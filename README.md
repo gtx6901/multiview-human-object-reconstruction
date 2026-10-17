@@ -1,11 +1,13 @@
 <!-- optimization-20261017 -->
-**最新优化进度：** 已生成带原图烘焙头盔颜色和拟合手指动作的完整300帧候选视频，使用逐高斯中心深度裁剪；人体已蒸馏到原SMPL-X拓扑与官方UV，并实际完成Blender静态GLB导出回读。几何、接触和外观仍存在明显局限，严格留出相机评估及背包重建尚未完成。
+**当前视频继续使用原始LHM++高斯人体和神经渲染器。** 已逐张量确认人体外观与原方案完全一致；网格资产支线因外观质量不足暂缓，没有替换视频人体。最新完整300帧候选加入八视角面部约束的头颈动作、拟合手指、原图头盔UV颜色和逐高斯中心裁剪；固定新视角输出1008×756。头盔开口、纹理污染与真实接触仍未验收，严格留出评估和背包重建仍未完成。
 
 - [按更正后三张图推进的当前进度](docs/OPTIMIZATION_PROGRESS.md)
-- [完整300帧彩色候选视频](media/helmet_full300_color_candidate.mp4)
+- [完整300帧LHM++候选视频](media/helmet_full300_lhm_head_candidate.mp4)
+- [同外观、同机位的头部姿态前后对照](media/lhm_head_pose_comparison.jpg)
+- [原LHM++人体外观保持证据](evidence/lhm_body_preservation.json)
 - [机器可读优化证据](evidence/optimization_milestone.json)
 
-![完整动作候选新视角](media/helmet_full300_color_candidate.jpg)
+![完整动作LHM++候选新视角](media/helmet_full300_lhm_head_candidate.jpg)
 
 下面136帧内容保留为历史基线；其限制描述以对应历史版本为准。
 

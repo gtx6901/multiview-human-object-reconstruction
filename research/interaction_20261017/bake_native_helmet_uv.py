@@ -7,7 +7,7 @@ import torch,numpy as np,trimesh,nvdiffrast.torch as dr
 from PIL import Image
 from scipy.ndimage import distance_transform_edt
 from helmet_texture_sampling import NativeHelmetSampler,linear_to_srgb
-p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_texture_native_all300_v2');p.add_argument('--stride',type=int,default=3);p.add_argument('--motion',default='helmet_shell_pose_all300_v1');p.add_argument('--uv',default='helmet_uv_all300_v1');p.add_argument('--policy',choices=['all-time','stage-separated'],default='stage-separated');options=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_texture_native_all300_v2');p.add_argument('--stride',type=int,default=3);p.add_argument('--motion',default='helmet_shell_pose_all300_v1');p.add_argument('--uv',default='helmet_uv_all300_v1');p.add_argument('--policy',choices=['all-time','stage-separated'],default='stage-separated');p.add_argument('--body-depth',default='body_depth_all300_v1');options=p.parse_args()
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4)
 assert options.stride>0 and json.loads((ROOT/'uv_rendering_verification_v1/report.json').read_text())['success']
 meshpath=ROOT/options.uv/'mesh.pt';mesh=torch.load(meshpath,weights_only=True);motion=torch.load(ROOT/options.motion/'sequence.pt',weights_only=True);meta=json.loads((ROOT/'helmet_native000_299_v1/manifest.json').read_text())
@@ -21,7 +21,7 @@ context=dr.RasterizeCudaContext();clip=torch.cat([uv*2-1,torch.zeros(len(uv),1,d
 rast,_=dr.rasterize(context,clip.contiguous(),faces.contiguous(),resolution=[H,W]);rast=rast.flip(1).contiguous()
 positions,_=dr.interpolate(verts[None].contiguous(),rast,faces);ns,_=dr.interpolate(normals[None].contiguous(),rast,faces)
 faceid=rast[0,...,3].long()-1;mask=faceid>=0;y,x=torch.where(mask);fid=faceid[mask];points=positions[0][mask];normal=torch.nn.functional.normalize(ns[0][mask],dim=1);classes=mesh['face_classes'].cuda()[fid].long();M=len(points)
-sampler=NativeHelmetSampler(mesh,motion,meta)
+sampler=NativeHelmetSampler(mesh,motion,meta,body_depth=options.body_depth)
 # Fit a small approximate camera-response correction using same-surface,
 # same-time correspondences. Camera717 fixes the global color gauge.
 calib_frames=[30,60,90,120,150,180,210,240,270,299] if options.policy=='all-time' else [180,210,240,270,299]
@@ -116,6 +116,7 @@ with torch.inference_mode():
     area=np.array(tm.area_faces);counts=np.bincount(faceids,minlength=len(area));observedcounts=np.bincount(faceids[observed],minlength=len(area));area_coverage=float((area*observedcounts/np.maximum(counts,1)).sum()/area.sum())
     report={'success':True,'seconds':time.time()-start,'source_mesh_sha256':hashlib.sha256(meshpath.read_bytes()).hexdigest(),'source_motion':options.motion,'texture_resolution':[W,H],'frame_stride':options.stride,'sampled_frames':frames,'views':used,'uv_texels':M,'observed_uv_texels':int(observed.sum()),'observed_uv_fraction':float(observed.mean()),'estimated_area_weighted_observed_fraction':area_coverage,'class_priors':priors,'color_correction':calib,'scope':'Real original native PNG multiframe/multicamera UV appearance, two best-angle observations per camera then channelwise weighted median across up to16 samples. Positive candidate labels, native mesh self-depth and surface-class agreement, conservative body depth and hand-unknown exclusion. Unobserved texels explicitly marked and repaired by nearby observed same-class colors or class medians/design fallbacks. Not calibrated albedo, relighting or proof of correct geometry/texture; pose/segmentation/lighting errors remain. Requires actual real/novel-view rendering and held-out evaluation. No raw footage/model weights published.'}
     report['appearance_policy']=options.policy
+    report['source_body_depth']=options.body_depth
     report['source_uv']=options.uv;report['source_shell']=shellsource
     if options.policy=='stage-separated':report['scope']+=' Phase/material evidence selection: exterior from worn180–299, lining from held0–135 dark observed pixels, rim from both; donning excluded. This is an explicit visible-material prior for this white-shell/black-lining helmet. Lower observed coverage is reported honestly. No invented logo or claim of resolved photometric pose ambiguity.'
     (out/'report.json').write_text(json.dumps(report,indent=2));print('native multiview UV bake completed',flush=True)

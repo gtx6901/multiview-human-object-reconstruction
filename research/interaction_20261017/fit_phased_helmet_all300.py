@@ -8,11 +8,11 @@ from PIL import Image
 from scipy.spatial.transform import Rotation
 from pytorch3d.transforms import axis_angle_to_matrix,matrix_to_axis_angle
 from mesh_renderer import MeshRenderer
-p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_phased_all300_v1');p.add_argument('--steps',type=int,default=100);p.add_argument('--initial',default='helmet_initial_all300_v1');p.add_argument('--phase-motion');p.add_argument('--skip-coarse',action='store_true');p.add_argument('--material-loss-weight',type=float,default=0.);p.add_argument('--material-mesh');options=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_phased_all300_v1');p.add_argument('--steps',type=int,default=100);p.add_argument('--initial',default='helmet_initial_all300_v1');p.add_argument('--phase-motion');p.add_argument('--skip-coarse',action='store_true');p.add_argument('--material-loss-weight',type=float,default=0.);p.add_argument('--material-mesh');p.add_argument('--phase-priors',default='helmet_phase_priors_all300_v1');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--opening-direction-weight',type=float,default=0.);options=p.parse_args()
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4);cv2.setNumThreads(2)
 maskroot=ROOT/'sam2_all300_v1';observations=json.loads((maskroot/'report.json').read_text());assert observations['success']
 meta=json.loads((ROOT/'helmet_native000_299_v1/manifest.json').read_text());initial=torch.load(ROOT/options.initial/'sequence.pt',weights_only=True)
-phaseinfo=json.loads((ROOT/'helmet_phase_priors_all300_v1/report.json').read_text());anchor=torch.load(ROOT/'helmet_phase_priors_all300_v1/anchors.pt',weights_only=True)
+phaseinfo=json.loads((ROOT/options.phase_priors/'report.json').read_text());anchor=torch.load(ROOT/options.phase_priors/'anchors.pt',weights_only=True)
 vertices=initial['vertices_local'].cuda();faces=initial['faces'].cuda();scale=initial['logscale'].exp().cuda();renderer=MeshRenderer();width,height=256,192
 A=np.array([[.125,0,-.4375],[0,.125,-.4375],[0,0,1.]])
 Ks=torch.tensor(np.array([A@np.array(v['K']) for v in meta['views']]),device='cuda',dtype=torch.float32);Ws=torch.tensor([v['W'] for v in meta['views']],device='cuda',dtype=torch.float32)
@@ -25,7 +25,7 @@ if options.material_loss_weight:
     material_colors=torch.full_like(vertices,.05);material_colors[:materialmesh['outer_vertex_count']]=.9
     opening_normal=torch.tensor(json.loads((ROOT/options.material_mesh/'report.json').read_text())['opening_plane_normal_local'],device='cuda',dtype=torch.float32)
 for vi,v in enumerate(meta['views']):
-    cache=np.load(ROOT/'body_depth_all300_v1'/f"{v['serial']}.npz");bd=cache['depth'];ba=cache['alpha'];hand=cache['hand_unknown']
+    cache=np.load(ROOT/options.body_depth/f"{v['serial']}.npz");bd=cache['depth'];ba=cache['alpha'];hand=cache['hand_unknown']
     assert np.allclose(cache['K'],Ks[vi].cpu().numpy()) and np.allclose(cache['W'],Ws[vi].cpu().numpy())
     valid=cv2.resize(np.asarray(Image.open(ROOT/'helmet_native000_299_v1'/v['serial']/'valid.png')),(width,height),interpolation=cv2.INTER_NEAREST)>127
     for f in range(300):
@@ -138,6 +138,10 @@ for step in range(options.steps+1):
         up=torch.nn.functional.normalize(anchor['joints_world'][:,15].cuda()-anchor['joints_world'][:,12].cuda(),dim=1)
         alignment=((R@opening_normal)*up).sum(1)
         regularization+=.1*torch.relu(.45-alignment[worn]).square().mean()
+        if options.opening_direction_weight:
+            front=anchor['joints_world'][:,[23,24]].mean(1).cuda()-anchor['joints_world'][:,15].cuda();front=front-(front*up).sum(1,keepdim=True)*up;front=torch.nn.functional.normalize(front,dim=1)
+            target_normal=torch.nn.functional.normalize(up-.6*front,dim=1)
+            regularization+=options.opening_direction_weight*(1-((R@opening_normal)*target_normal).sum(1))[worn].mean()
     value=data_sum+float(regularization.detach())
     if best is None or value<best[0]:best=(value,[x.detach().clone() for x in [rraw,traw,pr,pt]])
     if step<options.steps:regularization.backward();opt.step()
@@ -152,6 +156,8 @@ with torch.no_grad():
     np.savez_compressed(out/'observation_metrics.npz',frames=frames,views=views,before_iou=before,after_iou=after.cpu(),restored_negative_pixels=restored.cpu())
     report={'success':True,'frames':300,'observations':N,'seconds':time.time()-start,'history':history,'coarse_search':coarse,'phases':phases,'mean_input_soft_iou_before':float(before.mean()),'mean_input_soft_iou_after':float(after.mean()),'restored_negative_pixels':int(restored.sum()),'shared_relative_R':(axis_angle_to_matrix(pr)@relR).cpu().tolist(),'shared_relative_translation':(relt+pt).cpu().tolist(),'max_rotation_residual_rad':float(rr[attached].norm(dim=1).max()),'max_translation_residual':float(tt[attached].norm(dim=1).max()),'scope':'All8 main experiment; every300 frame uses real SAM2 candidate masks. Proposed stable-grasp/head-relative phases share transforms with small bounded per-frame residuals; other intervals free.24-way coarse rotations at selected phase/donning frames, original calibrated cameras/fixed shared scale. Tri-state silhouette loss restores half-weight negative evidence only when the predicted object is >.01 normalized-world units in front of a fitted bare-body mesh, away from hands and boundaries. Model/mask/rotation ambiguity remains. Before/after use same current mask/depth protocol after coarse initialization, not prior masks or held-out evaluation. Geometry remains old filled hull; no cavity/UV/texture or physical-contact accuracy claim.'}
     report['sources']=vars(options)
+    report['scope']=report['scope'].replace('Geometry remains old filled hull; no cavity/UV/texture or physical-contact accuracy claim.','Saved canonical geometry from the stated initialization is reused; candidate geometry/material provenance is in its source reports. No physical-contact accuracy claim.')
+    if options.opening_direction_weight:report['scope']+=' Explicit worn-helmet opening-direction DESIGN prior follows fitted head-up and eye-forward directions; not a measured cavity or independently validated contact constraint.'
     if options.material_loss_weight:
         report.update(material_class_error_before=float(beforephoto.mean()),material_class_error_after=float(afterphoto.mean()))
         report['scope']+=' Additional actual-image bright/dark material-class loss with an explicit white-outer/dark-lining prior, ambiguous middle luminance/hand pixels ignored; weak opening-up penalty only while worn. This disambiguates candidate orientation modes, not calibrated full photometric matching or true-pose evidence. Input silhouette and material metrics reported separately.'

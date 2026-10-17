@@ -16,8 +16,8 @@
   },
   {
     "file": "research/interaction_20261017/render_dynamic_hybrid.py",
-    "local_source_sha256": "cfe6b42cf8acbb2784e94437c6d55f71ed1e0d74d48150c0bb0148aea21c0171",
-    "published_sha256": "2ffb62215d8c2ae281ea6c9bb4ffbd0032d0e98cfa1caaeaa1af3e6df46be6dc"
+    "local_source_sha256": "7cfd3d8ccdc53575c3096c29e628474ad0d19c2db43efb61ed599b0780b09c03",
+    "published_sha256": "f1258dcddb43f86ded120175525cd6094f0f94ee794404084b45ecf828f86935"
   },
   {
     "file": "research/interaction_20261017/mask_observations.py",
@@ -56,13 +56,13 @@
   },
   {
     "file": "research/interaction_20261017/cache_body_depth_all300.py",
-    "local_source_sha256": "ea61117f5b20b889d91cd3cbb24c4760b2ff9947783d8c3681d83b23b8755ab9",
-    "published_sha256": "02d7c02c5b46677d98b5b396d9a318035dc748748d10f6628ecc18b7883f1142"
+    "local_source_sha256": "07cf665d6898c4608b5600e92fe14bb5121f68cc7fbba8e9aa10cb864cc1fd91",
+    "published_sha256": "3578100ca2ec36a8494261f943797ff0ecdbd7c3433d1525bdb7c90d3a53eaee"
   },
   {
     "file": "research/interaction_20261017/fit_phased_helmet_all300.py",
-    "local_source_sha256": "e92a2c648b565b8203b5c3381efa18c10a3004a68e0347b168d606b66fc7c7b1",
-    "published_sha256": "fea744c0402eb3cb4be9d5dbb5c50405672bc85215a82b4f2058e38ca99ac8df"
+    "local_source_sha256": "d956110e33133bb39a9912799cbdfa14ca91cdb3793ea12a4df7cb1d91726a07",
+    "published_sha256": "fefc823c20d6d8f1fb187fb82fc21e3034dc3fefe3fbd3d974cc58443b812598"
   },
   {
     "file": "research/interaction_20261017/vote_helmet_shape_all300.py",
@@ -81,13 +81,13 @@
   },
   {
     "file": "research/interaction_20261017/helmet_texture_sampling.py",
-    "local_source_sha256": "a7734e2d2894095d278eb339cad1f23100be6a50243d6083065449dd54526629",
-    "published_sha256": "51a2e63b0a7121ddcd76cc0832df330b18a21ecb59774882b2a1209166af7496"
+    "local_source_sha256": "c44452e38ecd846fb31aaca7e585db6a31ef5599317ba9c753d7497ba59bc437",
+    "published_sha256": "b5086333c2d9f968ecbc35fe85e828e175d3a43be063d5863cead79bbe8a8a50"
   },
   {
     "file": "research/interaction_20261017/bake_native_helmet_uv.py",
-    "local_source_sha256": "0072d55a79ed1a729fc4a7b8c3ad1155aec1aabaa732832b183c01f02fc40ecf",
-    "published_sha256": "6e11dff2d500fd89ad902667761e8c13b8d37b7f87da081520d5ba71daed47f5"
+    "local_source_sha256": "419cd8f270dca776a09719c019784462dc6460f1db6e2233639618eb95663266",
+    "published_sha256": "31665d1ab734646a03a5f714536c81a6a40c86ec9e1a198cb51e61e5620969ca"
   },
   {
     "file": "research/interaction_20261017/audit_helmet_material_orientation.py",
@@ -126,8 +126,8 @@
   },
   {
     "file": "research/interaction_20261017/prepare_blender_human_animation.py",
-    "local_source_sha256": "700a368c120e23273dbef0547b18b5b3ae663d461f962ceebea30df5b770bcd8",
-    "published_sha256": "493500060a7f420a2646cbc537d48d2adc71888be91759cdb6b0bbb6d00da909"
+    "local_source_sha256": "6f75c2038a6b4de929785c0a9c75a2147f5665106e84c09db70c7f3d63a09754",
+    "published_sha256": "afbfc01ef061aa08c909ff3eb4d0fa3d0e5beb63b3e41b5ad7c39fcec33b9d25"
   },
   {
     "file": "research/interaction_20261017/blender_human_animation.py",
@@ -158,5 +158,55 @@
     "file": "research/interaction_20261017/initialize_heldout_body.py",
     "local_source_sha256": "23ece90b52c124d6806c65c569d59acfecd9a061c0dc0dd1f6b98d3940cb3f81",
     "published_sha256": "f74164c0af44a2347afea4cb51b6d6cbd14b97919bff7361bfd95856a44d261a"
+  },
+  {
+    "file": "research/interaction_20261017/screen_multiview_hands.py",
+    "local_source_sha256": "2d26a3663cbe2c4c0b03466f1733491ac856c5fc2d87470db1ace2d1a05aa3c0",
+    "published_sha256": "55d16ab247bc079bd42a9b6c33d35157e7bf60e0ee2a22757b1d603271592f79"
+  },
+  {
+    "file": "research/interaction_20261017/export_avatar_motion.py",
+    "local_source_sha256": "8ae54fd4a119bb8d6f21915cbd9f1bdcdc4daf31bd3f06581d629031d1224a8d",
+    "published_sha256": "beea582f72f2e78e61b4b16b33326edf9c034cdeb0f8189c90ad1449fecb4533"
+  },
+  {
+    "file": "research/interaction_20261017/audit_lhm_body_visual_regression.py",
+    "local_source_sha256": "495b518a0325ec92afcf46940609efe124302e8f6cdc943d7d1a5cca2c4ac6b1",
+    "published_sha256": "18fd22b033645c7a4bc9fa2df4d9605fad80f09dc362f3cfbba5d73a38888be8"
+  },
+  {
+    "file": "research/interaction_20261017/review_lhm_helmet_contacts.py",
+    "local_source_sha256": "ccfc50da5c52464154aa27dfd8b2b08cb137b144513454e1d3b57367287213da",
+    "published_sha256": "646ca07768393a63e1a6a5cd1ac606089109220b3e50f9b2f8ef997a31e4a38e"
+  },
+  {
+    "file": "research/interaction_20261017/fit_lhm_head_from_multiview_faces.py",
+    "local_source_sha256": "6ad61ef49685f3f26bb20d07869e8b8b1475d1892d187630762cb625e36a43c3",
+    "published_sha256": "4f7fd58bdd71ffa278dfb69898c4dc8dd23c67b25e597653b78ac6a7955d4878"
+  },
+  {
+    "file": "research/interaction_20261017/prepare_face_head_helmet_priors.py",
+    "local_source_sha256": "6d65feb3a7181cf9c28e56d5a6cd011edf39cafe4fce34cc6fa7c2b58152eb57",
+    "published_sha256": "611e60eeb4d06104091d6e64146690528c878284b06de3849a4f09b5163cc8a9"
+  },
+  {
+    "file": "research/interaction_20261017/prepare_lhm_full_action_framing.py",
+    "local_source_sha256": "1936467ffa7628cbccec9b457bb95a20537005425b7fffff808201f6c94f1ce2",
+    "published_sha256": "2693082b3bb83ff64f9ec0a4506903f80e8d1c36dd4843c4978c8b3c1ee1bb70"
+  },
+  {
+    "file": "research/interaction_20261017/audit_lhm_head_motion.py",
+    "local_source_sha256": "f9cb46bbe5c4b29203e6894d194501f462fbb65c2dba7467ec01ff66a448c14b",
+    "published_sha256": "508dbe878144598b18458e4dea757cb44adc24e0fea045317c8326cb9ae625c4"
+  },
+  {
+    "file": "research/interaction_20261017/audit_backpack_decoding.py",
+    "local_source_sha256": "c0c935a7f7bca86665697ecec5ece9f0ff57cd2f0a8b71655fff936295c2a989",
+    "published_sha256": "803737f869c79cc3ac1569eb69c3f223ee7b90c807211b5232ab5f03f146f5f6"
+  },
+  {
+    "file": "research/interaction_20261017/prepare_backpack_native.py",
+    "local_source_sha256": "392636162a5cb66be90fa537ec12af3f4bb4a668f26048830e77582a64887261",
+    "published_sha256": "7c0376e2972756edc8376e2ad011bf43715d772270149dd53e385708bff3aac6"
   }
 ]

@@ -12,16 +12,16 @@ def linear_to_srgb(x):
     x=x.clamp(0,1);return torch.where(x<=.0031308,x*12.92,1.055*x.pow(1/2.4)-.055)
 
 class NativeHelmetSampler:
-    def __init__(self,mesh,motion,meta):
+    def __init__(self,mesh,motion,meta,body_depth='body_depth_all300_v1'):
         self.vertices=mesh['vertices_local'].cuda();self.faces=mesh['faces'].cuda();self.classes=mesh['face_classes'].cuda().long()
         self.R=motion['R'].cuda();self.t=motion['translation_world'].cuda();self.scale=motion['logscale'].exp().cuda();self.meta=meta
         self.renderer=MeshRenderer();self.maskroot=ROOT/'sam2_all300_v1';m=json.loads((self.maskroot/'report.json').read_text());self.records={(r['serial'],r['frame']):r for r in m['records']}
-        self.cache_view=None;self.cache=None
+        self.cache_view=None;self.cache=None;self.body_depth=body_depth
     def sample(self,vi,f,points,normals,classes):
         v=self.meta['views'][vi];record=self.records[(v['serial'],f)]
         if record['mask'] is None:return None
         if self.cache_view!=vi:
-            d=np.load(ROOT/'body_depth_all300_v1'/f"{v['serial']}.npz")
+            d=np.load(ROOT/self.body_depth/f"{v['serial']}.npz")
             self.cache={k:d[k] for k in ['depth','alpha','hand_unknown']};self.cache_view=vi
         W=torch.tensor(v['W'],device='cuda',dtype=torch.float32);K=torch.tensor(v['K'],device='cuda',dtype=torch.float32)
         vertices=self.vertices@self.R[f].T*self.scale+self.t[f]

@@ -1,15 +1,16 @@
 """Actual posed SMPL-X mesh depths for conservative helmet occlusion constraints."""
 import os
 from pathlib import Path
-import sys,json,time,inspect
+import sys,json,time,inspect,argparse
 ROOT=Path(__file__).resolve().parent;sys.path[:0]=[str(ROOT/'deps'),str(ROOT.parent/'lhmpp_20261016/deps')]
 import torch,numpy as np,cv2
 from smplx.lbs import lbs
 from avatar_rig import pose_axis_angles
 from smplx_surface_landmarks import SMPLXSurfaceLandmarks
 from mesh_renderer import MeshRenderer
-out=ROOT/'body_depth_all300_v1';out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4);cv2.setNumThreads(2)
-poses=torch.load(ROOT/'body_hands_all300_v1/pose_sequence.pt',weights_only=True);T=len(poses['frames']);assert T==300
+parser=argparse.ArgumentParser();parser.add_argument('--out',default='body_depth_all300_v1');parser.add_argument('--poses',default='body_hands_all300_v1');options=parser.parse_args()
+out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4);cv2.setNumThreads(2)
+poses=torch.load(ROOT/options.poses/'pose_sequence.pt',weights_only=True);T=len(poses['frames']);assert T==300
 model=SMPLXSurfaceLandmarks().cuda();d=np.load(model.model_path,allow_pickle=True)
 def tensor(key):return torch.tensor(d[key],dtype=torch.float32,device='cuda')
 args={'v_template':tensor('v_template'),'shapedirs':tensor('shapedirs')[:,:,:10],'posedirs':tensor('posedirs').reshape(10475*3,486).T.contiguous(),'J_regressor':tensor('J_regressor'),'parents':model.parents,'lbs_weights':tensor('weights')}
@@ -48,4 +49,5 @@ with torch.inference_mode():
         viewreports.append({'serial':v['serial'],'depth_shape':[T,height,width]});print('depth cached',v['serial'],flush=True)
 torch.save({'vertices_world':vertices,'faces':faces.cpu(),'joints_world':joints,'frames':poses['frames']},out/'body_mesh.pt')
 report={'success':True,'frames':T,'views':viewreports,'seconds':time.time()-start,'source_poses':'body_hands_all300_v1','coordinate_convention':'Positive OpenCV camera-space Z, top-left pixel centers; native K mapped to256×192 by explicit affine. Float32 depths, hard alpha.','hand_unknown':'Convex hull of21 projected points per hand, dilated3 cache pixels (24native pixels).','scope':'Actual full10475-vertex SMPL-X LBS from fitted motion, checked against verified subset at each batch; fixed beta0 body, not clothed Gaussian surface. These depths support conservative occlusion only, not calibrated human shape/contact truth. Use positive depth margin and retain hand/boundary uncertainty. Private licensed mesh tensors are not public assets.'}
+report['source_poses']=options.poses
 (out/'report.json').write_text(json.dumps(report,indent=2));print('body depth cache complete',flush=True)

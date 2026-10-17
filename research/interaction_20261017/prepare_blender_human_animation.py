@@ -15,8 +15,15 @@ model=ROOT.parent/'lhmpp_20261016/pretrained_models/human_model_files/smplx/SMPL
 d=np.load(model,allow_pickle=True);mesh=torch.load(ROOT/'human_mesh_textured_v1/mesh.pt',weights_only=True)
 p=torch.load(ROOT/'body_hands_all300_v1/pose_sequence.pt',weights_only=True)
 aa=torch.cat([pose_axis_angles(p,t,'cpu') for t in range(300)])
-R=axis_angle_to_matrix(aa);F=R[0,0].T.clone();R[:,0]=F@R[:,0]
-s=p['scale'];center=p['translation_world'][0].clone();J=mesh['rest_joints'];parent=mesh['parents'];weights=mesh['weights'];delta=mesh['offsets_model_space']
+R=axis_angle_to_matrix(aa)
+# The initial frame is BENT OVER: its root rotation cannot define world up.
+# Upright late-frame head/ankle directions define a constant export gauge.
+jworld=p['joints55_world'];up=(jworld[180:,15]-jworld[180:,[7,8]].mean(1)).median(0).values;up=up/up.norm()
+forward=(R[180:,0]@torch.tensor([0.,0.,1.])).mean(0);forward=forward-up*(forward@up);forward=forward/forward.norm()
+right=torch.linalg.cross(up,forward);right=right/right.norm();forward=torch.linalg.cross(right,up)
+F=torch.stack([right,up,forward]);assert torch.allclose(F@F.T,torch.eye(3),atol=1e-5)
+R[:,0]=F@R[:,0]
+s=p['scale'];center=jworld[180:,[10,11]].reshape(-1,3).median(0).values;J=mesh['rest_joints'];parent=mesh['parents'];weights=mesh['weights'];delta=mesh['offsets_model_space']
 translation=((p['translation_world']-center)/s+J[0])@F.T-J[0]
 _,A=batch_rigid_transform(R,J[None].expand(300,-1,-1),parent)
 samples=[0,42,150,180,299];reference=[]
@@ -29,7 +36,7 @@ for t in samples:
     reference.append(v.numpy())
 np.savez(out/'animation_data.npz',template=d['v_template'].astype('float32'),faces=d['f'],vt=d['vt'],ft=d['ft'],
     weights=weights.numpy(),joints=J.numpy(),parents=parent.numpy(),offset=delta.numpy(),posedirs=d['posedirs'].astype('float32'),
-    quaternion=matrix_to_quaternion(R).numpy(),translation=translation.numpy(),coeff=coeff.numpy(),reference=np.stack(reference),sample_frames=samples)
+    quaternion=matrix_to_quaternion(R).numpy(),translation=translation.numpy(),coeff=coeff.numpy(),reference=np.stack(reference),sample_frames=samples,world_gauge_F=F.numpy(),world_center=center.numpy(),body_scale=s.numpy())
 job={'out':str(out),'data':str(out/'animation_data.npz'),'texture':str(ROOT/'human_mesh_textured_v1/human_basecolor.png'),
      'official_addon_source':str(ROOT/'vendor/smplx_blender_addon'),'scope':'Custom conversion of the locally licensed original neutral SMPL-X NPZ, not stock official Blender model library. Original weights/rest joints and all486 pose correctives; fitted cloth offsets and fitted300-frame55-joint motion. All8-trained neural texture; no held-out quality claim. Local derived model only.'}
 (out/'job.json').write_text(json.dumps(job,indent=2))

@@ -19,6 +19,7 @@ from gsplat import rasterization
 import imageio.v2 as imageio
 p=argparse.ArgumentParser();p.add_argument('out');p.add_argument('reference',nargs='?',default='NONE');p.add_argument('motion',nargs='?',default='helmet_pose180_211_v1');p.add_argument('mesh',nargs='?',default='helmet_colors180_211_v1');p.add_argument('--avatar',default='avatar_motion180_211_v1');p.add_argument('--data',default='helmet_contiguous180_211_v1');p.add_argument('--cameras',default='hybrid_frame30_v1/cameras.json');p.add_argument('--neutral-helmet',action='store_true')
 p.add_argument('--occlusion',choices=['expected-depth','gaussian-center'],default='expected-depth')
+p.add_argument('--frames',type=int,nargs='+',help='Optional selected original frame IDs for an explicit preview; default renders full saved sequence.')
 options=p.parse_args()
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time()
 reference=ROOT/options.reference
@@ -43,10 +44,13 @@ cameras=json.loads((ROOT/options.cameras).read_text());width=cameras['width'];he
 novel=cameras['views'][8:] if len(cameras['views'])==10 else [cameras['views'][16],cameras['views'][40]]
 (out/'cameras.json').write_text(json.dumps({'width':width,'height':height,'views':cameras['views'][:8]+novel},indent=2))
 renderer=MeshRenderer();records=[];preview=[];checks=[]
+render_indices=list(range(len(poses['frames']))) if options.frames is None else [poses['frames'].tolist().index(f) for f in options.frames]
+assert render_indices and len(set(render_indices))==len(render_indices)
+qa_indices=sorted(set([render_indices[0],render_indices[len(render_indices)//2],render_indices[-1]]))
 with torch.inference_mode():
- for t,frame in enumerate(poses['frames'].tolist()):
+ for t in render_indices:
+    frame=int(poses['frames'][t])
     g=animate(rig,poses,t);world=mesh['vertices_local'].float()@motion['R'][t].float().T*motion['logscale'].float().exp()+motion['translation_world'][t].float()
-    qa_indices=[0,len(poses['frames'])//2,len(poses['frames'])-1]
     views=novel+(cameras['views'][:8] if t in qa_indices else [])
     pics=[]
     for c in views:
@@ -86,13 +90,15 @@ with torch.inference_mode():
     with imageio.get_writer(str(out/name),format='FFMPEG',fps=fps,codec='libx264',macro_block_size=2) as writer:
         for arr in preview:writer.append_data(arr[:,width:].copy())
 sheet=Image.new('RGB',(width*3,(height+40)*3),'white')
-for i,t in enumerate(qa_indices):sheet.paste(Image.fromarray(preview[t]),(0,i*(height+40)))
+for i,t in enumerate(qa_indices):sheet.paste(Image.fromarray(preview[render_indices.index(t)]),(0,i*(height+40)))
 sheet.save(out/'motion_contact.jpg')
 video_checks=[]
 for name in ['source_vs_novel_30fps.mp4','source_vs_novel_slow10fps.mp4','novel_only_30fps.mp4','novel_only_slow10fps.mp4']:
-    reader=imageio.get_reader(str(out/name),format='FFMPEG');count=sum(1 for _ in reader);reader.close();assert count==len(poses['frames']);video_checks.append({'file':name,'decoded_frames':count})
+    reader=imageio.get_reader(str(out/name),format='FFMPEG');count=sum(1 for _ in reader);reader.close();assert count==len(render_indices);video_checks.append({'file':name,'decoded_frames':count})
 report={'success':True,'helmet_material':'neutral gray plus synthetic headlight; geometry diagnostic only' if options.neutral_helmet else 'observed vertex colors plus gray for unobserved','object_motion_source':str(motion_source),'object_mesh_source':str(mesh_source),'frames':poses['frames'].tolist(),'seconds':time.time()-start,'real_cameras_used_in_body_fitting':8,'novel_fixed_cameras':len(novel),'records':records,'replay_checks':checks,'videos':video_checks,'scope':'Continuous sampled original-time frames, shared all8-fitted body and candidate object poses; object observed-view coverage detailed in its source report. Fixed original Gaussian appearance and zero finger articulation. Approximate Gaussian expected-depth compositing. Candidate geometry remains unaccepted; see object source report for method and limits. No CoCoNet predictions used or full-action completion claimed.'}
 report['occlusion_method']=options.occlusion
+report['frames']=[int(poses['frames'][t]) for t in render_indices]
+if options.frames is not None:report['scope']='Selected-frame preview only; not a continuous full-action video. '+report['scope']
 if 'texture' in mesh and not options.neutral_helmet:
     report['helmet_material']='Baked native-frame multiview UV RGB appearance; see source texture report for measured/inferred coverage and limitations'
 report['fitted_hand_fields_present']=all(k in poses for k in ['left_hand_pose','right_hand_pose'])

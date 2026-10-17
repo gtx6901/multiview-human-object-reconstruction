@@ -27,6 +27,42 @@
   "backpack_reconstruction_complete": false,
   "stock_official_blender_addon_import_complete": false,
   "scope": "Current generated color video and static asset previews are research candidates. No raw footage, calibration, licensed model arrays/OBJ/BLEND/GLB or weights included.",
+  "current_video_body": "Original LHM++ Gaussian representation and neural decoder; never the distilled mesh.",
+  "mesh_asset_branch": "Paused at user request; preserved as a historical local candidate.",
+  "head_face_input_fit": {
+    "before_face_input_error_native_px": 46.60280227661133,
+    "after_face_input_error_native_px": 25.76266860961914,
+    "screened_2d_points": 9072,
+    "frames_with_face_constraints": 300
+  },
+  "head_motion_continuity": {
+    "body_hands_all300_v1": {
+      "median_deg": 1.639349182346355,
+      "p95_deg": 4.7504614107622345,
+      "max_deg": 13.164523928199827,
+      "max_at_frame": 6
+    },
+    "body_head_faces_all300_v1": {
+      "median_deg": 2.5181972518651974,
+      "p95_deg": 6.529023443377818,
+      "max_deg": 11.143673105977534,
+      "max_at_frame": 17
+    }
+  },
+  "current_render_resolution": [
+    1008,
+    756
+  ],
+  "selected_independent_replay": {
+    "frames": [
+      0,
+      150,
+      299
+    ],
+    "exact_pngs": 30,
+    "maximum_uint8_difference": 0,
+    "scope": "Reproducibility only; not independent image quality."
+  },
   "material_pose": {
     "mean_input_soft_iou_before": 0.7768359780311584,
     "mean_input_soft_iou_after": 0.7647077441215515,
