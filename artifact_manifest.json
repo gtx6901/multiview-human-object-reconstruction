@@ -62,6 +62,11 @@
       "sha256": "393f9b2d8a2dc106c31c8fc632902a2b6c0b90820b9a435e8d992fca3acf85c6"
     },
     {
+      "path": "evidence/body_face_20261018.json",
+      "bytes": 16094,
+      "sha256": "f090da7eb4000fd627cc27571d08408cbd647ff9381113f19b18069156e37040"
+    },
+    {
       "path": "evidence/coconet_input_diagnostics.json",
       "bytes": 3041,
       "sha256": "28d2103437dfef5954105c406f60991e395c2cd337efd23fbe336dd112911a31"
@@ -160,6 +165,11 @@
       "path": "media/backpack_actor_canonical_turntable.mp4",
       "bytes": 37274,
       "sha256": "c2b1de62e3381b788a48f624e0c7e8be2606bafd95f11bfa13fdc979fa8bbbbd"
+    },
+    {
+      "path": "media/body_face_motion_generated_comparison.jpg",
+      "bytes": 124585,
+      "sha256": "35addcd7db4df64b8216d4df8a7c65750dbeb06dd4e13ea9cfe83d9ab5a75acf"
     },
     {
       "path": "media/color_attempt_contact.jpg",
@@ -313,8 +323,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 13354,
-      "sha256": "78a70e520288c7f735003129248b031d49eb0256510261039b905b86a43f2643"
+      "bytes": 14560,
+      "sha256": "fcd128b9d1b75a3eec021e20eb66684efa7a45380d7e87231e06c324f7fbea0d"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -398,8 +408,8 @@
     },
     {
       "path": "research/interaction_20261017/audit_shared_head_render.py",
-      "bytes": 7801,
-      "sha256": "009f5ad6ba642457b5130715ac10c146bf37d05cdda93723068c6bd430cf4341"
+      "bytes": 8869,
+      "sha256": "f66d2a0afe5cd1a1f59b2bd83addfde26da8bc142288811dab4e3cd82129887d"
     },
     {
       "path": "research/interaction_20261017/avatar_rig.py",
@@ -492,6 +502,11 @@
       "sha256": "e95f4ad9f70317ae802d9103aaa91383c3ca54e7a4aea492db80a88923dfed20"
     },
     {
+      "path": "research/interaction_20261017/fit_body_face_motion.py",
+      "bytes": 6475,
+      "sha256": "cf3282a6a52bd5b9b2707e810d086698a105a185d385051e7d7ea370a2b98e2a"
+    },
+    {
       "path": "research/interaction_20261017/fit_body_shape_probe.py",
       "bytes": 4833,
       "sha256": "333c44cc01f00ad40bf47e98c77c94d81e24f8ca27b1a8fdbfc8eb36d557c7f7"
@@ -538,8 +553,8 @@
     },
     {
       "path": "research/interaction_20261017/fit_shared_helmet_opening.py",
-      "bytes": 10191,
-      "sha256": "f8513e16faee164118718d3ec499747617dcf1c70bb946fc8578235f60074e16"
+      "bytes": 11812,
+      "sha256": "43a1a37bf98cfddf9e76542d75c8f90f61ac676b4a88e0c346ce044f8de29b21"
     },
     {
       "path": "research/interaction_20261017/fit_shared_shape_motion.py",
@@ -560,6 +575,11 @@
       "path": "research/interaction_20261017/hand_helmet_contact.py",
       "bytes": 4106,
       "sha256": "43bc2ab2754418ef9ac322de1ba5831046d88b5ed0e97116a799752ad96d678a"
+    },
+    {
+      "path": "research/interaction_20261017/helmet_opening_profile.py",
+      "bytes": 1649,
+      "sha256": "48f9ff287d871a5113debc159eefbd2a67f60302a661b37c91bae536067e8ec3"
     },
     {
       "path": "research/interaction_20261017/helmet_texture_sampling.py",
@@ -757,6 +777,11 @@
       "sha256": "2b92487b82016c325016fee02156ed393ea1daa9107cc6ca26adebc59d16f750"
     },
     {
+      "path": "research/interaction_20261017/repair_derived_body_projection.py",
+      "bytes": 2169,
+      "sha256": "ddea7b3da82b850408399915417492a311ddfb1b48d29394f72f5ec48209e49e"
+    },
+    {
       "path": "research/interaction_20261017/replay_coconet_batch.py",
       "bytes": 1843,
       "sha256": "12aa72029105a216c31233fff52a2cb58fefa93e2357a03006eca163f1b9e04a"
@@ -880,6 +905,16 @@
       "path": "research/interaction_20261017/verify_batched_uv.py",
       "bytes": 1850,
       "sha256": "59d2f0f62e3e166635e0ae70e43a37771c35bfc044f9d6f57566cda2755d64b8"
+    },
+    {
+      "path": "research/interaction_20261017/verify_body_face_stage.py",
+      "bytes": 2270,
+      "sha256": "2335115bbf1e72db3697e41bda82c4fbd3652080fe834f86c73964788b0735d5"
+    },
+    {
+      "path": "research/interaction_20261017/verify_helmet_profile_geometry.py",
+      "bytes": 2500,
+      "sha256": "728db0477ec183fb8708b63b6582848166c61123421a030b15f88ae655df2dd2"
     },
     {
       "path": "research/interaction_20261017/verify_joint_head_kinematics.py",
