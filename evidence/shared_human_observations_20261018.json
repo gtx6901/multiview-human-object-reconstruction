@@ -1,0 +1,68 @@
+{
+  "success": true,
+  "observations_compared": 2400,
+  "eligible_observations": 2400,
+  "resolution": [
+    504,
+    378
+  ],
+  "per_camera": [
+    {
+      "serial": "21305711",
+      "frames": 300,
+      "eligible": 300,
+      "mean_initial_support_fraction": 0.8228334333491941,
+      "mean_initial_srgb_mae": 0.21776712527534234
+    },
+    {
+      "serial": "21305717",
+      "frames": 300,
+      "eligible": 300,
+      "mean_initial_support_fraction": 0.7839903794538643,
+      "mean_initial_srgb_mae": 0.1346767494795844
+    },
+    {
+      "serial": "FCM21121414",
+      "frames": 300,
+      "eligible": 300,
+      "mean_initial_support_fraction": 0.8203693683069045,
+      "mean_initial_srgb_mae": 0.4263177195869957
+    },
+    {
+      "serial": "FCM21121415",
+      "frames": 300,
+      "eligible": 300,
+      "mean_initial_support_fraction": 0.7828242795852486,
+      "mean_initial_srgb_mae": 0.27307589965098084
+    },
+    {
+      "serial": "FCM21121416",
+      "frames": 300,
+      "eligible": 300,
+      "mean_initial_support_fraction": 0.8465061666088637,
+      "mean_initial_srgb_mae": 0.15604224930908037
+    },
+    {
+      "serial": "FCM22020159",
+      "frames": 300,
+      "eligible": 300,
+      "mean_initial_support_fraction": 0.8499793785340077,
+      "mean_initial_srgb_mae": 0.3018648609540595
+    },
+    {
+      "serial": "FCM22020160",
+      "frames": 300,
+      "eligible": 300,
+      "mean_initial_support_fraction": 0.8303672978383002,
+      "mean_initial_srgb_mae": 0.14754380528369693
+    },
+    {
+      "serial": "FCM22030167",
+      "frames": 300,
+      "eligible": 300,
+      "mean_initial_support_fraction": 0.8311864140238399,
+      "mean_initial_srgb_mae": 0.13456484173218086
+    }
+  ],
+  "scope": "All selected frames and all8 cameras compared with shared animated LHM scene. Native RGB area-downsampled with exact pixel-center K. Eroded candidate person mask, union of observed and rendered helmet dilated3pixels excluded, initial decoded/accumulated alpha>.8. Fixed initial support and decoder alpha are cached for subsequent fitting and support accounting. Per-observation128pixel eligibility is minimum support only; no claim of segmentation accuracy, cross-camera consistency, dynamic selection, all-data feature fitting or novel-view quality. Appearance, shape and motion are unchanged. No camera gain fitted here; sRGB residual includes exposure, geometry, pose and segmentation errors. Private RGB/camera cache must not be published."
+}

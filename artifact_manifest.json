@@ -97,6 +97,11 @@
       "sha256": "24ea08167c16ab8ad0ff474fc0ae101ed3aeb9252d06695d9d7c18b65827652a"
     },
     {
+      "path": "evidence/shared_human_observations_20261018.json",
+      "bytes": 2482,
+      "sha256": "51a2ccace78297ed0918edbf7cc2aa875159dd4d664ab473aecf2a3c8da787f3"
+    },
+    {
       "path": "evidence/shared_scene_20261018.json",
       "bytes": 1613,
       "sha256": "4b150aabc5b1deb76ca7e56be519b77e1bf510de1ac23c6b5fdb7c9b8d38efb5"
@@ -203,8 +208,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 5909,
-      "sha256": "5b7104321d1c3c6604735b8ec3e51da97d5a3f585b9aa738f624860d8c52b8ba"
+      "bytes": 6377,
+      "sha256": "ff70f1cdc4e38ebd0101fb8e0b190a8fd226312763212238f5f3e7d740b939ed"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -505,6 +510,11 @@
       "path": "research/interaction_20261017/prepare_pickup_replay.py",
       "bytes": 3379,
       "sha256": "1a3eb13d5b55b0671c43ff23d9931b0fd39cb4950eb62f725117564f5695b0bb"
+    },
+    {
+      "path": "research/interaction_20261017/prepare_shared_human_observations.py",
+      "bytes": 6501,
+      "sha256": "062b1859437fe65a472e7e61b2267e2e57b3f99e74920ca2e663351965871f32"
     },
     {
       "path": "research/interaction_20261017/refine_pickup_anchor_prompts.py",
