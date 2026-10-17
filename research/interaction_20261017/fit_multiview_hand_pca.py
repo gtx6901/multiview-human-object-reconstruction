@@ -10,12 +10,18 @@ p=argparse.ArgumentParser();p.add_argument('--out',default='body_hands_pickup000
 torch.set_num_threads(4);out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time()
 model=SMPLXSurfaceLandmarks().cuda();base=torch.load(ROOT/options.body/'pose_sequence.pt',weights_only=True)
 screen=np.load(ROOT/options.screen/'screened.npz');meta=json.loads((ROOT/options.observations_report).read_text())
+screen_report=json.loads((ROOT/options.screen/'report.json').read_text());excluded=screen_report.get('sources',{}).get('exclude_camera','')
+selected=list(range(len(meta['views'])))
+if excluded:
+    selected=[i for i,v in enumerate(meta['views']) if v['serial']!=excluded];meta['views']=[meta['views'][i] for i in selected]
+    assert screen_report['training_cameras']==[v['serial'] for v in meta['views']]
 T=len(base['frames']);assert screen['frames'].tolist()==base['frames'].tolist()
 root=base['root_pose'].cuda();body0=base['body_pose'].cuda();trans=base['translation_world'].cuda();scale=base['scale'].cuda()
 K=torch.tensor([v['K'] for v in meta['views']],device='cuda',dtype=torch.float32);W=torch.tensor([v['W'] for v in meta['views']],device='cuda',dtype=torch.float32)
 xy=torch.tensor(screen['xy'],device='cuda',dtype=torch.float32);valid=torch.tensor(screen['inlier'],device='cuda')
 weights=torch.tensor(np.minimum(screen['raw_score']/5,1),device='cuda',dtype=torch.float32)*valid
 bodydet=np.load(ROOT/options.body_detections_file)
+if excluded:bodydet={key:bodydet[key][selected] for key in ['xy','score']}
 bodyxy=(torch.tensor(bodydet['xy'][:,:,5:17],device='cuda',dtype=torch.float32)+.5)*2-.5
 bx=bodydet['xy'][:,:,5:17];bodyvalid=torch.tensor((bodydet['score'][:,:,5:17]>3)&(bx[...,0]>2)&(bx[...,0]<1022)&(bx[...,1]>2)&(bx[...,1]<766),device='cuda')
 rawpca=torch.nn.Parameter(torch.zeros(T,2,12,device='cuda'));rawarm=torch.nn.Parameter(torch.zeros(T,4,3,device='cuda'))
@@ -66,4 +72,6 @@ with torch.no_grad():
     perview=[{'serial':v['serial'],'points':int(valid[i].sum()),'before_native_px':float(before[i][valid[i]].mean()),'after_native_px':float(error[i][valid[i]].mean())} for i,v in enumerate(meta['views'])]
     report={'success':True,'frames':T,'views':8,'seconds':time.time()-start,'history':history,'hand_error_before_native_px':float(before[valid].mean()),'hand_error_after_native_px':float(error[valid].mean()),'body_error_before_native_px':float(beforebody[bodyvalid].mean()),'body_error_after_native_px':float(berror[bodyvalid].mean()),'per_camera':perview,'hand_pca_components':12,'flat_hand_mean':True,'max_abs_hand_axis_angle':float(torch.cat([left,right],1).abs().max()),'scope':'Shared twelve-component PCA per hand with small elbow/wrist corrections, using only geometrically screened real eight-view native RTMW pseudo-observations. Confidence weights are capped raw-score weights, not visibility probabilities. Frozen body root/translation/shape/scale and calibrated cameras; body landmarks regularize arm corrections. Temporal hand priors fill weak frames but are not measurements. Input residual improvement is not held-out or physical-contact accuracy. Avatar rendering must still be audited.'}
     report['sources']=vars(options)
+    report['views']=len(meta['views']);report['excluded_camera']=excluded
+    if excluded:report['scope']=report['scope'].replace('eight-view','seven-view')+' Held-out camera absent from screened hand points and body regularization.'
     (out/'report.json').write_text(json.dumps(report,indent=2));print(json.dumps({k:report[k] for k in ['success','hand_error_before_native_px','hand_error_after_native_px','body_error_after_native_px','seconds']}),flush=True)

@@ -46,8 +46,8 @@
   },
   {
     "file": "research/interaction_20261017/fit_multiview_hand_pca.py",
-    "local_source_sha256": "8927f0373e541e5f53ea2a1f9d74567b6bab4235386d9161e72fccc7f8cd18c2",
-    "published_sha256": "658ecdd01b0816715e8efc97b33ebec98680ee92d90bc2df501dfa06ba5d7f65"
+    "local_source_sha256": "2cb95646040984462a59930c7cc2168846c5d28b4d089f285129f5bf4de2f7bb",
+    "published_sha256": "ac905177c5ee804b8de3d1bf10e61d5944846d1cbc6a9bff074c577deac90453"
   },
   {
     "file": "research/interaction_20261017/segment_full_action_sam2.py",

@@ -58,13 +58,13 @@
     },
     {
       "path": "evidence/optimization_milestone.json",
-      "bytes": 3899,
-      "sha256": "b430d53ed64a5a9cefc6dd24a9a5cf0e6db73ad7c0c60fc7923c30673aa7fd90"
+      "bytes": 3787,
+      "sha256": "5aa600bffcf807fafbf2f5c00b8aecbafa95d48bbce2fe22c1071ffe743bc0b9"
     },
     {
       "path": "evidence/optimization_source_mapping.json",
-      "bytes": 8668,
-      "sha256": "a8a6741512bb23ed635a747c3bc22b49ecb7d7dfe0ba0fa2c11b841e6d093876"
+      "bytes": 8507,
+      "sha256": "3bc3817a2892b7ad3caccb9aae46bc01bdda152a2c2ab5acd4dd2ec832db1c5a"
     },
     {
       "path": "evidence/source_snapshot_mapping.json",
@@ -218,8 +218,8 @@
     },
     {
       "path": "research/interaction_20261017/fit_multiview_hand_pca.py",
-      "bytes": 7098,
-      "sha256": "658ecdd01b0816715e8efc97b33ebec98680ee92d90bc2df501dfa06ba5d7f65"
+      "bytes": 7813,
+      "sha256": "ac905177c5ee804b8de3d1bf10e61d5944846d1cbc6a9bff074c577deac90453"
     },
     {
       "path": "research/interaction_20261017/fit_nlf_smplh.py",
