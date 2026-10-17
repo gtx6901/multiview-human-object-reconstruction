@@ -4,10 +4,11 @@ from pathlib import Path
 import sys,json,argparse
 ROOT=Path(__file__).resolve().parent;sys.path[:0]=[str(ROOT/'deps'),str(ROOT.parent/'lhmpp_20261016/deps')]
 import torch,numpy as np
-p=argparse.ArgumentParser();p.add_argument('--updated-avatar',default='helmet_joint_head_all300_v1');p.add_argument('--fresh-cache',default='lhm_joint_head_occlusion_worn_v1');p.add_argument('--out',default='lhm_joint_head_occlusion_all300_v1');o=p.parse_args()
-old=ROOT/'lhm_occlusion_all300_v1';fresh=ROOT/o.fresh_cache;out=ROOT/o.out
+p=argparse.ArgumentParser();p.add_argument('--updated-avatar',default='helmet_joint_head_all300_v1');p.add_argument('--fresh-cache',default='lhm_joint_head_occlusion_worn_v1');p.add_argument('--out',default='lhm_joint_head_occlusion_all300_v1');p.add_argument('--base-avatar',default='body_head_faces_all300_v1');p.add_argument('--base-cache',default='lhm_occlusion_all300_v1');o=p.parse_args()
+old=ROOT/o.base_cache;fresh=ROOT/o.fresh_cache;out=ROOT/o.out
 r=json.loads((fresh/'report.json').read_text());assert r['success'];out.mkdir(exist_ok=False)
-a=torch.load(ROOT/'body_head_faces_all300_v1/avatar.pt',weights_only=True);b=torch.load(ROOT/o.updated_avatar/'avatar.pt',weights_only=True)
+a=torch.load(ROOT/o.base_avatar/'avatar.pt',weights_only=True);b=torch.load(ROOT/o.updated_avatar/'avatar.pt',weights_only=True)
+base_report=json.loads((old/'report.json').read_text());assert base_report['success'] and base_report['avatar_source']==o.base_avatar
 assert r['avatar_source']==o.updated_avatar
 def same(x,y):
  if isinstance(x,dict):return x.keys()==y.keys() and all(same(x[k],y[k]) for k in x)

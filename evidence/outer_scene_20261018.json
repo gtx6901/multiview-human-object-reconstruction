@@ -1,0 +1,343 @@
+{
+  "joint_motion": {
+    "observations": 2116,
+    "before_iou": 0.8669290542602539,
+    "after_iou": 0.8600056171417236,
+    "joint_head": {
+      "usable_face_points": 1098,
+      "points_before_directional_visibility": 2246,
+      "front_visibility_enabled": true,
+      "frames_without_face_support": 0,
+      "optimized_frames": 120,
+      "before_face_error_native_px": 15.414800643920898,
+      "after_face_error_native_px": 13.83018970489502,
+      "max_pose_component_change_rad": 0.0980115532875061,
+      "face_anchor_source": "shared_head_face_correspondence_v4",
+      "face_scope": "Native COCO nose/eyes from existing3view RANSAC screen, ears excluded, hand-cache overlap unknown. Optional directional visibility freezes the initial front-camera set during this inner fit, so optimization cannot hide residuals by turning away. Anchor/visibility definitions recorded separately; metrics across different definitions are not comparable quality evidence. Fixed torso/shape/fingers, only worn neck/head change. Existing body depth is held fixed in this inner iteration and must be regenerated for outer visibility update."
+    },
+    "scope": "All300/8-camera object masks with actual updated-canonical-human depth. Input face error decreases, silhouette slightly declines; not an accepted quality gain."
+  },
+  "scene_and_videos": {
+    "success": true,
+    "canonical_avatar_matches_updated_source": true,
+    "canonical_head_differs_from_original_baseline": true,
+    "original_appearance_features_preserved": true,
+    "only_worn_neck_head_motion_changed": true,
+    "all_four_videos_independently_decoded_300": true,
+    "scope": "Shared container hash/load and canonical/motion tensor checks plus video decode counts. Explicit head geometry change is intentional; does not assert image improvement, true helmet shape, novel-view accuracy or correct contact."
+  },
+  "texel_consensus": {
+    "before_observed_uv_fraction": 0.5088144204070424,
+    "after_observed_uv_fraction": 0.3500785707747231,
+    "diagnostics": {
+      "minimum_independent_cameras": 2,
+      "maximum_mean_absolute_linear_rgb_difference": 0.08,
+      "minimum_camera_agreement_fraction": 0.6,
+      "candidate_texels": 266127,
+      "single_camera_texels": 10130,
+      "eligible_texels": 183570,
+      "conflicting_multicamera_texels": 72427,
+      "rejected_weight_fraction": 0.4414103627204895,
+      "scope": "Each camera contributes at most one best-angle representative to an unweighted median reference, so one high-angle view cannot dominate the consistency vote. Retain samples close to that reference only with enough distinct cameras agreeing; rejected/single-view texels remain unknown and any later fill is inference. No stage restriction, white-shell or dark-lining color gate; common multi-camera registration bias can survive. Fixed lighting/exposure/pose ambiguity remains."
+    },
+    "negative_controls": {
+      "success": true,
+      "high_weight_single_view_outlier_rejected": true,
+      "single_camera_and_conflicting_pair_remain_unknown": true,
+      "corroborated_dark_material_preserved": true,
+      "scope": "Synthetic failure controls only. Does not establish real-data correspondence, appearance quality or recovered albedo."
+    },
+    "scope": "Same geometry/motion/camera correction/frame-selection as previous texture, only per-texel independent-camera consensus changed. Coverage decreases and dark patches remain in reviewed closeups. Unadopted; filled/median colors remain inferred, not recovered observation."
+  },
+  "weak_hand_contact": {
+    "success": true,
+    "baseline_loss": 0.00012668271665461361,
+    "controlled_displacement_loss": 0.09308545291423798,
+    "rotation_gradient_max": 0.0030651239212602377,
+    "translation_gradient_max": 0.0586845800280571,
+    "baseline_contact": {
+      "frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135
+      ],
+      "reliable_near_contact_frames": 106,
+      "before_mean_gap_model_units": 0.0033306642435491085,
+      "after_mean_gap_model_units": 0.0033306642435491085,
+      "before_fraction_within_015_model_units": 1.0,
+      "after_fraction_within_015_model_units": 1.0,
+      "surface_samples": 8192,
+      "source_avatar": "shared_head_joint_motion_all300_v3",
+      "scope": "Weak at-least-one palm/fingertip contact prior for held30..135, only points corroborated in>=3 cameras and fitted reprojection mean<30native px. Fixed initial frame set further requires some hand point within.08 human-model units. Distance to8192 deterministic area samples of the full shell, tolerance.01 model units, normalized by actual avatar scale. Coarse correspondence, finite surface sampling and hand fitting errors remain; this is not measured physical contact, a metric-unit statement or a nonpenetration/collision constraint. Frames without corroborated nearby hands remain unknown."
+    },
+    "scope": "Actual106 held-frame diagnostic plus deliberate object displacement. Baseline already satisfies the at-least-one-point proximity threshold in all106 screened frames, so adding this weak prior alone is not evidence of a useful contact improvement. Signed shell collision and extended-hand/Gaussian nonpenetration remain unimplemented."
+  },
+  "camera_assignment_audit": {
+    "hypotheses": [
+      {
+        "hypothesis": "extrinsics_assignment_only",
+        "permutations": 40320,
+        "identity_odd_frame_pair_error_native_px": 76.11890928145593,
+        "best_odd_frame_pair_error_native_px": 58.060879899463565
+      },
+      {
+        "hypothesis": "whole_camera_K_and_W_assignment",
+        "permutations": 40320,
+        "identity_odd_frame_pair_error_native_px": 76.11890928145593,
+        "best_odd_frame_pair_error_native_px": 57.42453023719657
+      }
+    ],
+    "scope": "Exhaustive8! assignment search using same-frame12 torso/limb detector correspondences, rawscore>2 and in_image. Even frames rank assignments, odd frames evaluate the same fixed ranking; temporal correlation remains. Pairwise symmetric epipolar medians then trimmed23-of28 mean, thresholds fixed before search. Tests extrinsics-only and whole K/W serial misassignment hypotheses. Detector semantics, synchronization, original calibration quality and degenerate camera geometry remain possible confounds. No calibration/serial mapping file changed, no candidate accepted automatically; requires multiview3D and static-background confirmation.",
+    "conclusion": "Best assignment remains around57-58native pixels; no usable mapping accepted or calibration changed."
+  },
+  "helmet_feature_observability": {
+    "success": true,
+    "frames": [
+      {
+        "frame": 42,
+        "views": [
+          {
+            "serial": "21305711",
+            "interior_features": 41
+          },
+          {
+            "serial": "21305717",
+            "interior_features": 16
+          },
+          {
+            "serial": "FCM21121415",
+            "interior_features": 20
+          },
+          {
+            "serial": "FCM21121416",
+            "interior_features": 0
+          },
+          {
+            "serial": "FCM22020159",
+            "interior_features": 0
+          },
+          {
+            "serial": "FCM22030167",
+            "interior_features": 1
+          }
+        ],
+        "pairs": [
+          {
+            "cameras": [
+              "21305711",
+              "21305717"
+            ],
+            "learned_score_above_02": 2,
+            "provided_epipolar_under_3_native_px": 0
+          },
+          {
+            "cameras": [
+              "21305711",
+              "FCM21121415"
+            ],
+            "learned_score_above_02": 5,
+            "provided_epipolar_under_3_native_px": 0
+          },
+          {
+            "cameras": [
+              "21305711",
+              "FCM22030167"
+            ],
+            "learned_score_above_02": 1,
+            "provided_epipolar_under_3_native_px": 0
+          },
+          {
+            "cameras": [
+              "21305717",
+              "FCM21121415"
+            ],
+            "learned_score_above_02": 2,
+            "provided_epipolar_under_3_native_px": 0
+          },
+          {
+            "cameras": [
+              "21305717",
+              "FCM22030167"
+            ],
+            "learned_score_above_02": 0,
+            "provided_epipolar_under_3_native_px": 0
+          },
+          {
+            "cameras": [
+              "FCM21121415",
+              "FCM22030167"
+            ],
+            "learned_score_above_02": 0,
+            "provided_epipolar_under_3_native_px": 0
+          }
+        ],
+        "three_or_more_view_3d_points": 0,
+        "total_consistent_pair_edges": 0
+      },
+      {
+        "frame": 90,
+        "views": [
+          {
+            "serial": "21305711",
+            "interior_features": 12
+          },
+          {
+            "serial": "21305717",
+            "interior_features": 11
+          },
+          {
+            "serial": "FCM21121415",
+            "interior_features": 0
+          },
+          {
+            "serial": "FCM21121416",
+            "interior_features": 2
+          },
+          {
+            "serial": "FCM22020159",
+            "interior_features": 0
+          },
+          {
+            "serial": "FCM22030167",
+            "interior_features": 0
+          }
+        ],
+        "pairs": [
+          {
+            "cameras": [
+              "21305711",
+              "21305717"
+            ],
+            "learned_score_above_02": 1,
+            "provided_epipolar_under_3_native_px": 0
+          },
+          {
+            "cameras": [
+              "21305711",
+              "FCM21121416"
+            ],
+            "learned_score_above_02": 0,
+            "provided_epipolar_under_3_native_px": 0
+          },
+          {
+            "cameras": [
+              "21305717",
+              "FCM21121416"
+            ],
+            "learned_score_above_02": 0,
+            "provided_epipolar_under_3_native_px": 0
+          }
+        ],
+        "three_or_more_view_3d_points": 0,
+        "total_consistent_pair_edges": 0
+      }
+    ],
+    "seconds": 1.9266870021820068,
+    "scope": "Cached ALIKED/LightGlue helmet-interior crop features; actual positive candidate mask eroded4native pixels and fitted-hand uncertainty excluded.512-square crops rescale native pixels explicitly; no shape/model agreement gate. Matchscore>.2, supplied-camera symmetric epipolar<3native px, unique-camera tracks>=3, DLT maximum reprojection3px, positive depth and ray span>=3deg. Tests whether real image detail can constrain shared helmet geometry/pose rather than recycling biased baked colors. Segmentation/detector/feature/calibration errors and white-shell sparsity remain; no replacement pose/geometry adopted, only2times tested. Private point/track arrays and original images excluded from public release."
+  },
+  "adopted": false,
+  "scope": "Updated full300 candidate and explicit failed/weak hypotheses. Body shape remains beta0 in this scene, nonzero-beta accepted-appearance trial is separate work in progress. Full goal, nonpenetration, helmet recovery, nonrigid backpack and conventional assets remain incomplete."
+}

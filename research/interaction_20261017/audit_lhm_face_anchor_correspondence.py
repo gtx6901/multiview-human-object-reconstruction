@@ -13,8 +13,8 @@ torch.set_num_threads(4);cv2.setNumThreads(2);out=ROOT/options.out;out.mkdir(exi
 from canonical_identity import semantic_identity
 source_report=json.loads((source/'report.json').read_text());avatar_source=options.avatar or source_report.get('source_avatar') or ('avatar_hands_all300_v1' if options.source=='avatar_canonical_views_v2' else None);assert avatar_source,'Explicit avatar provenance required'
 if source_report.get('source_avatar'):assert source_report['source_avatar']==avatar_source
-bundle=torch.load(ROOT/avatar_source/'avatar.pt',weights_only=True);assert bundle['poses']['betas'].abs().max()==0
-meta=json.loads((source/'cameras.json').read_text());pose=torch.load(source/'pose.pt',weights_only=True);model=SMPLXSurfaceLandmarks();prediction=model(pose_axis_angles(pose,0,'cpu'),pose['scale'],pose['translation_world']);proxy=prediction['coco17'][0,:5].detach().numpy();head=prediction['joints55'][0,15].detach().numpy()
+bundle=torch.load(ROOT/avatar_source/'avatar.pt',weights_only=True)
+meta=json.loads((source/'cameras.json').read_text());pose=torch.load(source/'pose.pt',weights_only=True);assert torch.equal(pose['betas'],bundle['poses']['betas']) and torch.equal(pose['scale'],bundle['poses']['scale']);model=SMPLXSurfaceLandmarks();prediction=model(pose_axis_angles(pose,0,'cpu'),pose['scale'],pose['translation_world'],betas=pose['betas']);proxy=prediction['coco17'][0,:5].detach().numpy();head=prediction['joints55'][0,15].detach().numpy()
 detector=RTMPose(str(ROOT/'wholebody_runtime_v1/rtmw.onnx'),model_input_size=(288,384),backend='onnxruntime',device='cpu',to_openpose=False);points=[];scores=[];views=[];Ps=[];rows=[]
 for view in meta['views']:
     W=np.array(view['W']);K=np.array(view['K']);center=-W[:3,:3].T@W[:3,3];direction=center-head;direction/=np.linalg.norm(direction)

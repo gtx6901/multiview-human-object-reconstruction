@@ -94,7 +94,12 @@
     {
       "path": "evidence/optimization_source_mapping.json",
       "bytes": 11209,
-      "sha256": "3bcdff3b409685c425f228a9f4ad7c430f8e3c04b79380640b8d8f8f911d1a09"
+      "sha256": "696408e5410d6106d8a73106392f0a2bb201eb1e376691cb225ef4fa3c0f69c1"
+    },
+    {
+      "path": "evidence/outer_scene_20261018.json",
+      "bytes": 12390,
+      "sha256": "b2b41aa3690d923372637e0343435ed17a96d6b7c6874de170c815c3044883fb"
     },
     {
       "path": "evidence/shared_features_20261018.json",
@@ -262,6 +267,16 @@
       "sha256": "a305c110b49b656cd55ebfa109c0cd43c00dc783d783ba54fb9ab9dad06dc58a"
     },
     {
+      "path": "media/shared_head_scene_all300_30fps.mp4",
+      "bytes": 1976981,
+      "sha256": "9443f6d65f53090e39c5ab10b74b6771f7edb7f0a2818629ed0e33595f0cf45c"
+    },
+    {
+      "path": "media/shared_head_scene_all300_slow10fps.mp4",
+      "bytes": 3082642,
+      "sha256": "d84893068d1387b1c63457c90bde438d5abc806a1645e151c317432f4049874d"
+    },
+    {
       "path": "media/shared_joint_scene_all300_30fps.mp4",
       "bytes": 1946019,
       "sha256": "4ec60a85da159ccf8139e726f1aeccbab9475d0f5877b5b8cf8a06e88d8e0af2"
@@ -292,9 +307,14 @@
       "sha256": "ae48de6f06dc247fd696e6afbc804ee4b9982c3a13f533eed95b9d6f6f6f7278"
     },
     {
+      "path": "media/texel_consensus_generated_comparison.jpg",
+      "bytes": 222391,
+      "sha256": "da7889f5d9eeaccabb94327c45ee100cdd8702088193162543f08720dea1b6b2"
+    },
+    {
       "path": "README.md",
-      "bytes": 12089,
-      "sha256": "dce9d452cba47c73f5a40cbadfdea621f64d1504c4d23b650615be69de80d6a7"
+      "bytes": 13354,
+      "sha256": "78a70e520288c7f735003129248b031d49eb0256510261039b905b86a43f2643"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -305,6 +325,11 @@
       "path": "research/interaction_20261017/audit_backpack_background_geometry.py",
       "bytes": 3607,
       "sha256": "47274bfd809fc1a39f924a17fdafa641bdd9e312a24bcc6d80f7c28b15a33b49"
+    },
+    {
+      "path": "research/interaction_20261017/audit_backpack_camera_assignment.py",
+      "bytes": 4285,
+      "sha256": "c0256634b059c7d84cfb1df178831e6232764b7f5ddf49e1cc45e8fbf21bb45c"
     },
     {
       "path": "research/interaction_20261017/audit_backpack_decoding.py",
@@ -327,6 +352,16 @@
       "sha256": "e91276f8e15f3378dcb769633997cf1e356b0ec0ce092c6949f80dabacb035eb"
     },
     {
+      "path": "research/interaction_20261017/audit_hand_helmet_contact.py",
+      "bytes": 1585,
+      "sha256": "d73c62c7a12b6f0365e030a9b2b707d8c67d32c9d0674fcc176b1e93a724acfc"
+    },
+    {
+      "path": "research/interaction_20261017/audit_helmet_image_features.py",
+      "bytes": 6044,
+      "sha256": "ad929b8c6d555b83239be921ef0284a1207e04911acd9e03ee377d915a1e0ef2"
+    },
+    {
       "path": "research/interaction_20261017/audit_helmet_material_orientation.py",
       "bytes": 5882,
       "sha256": "67c5084a983cc63faf3b139d3200be696bb3ab4c20ca74944e42b721e0c78300"
@@ -343,8 +378,8 @@
     },
     {
       "path": "research/interaction_20261017/audit_lhm_face_anchor_correspondence.py",
-      "bytes": 5454,
-      "sha256": "e11109036d48b8af82bab1b486b40897d61f3f88533af60b157696dd285f1038"
+      "bytes": 5542,
+      "sha256": "492846078fa3078d84d620bddf2f5722e5ad829a73469659e3248802578d218f"
     },
     {
       "path": "research/interaction_20261017/audit_lhm_head_motion.py",
@@ -383,8 +418,8 @@
     },
     {
       "path": "research/interaction_20261017/bake_native_helmet_uv.py",
-      "bytes": 18330,
-      "sha256": "98c3db95ba5eadeabceaba21bafcdc5725d0aa153ad53c816029606ee17dad0c"
+      "bytes": 18787,
+      "sha256": "4cdcb1d644f65442c918ce79c24e5988a0958f8ad040c279b2c7647d0fd876d3"
     },
     {
       "path": "research/interaction_20261017/blender_human_animation.py",
@@ -488,8 +523,8 @@
     },
     {
       "path": "research/interaction_20261017/fit_phased_helmet_all300.py",
-      "bytes": 27663,
-      "sha256": "d72b7e156d459f1df0dfca33f30f3e424e278b3c651e3564a5528e26a0362ca2"
+      "bytes": 28189,
+      "sha256": "28f83957d70c9eb7ba34be5e09aed3cd9f27b75a99da9e1a5c0fd744bd7470c6"
     },
     {
       "path": "research/interaction_20261017/fit_pickup_object.py",
@@ -498,8 +533,8 @@
     },
     {
       "path": "research/interaction_20261017/fit_shared_head_alignment.py",
-      "bytes": 7796,
-      "sha256": "8483b7d1c69aa5c16f20b2af6c09fbf2c5628571a2d68d7a0651bc3a3068275d"
+      "bytes": 8279,
+      "sha256": "553b53f7a32da0ecc179445cedc3a3104674e23b498a69c5b30a416528865671"
     },
     {
       "path": "research/interaction_20261017/fit_shared_helmet_opening.py",
@@ -520,6 +555,11 @@
       "path": "research/interaction_20261017/fuse_body_shortclip.py",
       "bytes": 6586,
       "sha256": "e9d7df39e24d9d6482109f66424c020f002d847cd867fefc0debd1f477af9868"
+    },
+    {
+      "path": "research/interaction_20261017/hand_helmet_contact.py",
+      "bytes": 4106,
+      "sha256": "43bc2ab2754418ef9ac322de1ba5831046d88b5ed0e97116a799752ad96d678a"
     },
     {
       "path": "research/interaction_20261017/helmet_texture_sampling.py",
@@ -603,8 +643,8 @@
     },
     {
       "path": "research/interaction_20261017/merge_joint_head_depth_cache.py",
-      "bytes": 2644,
-      "sha256": "7eece4906bb94a772f3e4b090287324b65225eca4d98a27094811a9b634be3b9"
+      "bytes": 2886,
+      "sha256": "d29ea9c76886158e906801fae329110fbd236ee051085ec0b045b2560f8d2cbf"
     },
     {
       "path": "research/interaction_20261017/mesh_renderer.py",
@@ -708,8 +748,8 @@
     },
     {
       "path": "research/interaction_20261017/render_canonical_avatar.py",
-      "bytes": 5664,
-      "sha256": "0a98a3fb3743e7d046659120da80d877d7c202b26d7eafec1005cede4db6e103"
+      "bytes": 5685,
+      "sha256": "2965f8c837404abb132d49754f208877df69e5d16661ea9919b3ffabe43d81cd"
     },
     {
       "path": "research/interaction_20261017/render_dynamic_hybrid.py",
@@ -807,6 +847,11 @@
       "sha256": "d522d08f59fb4bd856948f6b33e6ce281655f509a905319a893349fac5d2f69b"
     },
     {
+      "path": "research/interaction_20261017/texture_consensus.py",
+      "bytes": 1957,
+      "sha256": "c287aadbb23202210485502c49fa29bf8ceef75939047683f6d79f3eb92917fc"
+    },
+    {
       "path": "research/interaction_20261017/track_pickup_helmet.py",
       "bytes": 7708,
       "sha256": "4518ac42b0e4f4c78207aca2fda596a0b3a455963e34f33fa02fa626dcf3d296"
@@ -860,6 +905,16 @@
       "path": "research/interaction_20261017/verify_shared_head_identity.py",
       "bytes": 2663,
       "sha256": "03482e624bf676b352a543a2069e16066aeb973332f90d156f9af55d311d5b2b"
+    },
+    {
+      "path": "research/interaction_20261017/verify_shared_scene_update.py",
+      "bytes": 2171,
+      "sha256": "e85edd70c6f85e4678a7f17e2d36b84a9e708d611dbe19ff3f619f93fa8f327b"
+    },
+    {
+      "path": "research/interaction_20261017/verify_texture_consensus.py",
+      "bytes": 1340,
+      "sha256": "36f1b09e7fffc1e020d8dd1dba4b4ff3911e2bb8b8c39160c1f5b2f3d2cf3ee7"
     },
     {
       "path": "research/interaction_20261017/verify_uv_rendering.py",

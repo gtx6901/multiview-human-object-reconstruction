@@ -12,16 +12,21 @@ import torch,numpy as np
 from pytorch3d.transforms import axis_angle_to_matrix,matrix_to_quaternion,quaternion_multiply
 from smplx.lbs import batch_rigid_transform
 from avatar_rig import pose_axis_angles,animate
-p=argparse.ArgumentParser();p.add_argument('--out',required=True);p.add_argument('--avatar',default='helmet_joint_lhm_face_visible_all300_v1');p.add_argument('--mode',choices=['translation','rigid'],default='rigid');p.add_argument('--steps',type=int,default=400);o=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--out',required=True);p.add_argument('--avatar',default='helmet_joint_lhm_face_visible_all300_v1');p.add_argument('--face-anchors',default='lhm_face_anchor_correspondence_v1');p.add_argument('--mode',choices=['translation','rigid'],default='rigid');p.add_argument('--steps',type=int,default=400);o=p.parse_args()
 out=ROOT/o.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4)
-bundle=torch.load(ROOT/o.avatar/'avatar.pt',weights_only=True);reference=torch.load(ROOT/'body_head_faces_all300_v1/avatar.pt',weights_only=True)
-for key in ['zero_coords','weights','rest_joints','neutral_rotation','neutral_to_zero']:assert torch.equal(bundle['rig'][key],reference['rig'][key]),'Regenerate semantic anchors for different canonical human'
-assert torch.equal(bundle['features'],reference['features']) and bundle['poses']['betas'].abs().max()==0
+bundle=torch.load(ROOT/o.avatar/'avatar.pt',weights_only=True);anchor_report=json.loads((ROOT/o.face_anchors/'report.json').read_text());assert anchor_report['success'] and all(q['usable'] and q['support']>=3 for q in anchor_report['points'])
+if anchor_report.get('semantic_identity_sha256'):
+ from canonical_identity import semantic_identity
+ assert semantic_identity(bundle)==anchor_report['semantic_identity_sha256'],'Regenerate semantic anchors for changed canonical avatar'
+else:
+ reference=torch.load(ROOT/'body_head_faces_all300_v1/avatar.pt',weights_only=True)
+ for key in ['zero_coords','weights','rest_joints','neutral_rotation','neutral_to_zero']:assert torch.equal(bundle['rig'][key],reference['rig'][key]),'Regenerate semantic anchors for different canonical human'
+ assert torch.equal(bundle['features'],reference['features']) and bundle['poses']['betas'].abs().max()==0
 poses=bundle['poses'];rig=bundle['rig'];T=len(poses['frames']);assert T==300
 aa=torch.cat([pose_axis_angles(poses,t,'cpu') for t in range(T)]).cuda();rot=axis_angle_to_matrix(aa);rest=rig['rest_joints'].cuda().expand(T,-1,-1);joints,_=batch_rigid_transform(rot,rest,rig['parents'].cuda());headR=rot[:,0]
 for j in [3,6,9,12,15]:headR=headR@rot[:,j]
 headt=joints[:,15]*poses['scale'].cuda()+poses['translation_world'].cuda();scale=poses['scale'].cuda()
-local=torch.tensor(np.load(ROOT/'lhm_face_anchor_correspondence_v1/anchors.npz')['canonical_face_local'][:3],device='cuda',dtype=torch.float32)
+local=torch.tensor(np.load(ROOT/o.face_anchors/'anchors.npz')['canonical_face_local'][:3],device='cuda',dtype=torch.float32)
 screen=np.load(ROOT/'body_head_faces_all300_v1/face_screen.npz');xy=torch.tensor(screen['xy'][:,:,:3],device='cuda',dtype=torch.float32);valid=screen['inlier'][:,:,:3].copy()
 meta=json.loads((ROOT/'helmet_native000_299_v1/manifest.json').read_text());K=torch.tensor(np.array([v['K'] for v in meta['views']]),device='cuda',dtype=torch.float32);W=torch.tensor(np.array([v['W'] for v in meta['views']]),device='cuda',dtype=torch.float32)
 for vi,v in enumerate(meta['views']):

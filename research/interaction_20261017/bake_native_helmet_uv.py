@@ -1,13 +1,14 @@
 """Native multitime/multicamera helmet UV baking, with measured-coverage masks."""
 import os
 from pathlib import Path
-import sys,json,time,argparse,hashlib
-ROOT=Path(__file__).resolve().parent;sys.path[:0]=[str(ROOT/'deps'),str(ROOT.parent/'lhmpp_20261016/deps')];sys.path.append(os.environ.get("HOI_SHARED_SITE", ""))
+import sys,json,time,argparse,hashlib,os
+ROOT=Path(__file__).resolve().parent;sys.path[:0]=[str(ROOT/'deps'),str(ROOT.parent/'lhmpp_20261016/deps')]
+if os.environ.get('HOI_SHARED_SITE'):sys.path.append(os.environ['HOI_SHARED_SITE'])
 import torch,numpy as np,trimesh,nvdiffrast.torch as dr
 from PIL import Image
 from scipy.ndimage import distance_transform_edt
 from helmet_texture_sampling import NativeHelmetSampler,linear_to_srgb
-p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_texture_native_all300_v2');p.add_argument('--stride',type=int,default=3);p.add_argument('--motion',default='helmet_shell_pose_all300_v1');p.add_argument('--uv',default='helmet_uv_all300_v1');p.add_argument('--policy',choices=['all-time','stage-separated'],default='stage-separated');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--consistent-frames',action='store_true');p.add_argument('--consistency-per-surface',action='store_true');options=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_texture_native_all300_v2');p.add_argument('--stride',type=int,default=3);p.add_argument('--motion',default='helmet_shell_pose_all300_v1');p.add_argument('--uv',default='helmet_uv_all300_v1');p.add_argument('--policy',choices=['all-time','stage-separated'],default='stage-separated');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--consistent-frames',action='store_true');p.add_argument('--consistency-per-surface',action='store_true');p.add_argument('--texel-consensus',action='store_true');options=p.parse_args()
 assert not options.consistency_per_surface or options.consistent_frames
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4)
 assert options.stride>0 and json.loads((ROOT/'uv_rendering_verification_v1/report.json').read_text())['success']
@@ -140,6 +141,11 @@ with torch.inference_mode():
             colors=torch.cat([topcolor[vi],color[None]],0);frameids=torch.cat([topframe[vi],torch.full((1,M),f,device='cuda',dtype=torch.int16)],0)
             topweight[vi]=newweight;topcolor[vi]=torch.gather(colors,0,order[...,None].expand(-1,-1,3));topframe[vi]=torch.gather(frameids,0,order);count+=1
         used.append({'serial':v['serial'],'sampled_candidate_frames':count});print('native texture camera complete',v['serial'],flush=True)
+    consensus_report=None
+    if options.texel_consensus:
+        from texture_consensus import consistent_texel_weights
+        topweight,_,consensus_report=consistent_texel_weights(topweight,topcolor)
+        (out/'texel_consensus.json').write_text(json.dumps(consensus_report,indent=2))
     weights=topweight.reshape(16,M);colors=topcolor.reshape(16,M,3);total=weights.sum(0);observed=total>.01;channels=[]
     for channel in range(3):
         values,order=colors[:,:,channel].sort(0);sortedweights=torch.gather(weights,0,order);median_index=(sortedweights.cumsum(0)>=total[None]*.5).long().argmax(0)
@@ -167,5 +173,6 @@ with torch.inference_mode():
         report['frame_consistency_selection']=json.loads((out/'frame_color_consistency.json').read_text())
         report['scope']+=' Candidate frames first ranked by same-time corrected cross-camera color consistency, with explicit support/error gates. No stage or observed-dark-lining selection; common pose/color bias can still survive.'
     report['source_uv']=options.uv;report['source_shell']=shellsource
+    if consensus_report is not None:report['texel_consensus']=consensus_report
     if options.policy=='stage-separated':report['scope']+=' Phase/material evidence selection: exterior from worn180–299, lining from held0–135 dark observed pixels, rim from both; donning excluded. This is an explicit visible-material prior for this white-shell/black-lining helmet. Lower observed coverage is reported honestly. No invented logo or claim of resolved photometric pose ambiguity.'
     (out/'report.json').write_text(json.dumps(report,indent=2));print('native multiview UV bake completed',flush=True)

@@ -28,7 +28,7 @@ poses['body_pose'][0,15,2]=-.65;poses['body_pose'][0,16,2]=.65
 width=height=504;K=np.array([[800.,0,251.5],[0,800.,251.5],[0,0,1.]])
 with torch.inference_mode():
     g=animate(rig,poses,0);model=SMPLXSurfaceLandmarks().cuda();aa=torch.cat([poses['root_pose'][:,None],poses['body_pose'],torch.zeros(1,33,3,device='cuda')],1)
-    landmarks=model(aa,poses['scale'],poses['translation_world'])['joints55'][0].cpu().numpy()
+    landmarks=model(aa,poses['scale'],poses['translation_world'],betas=poses['betas'])['joints55'][0].cpu().numpy()
     xyz=g['xyz'][g['opacity'].flatten()>.05].cpu().numpy();lo=np.minimum(np.quantile(xyz,.001,axis=0),landmarks.min(0))-.07;hi=np.maximum(np.quantile(xyz,.999,axis=0),landmarks.max(0))+.07
     target=(lo+hi)/2;distance=2.5*float((hi-lo).max());cameras=[];sheet=Image.new('RGB',(12*192,6*212),'white')
     for row,elevation in enumerate([-15,10,35]):

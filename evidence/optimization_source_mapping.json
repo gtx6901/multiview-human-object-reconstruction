@@ -61,8 +61,8 @@
   },
   {
     "file": "research/interaction_20261017/fit_phased_helmet_all300.py",
-    "local_source_sha256": "9b4a52c8fc6d4b18268cee08646dcd0617e9b62b28ddabd7129bea7bbe5d8fb5",
-    "published_sha256": "d72b7e156d459f1df0dfca33f30f3e424e278b3c651e3564a5528e26a0362ca2"
+    "local_source_sha256": "1179cbee2a84199fe994a5c0919e903bb1bb2524b791370df39f778623e26a7b",
+    "published_sha256": "28f83957d70c9eb7ba34be5e09aed3cd9f27b75a99da9e1a5c0fd744bd7470c6"
   },
   {
     "file": "research/interaction_20261017/vote_helmet_shape_all300.py",
@@ -86,8 +86,8 @@
   },
   {
     "file": "research/interaction_20261017/bake_native_helmet_uv.py",
-    "local_source_sha256": "f25a1c58e22a3f1e05b8978becc304f91e0a97f0a967dd31e29212247c7886a2",
-    "published_sha256": "98c3db95ba5eadeabceaba21bafcdc5725d0aa153ad53c816029606ee17dad0c"
+    "local_source_sha256": "869b42d45695a75b179c27695d0a3714dc0b310627324739a19932f3e1f92d22",
+    "published_sha256": "4cdcb1d644f65442c918ce79c24e5988a0958f8ad040c279b2c7647d0fd876d3"
   },
   {
     "file": "research/interaction_20261017/audit_helmet_material_orientation.py",
@@ -101,8 +101,8 @@
   },
   {
     "file": "research/interaction_20261017/render_canonical_avatar.py",
-    "local_source_sha256": "df15ff593fde793cfbd93ce0753b958907280c488c5c81f9520b1a522bb2bb6f",
-    "published_sha256": "0a98a3fb3743e7d046659120da80d877d7c202b26d7eafec1005cede4db6e103"
+    "local_source_sha256": "21fc46cec496adb409c032bc1811e5e17aa6e494c3fab915068be6814ca495f8",
+    "published_sha256": "2965f8c837404abb132d49754f208877df69e5d16661ea9919b3ffabe43d81cd"
   },
   {
     "file": "research/interaction_20261017/fit_canonical_human_mesh.py",

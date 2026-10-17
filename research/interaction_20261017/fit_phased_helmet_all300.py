@@ -9,7 +9,7 @@ from scipy.spatial.transform import Rotation
 from pytorch3d.transforms import axis_angle_to_matrix,matrix_to_axis_angle
 from mesh_renderer import MeshRenderer
 p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_phased_all300_v1');p.add_argument('--steps',type=int,default=100);p.add_argument('--initial',default='helmet_initial_all300_v1');p.add_argument('--phase-motion');p.add_argument('--skip-coarse',action='store_true');p.add_argument('--material-loss-weight',type=float,default=0.);p.add_argument('--material-mesh');p.add_argument('--phase-priors',default='helmet_phase_priors_all300_v1');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--opening-direction-weight',type=float,default=0.);p.add_argument('--crop-observations',action='store_true');p.add_argument('--worn-rotation-cap-deg',type=float);p.add_argument('--worn-translation-cap',type=float)
-p.add_argument('--rgb-loss-weight',type=float,default=0.);p.add_argument('--rgb-texture');p.add_argument('--rgb-missing-penalty',type=float,default=.25,help='Fixed initial photo support;0 reproduces legacy variable-support loss');p.add_argument('--observation-frames',type=int,nargs='+');p.add_argument('--joint-head-avatar');p.add_argument('--joint-head-weight',type=float,default=.1);p.add_argument('--joint-head-face-anchors');p.add_argument('--joint-head-front-visibility',action='store_true');p.add_argument('--joint-head-lr',type=float,default=.01);options=p.parse_args()
+p.add_argument('--rgb-loss-weight',type=float,default=0.);p.add_argument('--rgb-texture');p.add_argument('--rgb-missing-penalty',type=float,default=.25,help='Fixed initial photo support;0 reproduces legacy variable-support loss');p.add_argument('--observation-frames',type=int,nargs='+');p.add_argument('--joint-head-avatar');p.add_argument('--joint-head-weight',type=float,default=.1);p.add_argument('--joint-head-face-anchors');p.add_argument('--joint-head-front-visibility',action='store_true');p.add_argument('--joint-head-lr',type=float,default=.01);p.add_argument('--hand-contact-avatar');p.add_argument('--hand-contact-weight',type=float,default=.03);options=p.parse_args()
 assert not (options.rgb_loss_weight and options.material_loss_weight),'Use real RGB or proxy material loss separately'
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4);cv2.setNumThreads(2)
 maskroot=ROOT/'sam2_all300_v1';observations=json.loads((maskroot/'report.json').read_text());assert observations['success']
@@ -169,6 +169,11 @@ def cost(R,t,ids):
             weight=confidence.float()*render['alpha'].detach();rgb_support_counts[ids]=confidence.sum((1,2)).detach()
             photo=((predicted-truth).abs().mean(-1)*weight).sum((1,2))/weight.sum((1,2)).clamp_min(1)
     return 1-iou+(options.material_loss_weight+options.rgb_loss_weight)*photo,iou,restore.sum((1,2)),photo
+hand_contact=None
+if options.hand_contact_avatar:
+    from hand_helmet_contact import HandHelmetContact
+    with torch.no_grad():R,t,_,_=trajectory()
+    hand_contact=HandHelmetContact(ROOT,options.hand_contact_avatar,vertices,faces,scale,R,t)
 # Coarse rotation search for phase representatives and the donning transition.
 # Never use held-out views here; this is the all8 main experiment.
 coarse=[];group=torch.tensor(Rotation.create_group('O').as_matrix(),device='cuda',dtype=torch.float32)
@@ -219,6 +224,7 @@ for step in range(options.steps+1):
     R,t,rr,tt=trajectory()
     regularization=2*(R[2:]-2*R[1:-1]+R[:-2]).square().mean()+1000*(t[2:]-2*t[1:-1]+t[:-2]).square().mean()+.002*rr.square().mean()+10*tt.square().mean()
     if joint_head is not None:regularization+=options.joint_head_weight*joint_head.face_loss()[0]
+    if hand_contact is not None:regularization+=options.hand_contact_weight*hand_contact.loss(R,t)
     if opening_normal is not None:
         worn=torch.zeros(300,dtype=torch.bool,device='cuda')
         for phase in phases:
@@ -246,6 +252,7 @@ with torch.no_grad():
     report['sources']=vars(options)
     if options.rgb_loss_weight:report['fixed_photo_support']={'enabled':options.rgb_missing_penalty>0,'reference_pixels':int(rgb_reference_support.sum()),'before_current_pixels':int(rgb_support_counts_before.sum()),'after_current_pixels':int(rgb_support_counts.sum()),'missing_penalty':options.rgb_missing_penalty,'scope':'Reference support captured after coarse initialization and fixed through motion updates. New loss denominator remains initial pixel count; soft mesh alpha/observed-UV confidence weights the missing-coverage penalty. Observations initially without RGB support remain unknown. Legacy penalty0 retains variable-support behavior. New metric protocol differs from earlier RGB trial.'}
     if joint_head is not None:report['joint_head']=joint_head.save(out)
+    if hand_contact is not None:report['hand_contact']=hand_contact.report(R,t)
     report['observed_frames']=sorted(set(frames))
     if options.observation_frames is not None:report['scope']='SELECTED-FRAME DIAGNOSTIC ONLY: saved300 motion is an initializer plus limited-frame fitting, NOT a full-action reconstruction. '+report['scope'].replace('every300 frame uses','selected frames use')
     if options.worn_rotation_cap_deg is not None or options.worn_translation_cap is not None:
