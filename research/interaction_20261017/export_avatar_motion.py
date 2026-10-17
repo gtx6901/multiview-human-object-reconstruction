@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 import sys,runpy,json,time,argparse
 ROOT=Path(__file__).resolve().parent;LHM=ROOT.parent/'lhmpp_20261016'
-parser=argparse.ArgumentParser();parser.add_argument('--out',default='avatar_motion180_211_v1');parser.add_argument('--poses',default='body_fused180_211_v1');parser.add_argument('--appearance-run');options=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('--out',default='avatar_motion180_211_v1');parser.add_argument('--poses',default='body_fused180_211_v1');parser.add_argument('--appearance-run');parser.add_argument('--shape-candidate',help='Conditional shape folder: beta/scale/translation propagated through actual upstream LHM shape blend and rest rig');options=parser.parse_args()
 sys.path.insert(0,str(LHM));sys.argv=[str(LHM/'load_model_probe.py'),'--name','../../interaction_20261017/model_load_'+options.out]
 scope=runpy.run_path(str(LHM/'load_model_probe.py'));model=scope['model']
 import torch
@@ -23,7 +23,12 @@ seed=ROOT.parent/'lhmpp_replay_seeded_a/runs'
 data_path=LHM/'runs'/options.appearance_run/'gaussian_attributes.pt' if options.appearance_run else seed/'decode_all8_v1/gaussian_attributes.pt'
 latent_path=LHM/'runs'/options.appearance_run/'latent.pt' if options.appearance_run else seed/'latent_all8_v2/latent.pt'
 data=move(torch.load(data_path,weights_only=True));latent=torch.load(latent_path,weights_only=True)['result']
-poses=move(torch.load(ROOT/options.poses/'pose_sequence.pt',weights_only=True));assert poses['betas'].abs().max()==0
+poses=move(torch.load(ROOT/options.poses/'pose_sequence.pt',weights_only=True))
+if options.shape_candidate:
+    shape=move(torch.load(ROOT/options.shape_candidate/'shape_candidate.pt',weights_only=True))
+    assert shape['translation_world'].shape==poses['translation_world'].shape
+    for key in ['betas','scale','translation_world']:poses[key]=shape[key]
+assert torch.isfinite(poses['betas']).all()
 model.renderer.cuda();model.renderer.device=torch.device('cuda');skinner=model.renderer.smplx_model
 with torch.inference_mode():
     query=data['query']['neutral_coords'][0]+data['attrs'][0]['offset_xyz'];N=len(query)
@@ -32,8 +37,16 @@ with torch.inference_mode():
     weights[fixed]=skinner.skinning_weight[fixed]
     neutral_to_zero=(weights@data['smplx']['transform_mat_neutral_pose'][0].reshape(-1,16)).reshape(N,4,4)
     zero=skinner.lbs(query[None],neutral_to_zero[None],torch.zeros(1,3,device='cuda'))[0]
+    # Upstream queries and voxel weights are deliberately beta-independent.
+    # LHM applies its dense shape directions AFTER mapping neutral to zero pose.
+    if poses['betas'].abs().max()>0:
+        from smplx.lbs import blend_shapes
+        zero=zero+blend_shapes(poses['betas'],skinner.shape_dirs)[0]
     rest=skinner.get_zero_pose_human(shape_param=poses['betas'],device=torch.device('cuda'),face_offset=None,joint_offset=None)
-    cached=torch.load(ROOT/'body_pose_v1/skeleton.pt',weights_only=True)['rest_joints'].cuda();rest_error=float((cached-rest).abs().max());assert rest_error<1e-6
+    from smplx_surface_landmarks import SMPLXSurfaceLandmarks
+    surface=SMPLXSurfaceLandmarks().cuda()
+    expected=surface.rest+torch.einsum('bl,jcl->bjc',poses['betas'],surface.joint_shapedirs)[0]
+    rest_error=float((expected-rest.reshape(55,3)).abs().max());assert rest_error<1e-6
     rig={'weights':weights.float(),'zero_coords':zero.float(),'neutral_to_zero':neutral_to_zero.float(),'rest_joints':rest.float(),'parents':skinner.smplx_layer.parents.cuda(),'neutral_rotation':data['attrs'][0]['rotation'].float(),**{k:data['attrs'][0][k].float() for k in ['opacity','scaling','shs']}}
     checks=[]
     for t in sorted(set([0,len(poses['frames'])//2,len(poses['frames'])-1])):
@@ -48,4 +61,6 @@ with torch.inference_mode():
     torch.save(bundle,out/'avatar.pt')
 report={'success':True,'gaussians':N,'frames':poses['frames'].tolist(),'checks_against_upstream':checks,'rest_joint_max_error':rest_error,'bytes':(out/'avatar.pt').stat().st_size,'seconds':time.time()-start,'scope':'Export/replay animation contract verified, not reconstructed motion or novel-view quality validation. Original complete LHM model used during export only; bundle replay requires tensor skinning and saved neural decoder, not reconstruction encoder.'}
 report['sources']={'poses':options.poses,'appearance_run':options.appearance_run,'gaussian_attributes':str(data_path),'latent':str(latent_path)}
+report['sources']['shape_candidate']=options.shape_candidate
+report['shared_beta_norm']=float(poses['betas'].norm())
 (out/'report.json').write_text(json.dumps(report,indent=2));print(json.dumps(report),flush=True)

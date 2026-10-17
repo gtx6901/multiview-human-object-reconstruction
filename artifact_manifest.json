@@ -94,7 +94,7 @@
     {
       "path": "evidence/optimization_source_mapping.json",
       "bytes": 11209,
-      "sha256": "24ea08167c16ab8ad0ff474fc0ae101ed3aeb9252d06695d9d7c18b65827652a"
+      "sha256": "baba840fa0388a326e000f92b94ca4f743274eff02a3a2f5c7ca1cc0af7ed37f"
     },
     {
       "path": "evidence/shared_features_20261018.json",
@@ -110,6 +110,11 @@
       "path": "evidence/shared_scene_20261018.json",
       "bytes": 1613,
       "sha256": "4b150aabc5b1deb76ca7e56be519b77e1bf510de1ac23c6b5fdb7c9b8d38efb5"
+    },
+    {
+      "path": "evidence/shared_shape_20261018.json",
+      "bytes": 5340,
+      "sha256": "f121dfe441965f3fc9c02c79d1db6304ae12bc4f57463fc4593beb90d388242e"
     },
     {
       "path": "evidence/source_snapshot_mapping.json",
@@ -222,9 +227,14 @@
       "sha256": "7673a625bc0c437f376602cc8a55cb498371ef9367982d95f0e0a2a8a124ecbc"
     },
     {
+      "path": "media/shared_shape_motion_comparison.jpg",
+      "bytes": 58024,
+      "sha256": "ae48de6f06dc247fd696e6afbc804ee4b9982c3a13f533eed95b9d6f6f6f7278"
+    },
+    {
       "path": "README.md",
-      "bytes": 7110,
-      "sha256": "42c1859665a47f0d345a268fdf1b9d823c5b550e6229cafafe1738d6da9a103d"
+      "bytes": 7882,
+      "sha256": "ca65393d3b9e0cff22dae022845d21d6ce89c591fe96587d4b9380fdaf17f456"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -317,6 +327,11 @@
       "sha256": "643a5580a2726e39fe0c79990bc775796291e1602c44ebd80ecb5cd9bf62db26"
     },
     {
+      "path": "research/interaction_20261017/calibrate_shared_camera_colors.py",
+      "bytes": 6279,
+      "sha256": "5a512ceb0859b1b30b1109152fb18c242b4ed435a78c617d6fe98f28ad9f9275"
+    },
+    {
       "path": "research/interaction_20261017/cari_runtime.py",
       "bytes": 1919,
       "sha256": "b9ebd7762b0359c326b6df37d5d58c77397352622f602b4488c235ed57532585"
@@ -343,8 +358,8 @@
     },
     {
       "path": "research/interaction_20261017/export_avatar_motion.py",
-      "bytes": 5675,
-      "sha256": "beea582f72f2e78e61b4b16b33326edf9c034cdeb0f8189c90ad1449fecb4533"
+      "bytes": 6669,
+      "sha256": "4838e24ec56fca191e94559a84cfb72cc28a51f888913ee2b0633100b0e45b7f"
     },
     {
       "path": "research/interaction_20261017/export_shared_scene.py",
@@ -390,6 +405,11 @@
       "path": "research/interaction_20261017/fit_pickup_object.py",
       "bytes": 6718,
       "sha256": "a3f08c6d957c880ee0f69bdfc6bc4fdaa36547ec4c66fd9b6ed9fe49dee8d6f9"
+    },
+    {
+      "path": "research/interaction_20261017/fit_shared_shape_motion.py",
+      "bytes": 5792,
+      "sha256": "73b30ba7dcf84377de80f9458e7ee0a28f2d171642e4417b106ecf052cbd7beb"
     },
     {
       "path": "research/interaction_20261017/fit_surface_body.py",
@@ -543,8 +563,8 @@
     },
     {
       "path": "research/interaction_20261017/refine_shared_human_features.py",
-      "bytes": 8084,
-      "sha256": "b1c554db434160bd110413c4d720148ed964c6a0b775a178bbb0a395d45b353e"
+      "bytes": 10030,
+      "sha256": "3ba918cd2aec9aa9729dac12b6f6dc2ce0ed6006cc40618e696b9c1b4115b463"
     },
     {
       "path": "research/interaction_20261017/render_canonical_avatar.py",

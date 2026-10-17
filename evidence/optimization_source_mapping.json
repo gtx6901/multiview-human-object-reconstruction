@@ -166,8 +166,8 @@
   },
   {
     "file": "research/interaction_20261017/export_avatar_motion.py",
-    "local_source_sha256": "8ae54fd4a119bb8d6f21915cbd9f1bdcdc4daf31bd3f06581d629031d1224a8d",
-    "published_sha256": "beea582f72f2e78e61b4b16b33326edf9c034cdeb0f8189c90ad1449fecb4533"
+    "local_source_sha256": "ae9449c5a2897733e09f134b7bad635be52768f480566aefe6795ae2e622eee2",
+    "published_sha256": "4838e24ec56fca191e94559a84cfb72cc28a51f888913ee2b0633100b0e45b7f"
   },
   {
     "file": "research/interaction_20261017/audit_lhm_body_visual_regression.py",
