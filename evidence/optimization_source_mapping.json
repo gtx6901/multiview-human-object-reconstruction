@@ -16,8 +16,8 @@
   },
   {
     "file": "research/interaction_20261017/render_dynamic_hybrid.py",
-    "local_source_sha256": "e8270b07122a072a632f8acf49f6630d50fb9191c0e3af8e45f5663538a0bd0e",
-    "published_sha256": "b9b58510cb7accede6d356267da01d3a7618d88fd39bbcf26add822624d0d317"
+    "local_source_sha256": "b4e4499e9928c6e1a6433c1ec633ef12df3e7388a51e1737ce4707c10457a0f9",
+    "published_sha256": "2b92487b82016c325016fee02156ed393ea1daa9107cc6ca26adebc59d16f750"
   },
   {
     "file": "research/interaction_20261017/mask_observations.py",

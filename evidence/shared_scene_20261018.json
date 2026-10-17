@@ -1,0 +1,59 @@
+{
+  "shared_scene_exact_replay": {
+    "success": true,
+    "frames": [
+      42,
+      180,
+      299
+    ],
+    "image_count": 30,
+    "max_u8_difference": 0
+  },
+  "rgb_pose_trial": {
+    "success": true,
+    "frames": 300,
+    "observations": 2116,
+    "history": [
+      {
+        "step": 0,
+        "loss": 0.39618016651365906,
+        "input_soft_iou": 0.8132877275488553,
+        "rgb_photometric_error": 0.1028232019824206
+      },
+      {
+        "step": 20,
+        "loss": 0.39456896617775783,
+        "input_soft_iou": 0.7882086598580186,
+        "rgb_photometric_error": 0.08921574312482303
+      },
+      {
+        "step": 40,
+        "loss": 0.39362404617713764,
+        "input_soft_iou": 0.7830725126320564,
+        "rgb_photometric_error": 0.08628648316702452
+      },
+      {
+        "step": 60,
+        "loss": 0.3890596144483425,
+        "input_soft_iou": 0.7842696522043873,
+        "rgb_photometric_error": 0.08461364923442921
+      }
+    ],
+    "adopted": false,
+    "reason": "Color error fell while silhouette IoU deteriorated; support also changes with pose."
+  },
+  "rotation_search": {
+    "success": true,
+    "interval": [
+      0,
+      180
+    ],
+    "candidate_count": 4096,
+    "boundary_step_degrees": {
+      "before_interval": null,
+      "after_interval": 8.622196068985316
+    },
+    "adopted": false
+  },
+  "scope": "Shared scene serialization and exact rendering replay only. Full-data human refinement, beta-consistent avatar regeneration, joint worn head/helmet fitting and contact optimization remain outstanding. No private scene assets or camera arrays published."
+}
