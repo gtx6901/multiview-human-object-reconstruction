@@ -10,6 +10,31 @@ ROOT=Path(__file__).resolve().parent
 sys.path[:0]=[str(ROOT/'deps'),str(ROOT.parent/'lhmpp_20261016/deps')]
 import torch
 
+def mesh_visible_opacities(means,opacities,K,W,mesh,depth_tolerance=0.):
+    """Cull Gaussian centers behind the nearest opaque mesh before decoding.
+
+    This is the center-depth approximation: an extended Gaussian can straddle
+    the mesh. It is not exact per-ray Gaussian/triangle interleaving.
+    Outside-image and unoccluded centers keep their original opacity.
+    """
+    pc=means@W[:3,:3].T+W[:3,3]
+    image=pc@K.T
+    uv=image[:,:2]/pc[:,2:3].clamp_min(1e-8)
+    height,width=mesh['depth'].shape
+    xy=torch.floor(uv+.5).long()
+    inside=(pc[:,2]>0)&(xy[:,0]>=0)&(xy[:,0]<width)&(xy[:,1]>=0)&(xy[:,1]<height)
+    x=xy[:,0].clamp(0,width-1);y=xy[:,1].clamp(0,height-1)
+    md=mesh['depth'][y,x]
+    blocked=inside&(mesh['hard_alpha'][y,x]>.5)&(md>0)&(pc[:,2]>md+depth_tolerance)
+    return opacities*~blocked.reshape(opacities.shape),blocked
+
+def composite_clipped_body(body_premul,body_alpha,mesh,background=None):
+    """Body decoded from mesh-clipped Gaussians, over the opaque mesh layer."""
+    if background is None:background=torch.ones(3,device=body_premul.device)
+    ma=mesh['alpha'];alpha=body_alpha+(1-body_alpha)*ma
+    rgb=body_premul+(1-body_alpha[...,None])*mesh['premultiplied_rgb']+(1-alpha[...,None])*background
+    return {'rgb':rgb,'alpha':alpha,'body_first':body_alpha>1e-5}
+
 def composite(body_premul,body_alpha,body_depth,mesh,background=None):
     if background is None:background=torch.ones(3,device=body_premul.device)
     ma=mesh['alpha'];mp=mesh['premultiplied_rgb'];md=mesh['depth']

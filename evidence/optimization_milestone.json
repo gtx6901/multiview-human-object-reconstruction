@@ -1,0 +1,113 @@
+{
+  "full300_render": {
+    "frames": 300,
+    "videos": [
+      {
+        "file": "source_vs_novel_30fps.mp4",
+        "decoded_frames": 300
+      },
+      {
+        "file": "source_vs_novel_slow10fps.mp4",
+        "decoded_frames": 300
+      },
+      {
+        "file": "novel_only_30fps.mp4",
+        "decoded_frames": 300
+      },
+      {
+        "file": "novel_only_slow10fps.mp4",
+        "decoded_frames": 300
+      }
+    ],
+    "occlusion": "Gaussian-center clipping before feature rasterization/decoding",
+    "fitted_hands": true
+  },
+  "quality_acceptance": false,
+  "strict_heldout_evaluation_complete": false,
+  "backpack_reconstruction_complete": false,
+  "stock_official_blender_addon_import_complete": false,
+  "scope": "Current generated color video and static asset previews are research candidates. No raw footage, calibration, licensed model arrays/OBJ/BLEND/GLB or weights included.",
+  "material_pose": {
+    "mean_input_soft_iou_before": 0.7768359780311584,
+    "mean_input_soft_iou_after": 0.7647077441215515,
+    "material_class_error_before": 0.10778742283582687,
+    "material_class_error_after": 0.06479982286691666
+  },
+  "canonical_mesh": {
+    "mean_synthetic_soft_iou_before": 0.8189668655395508,
+    "mean_synthetic_soft_iou_after": 0.9031143188476562,
+    "canonical_inverted_triangles": 0,
+    "frozen_face_hand_vertices": 6643
+  },
+  "static_glb": {
+    "success": true,
+    "max_roundtrip_bbox_error": 1.6391277313232422e-07,
+    "obj_import_counts": {
+      "vertices": 10475,
+      "faces": 20908,
+      "uv_loops": 62724
+    },
+    "glb_reimport_counts": {
+      "vertices": 11313,
+      "faces": 20908
+    }
+  },
+  "animated_glb": {
+    "success": true,
+    "blender_version": "4.5.3 LTS",
+    "frames": 300,
+    "bones": 55,
+    "pose_corrective_shape_keys": 486,
+    "gltf_nonnegative_corrective_targets": 714,
+    "gltf_corrective_weight_range": [
+      0,
+      1
+    ],
+    "cloth_offset_shape_key": true,
+    "original_lbs_checks": [
+      {
+        "frame": 0,
+        "max_original_lbs_vertex_error": 1.5362114347536954e-06
+      },
+      {
+        "frame": 42,
+        "max_original_lbs_vertex_error": 1.5033381190044871e-06
+      },
+      {
+        "frame": 150,
+        "max_original_lbs_vertex_error": 1.6027582582455762e-06
+      },
+      {
+        "frame": 180,
+        "max_original_lbs_vertex_error": 1.4700554394950005e-06
+      },
+      {
+        "frame": 299,
+        "max_original_lbs_vertex_error": 1.6723856743045742e-06
+      }
+    ],
+    "glb_roundtrip_checks": [
+      {
+        "frame": 0,
+        "max_nearest_reference_vertex_error": 0.00015922306920401752
+      },
+      {
+        "frame": 42,
+        "max_nearest_reference_vertex_error": 0.00015281964442692697
+      },
+      {
+        "frame": 150,
+        "max_nearest_reference_vertex_error": 0.00013440022303257138
+      },
+      {
+        "frame": 180,
+        "max_nearest_reference_vertex_error": 0.00014143649605102837
+      },
+      {
+        "frame": 299,
+        "max_nearest_reference_vertex_error": 0.00012833815708290786
+      }
+    ],
+    "scope": "Custom conversion of the locally licensed original neutral SMPL-X NPZ, not stock official Blender model library. Original weights/rest joints and all486 pose correctives; fitted cloth offsets and fitted300-frame55-joint motion. All8-trained neural texture; no held-out quality claim. Local derived model only. Actual Blender armature/shape-key animation and GLB export/reimport checked at5 frames. OriginalBLEND retains486 signed pose correctives; GLB losslessly reparameterizes them as nonnegative positive/negative delta targets to avoid importer slider clamping. No stock official addon library import claimed; no global self-intersection/contact or independent novel-view quality acceptance."
+  }
+}

@@ -12,6 +12,11 @@
       "sha256": "a1a96aac4240953918888fcedb9da62134c23e56d958be72e2ace1227903bd5f"
     },
     {
+      "path": "docs/OPTIMIZATION_PROGRESS.md",
+      "bytes": 9124,
+      "sha256": "a24995423997af28f7548e90aa4dd533f7a3c011f6d9ceee13dc7c4de91b5099"
+    },
+    {
       "path": "docs/PROGRESS_20261017.md",
       "bytes": 7317,
       "sha256": "b82cb4bb4076250e209a3464fc86796bee7425a77c9d9b3656439aa2e6092fa0"
@@ -52,6 +57,16 @@
       "sha256": "1478c02106e86f68e79c7be753e0a15eb0abe1a9c8d92686d2355a6c5b66275f"
     },
     {
+      "path": "evidence/optimization_milestone.json",
+      "bytes": 3899,
+      "sha256": "b430d53ed64a5a9cefc6dd24a9a5cf0e6db73ad7c0c60fc7923c30673aa7fd90"
+    },
+    {
+      "path": "evidence/optimization_source_mapping.json",
+      "bytes": 8668,
+      "sha256": "a8a6741512bb23ed635a747c3bc22b49ecb7d7dfe0ba0fa2c11b841e6d093876"
+    },
+    {
       "path": "evidence/source_snapshot_mapping.json",
       "bytes": 13743,
       "sha256": "d1eb9a5c07ac24712a8cd12afc1c16de39ffdb4fe2bd8c9e5876f0f473749e8f"
@@ -70,6 +85,21 @@
       "path": "media/color_attempt_contact.jpg",
       "bytes": 63689,
       "sha256": "cf466180665d222bd78d162c403932486646349dd4f402b1841931ee3878ac81"
+    },
+    {
+      "path": "media/helmet_full300_color_candidate.jpg",
+      "bytes": 52818,
+      "sha256": "f7894d499f26b1bcfb323652e09973c66d0af9fbe94a9ad981a852e6c46dd607"
+    },
+    {
+      "path": "media/helmet_full300_color_candidate.mp4",
+      "bytes": 200301,
+      "sha256": "6ddeb319937e442974cea1a3dc60d103d39a73a41675f6408a848d7026a6f10b"
+    },
+    {
+      "path": "media/human_static_candidate.png",
+      "bytes": 443570,
+      "sha256": "fc75e7338223e0b084acc66a347d8e955fb3790e06ace5d1ba4e588bbf7dd4dd"
     },
     {
       "path": "media/pickup_inspection_color_attempt_30fps.mp4",
@@ -98,8 +128,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 2374,
-      "sha256": "0744ac2bc2217a4ff7f9dece104d2a0515fb41352ee8f31fb17311d3ea714948"
+      "bytes": 3137,
+      "sha256": "5eb23b8f180f58c5826c6f6a109ee0b84f53b4e5a92f5f61a8d9ae0886ec3f20"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -110,6 +140,11 @@
       "path": "research/interaction_20261017/audit_coconet_outputs.py",
       "bytes": 4875,
       "sha256": "e91276f8e15f3378dcb769633997cf1e356b0ec0ce092c6949f80dabacb035eb"
+    },
+    {
+      "path": "research/interaction_20261017/audit_helmet_material_orientation.py",
+      "bytes": 5882,
+      "sha256": "67c5084a983cc63faf3b139d3200be696bb3ab4c20ca74944e42b721e0c78300"
     },
     {
       "path": "research/interaction_20261017/audit_nlf_world_alignment.py",
@@ -123,8 +158,13 @@
     },
     {
       "path": "research/interaction_20261017/avatar_rig.py",
-      "bytes": 1121,
-      "sha256": "c044244406f240dafb6f95c9de05816a15b44015897e049dcb8ba0f4338b8cc2"
+      "bytes": 1854,
+      "sha256": "416a401c728b31a32923c398dc0d4165085f94ad32a6f89d8609f4c43962c4a0"
+    },
+    {
+      "path": "research/interaction_20261017/bake_canonical_human_uv.py",
+      "bytes": 7899,
+      "sha256": "40d22809eefd1ddf8f26e95b06b7bc79c6e9fbf37c4bb94fd2f9e78f1c057f71"
     },
     {
       "path": "research/interaction_20261017/bake_helmet_shortclip.py",
@@ -132,9 +172,29 @@
       "sha256": "af3786ea15d9661a632269d90f8c34f380da9444311dca5a868b9b12a6c4d751"
     },
     {
+      "path": "research/interaction_20261017/bake_native_helmet_uv.py",
+      "bytes": 13161,
+      "sha256": "6e11dff2d500fd89ad902667761e8c13b8d37b7f87da081520d5ba71daed47f5"
+    },
+    {
+      "path": "research/interaction_20261017/blender_human_animation.py",
+      "bytes": 7674,
+      "sha256": "15088a9a8ef5e114ee2ba29b711cfc02d38bdc2b2f1fa657cb3cc363af583ad0"
+    },
+    {
+      "path": "research/interaction_20261017/blender_human_static.py",
+      "bytes": 4778,
+      "sha256": "b13aa30a045ed1e4f6c1660736e53ce7a7357e2447b39452458e340fbb443a58"
+    },
+    {
       "path": "research/interaction_20261017/build_pickup_hull.py",
       "bytes": 4057,
       "sha256": "2e5e4f97395cd638bb1d9f73a504561788f3163cb830a64fd4854f3c10b3cd27"
+    },
+    {
+      "path": "research/interaction_20261017/cache_body_depth_all300.py",
+      "bytes": 4729,
+      "sha256": "02d7c02c5b46677d98b5b396d9a318035dc748748d10f6628ecc18b7883f1142"
     },
     {
       "path": "research/interaction_20261017/cari_runtime.py",
@@ -152,9 +212,24 @@
       "sha256": "6043e9fb3dd3541c8d87e75c14d0fd1d4fba803cc43555edb5a924cc9f28df3b"
     },
     {
+      "path": "research/interaction_20261017/fit_canonical_human_mesh.py",
+      "bytes": 9165,
+      "sha256": "c11d208f2726e442776a6b7a84f1934612fa883b97fd14ca40f24316d254c540"
+    },
+    {
+      "path": "research/interaction_20261017/fit_multiview_hand_pca.py",
+      "bytes": 7098,
+      "sha256": "658ecdd01b0816715e8efc97b33ebec98680ee92d90bc2df501dfa06ba5d7f65"
+    },
+    {
       "path": "research/interaction_20261017/fit_nlf_smplh.py",
       "bytes": 2879,
       "sha256": "fadfaddf573881ddcf332a0cfbe1b5201585c0fd915c4670bf80d7e2e95c422b"
+    },
+    {
+      "path": "research/interaction_20261017/fit_phased_helmet_all300.py",
+      "bytes": 14698,
+      "sha256": "fea744c0402eb3cb4be9d5dbb5c50405672bc85215a82b4f2058e38ca99ac8df"
     },
     {
       "path": "research/interaction_20261017/fit_pickup_object.py",
@@ -162,19 +237,54 @@
       "sha256": "a3f08c6d957c880ee0f69bdfc6bc4fdaa36547ec4c66fd9b6ed9fe49dee8d6f9"
     },
     {
+      "path": "research/interaction_20261017/fit_surface_body.py",
+      "bytes": 7988,
+      "sha256": "9740ac6af2786177522ef688a4addc31dbbc3b7975f14e6863641bd283756f65"
+    },
+    {
       "path": "research/interaction_20261017/fuse_body_shortclip.py",
       "bytes": 6586,
       "sha256": "e9d7df39e24d9d6482109f66424c020f002d847cd867fefc0debd1f477af9868"
     },
     {
+      "path": "research/interaction_20261017/helmet_texture_sampling.py",
+      "bytes": 3615,
+      "sha256": "51a2e63b0a7121ddcd76cc0832df330b18a21ecb59774882b2a1209166af7496"
+    },
+    {
       "path": "research/interaction_20261017/hybrid_compositor.py",
-      "bytes": 3496,
-      "sha256": "3657b0fe4eaf8f926b5a3117683b4e506264e05e0a1da20ef238e91deda6179e"
+      "bytes": 4807,
+      "sha256": "6b5e5b2a2b243f4b01999a254ad12f9f0fcc3b369608f9d66df2264a33ffeeea"
+    },
+    {
+      "path": "research/interaction_20261017/infer_lhm_appearance_subset.py",
+      "bytes": 3589,
+      "sha256": "bd6c15a497c933b3bd9cc64b6fab19eadb317f34e7da213599afd418a5f8eb97"
+    },
+    {
+      "path": "research/interaction_20261017/initialize_heldout_body.py",
+      "bytes": 4609,
+      "sha256": "f74164c0af44a2347afea4cb51b6d6cbd14b97919bff7361bfd95856a44d261a"
+    },
+    {
+      "path": "research/interaction_20261017/initialize_material_helmet_pose.py",
+      "bytes": 3887,
+      "sha256": "05ff0fd32c8265b959249cfd4f0fa2c8bc94df8c7f434ba0dccad212161ff4ba"
+    },
+    {
+      "path": "research/interaction_20261017/inspect_backpack_sources.py",
+      "bytes": 1925,
+      "sha256": "a8d52c61ee7478996d93fca9734ce0b303d99d4a039fc4ad021930262d0451ea"
     },
     {
       "path": "research/interaction_20261017/inspect_pickup_anchors.py",
       "bytes": 2522,
       "sha256": "1d8f4ed53cf927cd044be33066a4bfe81959f9cf091e17906680e20f6bd7c7c8"
+    },
+    {
+      "path": "research/interaction_20261017/make_helmet_shell.py",
+      "bytes": 7145,
+      "sha256": "a8b56a46d9377d15e304895161f2599478b13c0828758d092d6328e53d1d0edc"
     },
     {
       "path": "research/interaction_20261017/make_pickup_anchor_prompts.py",
@@ -187,9 +297,24 @@
       "sha256": "a7859262454617fa23818ecc38f0fa00227a9c413d2722ae71b9e8788c6ed9ac"
     },
     {
+      "path": "research/interaction_20261017/mask_observations.py",
+      "bytes": 2161,
+      "sha256": "d3855759aa59f29f37529732418049e5debb8be75ca27fc42f231726cf200a23"
+    },
+    {
       "path": "research/interaction_20261017/mesh_renderer.py",
-      "bytes": 4597,
-      "sha256": "934e313fcbb21dcae806a3aef3a5fc4d04a2f048de8dfd2a2a51d1697fab16bf"
+      "bytes": 6184,
+      "sha256": "9e2e2a811dcb4f5ef0a700bb2257fe0034fa2ff99afc8499fc05d44bc70c69a3"
+    },
+    {
+      "path": "research/interaction_20261017/observe_full_action.py",
+      "bytes": 7979,
+      "sha256": "feb814dda6ef598af0dbab833af09beb0d5b7e8ab449bfe57b359906328169f5"
+    },
+    {
+      "path": "research/interaction_20261017/prepare_blender_human_animation.py",
+      "bytes": 3228,
+      "sha256": "493500060a7f420a2646cbc537d48d2adc71888be91759cdb6b0bbb6d00da909"
     },
     {
       "path": "research/interaction_20261017/prepare_helmet.py",
@@ -212,14 +337,24 @@
       "sha256": "d5aee9541b5aa58f963f35ded762f68edd8a6b7f7e2ac9c4a5d37de26cd428ec"
     },
     {
+      "path": "research/interaction_20261017/render_canonical_avatar.py",
+      "bytes": 5375,
+      "sha256": "1c6cb4779bee7cebf3bf76095efcffa41980a934460ba153acb212b0f4528938"
+    },
+    {
       "path": "research/interaction_20261017/render_dynamic_hybrid.py",
-      "bytes": 7856,
-      "sha256": "02b0b98e0002e5ff5cc7fde61f076a6c6031e2f48131152c18e135327ffe51cd"
+      "bytes": 9516,
+      "sha256": "2ffb62215d8c2ae281ea6c9bb4ffbd0032d0e98cfa1caaeaa1af3e6df46be6dc"
     },
     {
       "path": "research/interaction_20261017/replay_coconet_batch.py",
       "bytes": 1843,
       "sha256": "12aa72029105a216c31233fff52a2cb58fefa93e2357a03006eca163f1b9e04a"
+    },
+    {
+      "path": "research/interaction_20261017/run_blender_human_static.py",
+      "bytes": 1121,
+      "sha256": "136d89e22285668fa7d37d4e55e26e4b7ddbc40116d26aef1dff4b6485c3a2cf"
     },
     {
       "path": "research/interaction_20261017/run_coconet_all8.py",
@@ -252,6 +387,11 @@
       "sha256": "de4fec1d95c8846559d450688860c63c6ee1b682e019d56040fca436dc9738fe"
     },
     {
+      "path": "research/interaction_20261017/segment_full_action_sam2.py",
+      "bytes": 7398,
+      "sha256": "a9b3ec0fab93fd935444eeaf7824f02afd00e842b12a4ec0dacce3170cbbc223"
+    },
+    {
       "path": "research/interaction_20261017/segment_helmet_prompts.py",
       "bytes": 3856,
       "sha256": "96686038d86a16ca79f537985502c0733be80ac100560a2e94ecbc561e444480"
@@ -267,14 +407,39 @@
       "sha256": "760e1ec3d549d1f29185e589e4dcdabe82dc7ad43bdb361decd6bf7fc01bdec6"
     },
     {
+      "path": "research/interaction_20261017/smplx_surface_landmarks.py",
+      "bytes": 4031,
+      "sha256": "8d430dae26e03899bb23347eb6869c95565e0c5cc1f19fbc7e2c66a34c70027b"
+    },
+    {
       "path": "research/interaction_20261017/track_pickup_helmet.py",
-      "bytes": 7871,
-      "sha256": "f6af58aed85acd6a499fcb701a164afeab34a93270c623e26d5b79b9e36f7567"
+      "bytes": 7708,
+      "sha256": "4518ac42b0e4f4c78207aca2fda596a0b3a455963e34f33fa02fa626dcf3d296"
     },
     {
       "path": "research/interaction_20261017/unidepth_runtime.py",
       "bytes": 1956,
       "sha256": "62aa91fad783c2d0c5d856fbccf785a0d6428996e98fdfd84f245be1943bf5f4"
+    },
+    {
+      "path": "research/interaction_20261017/unwrap_helmet_shell.py",
+      "bytes": 2864,
+      "sha256": "5788ae4e4322e26c33f1d3dec78c368d59ea40aedb4990306ccc6f82f8752ccd"
+    },
+    {
+      "path": "research/interaction_20261017/verify_batched_depth.py",
+      "bytes": 1925,
+      "sha256": "6abdc8b103b5e4172cca499e37538bc3a643f1cbaf0c279ba28b62b95cdccb90"
+    },
+    {
+      "path": "research/interaction_20261017/verify_uv_rendering.py",
+      "bytes": 1314,
+      "sha256": "e4bf82e0b7edb2ddb1241096f61244f804fa20607f72b019339ac6e2180facbc"
+    },
+    {
+      "path": "research/interaction_20261017/vote_helmet_shape_all300.py",
+      "bytes": 6858,
+      "sha256": "6d666c5390c855e366574a1a4e322718afa1101a411055fa4a8e0e2b9f35a045"
     },
     {
       "path": "research/lhmpp_20261016/checkpoint_config.json",

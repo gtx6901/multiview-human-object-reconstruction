@@ -6,6 +6,7 @@ ROOT=Path(__file__).resolve().parent;sys.path[:0]=[str(ROOT.parent/'lhmpp_202610
 import torch,numpy as np,cv2
 from PIL import Image,ImageDraw
 from mobile_sam import sam_model_registry,SamPredictor
+from mask_observations import preserve_components
 p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_track_pickup000_135_v1');p.add_argument('--extra-anchors');options=p.parse_args()
 torch.set_num_threads(4);start=time.time();out=ROOT/options.out;out.mkdir(exist_ok=False)
 data=ROOT/'helmet_pickup_inspect000_135_v1';meta=json.loads((data/'manifest.json').read_text());anchors=json.loads((ROOT/'pickup_anchor_masks_v3/report.json').read_text())['records']
@@ -20,9 +21,7 @@ if options.extra_anchors:
 model=sam_model_registry['vit_t'](checkpoint=str(ROOT/'vendor/MobileSAM/weights/mobile_sam.pt')).cuda().eval();predictor=SamPredictor(model)
 flow=cv2.DISOpticalFlow_create(cv2.DISOPTICAL_FLOW_PRESET_MEDIUM);records=[]
 def core(m):
-    m=cv2.morphologyEx(m.astype('uint8'),cv2.MORPH_OPEN,cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(5,5)))
-    n,lab,stats,_=cv2.connectedComponentsWithStats(m)
-    return lab==(1+np.argmax(stats[1:,cv2.CC_STAT_AREA])) if n>1 else m.astype(bool)
+    return preserve_components(m)
 def box(m):
     y,x=np.where(m);return np.array([x.min(),y.min(),x.max()+1,y.max()+1],dtype='float32')
 def gray(arr):return cv2.resize(cv2.cvtColor(arr,cv2.COLOR_RGB2GRAY),(512,384))

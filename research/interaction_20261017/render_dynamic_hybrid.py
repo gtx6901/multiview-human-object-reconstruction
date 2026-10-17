@@ -12,12 +12,14 @@ from accelerate import init_empty_weights
 from core.models.transformer_block.dpt_decoder import PatchDPT4DecoderOnly
 from avatar_rig import animate
 from mesh_renderer import MeshRenderer
-from hybrid_compositor import composite
+from hybrid_compositor import composite,mesh_visible_opacities,composite_clipped_body
 spec=importlib.util.spec_from_file_location('gsplat_cuda',os.environ["HOI_GSPLAT_EXTENSION"])
 backend=importlib.util.module_from_spec(spec);spec.loader.exec_module(backend);sys.modules['gsplat.csrc']=backend
 from gsplat import rasterization
 import imageio.v2 as imageio
-p=argparse.ArgumentParser();p.add_argument('out');p.add_argument('reference',nargs='?',default='NONE');p.add_argument('motion',nargs='?',default='helmet_pose180_211_v1');p.add_argument('mesh',nargs='?',default='helmet_colors180_211_v1');p.add_argument('--avatar',default='avatar_motion180_211_v1');p.add_argument('--data',default='helmet_contiguous180_211_v1');p.add_argument('--cameras',default='hybrid_frame30_v1/cameras.json');p.add_argument('--neutral-helmet',action='store_true');options=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('out');p.add_argument('reference',nargs='?',default='NONE');p.add_argument('motion',nargs='?',default='helmet_pose180_211_v1');p.add_argument('mesh',nargs='?',default='helmet_colors180_211_v1');p.add_argument('--avatar',default='avatar_motion180_211_v1');p.add_argument('--data',default='helmet_contiguous180_211_v1');p.add_argument('--cameras',default='hybrid_frame30_v1/cameras.json');p.add_argument('--neutral-helmet',action='store_true')
+p.add_argument('--occlusion',choices=['expected-depth','gaussian-center'],default='expected-depth')
+options=p.parse_args()
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time()
 reference=ROOT/options.reference
 def move(x):
@@ -30,6 +32,7 @@ decoder.transformer_block=torch.nn.Module();decoder.load_state_dict(bundle['deco
 rig=move(bundle['rig']);poses=move(bundle['poses']);features=bundle['features'].cuda().float();bg=bundle['background_embedding'][2].cuda().float()
 motion_source=ROOT/options.motion;mesh_source=ROOT/options.mesh
 motion=move(torch.load(motion_source/'sequence.pt',weights_only=True));mesh=move(torch.load(mesh_source/'mesh.pt',weights_only=True))
+assert torch.allclose(mesh['vertices_local'][mesh['faces'].long()],motion['vertices_local'][motion['faces'].long()],atol=1e-6),'Renderer geometry differs from fitted geometry'
 if options.neutral_helmet:
     import trimesh
     tm=trimesh.Trimesh(mesh['vertices_local'].cpu().numpy(),mesh['faces'].cpu().numpy(),process=False)
@@ -48,14 +51,20 @@ with torch.inference_mode():
     pics=[]
     for c in views:
         K=torch.tensor(c['K'],device='cuda',dtype=torch.float32);W=torch.tensor(c['W'],device='cuda',dtype=torch.float32)
-        color,alpha,_=rasterization(means=g['xyz'],quats=g['rotation'],scales=g['scaling'],opacities=g['opacity'].flatten(),colors=torch.cat([g['shs'].squeeze(1),features],1),viewmats=W[None],Ks=K[None],width=width,height=height,backgrounds=torch.cat([torch.ones(3,device='cuda'),bg])[None],packed=False,render_mode='RGB+ED',near_plane=.01,far_plane=100.,eps2d=.3)
-        with torch.autocast('cuda',dtype=torch.bfloat16):rgb,mask=decoder.predict_rgbs(None,color[0,...,3:-1].permute(2,0,1)[None],None,height,width)
-        ba=mask[0,0].float().squeeze()*(alpha[0,...,0]>.001)
         colors=mesh['colors'].float()
         if options.neutral_helmet:
             normals=local_normals@motion['R'][t].float().T;center=-W[:3,:3].T@W[:3,3];light=torch.nn.functional.normalize(center-world,dim=1);diffuse=(normals*light).sum(1).clamp_min(0);colors=(.65*(.4+.6*diffuse))[:,None].expand(-1,3)
-        mr=renderer(world,mesh['faces'],K,W,width,height,colors)
-        result=composite(rgb[0,0].float()*ba[...,None],ba,color[0,...,-1],mr)
+        mr=renderer(world,mesh['faces'],K,W,width,height,colors,
+            uv=mesh.get('uv') if not options.neutral_helmet else None,
+            texture=mesh.get('texture') if not options.neutral_helmet else None)
+        opacities=g['opacity'].flatten()
+        if options.occlusion=='gaussian-center':
+            opacities,blocked=mesh_visible_opacities(g['xyz'],opacities,K,W,mr)
+        color,alpha,_=rasterization(means=g['xyz'],quats=g['rotation'],scales=g['scaling'],opacities=opacities,colors=torch.cat([g['shs'].squeeze(1),features],1),viewmats=W[None],Ks=K[None],width=width,height=height,backgrounds=torch.cat([torch.ones(3,device='cuda'),bg])[None],packed=False,render_mode='RGB+ED',near_plane=.01,far_plane=100.,eps2d=.3)
+        with torch.autocast('cuda',dtype=torch.bfloat16):rgb,mask=decoder.predict_rgbs(None,color[0,...,3:-1].permute(2,0,1)[None],None,height,width)
+        ba=mask[0,0].float().squeeze()*(alpha[0,...,0]>.001)
+        if options.occlusion=='gaussian-center':result=composite_clipped_body(rgb[0,0].float()*ba[...,None],ba,mr)
+        else:result=composite(rgb[0,0].float()*ba[...,None],ba,color[0,...,-1],mr)
         assert torch.isfinite(result['rgb']).all()
         arr=np.uint8(result['rgb'].cpu().numpy().clip(0,1)*255);pic=Image.fromarray(arr)
         filename=f'{frame:04d}_{c["label"]}.png';pic.save(out/filename)
@@ -83,4 +92,13 @@ video_checks=[]
 for name in ['source_vs_novel_30fps.mp4','source_vs_novel_slow10fps.mp4','novel_only_30fps.mp4','novel_only_slow10fps.mp4']:
     reader=imageio.get_reader(str(out/name),format='FFMPEG');count=sum(1 for _ in reader);reader.close();assert count==len(poses['frames']);video_checks.append({'file':name,'decoded_frames':count})
 report={'success':True,'helmet_material':'neutral gray plus synthetic headlight; geometry diagnostic only' if options.neutral_helmet else 'observed vertex colors plus gray for unobserved','object_motion_source':str(motion_source),'object_mesh_source':str(mesh_source),'frames':poses['frames'].tolist(),'seconds':time.time()-start,'real_cameras_used_in_body_fitting':8,'novel_fixed_cameras':len(novel),'records':records,'replay_checks':checks,'videos':video_checks,'scope':'Continuous sampled original-time frames, shared all8-fitted body and candidate object poses; object observed-view coverage detailed in its source report. Fixed original Gaussian appearance and zero finger articulation. Approximate Gaussian expected-depth compositing. Candidate geometry remains unaccepted; see object source report for method and limits. No CoCoNet predictions used or full-action completion claimed.'}
+report['occlusion_method']=options.occlusion
+if 'texture' in mesh and not options.neutral_helmet:
+    report['helmet_material']='Baked native-frame multiview UV RGB appearance; see source texture report for measured/inferred coverage and limitations'
+report['fitted_hand_fields_present']=all(k in poses for k in ['left_hand_pose','right_hand_pose'])
+if report['fitted_hand_fields_present']:
+    report['scope']=report['scope'].replace('zero finger articulation','saved fitted finger articulation')
+if options.occlusion=='gaussian-center':
+    report['scope']=report['scope'].replace('Approximate Gaussian expected-depth compositing.','Gaussian-center depth clipping before feature rasterization and neural decoding.')
+    report['scope']+=' Gaussian-center clipping precedes feature rasterization/decoding; extended splats and decoder boundaries remain approximate. Not evidence of correct physical contact.'
 (out/'report.json').write_text(json.dumps(report,indent=2));print('complete',flush=True)
