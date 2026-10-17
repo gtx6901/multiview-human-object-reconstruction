@@ -61,18 +61,18 @@
   },
   {
     "file": "research/interaction_20261017/fit_phased_helmet_all300.py",
-    "local_source_sha256": "d956110e33133bb39a9912799cbdfa14ca91cdb3793ea12a4df7cb1d91726a07",
-    "published_sha256": "fefc823c20d6d8f1fb187fb82fc21e3034dc3fefe3fbd3d974cc58443b812598"
+    "local_source_sha256": "de60df5bab1ff08772c5c738521fbcdef95f0104764efb51c4ac37123a75e741",
+    "published_sha256": "b5fb304f7922ec9d2e3ab7a411005bd1db2b7a3a2a65bc057f9f56bcc16d1af9"
   },
   {
     "file": "research/interaction_20261017/vote_helmet_shape_all300.py",
-    "local_source_sha256": "314fe7fbf87e1bb78d033e1ecccea627dcbe0b8da446967d065d47ba5efc8504",
-    "published_sha256": "6d666c5390c855e366574a1a4e322718afa1101a411055fa4a8e0e2b9f35a045"
+    "local_source_sha256": "ee4a864fe5b322e82f602a3ef37fcf0d52f62c72c86bf9a62ef2fc0f0b741f3b",
+    "published_sha256": "b70905c7db5b41856a9d5c3c0ae52edc2afaec21b92c5ad38487c0575b56be23"
   },
   {
     "file": "research/interaction_20261017/make_helmet_shell.py",
-    "local_source_sha256": "54302738fe6a685874aaf772ed8915cdc4b8ebeb8ef0f208c4d969b182eae181",
-    "published_sha256": "a8b56a46d9377d15e304895161f2599478b13c0828758d092d6328e53d1d0edc"
+    "local_source_sha256": "af2262fc7c77220cb303ade6f1cc73b3ffcfe36a8b00c4c46046423a423ccf26",
+    "published_sha256": "a2e6fc1254b29f8c66466dd870f076eb08481fd97a3c99fbaacb476a5e0e6efc"
   },
   {
     "file": "research/interaction_20261017/unwrap_helmet_shell.py",
@@ -181,8 +181,8 @@
   },
   {
     "file": "research/interaction_20261017/fit_lhm_head_from_multiview_faces.py",
-    "local_source_sha256": "6ad61ef49685f3f26bb20d07869e8b8b1475d1892d187630762cb625e36a43c3",
-    "published_sha256": "4f7fd58bdd71ffa278dfb69898c4dc8dd23c67b25e597653b78ac6a7955d4878"
+    "local_source_sha256": "35c986a1e45bfd5150e7afd5abf707ed359bcb1b804e4fdd40acae4828ab8396",
+    "published_sha256": "9443da831559eff373be1dccb36294914b270829ff890b611c4426b2d0cebc44"
   },
   {
     "file": "research/interaction_20261017/prepare_face_head_helmet_priors.py",

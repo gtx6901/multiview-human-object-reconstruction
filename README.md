@@ -3,6 +3,7 @@
 
 - [按更正后三张图推进的当前进度](docs/OPTIMIZATION_PROGRESS.md)
 - [完整300帧LHM++候选视频](media/helmet_full300_lhm_head_candidate.mp4)
+- [完整300帧慢速版（10fps）](media/helmet_full300_lhm_head_candidate_slow10fps.mp4)
 - [同外观、同机位的头部姿态前后对照](media/lhm_head_pose_comparison.jpg)
 - [原LHM++人体外观保持证据](evidence/lhm_body_preservation.json)
 - [机器可读优化证据](evidence/optimization_milestone.json)

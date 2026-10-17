@@ -8,15 +8,17 @@ from PIL import Image
 from scipy.spatial.transform import Rotation
 from pytorch3d.transforms import axis_angle_to_matrix,matrix_to_axis_angle
 from mesh_renderer import MeshRenderer
-p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_phased_all300_v1');p.add_argument('--steps',type=int,default=100);p.add_argument('--initial',default='helmet_initial_all300_v1');p.add_argument('--phase-motion');p.add_argument('--skip-coarse',action='store_true');p.add_argument('--material-loss-weight',type=float,default=0.);p.add_argument('--material-mesh');p.add_argument('--phase-priors',default='helmet_phase_priors_all300_v1');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--opening-direction-weight',type=float,default=0.);options=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_phased_all300_v1');p.add_argument('--steps',type=int,default=100);p.add_argument('--initial',default='helmet_initial_all300_v1');p.add_argument('--phase-motion');p.add_argument('--skip-coarse',action='store_true');p.add_argument('--material-loss-weight',type=float,default=0.);p.add_argument('--material-mesh');p.add_argument('--phase-priors',default='helmet_phase_priors_all300_v1');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--opening-direction-weight',type=float,default=0.);p.add_argument('--crop-observations',action='store_true');options=p.parse_args()
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4);cv2.setNumThreads(2)
 maskroot=ROOT/'sam2_all300_v1';observations=json.loads((maskroot/'report.json').read_text());assert observations['success']
 meta=json.loads((ROOT/'helmet_native000_299_v1/manifest.json').read_text());initial=torch.load(ROOT/options.initial/'sequence.pt',weights_only=True)
 phaseinfo=json.loads((ROOT/options.phase_priors/'report.json').read_text());anchor=torch.load(ROOT/options.phase_priors/'anchors.pt',weights_only=True)
 vertices=initial['vertices_local'].cuda();faces=initial['faces'].cuda();scale=initial['logscale'].exp().cuda();renderer=MeshRenderer();width,height=256,192
+if options.crop_observations:width=height=256
 A=np.array([[.125,0,-.4375],[0,.125,-.4375],[0,0,1.]])
 Ks=torch.tensor(np.array([A@np.array(v['K']) for v in meta['views']]),device='cuda',dtype=torch.float32);Ws=torch.tensor([v['W'] for v in meta['views']],device='cuda',dtype=torch.float32)
 records={(r['serial'],r['frame']):r for r in observations['records']};frames=[];views=[];labels=[];eligible=[];bodydepth=[];bodyalpha=[];photo_targets=[];photo_confidence=[]
+observation_K=[];crop_records=[]
 material_colors=None;opening_normal=None
 if options.material_loss_weight:
     assert options.material_mesh
@@ -27,25 +29,39 @@ if options.material_loss_weight:
 for vi,v in enumerate(meta['views']):
     cache=np.load(ROOT/options.body_depth/f"{v['serial']}.npz");bd=cache['depth'];ba=cache['alpha'];hand=cache['hand_unknown']
     assert np.allclose(cache['K'],Ks[vi].cpu().numpy()) and np.allclose(cache['W'],Ws[vi].cpu().numpy())
-    valid=cv2.resize(np.asarray(Image.open(ROOT/'helmet_native000_299_v1'/v['serial']/'valid.png')),(width,height),interpolation=cv2.INTER_NEAREST)>127
+    valid_native=np.asarray(Image.open(ROOT/'helmet_native000_299_v1'/v['serial']/'valid.png'))
+    valid=cv2.resize(valid_native,(256,192),interpolation=cv2.INTER_NEAREST)>127
     for f in range(300):
         r=records[(v['serial'],f)]
         if not r['mask']:continue
-        lab=cv2.resize(np.asarray(Image.open(maskroot/r['labels'])),(width,height),interpolation=cv2.INTER_NEAREST)
+        rawlab=np.asarray(Image.open(maskroot/r['labels']));rawperson=np.asarray(Image.open(maskroot/r['person_mask']));rawobj=np.asarray(Image.open(maskroot/r['mask']))
+        if options.crop_observations:
+            roi_bounds=np.array(r['roi_xyxy'],dtype=float);extent=max(roi_bounds[2:]-roi_bounds[:2]);assert extent>0
+            origin=(roi_bounds[:2]+roi_bounds[2:])/2-extent/2;s=width/extent
+            C=np.array([[s,0,-s*origin[0]+.5*s-.5],[0,s,-s*origin[1]+.5*s-.5],[0,0,1.]])
+            def warp_native(image,border=0,mode=cv2.INTER_NEAREST):return cv2.warpAffine(image,C[:2],(width,height),flags=mode,borderMode=cv2.BORDER_CONSTANT,borderValue=border)
+            def warp_cache(image):return cv2.warpAffine(image,(C@np.linalg.inv(A))[:2],(width,height),flags=cv2.INTER_NEAREST,borderMode=cv2.BORDER_CONSTANT,borderValue=0)
+            lab=warp_native(rawlab,255);person=warp_native(rawperson)>127;obj=warp_native(rawobj)>127;currentvalid=warp_native(valid_native)>127
+            bdepth=warp_cache(bd[f]);balpha=warp_cache(ba[f]);hunknown=warp_cache(hand[f]);native_roi=np.zeros_like(valid_native);x0,y0,x1,y1=roi_bounds
+            native_roi[max(0,int(np.floor(y0))):min(1536,int(np.ceil(y1))),max(0,int(np.floor(x0))):min(2048,int(np.ceil(x1)))]=1;roi=warp_native(native_roi)>0
+            guard=int(np.ceil(8*s));boundary_guard=cv2.dilate(obj.astype('uint8'),np.ones((2*guard+1,2*guard+1),np.uint8))>0;currentK=C@np.array(v['K'])
+        else:
+            lab=cv2.resize(rawlab,(width,height),interpolation=cv2.INTER_NEAREST);person=cv2.resize(rawperson,(width,height),interpolation=cv2.INTER_NEAREST)>127;obj=cv2.resize(rawobj,(width,height),interpolation=cv2.INTER_NEAREST)>127
+            currentvalid=valid;bdepth=bd[f];balpha=ba[f];hunknown=hand[f];boundary_guard=cv2.dilate(obj.astype('uint8'),np.ones((3,3),np.uint8))>0
+            roi=np.zeros_like(valid);x0,y0,x1,y1=np.array(r['roi_xyxy'])*.125;roi[max(0,int(np.floor(y0))):min(height,int(np.ceil(y1))),max(0,int(np.floor(x0))):min(width,int(np.ceil(x1)))]=True;currentK=Ks[vi].cpu().numpy()
         if (lab==1).sum()<10:continue
-        person=cv2.resize(np.asarray(Image.open(maskroot/r['person_mask'])),(width,height),interpolation=cv2.INTER_NEAREST)>127
-        obj=cv2.resize(np.asarray(Image.open(maskroot/r['mask'])),(width,height),interpolation=cv2.INTER_NEAREST)>127
-        boundary_guard=cv2.dilate(obj.astype('uint8'),np.ones((3,3),np.uint8))>0
-        roi=np.zeros_like(valid);x0,y0,x1,y1=np.array(r['roi_xyxy'])*.125
-        roi[max(0,int(np.floor(y0))):min(height,int(np.ceil(y1))),max(0,int(np.floor(x0))):min(width,int(np.ceil(x1)))]=True
-        restore=(lab==255)&person&~boundary_guard&(hand[f]==0)&valid&roi&(ba[f]>0)
-        frames.append(f);views.append(vi);labels.append(lab);eligible.append(restore);bodydepth.append(bd[f]);bodyalpha.append(ba[f])
+        restore=(lab==255)&person&~boundary_guard&(hunknown==0)&currentvalid&roi&(balpha>0)
+        frames.append(f);views.append(vi);labels.append(lab);eligible.append(restore);bodydepth.append(bdepth);bodyalpha.append(balpha);observation_K.append(currentK)
+        if options.crop_observations:crop_records.append({'serial':v['serial'],'frame':f,'native_origin':origin.tolist(),'native_square_extent':float(extent),'native_to_crop':C.tolist(),'foreground_crop_pixels':int((lab==1).sum())})
         if options.material_loss_weight:
-            rgb=cv2.resize(np.asarray(Image.open(ROOT/'helmet_native000_299_v1'/v['serial']/f'{f:04d}.png').convert('RGB')),(width,height),interpolation=cv2.INTER_AREA).astype('float32')/255
+            native_rgb=np.asarray(Image.open(ROOT/'helmet_native000_299_v1'/v['serial']/f'{f:04d}.png').convert('RGB'))
+            rgb=(warp_native(native_rgb,0,cv2.INTER_LINEAR) if options.crop_observations else cv2.resize(native_rgb,(width,height),interpolation=cv2.INTER_AREA)).astype('float32')/255
             luminance=rgb@np.array([.2126,.7152,.0722]);white=max(.6,float(np.quantile(luminance[lab==1],.95)));normalized=luminance/white
-            photo_targets.append(normalized>.7);photo_confidence.append((lab==1)&((normalized>.7)|(normalized<.2))&(hand[f]==0))
+            photo_targets.append(normalized>.7);photo_confidence.append((lab==1)&((normalized>.7)|(normalized<.2))&(hunknown==0))
     print('prepared masks/depth',v['serial'],flush=True)
 labels=torch.tensor(np.array(labels));eligible=torch.tensor(np.array(eligible));bodydepth=torch.tensor(np.array(bodydepth));N=len(frames)
+observation_K=torch.tensor(np.array(observation_K),device='cuda',dtype=torch.float32)
+if crop_records:(out/'observation_crops.json').write_text(json.dumps(crop_records,indent=2))
 if options.material_loss_weight:photo_targets=torch.tensor(np.array(photo_targets));photo_confidence=torch.tensor(np.array(photo_confidence))
 assert N>1500 and set(frames)==set(range(300))
 frameids=torch.tensor(frames,device='cuda');viewids=torch.tensor(views,device='cuda');R0=initial['R'].cuda();t0=initial['translation_world'].cuda();phases=phaseinfo['phases'];P=len(phases)
@@ -76,7 +92,7 @@ def trajectory():
 def cost(R,t,ids):
     vi=viewids[ids];f=frameids[ids]
     world=torch.einsum('bij,nj->bni',R[f],vertices)*scale+t[f,None]
-    render=renderer.depth_alpha_batch(world,faces,Ks[vi],Ws[vi],width,height,colors=material_colors)
+    render=renderer.depth_alpha_batch(world,faces,observation_K[ids],Ws[vi],width,height,colors=material_colors)
     lab=labels[ids.cpu()].cuda();restore_eligible=eligible[ids.cpu()].cuda();bd=bodydepth[ids.cpu()].cuda()
     # Only restore pixels confidently in front of the fitted body, away from hands/edges.
     restore=restore_eligible&(render['hard_alpha']>.5)&(render['depth']>0)&(render['depth']<bd-.01)
@@ -156,6 +172,8 @@ with torch.no_grad():
     np.savez_compressed(out/'observation_metrics.npz',frames=frames,views=views,before_iou=before,after_iou=after.cpu(),restored_negative_pixels=restored.cpu())
     report={'success':True,'frames':300,'observations':N,'seconds':time.time()-start,'history':history,'coarse_search':coarse,'phases':phases,'mean_input_soft_iou_before':float(before.mean()),'mean_input_soft_iou_after':float(after.mean()),'restored_negative_pixels':int(restored.sum()),'shared_relative_R':(axis_angle_to_matrix(pr)@relR).cpu().tolist(),'shared_relative_translation':(relt+pt).cpu().tolist(),'max_rotation_residual_rad':float(rr[attached].norm(dim=1).max()),'max_translation_residual':float(tt[attached].norm(dim=1).max()),'scope':'All8 main experiment; every300 frame uses real SAM2 candidate masks. Proposed stable-grasp/head-relative phases share transforms with small bounded per-frame residuals; other intervals free.24-way coarse rotations at selected phase/donning frames, original calibrated cameras/fixed shared scale. Tri-state silhouette loss restores half-weight negative evidence only when the predicted object is >.01 normalized-world units in front of a fitted bare-body mesh, away from hands and boundaries. Model/mask/rotation ambiguity remains. Before/after use same current mask/depth protocol after coarse initialization, not prior masks or held-out evaluation. Geometry remains old filled hull; no cavity/UV/texture or physical-contact accuracy claim.'}
     report['sources']=vars(options)
+    report['observation_render_resolution']=[width,height]
+    if options.crop_observations:report['scope']+=' Native-image helmet ROI observations mapped to256-square with explicit per-observation pixel-center affine K, preserving much more helmet silhouette detail than256-wide full-frame fitting. Body depth remains the existing coarse cache, conservatively resampled; no extra body-depth accuracy claimed. Before/after are THIS ROI protocol only, not directly comparable to full-frame IoU.'
     report['scope']=report['scope'].replace('Geometry remains old filled hull; no cavity/UV/texture or physical-contact accuracy claim.','Saved canonical geometry from the stated initialization is reused; candidate geometry/material provenance is in its source reports. No physical-contact accuracy claim.')
     if options.opening_direction_weight:report['scope']+=' Explicit worn-helmet opening-direction DESIGN prior follows fitted head-up and eye-forward directions; not a measured cavity or independently validated contact constraint.'
     if options.material_loss_weight:

@@ -29,6 +29,25 @@
   "scope": "Current generated color video and static asset previews are research candidates. No raw footage, calibration, licensed model arrays/OBJ/BLEND/GLB or weights included.",
   "current_video_body": "Original LHM++ Gaussian representation and neural decoder; never the distilled mesh.",
   "mesh_asset_branch": "Paused at user request; preserved as a historical local candidate.",
+  "current_work_status": "Optimization paused at user request for publication. Human appearance and full motion frozen to the user-accepted video; subsequent work targets helmet only.",
+  "helmet_native_roi_candidate": {
+    "mean_input_soft_iou_before": 0.8014791011810303,
+    "mean_input_soft_iou_after": 0.8658822774887085,
+    "material_class_error_before": 0.13164979219436646,
+    "material_class_error_after": 0.11786521971225739
+  },
+  "helmet_native_shape_candidate": {
+    "success": true,
+    "total_observations": 2120,
+    "vertices": 8002,
+    "faces": 16000,
+    "watertight": true,
+    "observation_resolution": [
+      2048,
+      1536
+    ]
+  },
+  "helmet_candidate_scope": "Native ROI pose/texture and native silhouette voting completed locally. The published full300 video precedes those latest helmet candidates; no new geometry quality acceptance or held-out result claimed.",
   "head_face_input_fit": {
     "before_face_input_error_native_px": 46.60280227661133,
     "after_face_input_error_native_px": 25.76266860961914,
