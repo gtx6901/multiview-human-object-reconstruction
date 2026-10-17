@@ -9,7 +9,7 @@ from scipy.spatial.transform import Rotation
 from pytorch3d.transforms import axis_angle_to_matrix,matrix_to_axis_angle
 from mesh_renderer import MeshRenderer
 p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_phased_all300_v1');p.add_argument('--steps',type=int,default=100);p.add_argument('--initial',default='helmet_initial_all300_v1');p.add_argument('--phase-motion');p.add_argument('--skip-coarse',action='store_true');p.add_argument('--material-loss-weight',type=float,default=0.);p.add_argument('--material-mesh');p.add_argument('--phase-priors',default='helmet_phase_priors_all300_v1');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--opening-direction-weight',type=float,default=0.);p.add_argument('--crop-observations',action='store_true');p.add_argument('--worn-rotation-cap-deg',type=float);p.add_argument('--worn-translation-cap',type=float)
-p.add_argument('--rgb-loss-weight',type=float,default=0.);p.add_argument('--rgb-texture');p.add_argument('--observation-frames',type=int,nargs='+');p.add_argument('--joint-head-avatar');p.add_argument('--joint-head-weight',type=float,default=.1);options=p.parse_args()
+p.add_argument('--rgb-loss-weight',type=float,default=0.);p.add_argument('--rgb-texture');p.add_argument('--rgb-missing-penalty',type=float,default=.25,help='Fixed initial photo support;0 reproduces legacy variable-support loss');p.add_argument('--observation-frames',type=int,nargs='+');p.add_argument('--joint-head-avatar');p.add_argument('--joint-head-weight',type=float,default=.1);options=p.parse_args()
 assert not (options.rgb_loss_weight and options.material_loss_weight),'Use real RGB or proxy material loss separately'
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4);cv2.setNumThreads(2)
 maskroot=ROOT/'sam2_all300_v1';observations=json.loads((maskroot/'report.json').read_text());assert observations['success']
@@ -88,6 +88,9 @@ if options.observation_frames is None:assert N>1500 and set(frames)==set(range(3
 else:assert N>=2 and set(frames)==set(options.observation_frames)
 frameids=torch.tensor(frames,device='cuda');viewids=torch.tensor(views,device='cuda');R0=initial['R'].cuda();t0=initial['translation_world'].cuda();phases=phaseinfo['phases'];P=len(phases)
 rgb_support_counts=torch.zeros(N,device='cuda',dtype=torch.int64)
+rgb_reference_support=torch.zeros_like(labels,dtype=torch.bool) if options.rgb_loss_weight else None
+capture_rgb_reference=False
+rgb_reference_ready=False
 phaseids=torch.full((300,),-1,device='cuda',dtype=torch.long);ar=torch.eye(3,device='cuda').expand(300,-1,-1).clone();at=torch.zeros(300,3,device='cuda')
 relR=[];relt=[]
 for i,phase in enumerate(phases):
@@ -155,9 +158,16 @@ def cost(R,t,ids):
         predicted=srgb_to_linear((render['premultiplied_rgb']/render['alpha'][...,None].clamp_min(1e-5)).clamp(0,1))
         confidence=photo_confidence[ids.cpu()].cuda()&(render['texture_confidence']>.75)&(render['alpha']>.9)
         confidence&=(bodyalpha[ids.cpu()].cuda()<.5)|(render['depth']<bd+.01)
-        weight=confidence.float()*render['alpha'].detach()
-        rgb_support_counts[ids]=confidence.sum((1,2)).detach()
-        photo=((predicted-truth).abs().mean(-1)*weight).sum((1,2))/weight.sum((1,2)).clamp_min(1)
+        if capture_rgb_reference:rgb_reference_support[ids.cpu()]=confidence.detach().cpu()
+        if options.rgb_missing_penalty>0 and rgb_reference_ready and not capture_rgb_reference:
+            reference=rgb_reference_support[ids.cpu()].cuda().float()
+            available=render['texture_confidence'].clamp(0,1)*render['alpha'].clamp(0,1)
+            available=available*((bodyalpha[ids.cpu()].cuda()<.5)|(render['depth']<bd+.01)).float()
+            weight=reference*available;rgb_support_counts[ids]=(weight>.75).sum((1,2)).detach()
+            photo=((predicted-truth).abs().mean(-1)*weight+options.rgb_missing_penalty*(reference-weight).clamp_min(0)).sum((1,2))/reference.sum((1,2)).clamp_min(1)
+        else:
+            weight=confidence.float()*render['alpha'].detach();rgb_support_counts[ids]=confidence.sum((1,2)).detach()
+            photo=((predicted-truth).abs().mean(-1)*weight).sum((1,2))/weight.sum((1,2)).clamp_min(1)
     return 1-iou+(options.material_loss_weight+options.rgb_loss_weight)*photo,iou,restore.sum((1,2)),photo
 # Coarse rotation search for phase representatives and the donning transition.
 # Never use held-out views here; this is the all8 main experiment.
@@ -192,7 +202,13 @@ def metrics():
     for ids in chunks:
         _,i,r,photo=cost(R,t,ids);ious.append(i);restores.append(r);photos.append(photo)
     return torch.cat(ious),torch.cat(restores),torch.cat(photos)
+capture_rgb_reference=bool(options.rgb_loss_weight)
 with torch.no_grad():before,restored_before,beforephoto=metrics();before=before.cpu();beforephoto=beforephoto.cpu()
+capture_rgb_reference=False
+rgb_reference_ready=bool(options.rgb_loss_weight)
+if options.rgb_loss_weight and options.rgb_missing_penalty>0:
+    with torch.no_grad():before,restored_before,beforephoto=metrics();before=before.cpu();beforephoto=beforephoto.cpu()
+rgb_support_counts_before=rgb_support_counts.detach().cpu().clone()
 opt=torch.optim.Adam([{'params':[rraw,pr],'lr':.018},{'params':[traw,pt],'lr':.0015}])
 if joint_head is not None:opt.add_param_group({'params':[joint_head.raw],'lr':.01})
 for step in range(options.steps+1):
@@ -228,6 +244,7 @@ with torch.no_grad():
     np.savez_compressed(out/'observation_metrics.npz',frames=frames,views=views,before_iou=before,after_iou=after.cpu(),restored_negative_pixels=restored.cpu())
     report={'success':True,'frames':300,'observations':N,'seconds':time.time()-start,'history':history,'coarse_search':coarse,'phases':phases,'mean_input_soft_iou_before':float(before.mean()),'mean_input_soft_iou_after':float(after.mean()),'restored_negative_pixels':int(restored.sum()),'shared_relative_R':(axis_angle_to_matrix(pr)@relR).cpu().tolist(),'shared_relative_translation':(relt+pt).cpu().tolist(),'max_rotation_residual_rad':float(rr[attached].norm(dim=1).max()),'max_translation_residual':float(tt[attached].norm(dim=1).max()),'scope':'All8 main experiment; every300 frame uses real SAM2 candidate masks. Proposed stable-grasp/head-relative phases share transforms with small bounded per-frame residuals; other intervals free.24-way coarse rotations at selected phase/donning frames, original calibrated cameras/fixed shared scale. Tri-state silhouette loss restores half-weight negative evidence only when the predicted object is >.01 normalized-world units in front of a fitted bare-body mesh, away from hands and boundaries. Model/mask/rotation ambiguity remains. Before/after use same current mask/depth protocol after coarse initialization, not prior masks or held-out evaluation. Geometry remains old filled hull; no cavity/UV/texture or physical-contact accuracy claim.'}
     report['sources']=vars(options)
+    if options.rgb_loss_weight:report['fixed_photo_support']={'enabled':options.rgb_missing_penalty>0,'reference_pixels':int(rgb_reference_support.sum()),'before_current_pixels':int(rgb_support_counts_before.sum()),'after_current_pixels':int(rgb_support_counts.sum()),'missing_penalty':options.rgb_missing_penalty,'scope':'Reference support captured after coarse initialization and fixed through motion updates. New loss denominator remains initial pixel count; soft mesh alpha/observed-UV confidence weights the missing-coverage penalty. Observations initially without RGB support remain unknown. Legacy penalty0 retains variable-support behavior. New metric protocol differs from earlier RGB trial.'}
     if joint_head is not None:report['joint_head']=joint_head.save(out)
     report['observed_frames']=sorted(set(frames))
     if options.observation_frames is not None:report['scope']='SELECTED-FRAME DIAGNOSTIC ONLY: saved300 motion is an initializer plus limited-frame fitting, NOT a full-action reconstruction. '+report['scope'].replace('every300 frame uses','selected frames use')

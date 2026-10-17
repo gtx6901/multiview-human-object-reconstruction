@@ -94,7 +94,7 @@
     {
       "path": "evidence/optimization_source_mapping.json",
       "bytes": 11209,
-      "sha256": "f186314ead638fccfc9f45be6357f4e9e975ebfc4d2f86435f5a1b6ffc9cd383"
+      "sha256": "048001779280c8fee6847f07275be223d731717a35cecd2eb76d289771af3d81"
     },
     {
       "path": "evidence/shared_features_20261018.json",
@@ -108,8 +108,8 @@
     },
     {
       "path": "evidence/shared_joint_20261018.json",
-      "bytes": 15004,
-      "sha256": "9c69a6c9693faecf88b6ff2d2800b2c3ad5ae0d53e8bfd725139fd563c342d29"
+      "bytes": 20311,
+      "sha256": "8171e2a58f40383373f78dbcc572ad06e1ed1ee1280a8509ff756e9bb8dbd04f"
     },
     {
       "path": "evidence/shared_scene_20261018.json",
@@ -232,6 +232,16 @@
       "sha256": "7673a625bc0c437f376602cc8a55cb498371ef9367982d95f0e0a2a8a124ecbc"
     },
     {
+      "path": "media/shared_joint_scene_all300_30fps.mp4",
+      "bytes": 1946019,
+      "sha256": "4ec60a85da159ccf8139e726f1aeccbab9475d0f5877b5b8cf8a06e88d8e0af2"
+    },
+    {
+      "path": "media/shared_joint_scene_all300_slow10fps.mp4",
+      "bytes": 3033836,
+      "sha256": "61ed52399b8e415e6becd0b0ad68c6dee4208d07f4b593304c38e3bbb43dc804"
+    },
+    {
       "path": "media/shared_linear_feature_comparison.jpg",
       "bytes": 73130,
       "sha256": "eb9ea9ee16faa7e71f40434543111169a96edbcc9934638fee67f6d7ecdcc760"
@@ -253,8 +263,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 9084,
-      "sha256": "78c63356d4e966243583ef4022545bd3bdcbbeb4495624dae9df6a459ed8af3d"
+      "bytes": 9853,
+      "sha256": "ff5eb5fe6fa5f8b170096129f1cd77bcc6fafd241a38f890815fe9121ce4db9a"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -275,6 +285,11 @@
       "path": "research/interaction_20261017/audit_backpack_epipolar.py",
       "bytes": 2514,
       "sha256": "b486e3aa706673ca0527c6fc1acb57bc46ef40b0e739514dde46a3abfb1df80b"
+    },
+    {
+      "path": "research/interaction_20261017/audit_backpack_learned_background.py",
+      "bytes": 4204,
+      "sha256": "fc5f1908eeb775213ae7c549653d1ec31392390ef8ef0bb9b079cb73e5a98571"
     },
     {
       "path": "research/interaction_20261017/audit_coconet_outputs.py",
@@ -428,8 +443,8 @@
     },
     {
       "path": "research/interaction_20261017/fit_phased_helmet_all300.py",
-      "bytes": 25295,
-      "sha256": "eed9a31c7fa9de6a94bd754b30f0ff7ed3c68aa76e1d90c7492e6cf06cff5fd0"
+      "bytes": 27395,
+      "sha256": "46905908a268f1965c5c943464136d8b23d762a3955dd0f8f66231887fe01914"
     },
     {
       "path": "research/interaction_20261017/fit_pickup_object.py",
@@ -528,8 +543,8 @@
     },
     {
       "path": "research/interaction_20261017/merge_joint_head_depth_cache.py",
-      "bytes": 2405,
-      "sha256": "8922c78c70a130a47fc8211c22a92d83755cb5c912198e195ddead70999aacb5"
+      "bytes": 2644,
+      "sha256": "7eece4906bb94a772f3e4b090287324b65225eca4d98a27094811a9b634be3b9"
     },
     {
       "path": "research/interaction_20261017/mesh_renderer.py",
@@ -745,6 +760,16 @@
       "path": "research/interaction_20261017/verify_batched_uv.py",
       "bytes": 1850,
       "sha256": "59d2f0f62e3e166635e0ae70e43a37771c35bfc044f9d6f57566cda2755d64b8"
+    },
+    {
+      "path": "research/interaction_20261017/verify_joint_scene.py",
+      "bytes": 2113,
+      "sha256": "a76c8db327ef505130363d33fe9900b5ff4fc04d3ebc11f18e464e39245cd7d3"
+    },
+    {
+      "path": "research/interaction_20261017/verify_rgb_fixed_support.py",
+      "bytes": 1719,
+      "sha256": "8bf2b11aca84b2f612b613a266924f8afe0c9c574bfacbbdd09e0d18b163b75f"
     },
     {
       "path": "research/interaction_20261017/verify_shaped_surface_landmarks.py",

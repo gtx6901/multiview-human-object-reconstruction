@@ -383,7 +383,181 @@
         "last_column_is_camera_center": 131.1231334095878
       }
     ],
-    "usable_static_background_pairs": 0
+    "usable_static_background_pairs": 0,
+    "learned_background_pairs": [
+      {
+        "cameras": [
+          "21305717",
+          "FCM21121415"
+        ],
+        "learned_matches": 50,
+        "usable": true,
+        "estimated_F_inliers": 23,
+        "provided_calibration_median_epi_px1024": 4.725748542381956
+      },
+      {
+        "cameras": [
+          "21305717",
+          "21305711"
+        ],
+        "learned_matches": 117,
+        "usable": true,
+        "estimated_F_inliers": 101,
+        "provided_calibration_median_epi_px1024": 3.0596740628298753
+      },
+      {
+        "cameras": [
+          "21305717",
+          "FCM22030167"
+        ],
+        "learned_matches": 58,
+        "usable": true,
+        "estimated_F_inliers": 27,
+        "provided_calibration_median_epi_px1024": 104.41209942540804
+      },
+      {
+        "cameras": [
+          "FCM21121415",
+          "FCM21121416"
+        ],
+        "learned_matches": 165,
+        "usable": true,
+        "estimated_F_inliers": 153,
+        "provided_calibration_median_epi_px1024": 96.17035763743614
+      },
+      {
+        "cameras": [
+          "FCM21121415",
+          "FCM22020159"
+        ],
+        "learned_matches": 58,
+        "usable": true,
+        "estimated_F_inliers": 51,
+        "provided_calibration_median_epi_px1024": 3.509566992571487
+      },
+      {
+        "cameras": [
+          "FCM21121415",
+          "FCM21121414"
+        ],
+        "learned_matches": 39,
+        "usable": true,
+        "estimated_F_inliers": 20,
+        "provided_calibration_median_epi_px1024": 196.97642477756006
+      },
+      {
+        "cameras": [
+          "FCM21121416",
+          "FCM22020159"
+        ],
+        "learned_matches": 75,
+        "usable": true,
+        "estimated_F_inliers": 45,
+        "provided_calibration_median_epi_px1024": 110.95229329300967
+      },
+      {
+        "cameras": [
+          "FCM22020159",
+          "21305711"
+        ],
+        "learned_matches": 59,
+        "usable": true,
+        "estimated_F_inliers": 38,
+        "provided_calibration_median_epi_px1024": 100.9910193511711
+      },
+      {
+        "cameras": [
+          "FCM22020159",
+          "FCM22020160"
+        ],
+        "learned_matches": 42,
+        "usable": true,
+        "estimated_F_inliers": 25,
+        "provided_calibration_median_epi_px1024": 46.69860188628181
+      },
+      {
+        "cameras": [
+          "FCM22020159",
+          "FCM22030167"
+        ],
+        "learned_matches": 211,
+        "usable": true,
+        "estimated_F_inliers": 186,
+        "provided_calibration_median_epi_px1024": 33.642627363286195
+      },
+      {
+        "cameras": [
+          "21305711",
+          "FCM21121414"
+        ],
+        "learned_matches": 66,
+        "usable": true,
+        "estimated_F_inliers": 47,
+        "provided_calibration_median_epi_px1024": 32.19313914364114
+      },
+      {
+        "cameras": [
+          "21305711",
+          "FCM22020160"
+        ],
+        "learned_matches": 83,
+        "usable": true,
+        "estimated_F_inliers": 67,
+        "provided_calibration_median_epi_px1024": 22.455099379446978
+      },
+      {
+        "cameras": [
+          "FCM21121414",
+          "FCM22020160"
+        ],
+        "learned_matches": 182,
+        "usable": true,
+        "estimated_F_inliers": 161,
+        "provided_calibration_median_epi_px1024": 46.4593704765661
+      },
+      {
+        "cameras": [
+          "FCM21121414",
+          "FCM22030167"
+        ],
+        "learned_matches": 256,
+        "usable": true,
+        "estimated_F_inliers": 241,
+        "provided_calibration_median_epi_px1024": 28.982291226213118
+      },
+      {
+        "cameras": [
+          "FCM22020160",
+          "FCM22030167"
+        ],
+        "learned_matches": 47,
+        "usable": true,
+        "estimated_F_inliers": 26,
+        "provided_calibration_median_epi_px1024": 106.61246868682952
+      }
+    ],
+    "learned_background_scope": "A second cached matcher produces candidate F-inlier sets, but reviewed matches concentrate on distant foliage and are potentially planar/repetitive; no replacement calibration accepted. Some provided-camera epipolar errors remain large on these sets."
   },
-  "scope": "Unadopted candidates. Linear feature result improves all8 input errors under its own fixed protocol; image tone still differs, and this is not independent novel-view truth. Joint head/helmet completed two inner fits with an intermediate actual-LHM depth refresh; updated scene still has shallow helmet geometry/texture problems. Each inner depth cache remains fixed. Backpack identity/crop review passed selected frames, but only101 of1683 possible3D body landmarks pass current screening; calibration/observation/sync ambiguity unresolved. No usable static-background SIFT pair at chosen threshold, so no claim of calibration root cause. Licensed scenes, original frames, calibration arrays and raw overlays stay private."
+  "scope": "Unadopted candidates. Linear feature result improves all8 input errors under its own fixed protocol; image tone still differs, and this is not independent novel-view truth. Joint head/helmet completed two inner fits with an intermediate actual-LHM depth refresh; updated scene still has shallow helmet geometry/texture problems. Each inner depth cache remains fixed. Backpack identity/crop review passed selected frames, but only101 of1683 possible3D body landmarks pass current screening; calibration/observation/sync ambiguity unresolved. No usable static-background SIFT pair at chosen threshold, so no claim of calibration root cause. Licensed scenes, original frames, calibration arrays and raw overlays stay private.",
+  "shared_joint_scene_verification": {
+    "success": true,
+    "canonical_rig_features_decoder_exactly_preserved": true,
+    "non_head_motion_exactly_preserved": true,
+    "before_worn_motion_exactly_preserved": true,
+    "frames": 300,
+    "decoded_video_frames": [
+      300,
+      300,
+      300,
+      300
+    ],
+    "scope": "Actual shared-scene independent load and saved tensor comparison against previously accepted LHM canonical appearance. Only neck/head motion during180..299 differs in human motion; helmet motion also refitted. All four render videos decode300frames. Does not certify helmet shape, contact, recovered appearance or novel-view quality."
+  },
+  "rgb_fixed_support_negative_case": {
+    "success": true,
+    "supported_observations": 23,
+    "reference_pixels": 98696,
+    "offscreen_photo_mean": 0.25,
+    "scope": "Actual selected-frame CUDA textured raster negative case after frozen support capture. Translating object1000world numerical units offscreen produces missing-support penalty.25 rather than zero RGB error. This verifies loss loophole correction only; no all-action pose or visual-quality claim."
+  }
 }

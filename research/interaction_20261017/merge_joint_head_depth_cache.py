@@ -1,12 +1,14 @@
 """Reuse only provably unchanged frames and splice freshly rendered worn depth."""
 import os
 from pathlib import Path
-import sys,json
+import sys,json,argparse
 ROOT=Path(__file__).resolve().parent;sys.path[:0]=[str(ROOT/'deps'),str(ROOT.parent/'lhmpp_20261016/deps')]
 import torch,numpy as np
-old=ROOT/'lhm_occlusion_all300_v1';fresh=ROOT/'lhm_joint_head_occlusion_worn_v1';out=ROOT/'lhm_joint_head_occlusion_all300_v1'
+p=argparse.ArgumentParser();p.add_argument('--updated-avatar',default='helmet_joint_head_all300_v1');p.add_argument('--fresh-cache',default='lhm_joint_head_occlusion_worn_v1');p.add_argument('--out',default='lhm_joint_head_occlusion_all300_v1');o=p.parse_args()
+old=ROOT/'lhm_occlusion_all300_v1';fresh=ROOT/o.fresh_cache;out=ROOT/o.out
 r=json.loads((fresh/'report.json').read_text());assert r['success'];out.mkdir(exist_ok=False)
-a=torch.load(ROOT/'body_head_faces_all300_v1/avatar.pt',weights_only=True);b=torch.load(ROOT/'helmet_joint_head_all300_v1/avatar.pt',weights_only=True)
+a=torch.load(ROOT/'body_head_faces_all300_v1/avatar.pt',weights_only=True);b=torch.load(ROOT/o.updated_avatar/'avatar.pt',weights_only=True)
+assert r['avatar_source']==o.updated_avatar
 def same(x,y):
  if isinstance(x,dict):return x.keys()==y.keys() and all(same(x[k],y[k]) for k in x)
  if isinstance(x,torch.Tensor):return torch.equal(x,y)
@@ -24,5 +26,5 @@ for p in sorted(old.glob('*.npz')):
   for key in ['depth','alpha','hand_unknown','depth_std','decoded_alpha']:
    assert len(d[key])==300 and len(n[key])==120;merged[key][ids]=n[key];assert np.array_equal(merged[key][:180],d[key][:180])
   np.savez_compressed(out/p.name,**merged);views.append(p.stem)
-report={'success':True,'frames':list(range(300)),'avatar_source':'helmet_joint_head_all300_v1','recomputed_frames':ids.tolist(),'views':views,'source_caches':[old.name,fresh.name],'unchanged_frame_asset_and_pose_checks':True,'scope':r['scope']+' Merged180..299 freshly rendered current worn-head depth;0..179 reused only after exact original/current rig, features, decoder and relevant pose comparisons. This is a visibility outer update, not new geometry truth or accepted helmet contact.'}
+report={'success':True,'frames':list(range(300)),'avatar_source':o.updated_avatar,'recomputed_frames':ids.tolist(),'views':views,'source_caches':[old.name,fresh.name],'unchanged_frame_asset_and_pose_checks':True,'scope':r['scope']+' Merged180..299 freshly rendered current worn-head depth;0..179 reused only after exact original/current rig, features, decoder and relevant pose comparisons. This is a visibility outer update, not new geometry truth or accepted helmet contact.'}
 (out/'report.json').write_text(json.dumps(report,indent=2));print('full current-head depth cache verified and merged')
