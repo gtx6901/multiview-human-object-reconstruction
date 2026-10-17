@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "frames": 136,
+  "novel_views": 2,
+  "real_qa_views": 8,
+  "real_qa_times": 3,
+  "exact_pngs": 296,
+  "maximum_uint8_difference": 0,
+  "decoded_video_frames": [
+    136,
+    136,
+    136,
+    136
+  ],
+  "scope": "Independent replay checks determinism/integrity, not geometric accuracy."
+}

@@ -1,0 +1,174 @@
+{
+  "success": true,
+  "source_cameras": 8,
+  "observations": 1088,
+  "nlf_predictions": 1088,
+  "body_mean_input_reprojection_px1024": 13.536927223205566,
+  "object_observed_masks": 474,
+  "object_unknown_masks": 614,
+  "object_observed_views_per_frame_min": 1,
+  "object_observed_views_per_frame_median": 3.0,
+  "object_temporal_carry_frames": [
+    7
+  ],
+  "object_mean_input_soft_visible_iou": 0.699636407637571,
+  "object_rotation_step_max_degrees": 36.58053885733889,
+  "object_rotation_step_max_frame": 4,
+  "object_translation_step_max_body_height_units": 0.07563812285661697,
+  "color_observed_vertex_fraction": 0.5389741063117981,
+  "independent_exact_pngs_per_variant": 296,
+  "video_frames": 136,
+  "video_fps": 30,
+  "slow_video_fps": 10,
+  "video_duration_seconds": 4.533333333333333,
+  "slow_video_duration_seconds": 13.6,
+  "source_integrity_checks": [
+    {
+      "serial": "21305711",
+      "source_bytes_unchanged": true
+    },
+    {
+      "serial": "21305717",
+      "source_bytes_unchanged": true
+    },
+    {
+      "serial": "FCM21121414",
+      "source_bytes_unchanged": true
+    },
+    {
+      "serial": "FCM21121415",
+      "source_bytes_unchanged": true
+    },
+    {
+      "serial": "FCM21121416",
+      "source_bytes_unchanged": true
+    },
+    {
+      "serial": "FCM22020159",
+      "source_bytes_unchanged": true
+    },
+    {
+      "serial": "FCM22020160",
+      "source_bytes_unchanged": true
+    },
+    {
+      "serial": "FCM22030167",
+      "source_bytes_unchanged": true
+    }
+  ],
+  "seconds": 0.2859792709350586,
+  "scope": "Execution/integrity/input-fit evidence only. Manual render review required; no unseen-view ground truth, measured metric accuracy, physical contact, cavity/texture acceptance or full300-frame completion.",
+  "joint_temporal_refinement": {
+    "success": true,
+    "observed_silhouettes": 474,
+    "mean_input_soft_iou_before": 0.691382646560669,
+    "mean_input_soft_iou_after": 0.6861401796340942,
+    "before": {
+      "max_rotation_step_degrees": 36.58053885733889,
+      "max_translation_step_body_height_units": 0.07563812285661697
+    },
+    "after": {
+      "max_rotation_step_degrees": 15.417896219987876,
+      "max_translation_step_body_height_units": 0.0348740853369236
+    },
+    "history": [
+      {
+        "step": 0,
+        "silhouette_cost": 0.3179458901286125,
+        "regularizer": 0.06534430384635925
+      },
+      {
+        "step": 25,
+        "silhouette_cost": 0.32498547807335854,
+        "regularizer": 0.003715678583830595
+      },
+      {
+        "step": 50,
+        "silhouette_cost": 0.3240247517824173,
+        "regularizer": 0.0017905101412907243
+      },
+      {
+        "step": 75,
+        "silhouette_cost": 0.3242385722696781,
+        "regularizer": 0.0013805472990497947
+      },
+      {
+        "step": 100,
+        "silhouette_cost": 0.32342562451958656,
+        "regularizer": 0.0012148063397035003
+      }
+    ],
+    "seconds": 23.91996431350708,
+    "scope": "All times jointly refined with actual multicamera masks and temporal matrix-rotation/translation second-difference penalties; fixed smoothed silhouette hull and scale. No invented object observations, no attachment to hands/head, no exact physical dynamics or orientation truth. Temporal priors regularize poorly observed frames, including frame7. Resolution256 objective is not directly comparable to prior384 metrics."
+  },
+  "final_render": {
+    "frames": 136,
+    "fixed_novel_views": 2,
+    "independent_exact_pngs": 296,
+    "videos": [
+      {
+        "file": "source_vs_novel_30fps.mp4",
+        "decoded_frames": 136
+      },
+      {
+        "file": "source_vs_novel_slow10fps.mp4",
+        "decoded_frames": 136
+      },
+      {
+        "file": "novel_only_30fps.mp4",
+        "decoded_frames": 136
+      },
+      {
+        "file": "novel_only_slow10fps.mp4",
+        "decoded_frames": 136
+      }
+    ],
+    "helmet_material": "neutral gray plus synthetic headlight; geometry diagnostic only"
+  },
+  "manual_review": {
+    "stage_review_complete": true,
+    "quality_acceptance_claimed": false,
+    "reviewer": "assistant visual inspection of actual local artifacts",
+    "inspected": [
+      "pickup_anchor_inspection_v1/all8_keyframe_crops.jpg",
+      "pickup_anchor_masks_v2/qa_group0.jpg",
+      "pickup_anchor_masks_v2/qa_group1.jpg",
+      "pickup_anchor_masks_v3/qa_group0.jpg",
+      "pickup_anchor_masks_v3/qa_group1.jpg",
+      "helmet_track_pickup000_135_v1/all seven nonempty camera QA strips",
+      "dynamic_pickup000_135_v1/motion_contact.jpg",
+      "dynamic_pickup_neutral000_135_v1/motion_contact.jpg",
+      "dynamic_pickup_final000_135_v1/motion_contact.jpg",
+      "pickup_publication_review_v1/decoded_motion_contact.jpg"
+    ],
+    "encoded_video_sample_frames": [
+      0,
+      4,
+      7,
+      15,
+      30,
+      45,
+      60,
+      75,
+      90,
+      105,
+      120,
+      135
+    ],
+    "confirmed": [
+      "Actual encoded new-view frames cover bending pickup, raising for inspection and turning the helmet.",
+      "One helmet trajectory is independent of head/hand attachment; all8 observed human views fit one body motion.",
+      "Public media crop contains generated new views only; original-source comparison panels remain local.",
+      "Neutral gray helmet and synthetic headlight are explicitly labeled as geometry diagnostics, not recovered material."
+    ],
+    "limitations": [
+      "Helmet shape remains rough and cavity is filled; this is a bounded silhouette baseline, not validated helmet geometry.",
+      "Observed-color attempt has obvious patching and texture/occlusion errors; it is retained as a failed appearance diagnostic.",
+      "Hands are coarse/fixed at the finger level; contact and penetration are not solved.",
+      "Temporal regularization reduces jitter by trading some input silhouette agreement; no true orientation or motion accuracy is established.",
+      "Frame7 has only one accepted object observation and is temporally underconstrained.",
+      "No middle-view ground truth, accepted physical scale, hardware-sync verification, full300-frame result or backpack result is available."
+    ],
+    "publication_purpose": "Progress documentation with successful execution evidence and visible failure boundaries, not a finished-method success claim."
+  }
+}

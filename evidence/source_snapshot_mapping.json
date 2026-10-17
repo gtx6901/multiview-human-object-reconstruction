@@ -1,0 +1,212 @@
+[
+  {
+    "file": "research/interaction_20261017/avatar_rig.py",
+    "local_source_sha256": "6963687487f0142746805033b206fb0177484b14c32cf7695ac1fd13ce4a4c5f",
+    "published_sha256": "c044244406f240dafb6f95c9de05816a15b44015897e049dcb8ba0f4338b8cc2",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/mesh_renderer.py",
+    "local_source_sha256": "9190fa5b62fae9bbf95f0836173cc1aa89211a7c60f983db97e922eeea13a426",
+    "published_sha256": "934e313fcbb21dcae806a3aef3a5fc4d04a2f048de8dfd2a2a51d1697fab16bf",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/hybrid_compositor.py",
+    "local_source_sha256": "26e72e970a9a1d24dd0c6c528f373eddd0fc7d43a78ab4b08163668043253845",
+    "published_sha256": "3657b0fe4eaf8f926b5a3117683b4e506264e05e0a1da20ef238e91deda6179e",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/render_dynamic_hybrid.py",
+    "local_source_sha256": "40bc1b855f45d2c8dbd6ba02d843d4863ae8da65aa6863e7baa4521cb8acb9a3",
+    "published_sha256": "02b0b98e0002e5ff5cc7fde61f076a6c6031e2f48131152c18e135327ffe51cd",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/prepare_helmet.py",
+    "local_source_sha256": "b518a1a836813498ca63301bc13e0157bdef6fba7adc27bd3bb1c960f5147c70",
+    "published_sha256": "85b05016b6284450b16a21fb54a020f36e2924db88253446d44e99a83607b678",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/detect_body.py",
+    "local_source_sha256": "842749a47dce5afe4ce92ffdf9df873375dcf7eb02d0f7572120df7d065d8a93",
+    "published_sha256": "6043e9fb3dd3541c8d87e75c14d0fd1d4fba803cc43555edb5a924cc9f28df3b",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/run_nlf_observations.py",
+    "local_source_sha256": "64f0061db66b2e557e864e7f9afe70ec26bcf83122fb975db911ad2c5744956a",
+    "published_sha256": "feec8f53ed7711c9cddd0daee0233692821578a46d6734b511c63613d7defae7",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/fit_nlf_smplh.py",
+    "local_source_sha256": "272a21a443900b169760459f4227a621f0bcb0fc09db4e3db4737cfcb3c04808",
+    "published_sha256": "fadfaddf573881ddcf332a0cfbe1b5201585c0fd915c4670bf80d7e2e95c422b",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/audit_nlf_world_alignment.py",
+    "local_source_sha256": "9dfcc5fe3c040cd4e01d738bfb015b2116d94b9854067b1c005dbf9535ee545f",
+    "published_sha256": "912a3c696e2804b748e5d0c6f11aa9ab54a3c1247a8995b8d9f4dbe2c479e8dc",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/cari_runtime.py",
+    "local_source_sha256": "69920c96e98a4b1cb47dc6fb6365eeabe67fef54a95b44b48ddf043d5cb3d301",
+    "published_sha256": "b9ebd7762b0359c326b6df37d5d58c77397352622f602b4488c235ed57532585",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/cari_utils_runtime.py",
+    "local_source_sha256": "6e712ec1ee188e619c3dbb3a94487ac4d046bf08a4198ca9235b8d15584110f2",
+    "published_sha256": "db6733eb66edb7f9dba935f5e2045bc020aceafdf63a35318c59fba79bf698c8",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/fuse_body_shortclip.py",
+    "local_source_sha256": "a418d7a6666f46b8eaea0654aba91417f5a8aad9e46cad3853561f2c33f0e506",
+    "published_sha256": "e9d7df39e24d9d6482109f66424c020f002d847cd867fefc0debd1f477af9868",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/segment_helmet_prompts.py",
+    "local_source_sha256": "0b6385b23fbffc410551219901f45f602623852bb9802da0898d47f892c1a74d",
+    "published_sha256": "96686038d86a16ca79f537985502c0733be80ac100560a2e94ecbc561e444480",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/segment_people_shortclip.py",
+    "local_source_sha256": "a09d4ffc2356bf069da74961395b9ac9cc573bcc34e483c67996b0cbe0af9182",
+    "published_sha256": "e25dbfd63044602c97cb28ab422a28a175197e86adbc5ce014054f51de2debc1",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/inspect_pickup_anchors.py",
+    "local_source_sha256": "9db8b70b64692aa476bf7bdb6b13c3e8647275f4a697086661c5415981998a31",
+    "published_sha256": "1d8f4ed53cf927cd044be33066a4bfe81959f9cf091e17906680e20f6bd7c7c8",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/make_pickup_anchor_prompts.py",
+    "local_source_sha256": "86537804af7db15a500f26db7557638865d7082073f8c855e9bb1b08ffa8509a",
+    "published_sha256": "85eb4ae527f13d5af6fa90ff1a8ef049cc853826e3692ee2799432df2c297bca",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/refine_pickup_anchor_prompts.py",
+    "local_source_sha256": "56d94e0c4f19b5543bf3c0f7ff4b7358652fe8812d3693345e5c9dc1ba2e8a2b",
+    "published_sha256": "3f78c992a52274e04e3c08790aa33a2b62ad26d3f755565ee14a4f7293ca2d5c",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/make_pickup_extra_anchors.py",
+    "local_source_sha256": "aacb2c487b0fff804ea531e40d75c065a15730e83635a37589ab7c635e21f1ad",
+    "published_sha256": "a7859262454617fa23818ecc38f0fa00227a9c413d2722ae71b9e8788c6ed9ac",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/track_pickup_helmet.py",
+    "local_source_sha256": "8aa74973223815ff93f869e7f33569e3e8ccb078b3e3026f3b40c291523dc025",
+    "published_sha256": "f6af58aed85acd6a499fcb701a164afeab34a93270c623e26d5b79b9e36f7567",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/build_pickup_hull.py",
+    "local_source_sha256": "ecfce3e9162b30040699519e65daaf95c7c046a6ecd23b53d3c678da7ef93c0e",
+    "published_sha256": "2e5e4f97395cd638bb1d9f73a504561788f3163cb830a64fd4854f3c10b3cd27",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/fit_pickup_object.py",
+    "local_source_sha256": "7164bb58d095220c00c08db07269ba9967d1792099600c73ae17979877fbd15d",
+    "published_sha256": "a3f08c6d957c880ee0f69bdfc6bc4fdaa36547ec4c66fd9b6ed9fe49dee8d6f9",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/bake_helmet_shortclip.py",
+    "local_source_sha256": "3536c334e8108f571ee1c806e4469ce346ece1e197ed6e2a269f14331bf9c431",
+    "published_sha256": "af3786ea15d9661a632269d90f8c34f380da9444311dca5a868b9b12a6c4d751",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/prepare_pickup_replay.py",
+    "local_source_sha256": "06a548de57e6605ea462015992f38240206ad13d0447ed11f748b917451cf3da",
+    "published_sha256": "1a3eb13d5b55b0671c43ff23d9931b0fd39cb4950eb62f725117564f5695b0bb",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/smooth_pickup_geometry.py",
+    "local_source_sha256": "d7e894aeed625e87eae06f7e260bfd2759a6dc69954b86b8f6ba2b8ec4fb751b",
+    "published_sha256": "760e1ec3d549d1f29185e589e4dcdabe82dc7ad43bdb361decd6bf7fc01bdec6",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/refine_pickup_motion.py",
+    "local_source_sha256": "5e75eb85299a597c7e1d17eab8261ae8030bfd8bdbadcf5f996ae7affa51e825",
+    "published_sha256": "d5aee9541b5aa58f963f35ded762f68edd8a6b7f7e2ac9c4a5d37de26cd428ec",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/run_pickup_observations.py",
+    "local_source_sha256": "3cd7d2515105d4b13a08506321d67cdab1bc8cfa1e6ff66a347118ec45d2d3dd",
+    "published_sha256": "b06ba374312c0ab577606b6a500ab106dfb069732ac06354dd934d52cdb8d931",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/run_pickup_object_pipeline.py",
+    "local_source_sha256": "88cb9463a77644382ce7a46cebc46c58a1337a98be2fba96e0bd7ace37fa1bdd",
+    "published_sha256": "c6515c3dc7e75f328e43cab5d0718e94da5903fcf913bbc4315663d2d0968ee1",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/audit_pickup_stage.py",
+    "local_source_sha256": "acae5b2a96467d2ca26e7f177d9b2749d62532a762e48d706436bcc69dd718c3",
+    "published_sha256": "43181aefe18e9c7395ce2b04cdef8b9d1bc266f21ef64876cdab1512ce1ecbb3",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/unidepth_runtime.py",
+    "local_source_sha256": "e2aa6d9f68054e924e4fcf78db08535a335c2eb2d7c758be8869b178744000d8",
+    "published_sha256": "62aa91fad783c2d0c5d856fbccf785a0d6428996e98fdfd84f245be1943bf5f4",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/run_unidepth_shortclip.py",
+    "local_source_sha256": "0e950fcded71e2982d4332609215cd97cba1543691aa30a8f3c2834c7fd5736f",
+    "published_sha256": "de4fec1d95c8846559d450688860c63c6ee1b682e019d56040fca436dc9738fe",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/align_depth_shortclip.py",
+    "local_source_sha256": "8769d4674c23335da2b0a448c588e6b1f1dfb1fb833837b0fa8f6fc0c80f5c76",
+    "published_sha256": "4a2bf79a41dd9bde4d5609e04ab3e88fcb7f73361f34e47686776d65ce2ef5fe",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/run_coconet_project_probe.py",
+    "local_source_sha256": "d256ced93917078cc3f6c140245a8f1e7d72f345568bccc7cd3aa35c96a6a344",
+    "published_sha256": "8d0105fcbb29568cbe42fac130ad10488c0c61c97c21af05a3e293f5f8e7a81e",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/run_coconet_all8.py",
+    "local_source_sha256": "748482694b34dd06e1ffc1f08d282b16efe8a39f63a1fbad42c2a1045434041c",
+    "published_sha256": "11167c04898b6f3a11ce551ae4c24291605ef6bd58537e2487a680d40fdbaebb",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/replay_coconet_batch.py",
+    "local_source_sha256": "a828de320d9e5748eb43b650fee9d526ccbe91d674cb8a03152c9970e96d5d62",
+    "published_sha256": "12aa72029105a216c31233fff52a2cb58fefa93e2357a03006eca163f1b9e04a",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  },
+  {
+    "file": "research/interaction_20261017/audit_coconet_outputs.py",
+    "local_source_sha256": "181a64b524d2813152598bcce992072fbf5895debbd2c260241581f39f3eb33e",
+    "published_sha256": "e91276f8e15f3378dcb769633997cf1e356b0ec0ce092c6949f80dabacb035eb",
+    "change": "Publication copy adds os import and externalizes machine-specific runtime paths; algorithm/operators unchanged."
+  }
+]

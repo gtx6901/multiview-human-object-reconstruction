@@ -1,0 +1,12 @@
+{
+  "latent_query_points_type": "e2e_points",
+  "gs_rendering": "featbacksplat",
+  "neural_renderer": {
+    "depth": 4,
+    "enc_channels": 128,
+    "enc_patch_size": 7,
+    "gradient_checkpointing": true,
+    "img_dim": 1024,
+    "type": "patch_4dptonly"
+  }
+}

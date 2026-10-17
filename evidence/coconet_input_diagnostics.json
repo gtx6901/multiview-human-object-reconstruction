@@ -1,0 +1,86 @@
+{
+  "success": true,
+  "per_view": [
+    {
+      "serial": "21305711",
+      "initial_body_mean_reprojection_px": 18.400358373514877,
+      "predicted_body_mean_reprojection_px": 36.315606584150686,
+      "contact_probability_mean": [
+        0.7383967638015747,
+        0.9973395466804504
+      ]
+    },
+    {
+      "serial": "21305717",
+      "initial_body_mean_reprojection_px": 8.750447549835325,
+      "predicted_body_mean_reprojection_px": 10.52554322939173,
+      "contact_probability_mean": [
+        0.8607283234596252,
+        0.7954584956169128
+      ]
+    },
+    {
+      "serial": "FCM21121414",
+      "initial_body_mean_reprojection_px": 18.5299974594999,
+      "predicted_body_mean_reprojection_px": 20.182255780564628,
+      "contact_probability_mean": [
+        0.9600837230682373,
+        0.997969925403595
+      ]
+    },
+    {
+      "serial": "FCM21121415",
+      "initial_body_mean_reprojection_px": 8.075196208598694,
+      "predicted_body_mean_reprojection_px": 10.369243988453185,
+      "contact_probability_mean": [
+        0.6679284572601318,
+        0.37974920868873596
+      ]
+    },
+    {
+      "serial": "FCM21121416",
+      "initial_body_mean_reprojection_px": 10.949010221872685,
+      "predicted_body_mean_reprojection_px": 11.03169594738091,
+      "contact_probability_mean": [
+        0.6320308446884155,
+        0.9593152403831482
+      ]
+    },
+    {
+      "serial": "FCM22020159",
+      "initial_body_mean_reprojection_px": 11.931378100751589,
+      "predicted_body_mean_reprojection_px": 12.204701773356703,
+      "contact_probability_mean": [
+        0.17106549441814423,
+        0.9790177941322327
+      ]
+    },
+    {
+      "serial": "FCM22020160",
+      "initial_body_mean_reprojection_px": 16.95820479802854,
+      "predicted_body_mean_reprojection_px": 18.76423405263324,
+      "contact_probability_mean": [
+        0.7290776371955872,
+        0.9649699330329895
+      ]
+    },
+    {
+      "serial": "FCM22030167",
+      "initial_body_mean_reprojection_px": 22.10617484965193,
+      "predicted_body_mean_reprojection_px": 23.25399787570071,
+      "contact_probability_mean": [
+        0.9953390955924988,
+        0.998170793056488
+      ]
+    }
+  ],
+  "initial_body_mean_cross_view_dispersion_world": 0.09138742382430627,
+  "predicted_body_mean_cross_view_dispersion_world": 0.09716697874190423,
+  "predicted_object_center_mean_cross_view_dispersion_world": 0.08266930546448731,
+  "contact_probability_std_across_views_mean": [
+    0.3071307837963104,
+    0.2116665542125702
+  ],
+  "seconds": 1.5163676738739014,
+  "scope": "Actual raw model predictions decoded by upstream rotation/SMPL conversion rules and original SMPL-H. Diagnostics use input keypoints, fixed calibrated cameras and one common scale. No GT, no independent novel-view or contact validation. No averaging into accepted shared geometry. Object rotation uses absolute head and translation uses relative head according to checkpoint loss_type. Hand contact sigmoid values are model probabilities, not physical contact evidence."
+}

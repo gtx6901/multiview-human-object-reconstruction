@@ -1,0 +1,11 @@
+{
+  "platform": "Windows / PowerShell",
+  "python": "3.11",
+  "torch": "2.5.1+cu124",
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "gpu_memory_GiB": 8,
+  "smplfitter": "0.6.0",
+  "warp-lang": "1.8.0",
+  "isolated_dependencies": true,
+  "scope": "Observed runtime for this research snapshot; not a universal supported installation matrix. GPU allocated-memory measurements in reports are per-process PyTorch accounting."
+}

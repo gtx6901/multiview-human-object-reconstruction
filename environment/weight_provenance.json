@@ -1,0 +1,38 @@
+{
+  "CoCoNet": {
+    "url": "https://huggingface.co/nvidia/CARI4D/resolve/607af76/step031397.pth",
+    "sha256": "e997f5204032e6ea111c4d0ef0b84a072cc566b3e3dc1968f16b39304227b7f0",
+    "bytes": 1127245558,
+    "verified": true
+  },
+  "NLF": {
+    "url": "https://github.com/isarandi/nlf/releases/download/v0.3.2/nlf_l_multi_0.3.2.torchscript",
+    "bytes": 493117974,
+    "local_sha256": "52bee28edb6ea9148691331df87cfc238d7e3d9134dc60104a5aaed282a9ddad",
+    "published_digest_verified": false
+  },
+  "UniDepth": {
+    "revision": "52b349b514bd8b47642f67ac78cb7b5dc5c51dd9",
+    "records": [
+      {
+        "name": "config.json",
+        "bytes": 3848,
+        "url": "https://huggingface.co/lpiccinelli/unidepth-v2-vitl14/resolve/52b349b514bd8b47642f67ac78cb7b5dc5c51dd9/config.json",
+        "sha256": "09eb0ea8de53a6c9a1d428ac98c79847fe2602ea417701261f3f628099a30816",
+        "published_lfs_sha256": null
+      },
+      {
+        "name": "model.safetensors",
+        "bytes": 1415383604,
+        "url": "https://huggingface.co/lpiccinelli/unidepth-v2-vitl14/resolve/52b349b514bd8b47642f67ac78cb7b5dc5c51dd9/model.safetensors",
+        "sha256": "ba73d3de735302ccc64a50f1e557122050c4b1893e6060b28dba05d6af3e67c6",
+        "published_lfs_sha256": "ba73d3de735302ccc64a50f1e557122050c4b1893e6060b28dba05d6af3e67c6"
+      }
+    ]
+  },
+  "LHM++": {
+    "repository": "https://huggingface.co/3DAIGC/LHMPP-700M",
+    "revision": "fc9f73664b9bfcc457e96210ddc06fe7caf0d559",
+    "model_sha256": "1897beb3c1ab8f0e198892f9813870aa82d2ada7ec4d043bb8cb293e1d65b725"
+  }
+}
