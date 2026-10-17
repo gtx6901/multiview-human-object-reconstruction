@@ -38,8 +38,8 @@
     },
     {
       "path": "docs/SHARED_SCENE_DESIGN.md",
-      "bytes": 5200,
-      "sha256": "6cd177436af7d98f56bb70f994b6e0807722025d29b3a598946db006fbaa7072"
+      "bytes": 6116,
+      "sha256": "7634d73ff6412299a0509797727d2f11990f8ef86af32f8c2f4c6f81969fa545"
     },
     {
       "path": "docs/THIRD_PARTY_NOTICES.md",
@@ -94,7 +94,7 @@
     {
       "path": "evidence/optimization_source_mapping.json",
       "bytes": 11209,
-      "sha256": "baba840fa0388a326e000f92b94ca4f743274eff02a3a2f5c7ca1cc0af7ed37f"
+      "sha256": "f186314ead638fccfc9f45be6357f4e9e975ebfc4d2f86435f5a1b6ffc9cd383"
     },
     {
       "path": "evidence/shared_features_20261018.json",
@@ -105,6 +105,11 @@
       "path": "evidence/shared_human_observations_20261018.json",
       "bytes": 2482,
       "sha256": "51a2ccace78297ed0918edbf7cc2aa875159dd4d664ab473aecf2a3c8da787f3"
+    },
+    {
+      "path": "evidence/shared_joint_20261018.json",
+      "bytes": 15004,
+      "sha256": "9c69a6c9693faecf88b6ff2d2800b2c3ad5ae0d53e8bfd725139fd563c342d29"
     },
     {
       "path": "evidence/shared_scene_20261018.json",
@@ -227,14 +232,29 @@
       "sha256": "7673a625bc0c437f376602cc8a55cb498371ef9367982d95f0e0a2a8a124ecbc"
     },
     {
+      "path": "media/shared_linear_feature_comparison.jpg",
+      "bytes": 73130,
+      "sha256": "eb9ea9ee16faa7e71f40434543111169a96edbcc9934638fee67f6d7ecdcc760"
+    },
+    {
+      "path": "media/shared_linear_features_all300_30fps.mp4",
+      "bytes": 2000686,
+      "sha256": "c960f06ef80df256ca4c8d386d4a98e8c19683d9acb6d884927e3d12122d1ff5"
+    },
+    {
+      "path": "media/shared_linear_features_all300_slow10fps.mp4",
+      "bytes": 3139863,
+      "sha256": "80f8264e6e20b076905aefa9e6bcc2385a9003dc889b24a6a1f66db9e5a6669e"
+    },
+    {
       "path": "media/shared_shape_motion_comparison.jpg",
       "bytes": 58024,
       "sha256": "ae48de6f06dc247fd696e6afbc804ee4b9982c3a13f533eed95b9d6f6f6f7278"
     },
     {
       "path": "README.md",
-      "bytes": 7882,
-      "sha256": "ca65393d3b9e0cff22dae022845d21d6ce89c591fe96587d4b9380fdaf17f456"
+      "bytes": 9084,
+      "sha256": "78c63356d4e966243583ef4022545bd3bdcbbeb4495624dae9df6a459ed8af3d"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -242,9 +262,19 @@
       "sha256": "4a2bf79a41dd9bde4d5609e04ab3e88fcb7f73361f34e47686776d65ce2ef5fe"
     },
     {
+      "path": "research/interaction_20261017/audit_backpack_background_geometry.py",
+      "bytes": 3607,
+      "sha256": "47274bfd809fc1a39f924a17fdafa641bdd9e312a24bcc6d80f7c28b15a33b49"
+    },
+    {
       "path": "research/interaction_20261017/audit_backpack_decoding.py",
       "bytes": 1607,
       "sha256": "803737f869c79cc3ac1569eb69c3f223ee7b90c807211b5232ab5f03f146f5f6"
+    },
+    {
+      "path": "research/interaction_20261017/audit_backpack_epipolar.py",
+      "bytes": 2514,
+      "sha256": "b486e3aa706673ca0527c6fc1acb57bc46ef40b0e739514dde46a3abfb1df80b"
     },
     {
       "path": "research/interaction_20261017/audit_coconet_outputs.py",
@@ -398,8 +428,8 @@
     },
     {
       "path": "research/interaction_20261017/fit_phased_helmet_all300.py",
-      "bytes": 24265,
-      "sha256": "a10576a8b85f4ad61968a32bb83cdd36dec3c5398487a287aa4f7bf008e8bfc9"
+      "bytes": 25295,
+      "sha256": "eed9a31c7fa9de6a94bd754b30f0ff7ed3c68aa76e1d90c7492e6cf06cff5fd0"
     },
     {
       "path": "research/interaction_20261017/fit_pickup_object.py",
@@ -472,6 +502,11 @@
       "sha256": "1d8f4ed53cf927cd044be33066a4bfe81959f9cf091e17906680e20f6bd7c7c8"
     },
     {
+      "path": "research/interaction_20261017/joint_head_constraints.py",
+      "bytes": 3989,
+      "sha256": "63defd2b8838821c9c8c54fda564b13820a82b3eb80ec9a550c3c1dc2ea3dd69"
+    },
+    {
       "path": "research/interaction_20261017/make_helmet_shell.py",
       "bytes": 8335,
       "sha256": "022595e02927a78ee26648ddc1950ef1cfcddcfed7bfab5f106a07ff44df1515"
@@ -492,9 +527,19 @@
       "sha256": "d3855759aa59f29f37529732418049e5debb8be75ca27fc42f231726cf200a23"
     },
     {
+      "path": "research/interaction_20261017/merge_joint_head_depth_cache.py",
+      "bytes": 2405,
+      "sha256": "8922c78c70a130a47fc8211c22a92d83755cb5c912198e195ddead70999aacb5"
+    },
+    {
       "path": "research/interaction_20261017/mesh_renderer.py",
       "bytes": 6936,
       "sha256": "043e5b1f4fcd0226636b245b366f2fe0ed62e640bafec865e84c2d000f5d1ba1"
+    },
+    {
+      "path": "research/interaction_20261017/observe_backpack_actor.py",
+      "bytes": 5199,
+      "sha256": "c0123ebb9e92c91fee1d23e8415f64f536a3259fe1d872ed7769be96093ed67c"
     },
     {
       "path": "research/interaction_20261017/observe_full_action.py",
@@ -552,6 +597,11 @@
       "sha256": "062b1859437fe65a472e7e61b2267e2e57b3f99e74920ca2e663351965871f32"
     },
     {
+      "path": "research/interaction_20261017/refine_backpack_person_crops.py",
+      "bytes": 3334,
+      "sha256": "c934bcbd07f01a9c5facf20e78987479e0d8fb0b61546c43bae6beea37400734"
+    },
+    {
       "path": "research/interaction_20261017/refine_pickup_anchor_prompts.py",
       "bytes": 1629,
       "sha256": "3f78c992a52274e04e3c08790aa33a2b62ad26d3f755565ee14a4f7293ca2d5c"
@@ -565,6 +615,11 @@
       "path": "research/interaction_20261017/refine_shared_human_features.py",
       "bytes": 10030,
       "sha256": "3ba918cd2aec9aa9729dac12b6f6dc2ce0ed6006cc40618e696b9c1b4115b463"
+    },
+    {
+      "path": "research/interaction_20261017/refresh_helmet_phase_anchors.py",
+      "bytes": 1691,
+      "sha256": "b74f66c701327f2496f7625f13325af6e0917da179b5cf24fc9065d3a6caaecd"
     },
     {
       "path": "research/interaction_20261017/render_canonical_avatar.py",
@@ -665,6 +720,11 @@
       "path": "research/interaction_20261017/track_pickup_helmet.py",
       "bytes": 7708,
       "sha256": "4518ac42b0e4f4c78207aca2fda596a0b3a455963e34f33fa02fa626dcf3d296"
+    },
+    {
+      "path": "research/interaction_20261017/triangulate_backpack_body.py",
+      "bytes": 4518,
+      "sha256": "da6039af47127be97aacef14da082340af86d966e235aacb6aaf64b9a7b0b53c"
     },
     {
       "path": "research/interaction_20261017/unidepth_runtime.py",

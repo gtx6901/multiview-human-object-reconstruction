@@ -61,8 +61,8 @@
   },
   {
     "file": "research/interaction_20261017/fit_phased_helmet_all300.py",
-    "local_source_sha256": "68a6f6f9099f82b4601734d57f28a687a08cd919bcd377d9bddf90456a507fc1",
-    "published_sha256": "a10576a8b85f4ad61968a32bb83cdd36dec3c5398487a287aa4f7bf008e8bfc9"
+    "local_source_sha256": "454e9f9817776283ec196803e400c6f9684d983ba9a83470e7285cf69eb2d05a",
+    "published_sha256": "eed9a31c7fa9de6a94bd754b30f0ff7ed3c68aa76e1d90c7492e6cf06cff5fd0"
   },
   {
     "file": "research/interaction_20261017/vote_helmet_shape_all300.py",

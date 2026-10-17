@@ -9,7 +9,7 @@ from scipy.spatial.transform import Rotation
 from pytorch3d.transforms import axis_angle_to_matrix,matrix_to_axis_angle
 from mesh_renderer import MeshRenderer
 p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_phased_all300_v1');p.add_argument('--steps',type=int,default=100);p.add_argument('--initial',default='helmet_initial_all300_v1');p.add_argument('--phase-motion');p.add_argument('--skip-coarse',action='store_true');p.add_argument('--material-loss-weight',type=float,default=0.);p.add_argument('--material-mesh');p.add_argument('--phase-priors',default='helmet_phase_priors_all300_v1');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--opening-direction-weight',type=float,default=0.);p.add_argument('--crop-observations',action='store_true');p.add_argument('--worn-rotation-cap-deg',type=float);p.add_argument('--worn-translation-cap',type=float)
-p.add_argument('--rgb-loss-weight',type=float,default=0.);p.add_argument('--rgb-texture');p.add_argument('--observation-frames',type=int,nargs='+');options=p.parse_args()
+p.add_argument('--rgb-loss-weight',type=float,default=0.);p.add_argument('--rgb-texture');p.add_argument('--observation-frames',type=int,nargs='+');p.add_argument('--joint-head-avatar');p.add_argument('--joint-head-weight',type=float,default=.1);options=p.parse_args()
 assert not (options.rgb_loss_weight and options.material_loss_weight),'Use real RGB or proxy material loss separately'
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4);cv2.setNumThreads(2)
 maskroot=ROOT/'sam2_all300_v1';observations=json.loads((maskroot/'report.json').read_text());assert observations['success']
@@ -115,8 +115,20 @@ if options.phase_motion:
         residual=matrix_to_axis_angle(R0@priorR.transpose(-1,-2))
         rraw[attached]=torch.atanh((residual[attached]/rotation_cap[attached]).clamp(-.999999,.999999))
         traw[attached]=translation_cap[attached]*torch.atanh(((t0-priort)[attached]/translation_cap[attached]).clamp(-.999999,.999999))
+joint_head=None
+if options.joint_head_avatar:
+    from joint_head_constraints import JointHeadConstraints
+    worn=torch.zeros(300,device='cuda',dtype=torch.bool)
+    for phase in phases:
+        if phase['joint']==15:worn[phase['start']:phase['stop_exclusive']]=True
+    joint_head=JointHeadConstraints(ROOT,options.joint_head_avatar,options.body_depth,meta,worn)
+fitparams=[rraw,traw,pr,pt]+([] if joint_head is None else [joint_head.raw])
+
 def trajectory():
-    phaseR=ar@(axis_angle_to_matrix(pr[pid])@relR[pid]);phaset=at+(ar@(relt[pid]+pt[pid])[...,None])[...,0]
+    current_ar,current_at=ar,at
+    if joint_head is not None:
+        headR,headt,_,_,_=joint_head.state();current_ar=torch.where(joint_head.worn[:,None,None],headR,ar);current_at=torch.where(joint_head.worn[:,None],headt,at)
+    phaseR=current_ar@(axis_angle_to_matrix(pr[pid])@relR[pid]);phaset=current_at+(current_ar@(relt[pid]+pt[pid])[...,None])[...,0]
     residualR=torch.where(attached[:,None],rotation_cap*torch.tanh(rraw),rraw)
     residualt=torch.where(attached[:,None],translation_cap*torch.tanh(traw/translation_cap),traw)
     R=axis_angle_to_matrix(residualR)@torch.where(attached[:,None,None],phaseR,R0)
@@ -182,6 +194,7 @@ def metrics():
     return torch.cat(ious),torch.cat(restores),torch.cat(photos)
 with torch.no_grad():before,restored_before,beforephoto=metrics();before=before.cpu();beforephoto=beforephoto.cpu()
 opt=torch.optim.Adam([{'params':[rraw,pr],'lr':.018},{'params':[traw,pt],'lr':.0015}])
+if joint_head is not None:opt.add_param_group({'params':[joint_head.raw],'lr':.01})
 for step in range(options.steps+1):
     opt.zero_grad();data_sum=0.;iou_sum=0.;photo_sum=0.
     for ids in chunks:
@@ -189,6 +202,7 @@ for step in range(options.steps+1):
         if step<options.steps:chunkloss.backward()
     R,t,rr,tt=trajectory()
     regularization=2*(R[2:]-2*R[1:-1]+R[:-2]).square().mean()+1000*(t[2:]-2*t[1:-1]+t[:-2]).square().mean()+.002*rr.square().mean()+10*tt.square().mean()
+    if joint_head is not None:regularization+=options.joint_head_weight*joint_head.face_loss()[0]
     if opening_normal is not None:
         worn=torch.zeros(300,dtype=torch.bool,device='cuda')
         for phase in phases:
@@ -201,19 +215,20 @@ for step in range(options.steps+1):
             target_normal=torch.nn.functional.normalize(up-.6*front,dim=1)
             regularization+=options.opening_direction_weight*(1-((R@opening_normal)*target_normal).sum(1))[worn].mean()
     value=data_sum+float(regularization.detach())
-    if best is None or value<best[0]:best=(value,[x.detach().clone() for x in [rraw,traw,pr,pt]])
+    if best is None or value<best[0]:best=(value,[x.detach().clone() for x in fitparams])
     if step<options.steps:regularization.backward();opt.step()
     for paramgroup,lr in zip(opt.param_groups,[.018,.0015]):paramgroup['lr']=lr*(1-.8*step/options.steps)
     if step%20==0:
         row={'step':step,'loss':value,'input_soft_iou':iou_sum,('rgb_photometric_error' if options.rgb_loss_weight else 'material_class_error'):photo_sum};history.append(row);print(json.dumps(row),flush=True)
 with torch.no_grad():
-    for x,b in zip([rraw,traw,pr,pt],best[1]):x.copy_(b)
+    for x,b in zip(fitparams,best[1]):x.copy_(b)
     R,t,rr,tt=trajectory();after,restored,afterphoto=metrics();assert torch.isfinite(R).all() and torch.isfinite(t).all()
     assert torch.allclose(torch.linalg.det(R),torch.ones(300,device='cuda'),atol=1e-4)
     sequence={**initial,'R':R.cpu(),'translation_world':t.cpu()};torch.save(sequence,out/'sequence.pt')
     np.savez_compressed(out/'observation_metrics.npz',frames=frames,views=views,before_iou=before,after_iou=after.cpu(),restored_negative_pixels=restored.cpu())
     report={'success':True,'frames':300,'observations':N,'seconds':time.time()-start,'history':history,'coarse_search':coarse,'phases':phases,'mean_input_soft_iou_before':float(before.mean()),'mean_input_soft_iou_after':float(after.mean()),'restored_negative_pixels':int(restored.sum()),'shared_relative_R':(axis_angle_to_matrix(pr)@relR).cpu().tolist(),'shared_relative_translation':(relt+pt).cpu().tolist(),'max_rotation_residual_rad':float(rr[attached].norm(dim=1).max()),'max_translation_residual':float(tt[attached].norm(dim=1).max()),'scope':'All8 main experiment; every300 frame uses real SAM2 candidate masks. Proposed stable-grasp/head-relative phases share transforms with small bounded per-frame residuals; other intervals free.24-way coarse rotations at selected phase/donning frames, original calibrated cameras/fixed shared scale. Tri-state silhouette loss restores half-weight negative evidence only when the predicted object is >.01 normalized-world units in front of a fitted bare-body mesh, away from hands and boundaries. Model/mask/rotation ambiguity remains. Before/after use same current mask/depth protocol after coarse initialization, not prior masks or held-out evaluation. Geometry remains old filled hull; no cavity/UV/texture or physical-contact accuracy claim.'}
     report['sources']=vars(options)
+    if joint_head is not None:report['joint_head']=joint_head.save(out)
     report['observed_frames']=sorted(set(frames))
     if options.observation_frames is not None:report['scope']='SELECTED-FRAME DIAGNOSTIC ONLY: saved300 motion is an initializer plus limited-frame fitting, NOT a full-action reconstruction. '+report['scope'].replace('every300 frame uses','selected frames use')
     if options.worn_rotation_cap_deg is not None or options.worn_translation_cap is not None:
