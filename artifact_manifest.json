@@ -97,6 +97,11 @@
       "sha256": "24ea08167c16ab8ad0ff474fc0ae101ed3aeb9252d06695d9d7c18b65827652a"
     },
     {
+      "path": "evidence/shared_features_20261018.json",
+      "bytes": 2679,
+      "sha256": "8a18562a3978efd283b582e66fd23f20d688b73550aec936b74533e877dfb8c9"
+    },
+    {
       "path": "evidence/shared_human_observations_20261018.json",
       "bytes": 2482,
       "sha256": "51a2ccace78297ed0918edbf7cc2aa875159dd4d664ab473aecf2a3c8da787f3"
@@ -207,9 +212,19 @@
       "sha256": "4d33e4b2936461b8fdb5ed7264b2c7ae881a495c88eb87fc88322975a057ef98"
     },
     {
+      "path": "media/shared_feature_frame299_comparison.jpg",
+      "bytes": 57246,
+      "sha256": "8cb9d478cb5091dcf8e3186a2fa1bbdf8589ed2476a040d26d0cab0436cba6a7"
+    },
+    {
+      "path": "media/shared_feature_three_frame_preview.mp4",
+      "bytes": 47025,
+      "sha256": "7673a625bc0c437f376602cc8a55cb498371ef9367982d95f0e0a2a8a124ecbc"
+    },
+    {
       "path": "README.md",
-      "bytes": 6377,
-      "sha256": "ff70f1cdc4e38ebd0101fb8e0b190a8fd226312763212238f5f3e7d740b939ed"
+      "bytes": 7110,
+      "sha256": "42c1859665a47f0d345a268fdf1b9d823c5b550e6229cafafe1738d6da9a103d"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -525,6 +540,11 @@
       "path": "research/interaction_20261017/refine_pickup_motion.py",
       "bytes": 5916,
       "sha256": "d5aee9541b5aa58f963f35ded762f68edd8a6b7f7e2ac9c4a5d37de26cd428ec"
+    },
+    {
+      "path": "research/interaction_20261017/refine_shared_human_features.py",
+      "bytes": 8084,
+      "sha256": "b1c554db434160bd110413c4d720148ed964c6a0b775a178bbb0a395d45b353e"
     },
     {
       "path": "research/interaction_20261017/render_canonical_avatar.py",
