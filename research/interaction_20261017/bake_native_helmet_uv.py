@@ -7,7 +7,8 @@ import torch,numpy as np,trimesh,nvdiffrast.torch as dr
 from PIL import Image
 from scipy.ndimage import distance_transform_edt
 from helmet_texture_sampling import NativeHelmetSampler,linear_to_srgb
-p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_texture_native_all300_v2');p.add_argument('--stride',type=int,default=3);p.add_argument('--motion',default='helmet_shell_pose_all300_v1');p.add_argument('--uv',default='helmet_uv_all300_v1');p.add_argument('--policy',choices=['all-time','stage-separated'],default='stage-separated');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--consistent-frames',action='store_true');options=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_texture_native_all300_v2');p.add_argument('--stride',type=int,default=3);p.add_argument('--motion',default='helmet_shell_pose_all300_v1');p.add_argument('--uv',default='helmet_uv_all300_v1');p.add_argument('--policy',choices=['all-time','stage-separated'],default='stage-separated');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--consistent-frames',action='store_true');p.add_argument('--consistency-per-surface',action='store_true');options=p.parse_args()
+assert not options.consistency_per_surface or options.consistent_frames
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4)
 assert options.stride>0 and json.loads((ROOT/'uv_rendering_verification_v1/report.json').read_text())['success']
 meshpath=ROOT/options.uv/'mesh.pt';mesh=torch.load(meshpath,weights_only=True);motion=torch.load(ROOT/options.motion/'sequence.pt',weights_only=True);meta=json.loads((ROOT/'helmet_native000_299_v1/manifest.json').read_text())
@@ -47,6 +48,7 @@ for a in range(8):
 assert ca,'No usable multiview color correspondences'
 ia=torch.cat(pa);ib=torch.cat(pb);c1=torch.cat(ca);c2=torch.cat(cb);pw=torch.cat(pairweights)
 rawgain=torch.nn.Parameter(torch.zeros(8,3,device='cuda'));rawbias=torch.nn.Parameter(torch.zeros(8,3,device='cuda'));reference=1;gate=torch.ones(8,1,device='cuda');gate[reference]=0
+rawexposure=torch.nn.Parameter(torch.zeros(8,1,device='cuda'))
 priorgain=torch.ones(8,3,device='cuda');white_support=[]
 if options.policy=='stage-separated':
     values=cs[:,reference][cw[:,reference]>.03];assert len(values)>10,'Reference lacks white-shell exposure evidence'
@@ -56,22 +58,27 @@ if options.policy=='stage-separated':
         if len(values)>10:priorgain[vi]=(refwhite/values.median(0).values.clamp_min(.02)).clamp(.25,4)
     priorgain[reference]=1
 def correction():
-    if options.policy=='all-time':return torch.exp(np.log(2)*torch.tanh(rawgain)*gate),.1*torch.tanh(rawbias)*gate
+    if options.policy=='all-time':
+        # Fit exposure separately from restrained white balance. Shared, small
+        # black-level offsets prevent false green/purple dark-lining correction.
+        chroma=rawgain-rawgain.mean(1,keepdim=True)
+        return torch.exp((np.log(4)*torch.tanh(rawexposure)+.15*torch.tanh(chroma))*gate),(.01*torch.tanh(rawbias.mean(1,keepdim=True))*gate).expand(-1,3)
     return priorgain*torch.exp(.25*torch.tanh(rawgain)*gate),.02*torch.tanh(rawbias)*gate
 def objective(g,b):
     residual=c1*g[ia]+b[ia]-c2*g[ib]-b[ib]
     return (torch.nn.functional.smooth_l1_loss(residual,torch.zeros_like(residual),beta=.03,reduction='none')*pw[:,None]).sum()/(3*pw.sum())
-opt=torch.optim.Adam([rawgain,rawbias],lr=.025)
+opt=torch.optim.Adam([rawgain,rawbias,rawexposure],lr=.025)
 with torch.no_grad():before=float(objective(*correction()))
 for step in range(201):
     opt.zero_grad();g,b=correction()
-    regularization=.002*(g-1).square().mean()+.02*b.square().mean() if options.policy=='all-time' else .1*(g/priorgain-1).square().mean()+2*b.square().mean()
+    regularization=.002*torch.log(g).square().mean()+2*b.square().mean()+.01*(torch.log(g)-torch.log(g).mean(1,keepdim=True)).square().mean() if options.policy=='all-time' else .1*(g/priorgain-1).square().mean()+2*b.square().mean()
     loss=objective(g,b)+regularization
     if step<200:loss.backward();opt.step()
 gain,bias=[v.detach() for v in correction()];after=float(objective(gain,bias).detach())
 calib={'reference_serial':meta['views'][reference]['serial'],'frames':calib_frames,'correspondences':len(c1),'pair_support':support.tolist(),'gain_linear_rgb':gain.cpu().tolist(),'bias_linear_rgb':bias.cpu().tolist(),'robust_color_loss_before':before,'robust_color_loss_after':after,'scope':'Approximate affine response fit in assumed linearized sRGB, same-time surface correspondences, robust loss, fixed reference camera and bounded coefficients. Not spectral/colorimetric calibration or recovered albedo; clipping, pose error and view-dependent lighting remain.'}
 (out/'camera_color_correction.json').write_text(json.dumps(calib,indent=2))
 calib['appearance_policy']=options.policy;calib['white_shell_support']=white_support;calib['exposure_prior_gain']=priorgain.cpu().tolist()
+if options.policy=='all-time':calib['scope']+=' Exposure gain is shared acrossRGB with bounded±2EV, chromatic correction is limited to exp(±.15), and black-level bias is shared acrossRGB within±.01 assumed-linear units. This reduces artificial chroma in dark lining; it does not recover missing source detail or guarantee registration.'
 if options.policy=='stage-separated':
     calib['scope']+=' Restricted to unclipped near-neutral white exterior patches while worn; robust white-patch exposure priors and strong gain/bias regularization address false dark/white correspondences. Material/illumination assumptions explicitly introduced; not unrestricted measured camera calibration.'
 (out/'camera_color_correction.json').write_text(json.dumps(calib,indent=2))
@@ -79,27 +86,42 @@ topweight=torch.zeros(8,2,M,device='cuda');topcolor=torch.zeros(8,2,M,3,device='
 frames=sorted(set(list(range(0,300,options.stride))+[299]));used=[]
 if options.policy=='stage-separated':frames=[f for f in frames if f<=135 or f>=180]
 frame_consistency=[]
+selected_by_class=None
 if options.consistent_frames:
     assert options.policy=='all-time','Consistency selection must not silently retain stage/color gates'
+    scoreids=sampleids;scoreclasses=classes[sampleids]
+    if options.consistency_per_surface:
+        scoregroups=[]
+        for c in [0,1]:
+            group=torch.where(classes==c)[0];scoregroups.append(group[torch.linspace(0,len(group)-1,min(2000,len(group)),device='cuda').long()])
+        scoreids=torch.cat(scoregroups);scoreclasses=classes[scoreids]
+    score_count=len(scoreids);minimum_views=2 if options.consistency_per_surface else 3
     with torch.inference_mode():
         for f in frames:
-            colors=torch.zeros(8,S,3,device='cuda');weights=torch.zeros(8,S,device='cuda')
+            colors=torch.zeros(8,score_count,3,device='cuda');weights=torch.zeros(8,score_count,device='cuda')
             for vi in range(8):
-                sample=sampler.sample(vi,f,points[sampleids],normal[sampleids],classes[sampleids])
+                sample=sampler.sample(vi,f,points[scoreids],normal[scoreids],classes[scoreids])
                 if sample is None:continue
                 c,w,_=sample;colors[vi]=(c*gain[vi]+bias[vi]).clamp(0,1);weights[vi]=w
-            known=weights>.03;supported=known.sum(0)>=3;support=int(supported.sum())
-            score=None
-            if support>=64:
-                masked=colors.masked_fill(~known[...,None],float('nan'));median=torch.nanmedian(masked,dim=0).values.nan_to_num(0)
-                error=(colors-median[None]).abs().mean(-1);w=weights*known*supported[None]
-                score=float((error*w).sum()/w.sum().clamp_min(1e-8))
-            frame_consistency.append({'frame':f,'surface_points_seen_by_at_least3_cameras':support,'corrected_linear_rgb_disagreement':score})
-            print('frame color consistency',f,score,flush=True)
+            known=weights>.03
+            for c in ([0,1] if options.consistency_per_surface else [0]):
+                supported=(known.sum(0)>=minimum_views)&(scoreclasses==c);support=int(supported.sum());score=None
+                if support>=64:
+                    masked=colors.masked_fill(~known[...,None],float('nan'));median=torch.nanmedian(masked,dim=0).values.nan_to_num(0)
+                    error=(colors-median[None]).abs().mean(-1);w=weights*known*supported[None]
+                    score=float((error*w).sum()/w.sum().clamp_min(1e-8))
+                frame_consistency.append({'frame':f,'surface_class':c,'minimum_camera_support':minimum_views,'supported_surface_points':support,'corrected_linear_rgb_disagreement':score})
+                print('frame color consistency',f,'surface',c,'support',support,'error',score,flush=True)
     eligible=sorted([r for r in frame_consistency if r['corrected_linear_rgb_disagreement'] is not None and r['corrected_linear_rgb_disagreement']<=.08],key=lambda r:r['corrected_linear_rgb_disagreement'])
     assert eligible,'No sufficiently supported cross-camera-consistent frames; do not bake a fabricated reliable texture'
-    chosen={r['frame'] for r in eligible[:max(1,int(np.ceil(.6*len(eligible))))]};frames=sorted(chosen)
-    (out/'frame_color_consistency.json').write_text(json.dumps({'records':frame_consistency,'selected_frames':frames,'maximum_disagreement':.08,'kept_fraction_of_eligible':.6,'scope':'Same-time corrected RGB disagreement on common candidate outer-surface points with at least3 visible cameras; at least64 supported points. Top60percent among frames passing.08 assumed-linear-RGB error gate. This filters appearance consistency, not true registration or geometric accuracy; common bias can pass. No held/worn stage restriction or lining dark-pixel gate.'},indent=2))
+    if options.consistency_per_surface:
+        selected_by_class={}
+        for c in [0,1]:
+            group=[r for r in eligible if r['surface_class']==c];selected_by_class[c]={r['frame'] for r in group[:max(1,int(np.ceil(.6*len(group))))]}
+        chosen=set.union(*selected_by_class.values())
+    else:chosen={r['frame'] for r in eligible[:max(1,int(np.ceil(.6*len(eligible))))]}
+    frames=sorted(chosen)
+    (out/'frame_color_consistency.json').write_text(json.dumps({'records':frame_consistency,'selected_frames':frames,'selected_frames_per_surface_class':None if selected_by_class is None else {str(c):sorted(v) for c,v in selected_by_class.items()},'minimum_camera_support':minimum_views,'maximum_disagreement':.08,'kept_fraction_of_eligible':.6,'scope':'Same-time corrected RGB disagreement on common visible candidate surface points, at least64 supported points. Top60percent passing.08 assumed-linear-RGB error gate, per surface class when requested; outer white surfaces must not decide lining visibility. Two-camera support is used for the separately scored cavity because the open hemisphere is seen by fewer cameras; pair agreement has weaker outlier rejection and cannot establish true geometry. No held/worn stage restriction or lining dark-pixel gate.'},indent=2))
 with torch.inference_mode():
     for vi,v in enumerate(meta['views']):
         count=0
@@ -107,6 +129,8 @@ with torch.inference_mode():
             result=sampler.sample(vi,f,points,normal,classes)
             if result is None:continue
             color,weight,srgb=result;color=(color*gain[vi]+bias[vi]).clamp(0,1)
+            if selected_by_class is not None:
+                weight*=((classes==0)&(f in selected_by_class[0]))|((classes==1)&(f in selected_by_class[1]))|(classes==2)
             if options.policy=='stage-separated':
                 # Observed design: white exterior when worn; dark lining during inspection.
                 # This prevents an uncertain silhouette-only orientation from mixing both.

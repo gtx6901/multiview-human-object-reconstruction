@@ -1,14 +1,15 @@
 """Fit a candidate planar rim to visually selected face-on inspection outlines."""
 import os
 from pathlib import Path
-import sys,json,time
+import sys,json,time,argparse
 ROOT=Path(__file__).resolve().parent;sys.path[:0]=[str(ROOT/'deps'),str(ROOT.parent/'lhmpp_20261016/deps')]
 import torch,numpy as np,cv2
 from scipy.spatial import cKDTree
 from scipy.optimize import minimize
 from PIL import Image,ImageDraw,ImageOps
-out=ROOT/'helmet_inspection_opening_plane_v1';out.mkdir(exist_ok=False);start=time.time()
-shape='helmet_held_native_shape_v1';m=torch.load(ROOT/shape/'sequence.pt',weights_only=True);vertices=m['vertices_local'].numpy();tri=vertices[m['faces'].numpy()];center=(vertices.min(0)+vertices.max(0))/2
+p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_inspection_opening_plane_v1');p.add_argument('--shape',default='helmet_held_native_shape_v1');options=p.parse_args()
+out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time()
+shape=options.shape;m=torch.load(ROOT/shape/'sequence.pt',weights_only=True);vertices=m['vertices_local'].numpy();tri=vertices[m['faces'].numpy()];center=(vertices.min(0)+vertices.max(0))/2
 meta=json.loads((ROOT/'helmet_native000_299_v1/manifest.json').read_text());v=next(x for x in meta['views'] if x['serial']=='21305717');K=np.array(v['K']);W=np.array(v['W']);cam=-W[:3,:3].T@W[:3,3];scale=float(m['logscale'].exp());records={(r['serial'],r['frame']):r for r in json.loads((ROOT/'sam2_all300_v1/report.json').read_text())['records']};observations=[];normals=[]
 for f in [60,70]:
  r=records[v['serial'],f];mask=np.array(Image.open(ROOT/'sam2_all300_v1'/r['mask']))>127;contours,_=cv2.findContours(mask.astype('uint8'),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE);contour=cv2.convexHull(max(contours,key=cv2.contourArea)).reshape(-1,2)

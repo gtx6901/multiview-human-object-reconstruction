@@ -17,12 +17,13 @@ class NativeHelmetSampler:
         self.R=motion['R'].cuda();self.t=motion['translation_world'].cuda();self.scale=motion['logscale'].exp().cuda();self.meta=meta
         self.renderer=MeshRenderer();self.maskroot=ROOT/'sam2_all300_v1';m=json.loads((self.maskroot/'report.json').read_text());self.records={(r['serial'],r['frame']):r for r in m['records']}
         self.cache_view=None;self.cache=None;self.body_depth=body_depth
-    def sample(self,vi,f,points,normals,classes):
+    def sample(self,vi,f,points,normals,classes,debug=False):
         v=self.meta['views'][vi];record=self.records[(v['serial'],f)]
         if record['mask'] is None:return None
         if self.cache_view!=vi:
             d=np.load(ROOT/self.body_depth/f"{v['serial']}.npz")
             self.cache={k:d[k] for k in ['depth','alpha','hand_unknown']};self.cache_view=vi
+            if 'decoded_alpha' in d:self.cache['decoded_alpha']=d['decoded_alpha']
         W=torch.tensor(v['W'],device='cuda',dtype=torch.float32);K=torch.tensor(v['K'],device='cuda',dtype=torch.float32)
         vertices=self.vertices@self.R[f].T*self.scale+self.t[f]
         mesh=self.renderer.depth_alpha_batch(vertices[None],self.faces,K[None],W[None],2048,1536)
@@ -40,11 +41,21 @@ class NativeHelmetSampler:
         ba=sample_tensor(torch.tensor(self.cache['alpha'][f],device='cuda'))[:,0]
         hand=sample_tensor(torch.tensor(self.cache['hand_unknown'][f],device='cuda'))[:,0]
         good=(pc[:,2]>.01)&(uv[:,0]>=0)&(uv[:,0]<2048)&(uv[:,1]>=0)&(uv[:,1]<1536)&hit
-        good&=(sample_tensor(lab)[:,0]==1)&((pc[:,2]-depth).abs()<.002)&(tag==classes)&(cosine>.15)&(hand<.5)
-        good&=(ba<.5)|(pc[:,2]<bd+.01)
+        filters={'candidate_label':sample_tensor(lab)[:,0]==1,'mesh_depth':(pc[:,2]-depth).abs()<.002,'surface_class':tag==classes,'view_angle':cosine>.15,'hand_unknown':hand<.5,'body_depth':(ba<.5)|(pc[:,2]<bd+.01)}
+        if 'decoded_alpha' in self.cache:
+            # Missing reliable depth inside the neural silhouette is UNKNOWN,
+            # never evidence that the human is absent (especially helmet lining).
+            silhouette=sample_tensor(torch.tensor(self.cache['decoded_alpha'][f],device='cuda'))[:,0]
+            filters['body_depth_uncertainty']=~((silhouette>.5)&(ba<.5))
+        stats={}
+        if debug:stats['projected_hit']={str(c):int((good&(classes==c)).sum()) for c in [0,1,2]}
+        for key,keep in filters.items():
+            good&=keep
+            if debug:stats[key]={str(c):int((good&(classes==c)).sum()) for c in [0,1,2]}
         rgb=torch.tensor(np.array(Image.open(ROOT/'helmet_native000_299_v1'/v['serial']/f'{f:04d}.png').convert('RGB')),device='cuda').permute(2,0,1)[None].float()/255
         colors=sample_tensor(rgb,mode='bilinear')
         # Clipped white is still an observation, but carries less color information.
         saturation=torch.where((colors>.985).all(1),.25,1.)
         weight=cosine.pow(3)*saturation*good
+        if debug:return srgb_to_linear(colors),weight,colors,stats
         return srgb_to_linear(colors),weight,colors

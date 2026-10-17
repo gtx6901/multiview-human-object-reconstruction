@@ -1,4 +1,4 @@
-"""Fixed-shape differentiable SMPL-X surface COCO17 and MANO-style hands.
+"""Differentiable SMPL-X surface COCO17 and MANO-style hands.
 
 COCO17 = upstream GVHMR SMPL-COCO regressor @ its SMPL-X-to-SMPL map.
 Only needed vertices are skinned; verify against full official LBS before use.
@@ -36,6 +36,9 @@ class SMPLXSurfaceLandmarks(torch.nn.Module):
         self.register_buffer('rest',rest)
         self.register_buffer('parents',parents)
         self.register_buffer('template',template[ids])
+        shapedirs=torch.tensor(d['shapedirs'][:,:,:10],dtype=torch.float32)
+        self.register_buffer('shapedirs',shapedirs[ids])
+        self.register_buffer('joint_shapedirs',torch.einsum('jv,vcl->jcl',jreg,shapedirs))
         self.register_buffer('weights',torch.tensor(d['weights'],dtype=torch.float32)[ids])
         self.register_buffer('posedirs',torch.tensor(d['posedirs'],dtype=torch.float32)[ids].reshape(len(ids)*3,486).T.contiguous())
         self.register_buffer('left_pca',torch.tensor(d['hands_componentsl'],dtype=torch.float32))
@@ -44,12 +47,18 @@ class SMPLXSurfaceLandmarks(torch.nn.Module):
         self.hand_joint_ids=[[20,37,38,39,25,26,27,28,29,30,34,35,36,31,32,33],
                              [21,52,53,54,40,41,42,43,44,45,49,50,51,46,47,48]]
 
-    def forward(self,axis_angles,scale=None,translation=None):
+    def forward(self,axis_angles,scale=None,translation=None,betas=None):
         assert axis_angles.ndim==3 and axis_angles.shape[1:]==(55,3)
         B=len(axis_angles);R=axis_angle_to_matrix(axis_angles)
-        joints,A=batch_rigid_transform(R,self.rest[None].expand(B,-1,-1),self.parents)
+        rest=self.rest[None].expand(B,-1,-1);template=self.template[None]
+        if betas is not None:
+            assert betas.ndim==2 and betas.shape[1]==10 and len(betas) in [1,B] and torch.isfinite(betas).all()
+            betas=betas.expand(B,-1)
+            rest=rest+torch.einsum('bl,jcl->bjc',betas,self.joint_shapedirs)
+            template=template+torch.einsum('bl,vcl->bvc',betas,self.shapedirs)
+        joints,A=batch_rigid_transform(R,rest,self.parents)
         feature=(R[:,1:]-torch.eye(3,device=R.device)).reshape(B,486)
-        posed=self.template[None]+(feature@self.posedirs).reshape(B,-1,3)
+        posed=template+(feature@self.posedirs).reshape(B,-1,3)
         transform=(self.weights@A.reshape(B,55,16)).reshape(B,-1,4,4)
         vertices=(transform[:,:,:3,:3]@posed[...,None])[...,0]+transform[:,:,:3,3]
         coco=self.coco_regressor@vertices

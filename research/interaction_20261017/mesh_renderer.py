@@ -11,7 +11,7 @@ class MeshRenderer:
     def __init__(self):
         self.context=dr.RasterizeCudaContext()
 
-    def depth_alpha_batch(self,vertices,faces,K,W,width,height,near=.01,far=100.,colors=None):
+    def depth_alpha_batch(self,vertices,faces,K,W,width,height,near=.01,far=100.,colors=None,uv=None,texture=None,texture_confidence=None):
         """Instanced opaque depths in the same CV convention as __call__."""
         pc=torch.einsum('bij,bnj->bni',W[:,:3,:3],vertices)+W[:,None,:3,3]
         image=torch.einsum('bij,bnj->bni',K,pc)
@@ -23,7 +23,15 @@ class MeshRenderer:
         alpha=dr.antialias(hard,rast,clip,faces)
         result={'alpha':alpha.flip(1)[...,0],'depth':depth.flip(1)[...,0],'hard_alpha':hard.flip(1)[...,0],
                 'face_id':rast.flip(1)[...,3].to(torch.long)-1}
-        if colors is not None:
+        if uv is not None and texture is not None:
+            coordinates,_=dr.interpolate(uv[None].expand(len(vertices),-1,-1).contiguous(),rast,faces)
+            coordinates=torch.stack([coordinates[...,0],1-coordinates[...,1]],-1).contiguous()
+            rgb=dr.texture(texture[None].contiguous(),coordinates,filter_mode='linear',boundary_mode='clamp')
+            result['premultiplied_rgb']=dr.antialias(rgb*hard,rast,clip,faces).flip(1)
+            if texture_confidence is not None:
+                confidence=dr.texture(texture_confidence[None,...,None].contiguous(),coordinates,filter_mode='linear',boundary_mode='clamp')
+                result['texture_confidence']=confidence.flip(1)[...,0]
+        elif colors is not None:
             attrs=colors[None].expand(len(vertices),-1,-1).contiguous();rgb,_=dr.interpolate(attrs,rast,faces)
             result['premultiplied_rgb']=dr.antialias(rgb*hard,rast,clip,faces).flip(1)
         return result

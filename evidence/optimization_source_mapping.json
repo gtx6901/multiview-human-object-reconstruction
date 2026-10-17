@@ -6,8 +6,8 @@
   },
   {
     "file": "research/interaction_20261017/mesh_renderer.py",
-    "local_source_sha256": "03e42908806c4237dcca1ed1c6e2fa9240da3393547e4821727407dc2d2602b7",
-    "published_sha256": "9e2e2a811dcb4f5ef0a700bb2257fe0034fa2ff99afc8499fc05d44bc70c69a3"
+    "local_source_sha256": "6040f9edcd526552a0086c33a1d2d676860276d8ae3c45056a96012b5760eca6",
+    "published_sha256": "043e5b1f4fcd0226636b245b366f2fe0ed62e640bafec865e84c2d000f5d1ba1"
   },
   {
     "file": "research/interaction_20261017/hybrid_compositor.py",
@@ -31,8 +31,8 @@
   },
   {
     "file": "research/interaction_20261017/smplx_surface_landmarks.py",
-    "local_source_sha256": "79d5e62532d4345505a6c5823ef803cae677ae6c4bdfe15c6d6824612bf6469f",
-    "published_sha256": "8d430dae26e03899bb23347eb6869c95565e0c5cc1f19fbc7e2c66a34c70027b"
+    "local_source_sha256": "fc5755de56fee07ad925867a1db2beb3fef1133bdcae4311bd0f6913dc7be09f",
+    "published_sha256": "d522d08f59fb4bd856948f6b33e6ce281655f509a905319a893349fac5d2f69b"
   },
   {
     "file": "research/interaction_20261017/observe_full_action.py",
@@ -61,8 +61,8 @@
   },
   {
     "file": "research/interaction_20261017/fit_phased_helmet_all300.py",
-    "local_source_sha256": "a7d84f645e113bcfdfd34ea133dbb5ab92a385b5fb57d4e42dd111a0aae92afd",
-    "published_sha256": "3256e82d9c884705b4e08243ac94a7cbf82bcd09ca9a04702448742b9727a893"
+    "local_source_sha256": "68a6f6f9099f82b4601734d57f28a687a08cd919bcd377d9bddf90456a507fc1",
+    "published_sha256": "a10576a8b85f4ad61968a32bb83cdd36dec3c5398487a287aa4f7bf008e8bfc9"
   },
   {
     "file": "research/interaction_20261017/vote_helmet_shape_all300.py",
@@ -81,13 +81,13 @@
   },
   {
     "file": "research/interaction_20261017/helmet_texture_sampling.py",
-    "local_source_sha256": "c44452e38ecd846fb31aaca7e585db6a31ef5599317ba9c753d7497ba59bc437",
-    "published_sha256": "b5086333c2d9f968ecbc35fe85e828e175d3a43be063d5863cead79bbe8a8a50"
+    "local_source_sha256": "567df6dcbd9cffd5242e5f204d90264f7a81a9e5f1fea29f48024a35f4b80571",
+    "published_sha256": "a7e0e9fd01832ed827188a83e219fa2e12c01b02e6377b2c20a9d4d98eb6c058"
   },
   {
     "file": "research/interaction_20261017/bake_native_helmet_uv.py",
-    "local_source_sha256": "0b6a08052e7bae8dd5a660c3836a35367c2972272a698b1e5b84921619d2ae0f",
-    "published_sha256": "2d89a955148e4f4bb8896ff08e2c4f7ff246385edbb41d4e8bec0b18cb1c1a83"
+    "local_source_sha256": "f25a1c58e22a3f1e05b8978becc304f91e0a97f0a967dd31e29212247c7886a2",
+    "published_sha256": "98c3db95ba5eadeabceaba21bafcdc5725d0aa153ad53c816029606ee17dad0c"
   },
   {
     "file": "research/interaction_20261017/audit_helmet_material_orientation.py",
