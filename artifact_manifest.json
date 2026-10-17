@@ -102,6 +102,11 @@
       "sha256": "8a18562a3978efd283b582e66fd23f20d688b73550aec936b74533e877dfb8c9"
     },
     {
+      "path": "evidence/shared_head_20261018.json",
+      "bytes": 7023,
+      "sha256": "e1de04f0839c28ffc0088f3b72c028844330c38b38d29703c9a82e485b207ab9"
+    },
+    {
       "path": "evidence/shared_human_observations_20261018.json",
       "bytes": 2482,
       "sha256": "51a2ccace78297ed0918edbf7cc2aa875159dd4d664ab473aecf2a3c8da787f3"
@@ -252,6 +257,11 @@
       "sha256": "7673a625bc0c437f376602cc8a55cb498371ef9367982d95f0e0a2a8a124ecbc"
     },
     {
+      "path": "media/shared_head_generated_comparison.jpg",
+      "bytes": 118637,
+      "sha256": "a305c110b49b656cd55ebfa109c0cd43c00dc783d783ba54fb9ab9dad06dc58a"
+    },
+    {
       "path": "media/shared_joint_scene_all300_30fps.mp4",
       "bytes": 1946019,
       "sha256": "4ec60a85da159ccf8139e726f1aeccbab9475d0f5877b5b8cf8a06e88d8e0af2"
@@ -283,8 +293,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 11039,
-      "sha256": "4e2f46c13cce64afa7cb891683bcb6aac7fbef89e365af1616d8fbb21988a390"
+      "bytes": 12089,
+      "sha256": "dce9d452cba47c73f5a40cbadfdea621f64d1504c4d23b650615be69de80d6a7"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -332,6 +342,11 @@
       "sha256": "18fd22b033645c7a4bc9fa2df4d9605fad80f09dc362f3cfbba5d73a38888be8"
     },
     {
+      "path": "research/interaction_20261017/audit_lhm_face_anchor_correspondence.py",
+      "bytes": 5454,
+      "sha256": "e11109036d48b8af82bab1b486b40897d61f3f88533af60b157696dd285f1038"
+    },
+    {
       "path": "research/interaction_20261017/audit_lhm_head_motion.py",
       "bytes": 1471,
       "sha256": "508dbe878144598b18458e4dea757cb44adc24e0fea045317c8326cb9ae625c4"
@@ -345,6 +360,11 @@
       "path": "research/interaction_20261017/audit_pickup_stage.py",
       "bytes": 3680,
       "sha256": "43181aefe18e9c7395ce2b04cdef8b9d1bc266f21ef64876cdab1512ce1ecbb3"
+    },
+    {
+      "path": "research/interaction_20261017/audit_shared_head_render.py",
+      "bytes": 7801,
+      "sha256": "009f5ad6ba642457b5130715ac10c146bf37d05cdda93723068c6bd430cf4341"
     },
     {
       "path": "research/interaction_20261017/avatar_rig.py",
@@ -388,13 +408,18 @@
     },
     {
       "path": "research/interaction_20261017/cache_lhm_occlusion.py",
-      "bytes": 5518,
-      "sha256": "643a5580a2726e39fe0c79990bc775796291e1602c44ebd80ecb5cd9bf62db26"
+      "bytes": 5527,
+      "sha256": "4301fa8a3e7cda6f2e55a1aa8fbbbbd873f05f1b6dea66bdc0bea334aeadae80"
     },
     {
       "path": "research/interaction_20261017/calibrate_shared_camera_colors.py",
       "bytes": 6279,
       "sha256": "5a512ceb0859b1b30b1109152fb18c242b4ed435a78c617d6fe98f28ad9f9275"
+    },
+    {
+      "path": "research/interaction_20261017/canonical_identity.py",
+      "bytes": 756,
+      "sha256": "f5d0088c21919e5099f989dba7f6baa35f414d9e56bade61d92bc9e24280d2a2"
     },
     {
       "path": "research/interaction_20261017/cari_runtime.py",
@@ -470,6 +495,11 @@
       "path": "research/interaction_20261017/fit_pickup_object.py",
       "bytes": 6718,
       "sha256": "a3f08c6d957c880ee0f69bdfc6bc4fdaa36547ec4c66fd9b6ed9fe49dee8d6f9"
+    },
+    {
+      "path": "research/interaction_20261017/fit_shared_head_alignment.py",
+      "bytes": 7796,
+      "sha256": "8483b7d1c69aa5c16f20b2af6c09fbf2c5628571a2d68d7a0651bc3a3068275d"
     },
     {
       "path": "research/interaction_20261017/fit_shared_helmet_opening.py",
@@ -548,8 +578,8 @@
     },
     {
       "path": "research/interaction_20261017/joint_head_constraints.py",
-      "bytes": 6775,
-      "sha256": "5ba6e45575c3b37dbb348ec7d00cafea59ea7ff0b91b1767307e6aa8732d9f55"
+      "bytes": 7023,
+      "sha256": "7c7056208e1ae897f1fa65b7c17625af59d27b43d4457deb6fa18eee3f8c6f00"
     },
     {
       "path": "research/interaction_20261017/make_helmet_shell.py",
@@ -825,6 +855,11 @@
       "path": "research/interaction_20261017/verify_shaped_surface_landmarks.py",
       "bytes": 2156,
       "sha256": "bdae946382c3e08efe7ec8dabf0e280d0bedf8f4db69bc4ff2a8c00979e4b636"
+    },
+    {
+      "path": "research/interaction_20261017/verify_shared_head_identity.py",
+      "bytes": 2663,
+      "sha256": "03482e624bf676b352a543a2069e16066aeb973332f90d156f9af55d311d5b2b"
     },
     {
       "path": "research/interaction_20261017/verify_uv_rendering.py",

@@ -16,9 +16,13 @@ class JointHeadConstraints:
   expected=self.model.rest+torch.einsum('bl,jcl->bjc',self.beta,self.model.joint_shapedirs)[0];assert torch.allclose(self.rest[0],expected,atol=1e-6)
   if face_anchors:
    report=json.loads((self.root/face_anchors/'report.json').read_text());assert report['success'] and all(p['usable'] and p['support']>=3 for p in report['points'])
-   reference=torch.load(self.root/'body_head_faces_all300_v1/avatar.pt',weights_only=True)
-   for key in ['zero_coords','weights','rest_joints']:assert torch.equal(self.bundle['rig'][key],reference['rig'][key]),'Regenerate LHM face anchors for changed canonical geometry'
-   assert torch.equal(self.bundle['features'],reference['features']) and self.beta.abs().max()==0,'Regenerate anchors for changed appearance or shape'
+   if report.get('semantic_identity_sha256'):
+    from canonical_identity import semantic_identity
+    assert semantic_identity(self.bundle)==report['semantic_identity_sha256'],'Regenerate semantic anchors for changed canonical avatar'
+   else:
+    reference=torch.load(self.root/'body_head_faces_all300_v1/avatar.pt',weights_only=True)
+    for key in ['zero_coords','weights','rest_joints']:assert torch.equal(self.bundle['rig'][key],reference['rig'][key]),'Regenerate LHM face anchors for changed canonical geometry'
+    assert torch.equal(self.bundle['features'],reference['features']) and self.beta.abs().max()==0,'Regenerate anchors for changed appearance or shape'
    self.local_face=torch.tensor(np.load(self.root/face_anchors/'anchors.npz')['canonical_face_local'],device='cuda',dtype=torch.float32)
   d=np.load(self.root/'body_head_faces_all300_v1/face_screen.npz');valid=d['inlier'].copy();valid[:,:,3:]=False
   # The existing conservative hand region marks face observations as unknown.
