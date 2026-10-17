@@ -1,0 +1,66 @@
+"""Compare a small shared opening-plane family against all native observations.
+
+Outer source hull is fixed. Only two time-invariant opening parameters vary;
+all300 object poses are fixed during this geometry block. New UV/baking and a
+pose block are required afterwards. No per-frame geometry is introduced.
+"""
+import os
+from pathlib import Path
+import sys,json,time,argparse
+ROOT=Path(__file__).resolve().parent;sys.path[:0]=[str(ROOT/'deps'),str(ROOT.parent/'lhmpp_20261016/deps')]
+import torch,numpy as np,cv2,trimesh
+from PIL import Image
+from mesh_renderer import MeshRenderer
+p=argparse.ArgumentParser();p.add_argument('--out',required=True);p.add_argument('--motion',required=True);p.add_argument('--body-depth',required=True);p.add_argument('--verify-baseline-only',action='store_true');p.add_argument('--level-shifts',type=float,nargs='+',default=[-.2,-.1,0,.1]);p.add_argument('--tilt-shifts',type=float,nargs='+',default=[-.2,0,.2]);o=p.parse_args()
+out=ROOT/o.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4);cv2.setNumThreads(2)
+motion=torch.load(ROOT/o.motion/'sequence.pt',weights_only=True);assert motion['frames'].tolist()==list(range(300))
+ref=ROOT/'helmet_shell_all300_v5';refmesh=torch.load(ref/'mesh.pt',weights_only=True);refreport=json.loads((ref/'report.json').read_text());source=refreport['source_motion'];closed_source=torch.load(ROOT/source/'sequence.pt',weights_only=True)
+assert torch.allclose(motion['logscale'],closed_source['logscale'])
+assert torch.allclose(motion['vertices_local'][motion['faces'].long()],refmesh['vertices_local'][refmesh['faces'].long()],atol=1e-6),'Opening block requires the documented original shell topology'
+scale=float(motion['logscale'].exp());closed=trimesh.Trimesh(closed_source['vertices_local'].numpy(),closed_source['faces'].numpy(),process=False)
+if closed.volume<0:closed.invert()
+before=closed.vertices.copy();trimesh.smoothing.filter_taubin(closed,lamb=.5,nu=.53,iterations=refreport['smoothing']['iterations']);delta=closed.vertices-before;size=np.linalg.norm(delta,axis=1)*scale;closed.vertices=before+delta*np.minimum(1,.005/np.maximum(size,1e-12))[:,None]
+n0=np.array(refreport['opening_plane_normal_local']);origin0=n0*refreport['opening_level_local'];up=np.array(refreport['opening_up_local']);front=np.array(refreport['opening_front_local'])
+def build(level,tilt):
+ normal=n0+tilt*front;normal/=np.linalg.norm(normal);origin=origin0+level*up
+ v,f,_=trimesh.intersections.slice_faces_plane(closed.vertices,closed.faces,normal,origin);outer=trimesh.Trimesh(v,f,process=False);outer.merge_vertices(digits_vertex=10);outer.remove_unreferenced_vertices();v=outer.vertices.copy();f=outer.faces.copy();N=len(v)
+ assert N>100 and not outer.is_watertight
+ inner=v-.001/scale*outer.vertex_normals;edges=outer.edges;_,inverse,counts=np.unique(np.sort(edges,axis=1),axis=0,return_inverse=True,return_counts=True);edge=edges[counts[inverse]==1];rim=np.concatenate([np.stack([edge[:,1],edge[:,0],edge[:,0]+N],1),np.stack([edge[:,1],edge[:,0]+N,edge[:,1]+N],1)])
+ faces=np.concatenate([f,f[:,::-1]+N,rim]);vertices=np.concatenate([v,inner]);shell=trimesh.Trimesh(vertices,faces,process=False);assert shell.is_watertight and shell.is_winding_consistent and shell.volume>0
+ colors=np.full_like(vertices,.2);colors[:N]=.9;colors[N:]=.05;classes=np.r_[np.zeros(len(f)),np.ones(len(f)),np.full(len(rim),2)]
+ return {'vertices_local':torch.tensor(vertices,dtype=torch.float32),'faces':torch.tensor(faces,dtype=torch.int32),'colors':torch.tensor(colors,dtype=torch.float32),'face_classes':torch.tensor(classes,dtype=torch.int64),'outer_vertex_count':N},normal,float(origin@normal)
+baseline,_,_=build(0,0);assert torch.allclose(baseline['vertices_local'][baseline['faces'].long()],refmesh['vertices_local'][refmesh['faces'].long()],atol=1e-6),'Rebuilt zero-parameter shell must reproduce current canonical geometry'
+if o.verify_baseline_only:
+ (out/'report.json').write_text(json.dumps({'success':True,'zero_parameter_geometry_matches_current_shell':True,'scope':'Shared opening-family control only. No observation scoring, optimization or quality claim.'},indent=2));print('opening parameter baseline exactly reproduces current shell',flush=True);sys.exit(0)
+cache_report=json.loads((ROOT/o.body_depth/'report.json').read_text());assert cache_report['avatar_source']==o.motion,'Refresh visibility from the current jointly fitted avatar before geometry scoring'
+meta=json.loads((ROOT/'helmet_native000_299_v1/manifest.json').read_text());maskroot=ROOT/'sam2_all300_v1';records=json.loads((maskroot/'report.json').read_text())['records'];lookup={(r['serial'],r['frame']):r for r in records};A=np.array([[.125,0,-.4375],[0,.125,-.4375],[0,0,1.]])
+screen=np.load(ROOT/'body_head_faces_all300_v1/face_screen.npz');labels=[];eligibles=[];depths=[];Ks=[];Ws=[];frameids=[];viewids=[];facecoords=[];facevalid=[]
+for vi,v in enumerate(meta['views']):
+ cache=np.load(ROOT/o.body_depth/f"{v['serial']}.npz");assert np.allclose(cache['K'],A@np.array(v['K'])) and np.allclose(cache['W'],v['W']);valid_native=np.asarray(Image.open(ROOT/'helmet_native000_299_v1'/v['serial']/'valid.png'))
+ for f in range(300):
+  r=lookup[(v['serial'],f)]
+  if not r['mask']:continue
+  bounds=np.array(r['roi_xyxy'],dtype=float);extent=max(bounds[2:]-bounds[:2]);origin=(bounds[:2]+bounds[2:])/2-extent/2;s=256/extent;C=np.array([[s,0,-s*origin[0]+.5*s-.5],[0,s,-s*origin[1]+.5*s-.5],[0,0,1.]])
+  def warp(x,border=0):return cv2.warpAffine(x,C[:2],(256,256),flags=cv2.INTER_NEAREST,borderMode=cv2.BORDER_CONSTANT,borderValue=border)
+  def cached(x):return cv2.warpAffine(x,(C@np.linalg.inv(A))[:2],(256,256),flags=cv2.INTER_NEAREST)
+  lab=warp(np.asarray(Image.open(maskroot/r['labels'])),255)
+  if (lab==1).sum()<10:continue
+  person=warp(np.asarray(Image.open(maskroot/r['person_mask'])))>127;obj=warp(np.asarray(Image.open(maskroot/r['mask'])))>127;guard=int(np.ceil(8*s));boundary=cv2.dilate(obj.astype('uint8'),np.ones((2*guard+1,2*guard+1),np.uint8))>0;bd=cached(cache['depth'][f]);ba=cached(cache['alpha'][f]);hand=cached(cache['hand_unknown'][f]);valid=warp(valid_native)>127
+  yy,xx=np.indices((256,256));nx=(xx-C[0,2])/s;ny=(yy-C[1,2])/s;roi=(nx>=np.floor(bounds[0]))&(nx<np.ceil(bounds[2]))&(ny>=np.floor(bounds[1]))&(ny<np.ceil(bounds[3]))
+  eligible=(lab==255)&person&~boundary&(hand==0)&valid&(ba>0)&roi
+  face=screen['xy'][vi,f,:3];q=np.c_[face,np.ones(3)]@C.T;q=q[:,:2];pix=np.floor(q+.5).astype(int);inside=(pix[:,0]>=0)&(pix[:,0]<256)&(pix[:,1]>=0)&(pix[:,1]<256);x=pix[:,0].clip(0,255);y=pix[:,1].clip(0,255)
+  fv=screen['inlier'][vi,f,:3]&inside&(hand[y,x]==0)&(lab[y,x]!=1)
+  labels.append(lab);eligibles.append(eligible);depths.append(bd);Ks.append(C@np.array(v['K']));Ws.append(v['W']);frameids.append(f);viewids.append(vi);facecoords.append(pix.clip(0,255));facevalid.append(fv)
+ print('opening observations',v['serial'],flush=True)
+labels=torch.tensor(np.array(labels));eligibles=torch.tensor(np.array(eligibles));depths=torch.tensor(np.array(depths));Ks=torch.tensor(np.array(Ks),device='cuda',dtype=torch.float32);Ws=torch.tensor(np.array(Ws),device='cuda',dtype=torch.float32);frameids=torch.tensor(frameids,device='cuda');facecoords=torch.tensor(np.array(facecoords),device='cuda');facevalid=torch.tensor(np.array(facevalid),device='cuda');R=motion['R'].cuda();t=motion['translation_world'].cuda();renderer=MeshRenderer();chunks=list(torch.arange(len(labels),device='cuda').split(32));rows=[];best=None
+assert len(labels)>1500 and set(frameids.cpu().tolist())==set(range(300))
+with torch.inference_mode():
+ for level,tilt in [(0.,0.)]+[(a,b) for a in o.level_shifts for b in o.tilt_shifts if a!=0 or b!=0]:
+  mesh,normal,plane=build(level,tilt);vertices=mesh['vertices_local'].cuda();faces=mesh['faces'].cuda();ious=[];facehits=[]
+  for ids in chunks:
+   world=torch.einsum('bij,nj->bni',R[frameids[ids]],vertices)*scale+t[frameids[ids],None];render=renderer.depth_alpha_batch(world,faces,Ks[ids],Ws[ids],256,256);lab=labels[ids.cpu()].cuda();restore=eligibles[ids.cpu()].cuda()&(render['hard_alpha']>.5)&(render['depth']>0)&(render['depth']<depths[ids.cpu()].cuda()-.01);valid=(lab!=255).float()+.5*restore;target=(lab==1).float();pred=render['alpha']*valid;intersection=(pred*target).sum((1,2));union=(pred+target-pred*target).sum((1,2)).clamp_min(1);ious.append(intersection/union)
+   xy=facecoords[ids];batch=torch.arange(len(ids),device='cuda')[:,None];hit=render['alpha'][batch,xy[...,1],xy[...,0]];facehits.append((hit*facevalid[ids]).sum())
+  iou=torch.cat(ious);facepen=float(torch.stack(facehits).sum()/facevalid.sum().clamp_min(1));loss=float(1-iou.mean())+.5*facepen;row={'level_shift':level,'tilt_shift':tilt,'input_iou':float(iou.mean()),'visible_face_coverage':facepen,'loss':loss,'held_iou':float(iou[frameids<136].mean()),'worn_iou':float(iou[frameids>=180].mean())};rows.append(row);print(json.dumps(row),flush=True)
+  if best is None or loss<best[0]:best=(loss,mesh,normal,plane,row,iou.cpu())
+torch.save(best[1],out/'mesh.pt');torch.save({**motion,'vertices_local':best[1]['vertices_local'],'faces':best[1]['faces']},out/'sequence.pt');np.savez_compressed(out/'observation_metrics.npz',frames=frameids.cpu(),views=viewids,selected_iou=best[5]);scope='Two shared canonical opening parameters only: fixed source closed hull,30step bounded smoothing and.001world-numerical-unit shell thickness prior; all8x300 native ROI labels plus visible nose/eye non-coverage evidence. Fixed input poses/body-depth for this geometry block. Full-body segmentation, proxy face visibility and source hull remain imperfect. Selected input score is not real cavity/contact/new-view truth. New UV, texture bake, pose/head refit and actual image comparisons required before adoption; baseline reconstruction is asserted exact.'
+(out/'report.json').write_text(json.dumps({'success':True,'observations':len(labels),'candidates':rows,'selected':best[4],'opening_plane_normal_local':best[2].tolist(),'opening_level_local':best[3],'source_shape':source,'baseline_shell':ref.name,'sources':vars(o),'seconds':time.time()-start,'scope':scope},indent=2));print('shared opening geometry block complete; unadopted',flush=True)

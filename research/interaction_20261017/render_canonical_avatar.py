@@ -1,7 +1,7 @@
 """Frozen neural Gaussian avatar in A-pose, dozens of RGB/alpha target views."""
 import os
 from pathlib import Path
-import sys,json,time,importlib.util
+import sys,json,time,importlib.util,argparse
 ROOT=Path(__file__).resolve().parent;LHM=ROOT.parent/'lhmpp_20261016';sys.path.insert(0,str(LHM))
 from runtime_imports import configure
 configure();sys.path.insert(0,str(ROOT/'deps'))
@@ -13,8 +13,9 @@ from avatar_rig import animate
 from smplx_surface_landmarks import SMPLXSurfaceLandmarks
 spec=importlib.util.spec_from_file_location('gsplat_cuda',os.environ["HOI_GSPLAT_EXTENSION"]);backend=importlib.util.module_from_spec(spec);spec.loader.exec_module(backend);sys.modules['gsplat.csrc']=backend
 from gsplat import rasterization
-out=ROOT/'avatar_canonical_views_v2';out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4)
-bundle=torch.load(ROOT/'avatar_hands_all300_v1/avatar.pt',weights_only=True)
+p=argparse.ArgumentParser();p.add_argument('--out',default='avatar_canonical_views_v2');p.add_argument('--avatar',default='avatar_hands_all300_v1');o=p.parse_args()
+out=ROOT/o.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4)
+bundle=torch.load(ROOT/o.avatar/'avatar.pt',weights_only=True)
 def move(x):
     if isinstance(x,torch.Tensor):return x.cuda()
     if isinstance(x,dict):return {k:move(v) for k,v in x.items()}
@@ -45,4 +46,4 @@ with torch.inference_mode():
         print('canonical elevation completed',elevation,flush=True)
     torch.save({k:v.cpu() for k,v in poses.items()},out/'pose.pt')
 sheet.save(out/'all72_views.jpg');(out/'cameras.json').write_text(json.dumps({'width':width,'height':height,'views':cameras,'coordinate_convention':'Canonical SMPL-X Y-up model frame, frozen avatar scale, zero world translation, CV camera matrices'},indent=2))
-(out/'report.json').write_text(json.dumps({'success':True,'views':len(cameras),'seconds':time.time()-start,'pose':'A-pose shoulders ±.65rad, neutral hands/face, fixed beta0 and original avatar scale','scope':'Actual frozen Gaussian skinning + original saved neural decoder from72 virtual cameras, RGB/soft-alpha targets for mesh distillation. These are model predictions, not new real observations or validated mesh/appearance. Source avatar uses all8 cameras; do not reuse this bundle in strict held-out evaluation.'},indent=2));print('canonical72 views complete',flush=True)
+(out/'report.json').write_text(json.dumps({'success':True,'views':len(cameras),'seconds':time.time()-start,'source_avatar':o.avatar,'shared_beta_norm':float(bundle['poses']['betas'].norm()),'pose':'A-pose shoulders ±.65rad, neutral hands/face, source shared beta and scale','scope':'Actual frozen Gaussian skinning + saved neural decoder from72 virtual cameras, RGB/soft-alpha targets for mesh distillation. These are model predictions, not new real observations, reconstructed sequence motion or validated mesh/appearance. Camera/time input provenance is inherited from the stated source avatar; this script does not construct an independent held-out reconstruction.'},indent=2));print('canonical72 views complete',flush=True)

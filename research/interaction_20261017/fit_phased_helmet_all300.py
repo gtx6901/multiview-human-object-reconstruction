@@ -9,7 +9,7 @@ from scipy.spatial.transform import Rotation
 from pytorch3d.transforms import axis_angle_to_matrix,matrix_to_axis_angle
 from mesh_renderer import MeshRenderer
 p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_phased_all300_v1');p.add_argument('--steps',type=int,default=100);p.add_argument('--initial',default='helmet_initial_all300_v1');p.add_argument('--phase-motion');p.add_argument('--skip-coarse',action='store_true');p.add_argument('--material-loss-weight',type=float,default=0.);p.add_argument('--material-mesh');p.add_argument('--phase-priors',default='helmet_phase_priors_all300_v1');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--opening-direction-weight',type=float,default=0.);p.add_argument('--crop-observations',action='store_true');p.add_argument('--worn-rotation-cap-deg',type=float);p.add_argument('--worn-translation-cap',type=float)
-p.add_argument('--rgb-loss-weight',type=float,default=0.);p.add_argument('--rgb-texture');p.add_argument('--rgb-missing-penalty',type=float,default=.25,help='Fixed initial photo support;0 reproduces legacy variable-support loss');p.add_argument('--observation-frames',type=int,nargs='+');p.add_argument('--joint-head-avatar');p.add_argument('--joint-head-weight',type=float,default=.1);options=p.parse_args()
+p.add_argument('--rgb-loss-weight',type=float,default=0.);p.add_argument('--rgb-texture');p.add_argument('--rgb-missing-penalty',type=float,default=.25,help='Fixed initial photo support;0 reproduces legacy variable-support loss');p.add_argument('--observation-frames',type=int,nargs='+');p.add_argument('--joint-head-avatar');p.add_argument('--joint-head-weight',type=float,default=.1);p.add_argument('--joint-head-face-anchors');p.add_argument('--joint-head-front-visibility',action='store_true');p.add_argument('--joint-head-lr',type=float,default=.01);options=p.parse_args()
 assert not (options.rgb_loss_weight and options.material_loss_weight),'Use real RGB or proxy material loss separately'
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4);cv2.setNumThreads(2)
 maskroot=ROOT/'sam2_all300_v1';observations=json.loads((maskroot/'report.json').read_text());assert observations['success']
@@ -124,13 +124,13 @@ if options.joint_head_avatar:
     worn=torch.zeros(300,device='cuda',dtype=torch.bool)
     for phase in phases:
         if phase['joint']==15:worn[phase['start']:phase['stop_exclusive']]=True
-    joint_head=JointHeadConstraints(ROOT,options.joint_head_avatar,options.body_depth,meta,worn)
+    joint_head=JointHeadConstraints(ROOT,options.joint_head_avatar,options.body_depth,meta,worn,options.joint_head_face_anchors,options.joint_head_front_visibility)
 fitparams=[rraw,traw,pr,pt]+([] if joint_head is None else [joint_head.raw])
 
 def trajectory():
     current_ar,current_at=ar,at
     if joint_head is not None:
-        headR,headt,_,_,_=joint_head.state();current_ar=torch.where(joint_head.worn[:,None,None],headR,ar);current_at=torch.where(joint_head.worn[:,None],headt,at)
+        headR,headt,_,_,_=joint_head.state(surface=False);current_ar=torch.where(joint_head.worn[:,None,None],headR,ar);current_at=torch.where(joint_head.worn[:,None],headt,at)
     phaseR=current_ar@(axis_angle_to_matrix(pr[pid])@relR[pid]);phaset=current_at+(current_ar@(relt[pid]+pt[pid])[...,None])[...,0]
     residualR=torch.where(attached[:,None],rotation_cap*torch.tanh(rraw),rraw)
     residualt=torch.where(attached[:,None],translation_cap*torch.tanh(traw/translation_cap),traw)
@@ -210,7 +210,7 @@ if options.rgb_loss_weight and options.rgb_missing_penalty>0:
     with torch.no_grad():before,restored_before,beforephoto=metrics();before=before.cpu();beforephoto=beforephoto.cpu()
 rgb_support_counts_before=rgb_support_counts.detach().cpu().clone()
 opt=torch.optim.Adam([{'params':[rraw,pr],'lr':.018},{'params':[traw,pt],'lr':.0015}])
-if joint_head is not None:opt.add_param_group({'params':[joint_head.raw],'lr':.01})
+if joint_head is not None:opt.add_param_group({'params':[joint_head.raw],'lr':options.joint_head_lr})
 for step in range(options.steps+1):
     opt.zero_grad();data_sum=0.;iou_sum=0.;photo_sum=0.
     for ids in chunks:

@@ -61,8 +61,8 @@
   },
   {
     "file": "research/interaction_20261017/fit_phased_helmet_all300.py",
-    "local_source_sha256": "9e30c61cbe039b97b132ecaadcaf83d2d29d6dd6677cf31a43fb9497198d53d6",
-    "published_sha256": "46905908a268f1965c5c943464136d8b23d762a3955dd0f8f66231887fe01914"
+    "local_source_sha256": "9b4a52c8fc6d4b18268cee08646dcd0617e9b62b28ddabd7129bea7bbe5d8fb5",
+    "published_sha256": "d72b7e156d459f1df0dfca33f30f3e424e278b3c651e3564a5528e26a0362ca2"
   },
   {
     "file": "research/interaction_20261017/vote_helmet_shape_all300.py",
@@ -101,8 +101,8 @@
   },
   {
     "file": "research/interaction_20261017/render_canonical_avatar.py",
-    "local_source_sha256": "ad7d724f1f0b8a35a266eb413a04754daa292794e0367e14aead5f7983ab0ceb",
-    "published_sha256": "1c6cb4779bee7cebf3bf76095efcffa41980a934460ba153acb212b0f4528938"
+    "local_source_sha256": "df15ff593fde793cfbd93ce0753b958907280c488c5c81f9520b1a522bb2bb6f",
+    "published_sha256": "0a98a3fb3743e7d046659120da80d877d7c202b26d7eafec1005cede4db6e103"
   },
   {
     "file": "research/interaction_20261017/fit_canonical_human_mesh.py",
