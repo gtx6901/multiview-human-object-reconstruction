@@ -4,7 +4,7 @@ from pathlib import Path
 import sys,json,time,argparse
 ROOT=Path(__file__).resolve().parent;sys.path[:0]=[str(ROOT/'deps'),str(ROOT.parent/'lhmpp_20261016/deps')]
 import torch,numpy as np,trimesh
-p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_shell_all300_v5');p.add_argument('--smooth-iterations',type=int,default=30);p.add_argument('--pose-source',default='helmet_shell_pose_all300_v1');p.add_argument('--shape-source',default='helmet_phased_all300_v3');p.add_argument('--body-source',default='body_hands_all300_v1');options=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_shell_all300_v5');p.add_argument('--smooth-iterations',type=int,default=30);p.add_argument('--pose-source',default='helmet_shell_pose_all300_v1');p.add_argument('--shape-source',default='helmet_phased_all300_v3');p.add_argument('--body-source',default='body_hands_all300_v1');p.add_argument('--opening-report');options=p.parse_args()
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time()
 motion=torch.load(ROOT/options.shape_source/'sequence.pt',weights_only=True);body=torch.load(ROOT/options.body_source/'pose_sequence.pt',weights_only=True)
 mesh=trimesh.Trimesh(motion['vertices_local'].numpy(),motion['faces'].numpy(),process=False)
@@ -28,7 +28,12 @@ normal=localup-.6*localfront;normal/=np.linalg.norm(normal)
 clearance=.012
 opening_world=eyes+clearance*up
 opening_local=np.einsum('tji,tj->ti',motion['R'][180:].numpy(),opening_world-motion['translation_world'][180:].numpy())/float(motion['logscale'].exp())
-level=float(np.median(opening_local@normal));origin=normal*level
+level=float(np.median(opening_local@normal))
+if options.opening_report:
+    measured=json.loads((ROOT/options.opening_report/'report.json').read_text());assert measured['success'] and measured['shape_source']==options.shape_source
+    normal=np.array(measured['opening_plane_normal_local']);assert np.isclose(np.linalg.norm(normal),1)
+    level=float(measured['opening_level_local'])
+origin=normal*level
 cut_vertices,cut_faces,_=trimesh.intersections.slice_faces_plane(vertices=mesh.vertices,faces=mesh.faces,plane_normal=normal,plane_origin=origin)
 outer=trimesh.Trimesh(cut_vertices,cut_faces,process=False)
 outer.merge_vertices(digits_vertex=10);outer.remove_unreferenced_vertices();assert len(outer.faces)>100 and not outer.is_watertight
@@ -52,4 +57,7 @@ report['smoothing'].update(unclamped_max_displacement=float(unclamped.max()),per
 report['pose_source']=options.pose_source
 report['source_motion']=options.shape_source;report['body_source']=options.body_source
 report['scope']='EXPLICIT GEOMETRIC PRIOR for the observed open-face half-helmet: Taubin smooth voxel stair artifacts first, use fitted worn head/neck/eye directions, tilt a nominal opening plane upward at the forehead (normal=up-.6front), place it above the eye line by.012 normalized-world units, cut without capping, offset inward and join rims. V2 arbitrary lower18% cut left excessive facial coverage and is superseded as a candidate. This is an anatomical/design prior, not observed cavity geometry or calibrated metric thickness. Retained outer surface changes only by measured smoothing offsets; closed shell connectivity/winding checked, self-intersections/real-image fit/anatomical clearance still require audit. No recovered UV/color.'
+if options.opening_report:
+    report['opening_source']=options.opening_report;report.pop('eye_line_clearance_normalized_world',None)
+    report['scope']='Experimental inspection-image-constrained planar opening, source report states selected observed outlines and ambiguity. Replaces the head/eye anatomical cut plane; source closed-hull smoothing and inward.001normalized-unit thickness remain explicit geometric priors. No measured lining thickness, non-planar rim, visor or true cavity recovery claim. Requires actual multiview held/worn rendering, pose refit and new UV/texture. No human changes.'
 (out/'report.json').write_text(json.dumps(report,indent=2));print('offline helmet shell generated; prior requires visual QA',flush=True)

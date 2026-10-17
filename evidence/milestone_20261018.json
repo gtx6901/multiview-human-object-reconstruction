@@ -1,0 +1,134 @@
+{
+  "render": {
+    "frames": 300,
+    "per_view_resolution": [
+      1134,
+      1512
+    ],
+    "decoded_video_counts": [
+      {
+        "file": "source_vs_novel_30fps.mp4",
+        "decoded_frames": 300
+      },
+      {
+        "file": "source_vs_novel_slow10fps.mp4",
+        "decoded_frames": 300
+      },
+      {
+        "file": "novel_only_30fps.mp4",
+        "decoded_frames": 300
+      },
+      {
+        "file": "novel_only_slow10fps.mp4",
+        "decoded_frames": 300
+      }
+    ]
+  },
+  "appearance_candidate": {
+    "input_images": 16,
+    "original_static_images": 8,
+    "additional_dynamic_images": 8,
+    "original_accepted_avatar_preserved": true,
+    "adopted_as_final": false
+  },
+  "comparison": {
+    "success": true,
+    "pose_tensor_fields_identical": [
+      "frames",
+      "root_pose",
+      "body_pose",
+      "translation_world",
+      "scale",
+      "betas",
+      "lhand_pose",
+      "rhand_pose",
+      "joints_world",
+      "projected",
+      "joints55_world",
+      "left_hand_pose",
+      "right_hand_pose",
+      "hand_pca"
+    ],
+    "decoder_and_config_identical": true,
+    "camera_files_equal": true,
+    "helmet_motion_and_texture_equal": true,
+    "views_with_real_source_comparison": 8,
+    "scope": "Frozen accepted full300 motion and pretrained decoder, same camera K/W and helmet in two independently replayed Gaussian appearance branches. Selected42/180/299 rendered, not full300 new video. Real frame299 all8 sheets are input-view visual comparisons, no strict heldout claim. Changes include decoded Gaussian geometry/skin weights/features from new image conditioning, not just color. Original body never overwritten. Visual inspection only, not quality acceptance."
+  },
+  "relative_motion_candidate": [
+    {
+      "start": 36,
+      "stop_exclusive": 48,
+      "joint": 20,
+      "relative_angle_to_phase_mean_deg": {
+        "min": 4.202624454891332,
+        "median": 6.100138795281627,
+        "p95": 12.467930998324025,
+        "max": 14.621644791573535
+      },
+      "relative_rotation_step_deg": {
+        "min": 2.161994877107534,
+        "median": 8.744837590523002,
+        "p95": 12.546684635124825,
+        "max": 15.574525916342074
+      },
+      "relative_translation_to_phase_median_normalized_world": {
+        "min": 0.0003127834643237293,
+        "median": 0.004946609027683735,
+        "p95": 0.020823151851072898,
+        "max": 0.027299636974930763
+      },
+      "relative_translation_axis_range_normalized_world": [
+        0.01382916048169136,
+        0.009174071252346039,
+        0.03235746920108795
+      ]
+    },
+    {
+      "start": 180,
+      "stop_exclusive": 300,
+      "joint": 15,
+      "relative_angle_to_phase_mean_deg": {
+        "min": 0.5684875583321818,
+        "median": 1.7301660808411248,
+        "p95": 3.173274471625595,
+        "max": 3.2443581734578597
+      },
+      "relative_rotation_step_deg": {
+        "min": 0.004926468000400128,
+        "median": 0.08096056617899441,
+        "p95": 1.4927170317929153,
+        "max": 3.068082082631535
+      },
+      "relative_translation_to_phase_median_normalized_world": {
+        "min": 0.00041338169830851257,
+        "median": 0.0024803795386105776,
+        "p95": 0.00414823074825108,
+        "max": 0.004219911061227322
+      },
+      "relative_translation_axis_range_normalized_world": [
+        0.0042969705536961555,
+        0.0044694580137729645,
+        0.004805941134691238
+      ]
+    }
+  ],
+  "uv_candidate": {
+    "observed_uv_fraction": 0.5872879351905532,
+    "estimated_area_weighted_observed_fraction": 0.5877104700421283,
+    "sampled_frames": [
+      150,
+      160,
+      180,
+      190,
+      210,
+      220,
+      240,
+      250,
+      260,
+      270,
+      280
+    ]
+  },
+  "scope": "Input-view visual comparisons only; no heldout quality claim. Tightened attachment is an imposed prior, not measured rigid contact. Only58.7percent UV observation coverage; reduced dark patches may partly be inferred fill. Helmet still shallow. Inspection-derived new shell is NOT in this published video; its full300 refit remains a separate candidate. No raw images, camera arrays, weights or licensed avatar assets published."
+}

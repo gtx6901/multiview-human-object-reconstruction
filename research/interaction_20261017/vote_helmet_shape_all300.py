@@ -62,5 +62,5 @@ with torch.inference_mode():
     report['search_bounds_source']=options.bounds
     report['sources']=vars(options);report['observation_resolution']=[width,height]
     if options.native_observations:report['scope']+=' Native2048x1536 labels sampled directly at projected voxels; no full-frame256 silhouette downsampling. Coarse body cache remains256x192 and is sampled with its explicit pixel-center mapping. This improves observation sampling only, not mask correctness or recovered cavity truth.'
-    if options.frame_range!=[0,300]:report['scope']='Selected-time-window diagnostic only, not full300 all-time fusion. '+report['scope']
+    if options.frame_range!=[0,300]:report['scope']=report['scope'].replace('All300-time/all8-view','Selected-time-window/all8-view')+' Frame window is explicit in sources; not full300 all-time fusion.'
     (out/'report.json').write_text(json.dumps(report,indent=2));print('all-time shape vote complete',flush=True)

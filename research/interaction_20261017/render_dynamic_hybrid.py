@@ -7,7 +7,7 @@ sys.path.insert(0,str(LHM))
 from runtime_imports import configure
 configure();sys.path.insert(0,str(ROOT/'deps'))
 import torch,numpy as np
-from PIL import Image,ImageDraw
+from PIL import Image,ImageDraw,ImageOps
 from accelerate import init_empty_weights
 from core.models.transformer_block.dpt_decoder import PatchDPT4DecoderOnly
 from avatar_rig import animate
@@ -78,7 +78,8 @@ with torch.inference_mode():
         if c in novel:pics.append(pic)
         records.append({'frame':frame,'view':c['label'],'mesh_visible_pixels':int(((mr['alpha']>.5)&~result['body_first']).sum())})
     strip=Image.new('RGB',(width*3,height+40),'white')
-    strip.paste(Image.open(ROOT/options.data/'21305717'/f'{frame:04d}.png').resize((width,height)),(0,40))
+    source=Image.open(ROOT/options.data/'21305717'/f'{frame:04d}.png')
+    strip.paste(ImageOps.pad(source,(width,height),color='white'),(0,40))
     for j,pic in enumerate(pics):strip.paste(pic,((j+1)*width,40))
     material='neutral helmet diagnostic' if options.neutral_helmet else 'candidate geometry/color'
     d=ImageDraw.Draw(strip);d.text((8,10),f'SOURCE camera 717 | frame {frame}',fill='black');d.text((width+8,10),'NOVEL A | '+material,fill='black');d.text((2*width+8,10),'NOVEL B | '+material,fill='black')
