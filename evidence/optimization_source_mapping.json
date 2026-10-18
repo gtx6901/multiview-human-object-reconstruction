@@ -230,13 +230,28 @@
     "published_sha256": "e710e84a79b92d095c7b77337942f42ea034340a347bdf371743f5352616afc3"
   },
   {
+    "file": "research/interaction_20261017/worn_head_envelope.py",
+    "local_source_sha256": "4965fc6f5b959b316d164e2b4118be4dcf39e2cec727255d9668df48e66ddb52",
+    "published_sha256": "73e74f3b9ec51207bc3c8465e815e53624fee1197e814dd05046c154771e8014"
+  },
+  {
+    "file": "research/interaction_20261017/refine_shared_human_features.py",
+    "local_source_sha256": "0a155e34f9b7aeef9725d053e83330b6aa55f765f4ca91b25cdd016567b778c8",
+    "published_sha256": "9fc35238246e270c1bea8e1c5f9918a4f397fe752ec1362d6436f96e5eddb6f3"
+  },
+  {
+    "file": "research/interaction_20261017/run_aligned_body_feature_review.py",
+    "local_source_sha256": "789ab18bb252e44d55173dcd021344a00b9c7ee95f45afe46107f40f172e42c9",
+    "published_sha256": "b1d6d57e60a449acb5295f07fc4d8da25b326606818bbd77bd5ac1760fec3eb3"
+  },
+  {
     "file": "research/interaction_20261017/prepare_shared_human_observations.py",
     "local_source_sha256": "ab03bd27e644b46a6caed386bce9bc8f60c3f9c6c8179ad79e94598751094685",
     "published_sha256": "121719bbcdda6c8ac89032d248c1e3e499e164b7a16d654f0f0c27f921d576a9"
   },
   {
-    "file": "research/interaction_20261017/worn_head_envelope.py",
-    "local_source_sha256": "4965fc6f5b959b316d164e2b4118be4dcf39e2cec727255d9668df48e66ddb52",
-    "published_sha256": "73e74f3b9ec51207bc3c8465e815e53624fee1197e814dd05046c154771e8014"
+    "file": "research/interaction_20261017/verify_shared_feature_contract.py",
+    "local_source_sha256": "510d834542e1309408741205e7594aa5f8202084cc465c3f9d0a7b8a443925e8",
+    "published_sha256": "bd12c38213a64ff275c73e7f97f1b8c4b88137a81ce05a6f539fd5d4c866b5db"
   }
 ]
