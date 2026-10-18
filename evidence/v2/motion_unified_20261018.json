@@ -1,0 +1,124 @@
+{
+  "success": true,
+  "source_avatar": "D:\\Document\\\u5927\u56db\\\u6691\u6821--\u6570\u5b57\u4eba\u91cd\u5efa\\assets\\human\\underarm_weight_amount_fit_v3\\avatar.pt",
+  "stage_steps": [
+    400,
+    200,
+    200
+  ],
+  "frames": 300,
+  "seconds": 33.7,
+  "mean_reproj_px_before": 33.27603530883789,
+  "mean_reproj_px_after": 30.073240280151367,
+  "history": [
+    {
+      "stage": 0,
+      "iter": 0,
+      "loss": 5816.2495,
+      "reproj_px": 33.28
+    },
+    {
+      "stage": 0,
+      "iter": 80,
+      "loss": 5191.5718,
+      "reproj_px": 30.18
+    },
+    {
+      "stage": 0,
+      "iter": 160,
+      "loss": 5180.5142,
+      "reproj_px": 30.12
+    },
+    {
+      "stage": 0,
+      "iter": 240,
+      "loss": 5176.2061,
+      "reproj_px": 30.1
+    },
+    {
+      "stage": 0,
+      "iter": 320,
+      "loss": 5173.731,
+      "reproj_px": 30.09
+    },
+    {
+      "stage": 0,
+      "iter": 399,
+      "loss": 5172.2676,
+      "reproj_px": 30.08
+    },
+    {
+      "stage": 1,
+      "iter": 0,
+      "loss": 6206.6611,
+      "reproj_px": 30.08
+    },
+    {
+      "stage": 1,
+      "iter": 40,
+      "loss": 6206.9189,
+      "reproj_px": 30.08
+    },
+    {
+      "stage": 1,
+      "iter": 80,
+      "loss": 6206.0317,
+      "reproj_px": 30.08
+    },
+    {
+      "stage": 1,
+      "iter": 120,
+      "loss": 6205.7534,
+      "reproj_px": 30.08
+    },
+    {
+      "stage": 1,
+      "iter": 160,
+      "loss": 6205.4829,
+      "reproj_px": 30.08
+    },
+    {
+      "stage": 1,
+      "iter": 199,
+      "loss": 6205.2197,
+      "reproj_px": 30.08
+    },
+    {
+      "stage": 2,
+      "iter": 0,
+      "loss": 6205.2139,
+      "reproj_px": 30.08
+    },
+    {
+      "stage": 2,
+      "iter": 40,
+      "loss": 6205.6733,
+      "reproj_px": 30.08
+    },
+    {
+      "stage": 2,
+      "iter": 80,
+      "loss": 6204.8887,
+      "reproj_px": 30.08
+    },
+    {
+      "stage": 2,
+      "iter": 120,
+      "loss": 6204.7266,
+      "reproj_px": 30.07
+    },
+    {
+      "stage": 2,
+      "iter": 160,
+      "loss": 6204.5605,
+      "reproj_px": 30.07
+    },
+    {
+      "stage": 2,
+      "iter": 199,
+      "loss": 6204.394,
+      "reproj_px": 30.07
+    }
+  ],
+  "scope": "Body+feet+hands on the avatar's own rig; beta/scale frozen; trust-region prior to the accepted initialisation. Face stage lives in fit_face_stage.py."
+}

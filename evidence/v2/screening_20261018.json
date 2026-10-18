@@ -1,0 +1,57 @@
+{
+  "success": true,
+  "cameras": [
+    "21305711",
+    "21305717",
+    "FCM21121414",
+    "FCM21121415",
+    "FCM21121416",
+    "FCM22020159",
+    "FCM22020160",
+    "FCM22030167"
+  ],
+  "frames": 300,
+  "score_min": 0.5,
+  "max_error_px": 10.0,
+  "min_views": 3,
+  "min_ray_angle_deg": 1.5,
+  "triangulation": "pair-RANSAC over candidate views, refit on inliers",
+  "groups": {
+    "body": {
+      "joints": 17,
+      "valid_rate": 0.9190196078431373,
+      "frames_all_valid": 0.29333333333333333,
+      "median_support": 4.0,
+      "median_error_px": 4.730335712432861
+    },
+    "feet": {
+      "joints": 6,
+      "valid_rate": 0.9377777777777778,
+      "frames_all_valid": 0.6433333333333333,
+      "median_support": 3.0,
+      "median_error_px": 4.704628944396973
+    },
+    "face": {
+      "joints": 68,
+      "valid_rate": 0.6886764705882353,
+      "frames_all_valid": 0.043333333333333335,
+      "median_support": 3.0,
+      "median_error_px": 4.769410610198975
+    },
+    "left_hand": {
+      "joints": 21,
+      "valid_rate": 0.7425396825396825,
+      "frames_all_valid": 0.06666666666666667,
+      "median_support": 3.0,
+      "median_error_px": 4.763059616088867
+    },
+    "right_hand": {
+      "joints": 21,
+      "valid_rate": 0.5404761904761904,
+      "frames_all_valid": 0.023333333333333334,
+      "median_support": 3.0,
+      "median_error_px": 4.897981643676758
+    }
+  },
+  "seconds": 53.2
+}

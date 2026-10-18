@@ -1,0 +1,48 @@
+{
+  "success": true,
+  "source": "D:\\Document\\\u5927\u56db\\\u6691\u6821--\u6570\u5b57\u4eba\u91cd\u5efa\\assets\\human\\motion_unified_v1",
+  "face_keypoints": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "face_reproj_px_before": 27.18570327758789,
+  "face_reproj_px_after": 22.098033905029297,
+  "neck_head_delta_mean": 0.20901505649089813,
+  "history": [
+    {
+      "iter": 0,
+      "loss": 363.9371,
+      "face_reproj_px": 25.983
+    },
+    {
+      "iter": 40,
+      "loss": 277.9231,
+      "face_reproj_px": 22.501
+    },
+    {
+      "iter": 80,
+      "loss": 272.0795,
+      "face_reproj_px": 22.194
+    },
+    {
+      "iter": 120,
+      "loss": 271.0172,
+      "face_reproj_px": 22.131
+    },
+    {
+      "iter": 160,
+      "loss": 270.6785,
+      "face_reproj_px": 22.11
+    },
+    {
+      "iter": 199,
+      "loss": 270.4649,
+      "face_reproj_px": 22.098
+    }
+  ],
+  "seconds": 5.7,
+  "scope": "Neck/head only; head-local nose/eye/ear offsets learned from the current motion. Weak 5-point constraint, not a dense face fit."
+}
