@@ -13,8 +13,8 @@ from shared_scene import load_shared_scene
 spec=importlib.util.spec_from_file_location('gsplat_cuda',os.environ["HOI_GSPLAT_EXTENSION"]);backend=importlib.util.module_from_spec(spec);spec.loader.exec_module(backend);sys.modules['gsplat.csrc']=backend
 from gsplat import rasterization
 p=argparse.ArgumentParser();p.add_argument('--out',required=True);p.add_argument('--scene',default='shared_scene_candidate_v1');p.add_argument('--observations',default='shared_human_observations_all300_v1');p.add_argument('--epochs',type=int,default=1);p.add_argument('--frames',nargs='+',type=int);p.add_argument('--holdout',help='Optional camera excluded from feature gradients and gain calibration; evaluated with gain1')
-p.add_argument('--response',choices=['srgb-model-fit','linear-reference'],default='srgb-model-fit');p.add_argument('--reference-camera',default='21305717')
-o=p.parse_args();out=ROOT/o.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4);torch.manual_seed(712)
+p.add_argument('--response',choices=['srgb-model-fit','linear-reference'],default='srgb-model-fit');p.add_argument('--reference-camera',default='21305717');p.add_argument('--feature-bound',type=float,default=.2)
+o=p.parse_args();assert 0<o.feature_bound<=.2;out=ROOT/o.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4);torch.manual_seed(712)
 def move(x):
  if isinstance(x,torch.Tensor):return x.cuda()
  if isinstance(x,dict):return {k:move(v) for k,v in x.items()}
@@ -37,7 +37,7 @@ def response(x):
  x=x.clamp(0,1);return torch.where(x<=.04045,x/12.92,((x+.055)/1.055)**2.4)
 def render(c,f):
  with torch.no_grad():g=animate(rig,poses,frames.index(f))
- color,_,_=rasterization(means=g['xyz'],quats=g['rotation'],scales=g['scaling'],opacities=g['opacity'].flatten(),colors=torch.cat([g['shs'].squeeze(1),base+.2*delta.tanh()],1),viewmats=c['W'][None],Ks=c['K'][None],width=width,height=height,backgrounds=torch.cat([torch.ones(3,device='cuda'),bg])[None],packed=False,near_plane=.01,far_plane=100.,eps2d=.3)
+ color,_,_=rasterization(means=g['xyz'],quats=g['rotation'],scales=g['scaling'],opacities=g['opacity'].flatten(),colors=torch.cat([g['shs'].squeeze(1),base+o.feature_bound*delta.tanh()],1),viewmats=c['W'][None],Ks=c['K'][None],width=width,height=height,backgrounds=torch.cat([torch.ones(3,device='cuda'),bg])[None],packed=False,near_plane=.01,far_plane=100.,eps2d=.3)
  with torch.autocast('cuda',dtype=torch.bfloat16):rgb,mask=decoder.predict_rgbs(None,color[0,...,3:].permute(2,0,1)[None],None,height,width)
  return rgb[0,0].float(),mask[0,0].float().squeeze()
 def tensors(c,i):
@@ -89,11 +89,11 @@ with torch.no_grad():
 candidate=out/'scene';candidate.mkdir()
 manifest=scene['manifest']
 for row in manifest['assets']:shutil.copyfile(ROOT/o.scene/row['path'],candidate/row['path'])
-human=torch.load(candidate/'human_canonical.pt',weights_only=True);human['features']=(base+.2*delta.tanh()).detach().cpu();torch.save(human,candidate/'human_canonical.pt')
+human=torch.load(candidate/'human_canonical.pt',weights_only=True);human['features']=(base+o.feature_bound*delta.tanh()).detach().cpu();torch.save(human,candidate/'human_canonical.pt')
 manifest['sources']={'initializer':o.scene,'refinement':o.out};manifest['scope']='Shared feature refinement candidate only; frozen rig, geometry, motion and neural decoder; not adopted quality result.'
 for row in manifest['assets']:row['sha256']=hashlib.sha256((candidate/row['path']).read_bytes()).hexdigest()
 (candidate/'scene.json').write_text(json.dumps(manifest,indent=2));loaded=load_shared_scene(candidate);assert torch.equal(loaded['avatar']['features'],human['features'])
 r={'success':True,'frames':selected,'observations_compared':len(after),'training_cameras':train,'holdout_camera':o.holdout,'epochs':o.epochs,'updates':updates,'fixed_camera_rgb_gains':{s:g.cpu().tolist() for s,g in gains.items()},'baseline':baseline,'after':after,'history':history,'feature_max_change':float((human['features']-b['features']).abs().max()),'seconds':time.time()-start,'scope':'One canonical feature tensor receives gradients from all eligible selected times and training cameras. Fixed initial support prevents mask shrinking from removing RGB loss; initial decoder mask anchored. Fixed per-camera channel gains calibrated on initial model; heldout gain1. Bounded feature delta±.2, static geometry/poses/decoder, no geometry or beta refinement. Camera holdout is only conditional feature-overfit diagnostic because initializer and earlier motion used all8. Training error and support are not independent novel-view quality; must rerender before adoption. No dynamic cross-view reliability selection yet. Private tensors/images remain local.'}
-r['response']=o.response;r['reference_camera']=o.reference_camera
+r['response']=o.response;r['reference_camera']=o.reference_camera;r['feature_bound']=o.feature_bound;r['scope']=r['scope'].replace('delta±.2',f'delta±{o.feature_bound:g}')
 if o.response=='linear-reference':r['scope']+=' NEW response: linear-light RGB; fixed reference camera gain1; other gains from temporal medians of same-view model-to-image log ratios, scalar exposure plus log-white-balance±.1; clipped-white target pixels excluded with static support. Loss compares corrected real RGB in reference units, so this metric is not comparable with old sRGB loss. This fixes brightness gauge but still inherits initial geometry/appearance bias; correspondence-graph calibration was rejected and is NOT used.'
 (out/'report.json').write_text(json.dumps(r,indent=2));print('shared feature refinement candidate complete',flush=True)

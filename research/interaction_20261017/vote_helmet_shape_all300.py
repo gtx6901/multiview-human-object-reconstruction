@@ -1,13 +1,15 @@
 """All-time/all-view object-coordinate silhouette voting with unknown-aware support."""
 import os
 from pathlib import Path
-import sys,json,time,argparse
-ROOT=Path(__file__).resolve().parent;sys.path[:0]=[str(ROOT/'deps'),str(ROOT.parent/'lhmpp_20261016/deps')];sys.path.append(os.environ.get("HOI_SHARED_SITE", ""))
+import sys,json,time,argparse,os
+ROOT=Path(__file__).resolve().parent;sys.path[:0]=[str(ROOT/'deps'),str(ROOT.parent/'lhmpp_20261016/deps')]
+if os.environ.get('HOI_SHARED_SITE'):sys.path.append(os.environ['HOI_SHARED_SITE'])
 import torch,numpy as np,cv2,trimesh,pymeshlab
 from PIL import Image
 from scipy.ndimage import label,binary_fill_holes
 from skimage.measure import marching_cubes
-p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_shape_vote_all300_v1');p.add_argument('--motion',default='helmet_phased_all300_v1');p.add_argument('--grid',type=int,default=96);p.add_argument('--ratio',type=float,default=.85);p.add_argument('--bounds',default='helmet_initial_all300_v1');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--native-observations',action='store_true');p.add_argument('--frame-range',type=int,nargs=2,default=[0,300]);options=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_shape_vote_all300_v1');p.add_argument('--motion',default='helmet_phased_all300_v1');p.add_argument('--grid',type=int,default=96);p.add_argument('--ratio',type=float,default=.85);p.add_argument('--bounds',default='helmet_initial_all300_v1');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--native-observations',action='store_true');p.add_argument('--frame-range',type=int,nargs=2,default=[0,300]);p.add_argument('--boundary-unknown-radius',type=int,default=0);options=p.parse_args()
+assert options.boundary_unknown_radius>=0 and (options.boundary_unknown_radius==0 or options.native_observations)
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4);cv2.setNumThreads(2)
 motion=torch.load(ROOT/options.motion/'sequence.pt',weights_only=True);meta=json.loads((ROOT/'helmet_native000_299_v1/manifest.json').read_text());maskroot=ROOT/'sam2_all300_v1';obs=json.loads((maskroot/'report.json').read_text());records={(r['serial'],r['frame']):r for r in obs['records']}
 base=torch.load(ROOT/options.bounds/'sequence.pt',weights_only=True)['vertices_local'];lo=base.min(0).values;hi=base.max(0).values;extent=(hi-lo)*1.2;origin=(lo+hi-extent)/2;n=options.grid;spacing=extent/(n-1)
@@ -29,6 +31,8 @@ with torch.inference_mode():
             labels=cv2.resize(np.asarray(Image.open(maskroot/rec['labels'])),(width,height),interpolation=cv2.INTER_NEAREST)
             person=cv2.resize(np.asarray(Image.open(maskroot/rec['person_mask'])),(width,height),interpolation=cv2.INTER_NEAREST)>127
             mask=cv2.resize(np.asarray(Image.open(maskroot/rec['mask'])),(width,height),interpolation=cv2.INTER_NEAREST)>127
+            if options.boundary_unknown_radius:
+                kernel=np.ones((2*options.boundary_unknown_radius+1,)*2,np.uint8);expanded=cv2.dilate(mask.astype('uint8'),kernel)>0;core=cv2.erode(mask.astype('uint8'),kernel)>0;labels[expanded&~core]=255
             roi=np.zeros((height,width),dtype=bool);x0,y0,x1,y1=np.array(rec['roi_xyxy'])*(1 if options.native_observations else .125)
             roi[max(0,int(np.floor(y0))):min(height,int(np.ceil(y1))),max(0,int(np.floor(x0))):min(width,int(np.ceil(x1)))]=True
             guard=17 if options.native_observations else 3
@@ -45,6 +49,7 @@ with torch.inference_mode():
             positive+=pos.float();known+=(pos|neg).float()+.5*restore_neg.float();hits|=pos;used+=1
         view_support+=hits.short();observations.append({'serial':v['serial'],'observations':used});print('voted',v['serial'],flush=True)
     ratio=positive/known.clamp_min(1);occupancy=(ratio>=options.ratio)&(positive>=12)&(view_support>=3)
+    np.savez_compressed(out/'vote_statistics_private.npz',positive=positive.cpu().numpy().reshape(n,n,n),known=known.cpu().numpy().reshape(n,n,n),view_support=view_support.cpu().numpy().reshape(n,n,n),origin=origin.numpy(),spacing=spacing.numpy())
     occ=occupancy.reshape(n,n,n).cpu().numpy();occ[[0,-1]]=False;occ[:,[0,-1]]=False;occ[:,:,[0,-1]]=False
     components,count=label(occ);sizes=np.bincount(components.ravel());sizes[0]=0
     diagnostics={'grid':n,'ratio':options.ratio,'occupied_voxels':int(occ.sum()),'positive_max':float(positive.max()),'known_max':float(known.max()),'ratio_quantiles_supported':np.quantile(ratio[(positive>=12)&(view_support>=3)].cpu().numpy(),[0,.25,.5,.75,.9,.95,.99,1]).tolist()}
@@ -61,6 +66,8 @@ with torch.inference_mode():
     report={'success':True,'observations':observations,'total_observations':sum(r['observations'] for r in observations),'seconds':time.time()-start,'diagnostics':diagnostics,'vertices':len(tm.vertices),'faces':len(tm.faces),'watertight':bool(tm.is_watertight),'source_motion':options.motion,'scope':'All300-time/all8-view candidate silhouette voting in one object coordinate system, unknowns excluded and conservative half-weight body-depth negatives restored away from hands/boundaries. Fixed.85 vote ratio,≥12 positive observations and≥3 contributing cameras. Bounded grid prior/largest3D component and cavity filling produce a CLOSED preliminary hull, not a recovered hollow helmet. Pose errors/mask bias can shrink/distort it. Must alternate pose/shape refinement and inspect before cavity editing/UV/texture; this is not accepted geometry or held-out evidence.'}
     report['search_bounds_source']=options.bounds
     report['sources']=vars(options);report['observation_resolution']=[width,height]
+    report['scope']=report['scope'].replace('Fixed.85 vote ratio',f'Fixed{options.ratio:g} vote ratio')
+    if options.boundary_unknown_radius:report['scope']+=f' A fixed±{options.boundary_unknown_radius}native-pixel mask-boundary band is UNKNOWN, not fabricated foreground. This is explicit segmentation/registration tolerance; positive12 and3camera support still require measured positive interiors.'
     if options.native_observations:report['scope']+=' Native2048x1536 labels sampled directly at projected voxels; no full-frame256 silhouette downsampling. Coarse body cache remains256x192 and is sampled with its explicit pixel-center mapping. This improves observation sampling only, not mask correctness or recovered cavity truth.'
     if options.frame_range!=[0,300]:report['scope']=report['scope'].replace('All300-time/all8-view','Selected-time-window/all8-view')+' Frame window is explicit in sources; not full300 all-time fusion.'
     (out/'report.json').write_text(json.dumps(report,indent=2));print('all-time shape vote complete',flush=True)

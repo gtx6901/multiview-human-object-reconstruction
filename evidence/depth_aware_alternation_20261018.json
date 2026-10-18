@@ -1,0 +1,2334 @@
+{
+  "reports": {
+    "visible_face_coverage_controls_v1": {
+      "success": true,
+      "opaque_mesh_behind_face_not_penalized": true,
+      "opaque_mesh_in_front_penalized": true,
+      "uncertain_depth_unknown_and_margin_not_front": true,
+      "scope": "Synthetic depth-order controls for visible-face overlap. Does not certify LHM expected depth as a true physical surface or validate real image quality."
+    },
+    "helmet_body_face_depth_aware_profile_v2": {
+      "success": true,
+      "observations": 2116,
+      "candidates": [
+        {
+          "source_family": "current_shell_control",
+          "level_shift": 0.0,
+          "tilt_shift": 0.0,
+          "side_drop": 0.0,
+          "back_drop": 0.0,
+          "input_iou": 0.8702200055122375,
+          "visible_face_coverage": 0.0,
+          "raw_projected_face_coverage_diagnostic": 0.4753810465335846,
+          "depth_supported_face_points": 490,
+          "loss": 0.12977999448776245,
+          "held_iou": 0.8363601565361023,
+          "worn_iou": 0.8918375968933105
+        },
+        {
+          "source_family": "new_closed_hull",
+          "level_shift": -0.05,
+          "tilt_shift": 0.0,
+          "side_drop": 0.0,
+          "back_drop": 0.0,
+          "input_iou": 0.8698579668998718,
+          "visible_face_coverage": 0.0,
+          "raw_projected_face_coverage_diagnostic": 0.6165756583213806,
+          "depth_supported_face_points": 490,
+          "loss": 0.13014203310012817,
+          "held_iou": 0.8305351138114929,
+          "worn_iou": 0.8939246535301208
+        },
+        {
+          "source_family": "new_closed_hull",
+          "level_shift": -0.05,
+          "tilt_shift": 0.0,
+          "side_drop": 0.0,
+          "back_drop": 0.1,
+          "input_iou": 0.8697344660758972,
+          "visible_face_coverage": 0.0,
+          "raw_projected_face_coverage_diagnostic": 0.6165756583213806,
+          "depth_supported_face_points": 490,
+          "loss": 0.13026553392410278,
+          "held_iou": 0.8301546573638916,
+          "worn_iou": 0.8939844965934753
+        },
+        {
+          "source_family": "new_closed_hull",
+          "level_shift": -0.05,
+          "tilt_shift": 0.0,
+          "side_drop": 0.1,
+          "back_drop": 0.0,
+          "input_iou": 0.8690415620803833,
+          "visible_face_coverage": 0.0,
+          "raw_projected_face_coverage_diagnostic": 0.6190913319587708,
+          "depth_supported_face_points": 490,
+          "loss": 0.1309584379196167,
+          "held_iou": 0.8283259868621826,
+          "worn_iou": 0.8941672444343567
+        },
+        {
+          "source_family": "new_closed_hull",
+          "level_shift": -0.05,
+          "tilt_shift": 0.0,
+          "side_drop": 0.1,
+          "back_drop": 0.1,
+          "input_iou": 0.8690414428710938,
+          "visible_face_coverage": 0.0,
+          "raw_projected_face_coverage_diagnostic": 0.6190913319587708,
+          "depth_supported_face_points": 490,
+          "loss": 0.13095855712890625,
+          "held_iou": 0.8283255100250244,
+          "worn_iou": 0.8941673636436462
+        },
+        {
+          "source_family": "new_closed_hull",
+          "level_shift": 0.0,
+          "tilt_shift": 0.0,
+          "side_drop": 0.0,
+          "back_drop": 0.0,
+          "input_iou": 0.8707104921340942,
+          "visible_face_coverage": 0.0,
+          "raw_projected_face_coverage_diagnostic": 0.6085575222969055,
+          "depth_supported_face_points": 490,
+          "loss": 0.12928950786590576,
+          "held_iou": 0.8335118889808655,
+          "worn_iou": 0.8929873704910278
+        },
+        {
+          "source_family": "new_closed_hull",
+          "level_shift": 0.0,
+          "tilt_shift": 0.0,
+          "side_drop": 0.0,
+          "back_drop": 0.1,
+          "input_iou": 0.8705390095710754,
+          "visible_face_coverage": 0.0,
+          "raw_projected_face_coverage_diagnostic": 0.6085575222969055,
+          "depth_supported_face_points": 490,
+          "loss": 0.12946099042892456,
+          "held_iou": 0.8325320482254028,
+          "worn_iou": 0.8934198021888733
+        },
+        {
+          "source_family": "new_closed_hull",
+          "level_shift": 0.0,
+          "tilt_shift": 0.0,
+          "side_drop": 0.1,
+          "back_drop": 0.0,
+          "input_iou": 0.8697822690010071,
+          "visible_face_coverage": 0.0,
+          "raw_projected_face_coverage_diagnostic": 0.6160355806350708,
+          "depth_supported_face_points": 490,
+          "loss": 0.13021773099899292,
+          "held_iou": 0.8296806812286377,
+          "worn_iou": 0.8945701718330383
+        },
+        {
+          "source_family": "new_closed_hull",
+          "level_shift": 0.0,
+          "tilt_shift": 0.0,
+          "side_drop": 0.1,
+          "back_drop": 0.1,
+          "input_iou": 0.8697332143783569,
+          "visible_face_coverage": 0.0,
+          "raw_projected_face_coverage_diagnostic": 0.6160355806350708,
+          "depth_supported_face_points": 490,
+          "loss": 0.13026678562164307,
+          "held_iou": 0.8295281529426575,
+          "worn_iou": 0.8945869207382202
+        },
+        {
+          "source_family": "new_closed_hull",
+          "level_shift": 0.05,
+          "tilt_shift": 0.0,
+          "side_drop": 0.0,
+          "back_drop": 0.0,
+          "input_iou": 0.8697292804718018,
+          "visible_face_coverage": 0.0,
+          "raw_projected_face_coverage_diagnostic": 0.5937513709068298,
+          "depth_supported_face_points": 490,
+          "loss": 0.13027071952819824,
+          "held_iou": 0.8341260552406311,
+          "worn_iou": 0.8903239369392395
+        },
+        {
+          "source_family": "new_closed_hull",
+          "level_shift": 0.05,
+          "tilt_shift": 0.0,
+          "side_drop": 0.0,
+          "back_drop": 0.1,
+          "input_iou": 0.8704497814178467,
+          "visible_face_coverage": 0.0,
+          "raw_projected_face_coverage_diagnostic": 0.5948172807693481,
+          "depth_supported_face_points": 490,
+          "loss": 0.12955021858215332,
+          "held_iou": 0.834139883518219,
+          "worn_iou": 0.8916745781898499
+        },
+        {
+          "source_family": "new_closed_hull",
+          "level_shift": 0.05,
+          "tilt_shift": 0.0,
+          "side_drop": 0.1,
+          "back_drop": 0.0,
+          "input_iou": 0.8707265257835388,
+          "visible_face_coverage": 0.0,
+          "raw_projected_face_coverage_diagnostic": 0.6112196445465088,
+          "depth_supported_face_points": 490,
+          "loss": 0.12927347421646118,
+          "held_iou": 0.8324694037437439,
+          "worn_iou": 0.8942201733589172
+        },
+        {
+          "source_family": "new_closed_hull",
+          "level_shift": 0.05,
+          "tilt_shift": 0.0,
+          "side_drop": 0.1,
+          "back_drop": 0.1,
+          "input_iou": 0.870573103427887,
+          "visible_face_coverage": 0.0,
+          "raw_projected_face_coverage_diagnostic": 0.6112196445465088,
+          "depth_supported_face_points": 490,
+          "loss": 0.12942689657211304,
+          "held_iou": 0.8314943313598633,
+          "worn_iou": 0.8946325778961182
+        }
+      ],
+      "selected": {
+        "source_family": "new_closed_hull",
+        "level_shift": 0.05,
+        "tilt_shift": 0.0,
+        "side_drop": 0.1,
+        "back_drop": 0.0,
+        "input_iou": 0.8707265257835388,
+        "visible_face_coverage": 0.0,
+        "raw_projected_face_coverage_diagnostic": 0.6112196445465088,
+        "depth_supported_face_points": 490,
+        "loss": 0.12927347421646118,
+        "held_iou": 0.8324694037437439,
+        "worn_iou": 0.8942201733589172
+      },
+      "opening_plane_normal_local": [
+        0.3908891467677315,
+        0.40765330983727815,
+        -0.825242057773298
+      ],
+      "opening_level_local": -0.3082197354727182,
+      "opening_up_local": [
+        0.6695075035095215,
+        -0.04001970216631889,
+        -0.7417265176773071
+      ],
+      "opening_front_local": [
+        0.3560938537120819,
+        -0.8590351343154907,
+        0.3677714467048645
+      ],
+      "source_shape": "helmet_body_face_native_vote_v1",
+      "baseline_shell": "helmet_shell_all300_v5",
+      "sources": {
+        "out": "helmet_body_face_depth_aware_profile_v2",
+        "motion": "shared_shape_body_face_object_motion_v1",
+        "avatar": "shared_shape_body_face_motion_v1",
+        "closed_source": "helmet_body_face_native_vote_v1",
+        "smoothing_iterations": 5,
+        "body_depth": "shared_shape_body_face_occlusion_all300_v1",
+        "verify_baseline_only": false,
+        "level_shifts": [
+          -0.05,
+          0.0,
+          0.05
+        ],
+        "tilt_shifts": [
+          0.0
+        ],
+        "side_drops": [
+          0.0,
+          0.1
+        ],
+        "back_drops": [
+          0.0,
+          0.1
+        ],
+        "front_face_visibility": true,
+        "face_anchors": "shared_shape_head_face_anchors_v2",
+        "legacy_raw_face_coverage": false,
+        "face_depth_margin": 0.01
+      },
+      "seconds": 245.03935623168945,
+      "scope": "Shared canonical level/tilt and side/back rim-drop family: fixed source closed hull,30step bounded smoothing and.001world-numerical-unit shell thickness prior; all8x300 native ROI labels plus visible nose/eye non-coverage evidence. Fixed input poses/body-depth for this geometry block. Full-body segmentation, proxy face visibility and source hull remain imperfect. Selected input score is not real cavity/contact/new-view truth. New UV, texture bake, pose/head refit and actual image comparisons required before adoption; baseline reconstruction is asserted exact. Nonplanar signed-field clipping lowers side/back rim relative to the plane without independently generating each frame. This is a low-dimensional opening-shape prior tested against observations, not measured cavity reconstruction. Plane metadata describes the base plane only; chosen side/back drops are explicit in selected. Surface clipping is linear on each source triangle. Face noncoverage uses frozen initial directional visibility from the stated avatar and semantic anchor identity, excluding hand uncertainty and back-camera hallucinations; still model-dependent screening. New closed source compared to the unchanged current-shell control under the SAME updated motion/visibility protocol; no exact-zero-rebuild claim for a different source hull. Bounded smoothing iterations explicitly recorded. Face-coverage selection now excludes helmet surfaces behind the human face: a point contributes only with reliable positive body depth and helmet depth in front by the recorded margin. Fixed body-depth-supported face denominator is independent of candidate coverage; missing body depth is unknown, not bare-depth fallback. Raw alpha projection is retained only as a diagnostic (or explicit legacy reproduction). LHM expected depth remains approximate and this is not physical contact certification.",
+      "visible_face_points": 1309,
+      "smoothing_iterations": 5,
+      "face_coverage_protocol": "mesh_in_front_of_reliable_lhm_depth"
+    },
+    "depth_aware_profile_alternation_v2": {
+      "success": true,
+      "stages": [
+        {
+          "stage": "pose",
+          "success": true,
+          "returncode": 0,
+          "seconds": 406.960599899292
+        },
+        {
+          "stage": "uv",
+          "success": true,
+          "returncode": 0,
+          "seconds": 7.1244213581085205
+        },
+        {
+          "stage": "texture",
+          "success": true,
+          "returncode": 0,
+          "seconds": 85.08527040481567
+        },
+        {
+          "stage": "contacts",
+          "success": true,
+          "returncode": 0,
+          "seconds": 19.232548713684082
+        }
+      ],
+      "seconds": 518.4067397117615,
+      "scope": "One geometry-to-pose-to-UV/native-texture block on a fixed shaped/face-constrained human. Actual identical-camera contacts require visual review. No adoption or full-goal completion."
+    },
+    "helmet_depth_aware_profile_pose_v2": {
+      "success": true,
+      "frames": 300,
+      "observations": 2116,
+      "seconds": 403.1828372478485,
+      "history": [
+        {
+          "step": 0,
+          "loss": 0.1315972615557257,
+          "input_soft_iou": 0.8707280179277936,
+          "material_class_error": 0.0
+        },
+        {
+          "step": 20,
+          "loss": 0.11830588213706505,
+          "input_soft_iou": 0.8843687991338779,
+          "material_class_error": 0.0
+        },
+        {
+          "step": 40,
+          "loss": 0.11861859549389919,
+          "input_soft_iou": 0.8838605351168628,
+          "material_class_error": 0.0
+        },
+        {
+          "step": 60,
+          "loss": 0.11844421999921906,
+          "input_soft_iou": 0.8839756553475033,
+          "material_class_error": 0.0
+        },
+        {
+          "step": 80,
+          "loss": 0.11804303129247273,
+          "input_soft_iou": 0.8843551938385054,
+          "material_class_error": 0.0
+        }
+      ],
+      "coarse_search": [],
+      "phases": [
+        {
+          "start": 36,
+          "stop_exclusive": 48,
+          "joint": 20,
+          "kind": "proposed stable grasp",
+          "relative_R": [
+            [
+              -0.268120933993084,
+              0.7485871393068434,
+              0.6064061836913223
+            ],
+            [
+              0.940566468320111,
+              0.33959316490398517,
+              -0.003346792842237767
+            ],
+            [
+              -0.20843676121670682,
+              0.5694679773392812,
+              -0.7951479983994162
+            ]
+          ],
+          "relative_translation": [
+            0.0505291149020195,
+            -0.08916489034891129,
+            0.016239114105701447
+          ],
+          "median_relative_angle_deg": 8.965077813211947,
+          "max_relative_angle_deg": 14.87578191657929,
+          "median_relative_translation_radius": 0.005597710143774748
+        },
+        {
+          "start": 180,
+          "stop_exclusive": 300,
+          "joint": 15,
+          "kind": "worn helmet head-relative prior",
+          "relative_R": [
+            [
+              0.6755564378360759,
+              0.7238302871330609,
+              -0.14033251486060822
+            ],
+            [
+              0.6517514611470185,
+              -0.6752404515469299,
+              -0.34535541907927925
+            ],
+            [
+              -0.3447369028563066,
+              0.14184515509374593,
+              -0.9279204813913058
+            ]
+          ],
+          "relative_translation": [
+            -0.021822277456521988,
+            0.055681291967630386,
+            0.014393273741006851
+          ],
+          "median_relative_angle_deg": 13.6747884240643,
+          "max_relative_angle_deg": 30.106378534411842,
+          "median_relative_translation_radius": 0.0083067761734128
+        }
+      ],
+      "mean_input_soft_iou_before": 0.8707279562950134,
+      "mean_input_soft_iou_after": 0.8843552470207214,
+      "restored_negative_pixels": 153843,
+      "shared_relative_R": [
+        [
+          [
+            0.04854782670736313,
+            0.7677984237670898,
+            0.6388493180274963
+          ],
+          [
+            0.8931323289871216,
+            0.2529766857624054,
+            -0.3719104528427124
+          ],
+          [
+            -0.4471663534641266,
+            0.5886325240135193,
+            -0.6734642386436462
+          ]
+        ],
+        [
+          [
+            -0.9911606311798096,
+            0.050461798906326294,
+            -0.1226954311132431
+          ],
+          [
+            0.131879985332489,
+            0.47535479068756104,
+            -0.8698533773422241
+          ],
+          [
+            0.014429479837417603,
+            -0.8783457279205322,
+            -0.4778079390525818
+          ]
+        ]
+      ],
+      "shared_relative_translation": [
+        [
+          0.04004364088177681,
+          -0.081273652613163,
+          0.007207110524177551
+        ],
+        [
+          0.00294849113561213,
+          0.05204667150974274,
+          0.007616863120347261
+        ]
+      ],
+      "max_rotation_residual_rad": 0.31329235434532166,
+      "max_translation_residual": 0.01994640752673149,
+      "scope": "All8 main experiment; every300 frame uses real SAM2 candidate masks. Proposed stable-grasp/head-relative phases share transforms with small bounded per-frame residuals; other intervals free.Coarse search skipped during warm-started shape/pose alternation, original calibrated cameras/fixed shared scale. Tri-state silhouette loss restores half-weight negative evidence only when the predicted object is >.01 normalized-world units in front of a conservative LHM expected-depth core, away from hands and boundaries. Model/mask/rotation ambiguity remains. Before/after use same current mask/depth protocol after coarse initialization, not prior masks or held-out evaluation. Saved canonical geometry from the stated initialization is reused; candidate geometry/material provenance is in its source reports. No physical-contact accuracy claim. Worn-phase per-frame axis limits divided by sqrt(3) bound the TOTAL residual rotation/translation norms by the specified values; shared phase transform is still optimized. This enforces an attachment prior, not measured contact or metric-unit accuracy. Tight bounds may expose frozen-head motion errors. Native-image helmet ROI observations mapped to256-square with explicit per-observation pixel-center affine K, preserving much more helmet silhouette detail than256-wide full-frame fitting. Body depth remains the existing coarse cache, conservatively resampled; no extra body-depth accuracy claimed. Before/after are THIS ROI protocol only, not directly comparable to full-frame IoU.",
+      "sources": {
+        "out": "helmet_depth_aware_profile_pose_v2",
+        "steps": 80,
+        "initial": "helmet_body_face_depth_aware_profile_v2",
+        "phase_motion": "shared_shape_body_face_object_motion_v1",
+        "skip_coarse": true,
+        "material_loss_weight": 0.0,
+        "material_mesh": null,
+        "phase_priors": "shared_shape_body_face_phase_anchors_v1",
+        "body_depth": "shared_shape_body_face_occlusion_all300_v1",
+        "opening_direction_weight": 0.0,
+        "crop_observations": true,
+        "worn_rotation_cap_deg": 3.0,
+        "worn_translation_cap": 0.003,
+        "rgb_loss_weight": 0.0,
+        "rgb_texture": null,
+        "rgb_missing_penalty": 0.25,
+        "observation_frames": null,
+        "joint_head_avatar": null,
+        "joint_head_weight": 0.1,
+        "joint_head_face_anchors": null,
+        "joint_head_front_visibility": false,
+        "joint_head_lr": 0.01,
+        "hand_contact_avatar": null,
+        "hand_contact_weight": 0.03
+      },
+      "observed_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        259,
+        260,
+        261,
+        262,
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299
+      ],
+      "body_occlusion_scope": "Stated source avatar saved LHM rig, Gaussian appearance and neural decoder, no helmet clipping. Positive OpenCV Z is opacity-normalized expected Gaussian-center depth, NOT a nearest opaque surface or decoded geometric surface. Extra second-depth moment rejects mixtures with std>=.01 normalized-world units; accumulated and decoded alpha must both exceed.95, then one-pixel eroded. Excluded pixels remain unknown, no bare-depth fallback. Cache hand uncertainty comes unchanged from fitted bare-hand landmarks. Rendering at504x378 and explicit pixel-center K; nearest-exact resampling to existing256x192 cache convention. No metric-unit, correct-contact or novel-view quality claim.",
+      "observation_render_resolution": [
+        256,
+        256
+      ]
+    },
+    "helmet_depth_aware_profile_texture_v2": {
+      "success": true,
+      "seconds": 81.27167558670044,
+      "source_mesh_sha256": "d1db7f3134d1ad127263087fe30d8bd202c157e33428cadb5cea4c4d94059ba2",
+      "source_motion": "helmet_depth_aware_profile_pose_v2",
+      "texture_resolution": [
+        1024,
+        1024
+      ],
+      "frame_stride": 10,
+      "sampled_frames": [
+        0,
+        30,
+        40,
+        50,
+        60,
+        140,
+        150,
+        160,
+        240
+      ],
+      "views": [
+        {
+          "serial": "21305711",
+          "sampled_candidate_frames": 8
+        },
+        {
+          "serial": "21305717",
+          "sampled_candidate_frames": 9
+        },
+        {
+          "serial": "FCM21121414",
+          "sampled_candidate_frames": 3
+        },
+        {
+          "serial": "FCM21121415",
+          "sampled_candidate_frames": 9
+        },
+        {
+          "serial": "FCM21121416",
+          "sampled_candidate_frames": 8
+        },
+        {
+          "serial": "FCM22020159",
+          "sampled_candidate_frames": 9
+        },
+        {
+          "serial": "FCM22020160",
+          "sampled_candidate_frames": 7
+        },
+        {
+          "serial": "FCM22030167",
+          "sampled_candidate_frames": 8
+        }
+      ],
+      "uv_texels": 537768,
+      "observed_uv_texels": 273728,
+      "observed_uv_fraction": 0.5090076017911069,
+      "estimated_area_weighted_observed_fraction": 0.5082909448176107,
+      "class_priors": [
+        {
+          "class": 0,
+          "observed_texels": 272093,
+          "unobserved_texels": 428,
+          "fallback_or_observed_class_median_srgb": [
+            0.5537100434303284,
+            0.5587118864059448,
+            0.5530107617378235
+          ]
+        },
+        {
+          "class": 1,
+          "observed_texels": 0,
+          "unobserved_texels": 262866,
+          "fallback_or_observed_class_median_srgb": [
+            0.03,
+            0.03,
+            0.03
+          ]
+        },
+        {
+          "class": 2,
+          "observed_texels": 1635,
+          "unobserved_texels": 746,
+          "fallback_or_observed_class_median_srgb": [
+            0.10133985430002213,
+            0.10216548293828964,
+            0.10653231292963028
+          ]
+        }
+      ],
+      "color_correction": {
+        "reference_serial": "21305717",
+        "frames": [
+          30,
+          60,
+          90,
+          120,
+          150,
+          180,
+          210,
+          240,
+          270,
+          299
+        ],
+        "correspondences": 1578,
+        "pair_support": [
+          [
+            0,
+            18,
+            0,
+            15,
+            0,
+            0,
+            26,
+            95
+          ],
+          [
+            18,
+            0,
+            138,
+            177,
+            1,
+            68,
+            0,
+            0
+          ],
+          [
+            0,
+            138,
+            0,
+            26,
+            22,
+            58,
+            4,
+            0
+          ],
+          [
+            15,
+            177,
+            26,
+            0,
+            0,
+            1,
+            0,
+            4
+          ],
+          [
+            0,
+            1,
+            22,
+            0,
+            0,
+            235,
+            294,
+            96
+          ],
+          [
+            0,
+            68,
+            58,
+            1,
+            235,
+            0,
+            99,
+            0
+          ],
+          [
+            26,
+            0,
+            4,
+            0,
+            294,
+            99,
+            0,
+            201
+          ],
+          [
+            95,
+            0,
+            0,
+            4,
+            96,
+            0,
+            201,
+            0
+          ]
+        ],
+        "gain_linear_rgb": [
+          [
+            0.3964346945285797,
+            0.41567954421043396,
+            0.3660549223423004
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            0.2916612923145294,
+            0.2995132505893707,
+            0.30177196860313416
+          ],
+          [
+            0.2933211922645569,
+            0.28661391139030457,
+            0.29065683484077454
+          ],
+          [
+            0.3434273898601532,
+            0.3331586718559265,
+            0.33363980054855347
+          ],
+          [
+            0.2865888774394989,
+            0.2912946343421936,
+            0.2884310781955719
+          ],
+          [
+            0.2784121334552765,
+            0.2775475084781647,
+            0.287869930267334
+          ],
+          [
+            0.4527270495891571,
+            0.4519660770893097,
+            0.42526501417160034
+          ]
+        ],
+        "bias_linear_rgb": [
+          [
+            0.002975698094815016,
+            0.002975698094815016,
+            0.002975698094815016
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.00965479388833046,
+            0.00965479388833046,
+            0.00965479388833046
+          ],
+          [
+            -0.009062820114195347,
+            -0.009062820114195347,
+            -0.009062820114195347
+          ],
+          [
+            0.009208847768604755,
+            0.009208847768604755,
+            0.009208847768604755
+          ],
+          [
+            -0.009303642436861992,
+            -0.009303642436861992,
+            -0.009303642436861992
+          ],
+          [
+            0.009329727850854397,
+            0.009329727850854397,
+            0.009329727850854397
+          ],
+          [
+            0.006699677091091871,
+            0.006699677091091871,
+            0.006699677091091871
+          ]
+        ],
+        "robust_color_loss_before": 0.18989744782447815,
+        "robust_color_loss_after": 0.08975376933813095,
+        "scope": "Approximate affine response fit in assumed linearized sRGB, same-time surface correspondences, robust loss, fixed reference camera and bounded coefficients. Not spectral/colorimetric calibration or recovered albedo; clipping, pose error and view-dependent lighting remain. Exposure gain is shared acrossRGB with bounded\u00b12EV, chromatic correction is limited to exp(\u00b1.15), and black-level bias is shared acrossRGB within\u00b1.01 assumed-linear units. This reduces artificial chroma in dark lining; it does not recover missing source detail or guarantee registration.",
+        "appearance_policy": "all-time",
+        "white_shell_support": [],
+        "exposure_prior_gain": [
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "scope": "Real original native PNG multiframe/multicamera UV appearance, two best-angle observations per camera then channelwise weighted median across up to16 samples. Positive candidate labels, native mesh self-depth and surface-class agreement, conservative body depth and hand-unknown exclusion. Unobserved texels explicitly marked and repaired by nearby observed same-class colors or class medians/design fallbacks. Not calibrated albedo, relighting or proof of correct geometry/texture; pose/segmentation/lighting errors remain. Requires actual real/novel-view rendering and held-out evaluation. No raw footage/model weights published. Candidate frames first ranked by same-time corrected cross-camera color consistency, with explicit support/error gates. No stage or observed-dark-lining selection; common pose/color bias can still survive.",
+      "appearance_policy": "all-time",
+      "source_body_depth": "shared_shape_body_face_occlusion_all300_v1",
+      "frame_consistency_selection": {
+        "records": [
+          {
+            "frame": 0,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 113,
+            "corrected_linear_rgb_disagreement": 0.04651198163628578
+          },
+          {
+            "frame": 0,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 10,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 25,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 10,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 20,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 20,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 30,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 101,
+            "corrected_linear_rgb_disagreement": 0.006285957060754299
+          },
+          {
+            "frame": 30,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 17,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 40,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 73,
+            "corrected_linear_rgb_disagreement": 0.011786709539592266
+          },
+          {
+            "frame": 40,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 50,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 84,
+            "corrected_linear_rgb_disagreement": 0.010387427173554897
+          },
+          {
+            "frame": 50,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 15,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 60,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 314,
+            "corrected_linear_rgb_disagreement": 0.047419145703315735
+          },
+          {
+            "frame": 60,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 70,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 416,
+            "corrected_linear_rgb_disagreement": 0.05184277147054672
+          },
+          {
+            "frame": 70,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 80,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 50,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 80,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 90,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 6,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 90,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 100,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 100,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 110,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 6,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 110,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 28,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 120,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 118,
+            "corrected_linear_rgb_disagreement": 0.06392398476600647
+          },
+          {
+            "frame": 120,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 4,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 130,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 130,
+            "corrected_linear_rgb_disagreement": 0.10982688516378403
+          },
+          {
+            "frame": 130,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 140,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 249,
+            "corrected_linear_rgb_disagreement": 0.03677019476890564
+          },
+          {
+            "frame": 140,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 4,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 150,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 294,
+            "corrected_linear_rgb_disagreement": 0.030729273334145546
+          },
+          {
+            "frame": 150,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 4,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 160,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 363,
+            "corrected_linear_rgb_disagreement": 0.024538515135645866
+          },
+          {
+            "frame": 160,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 170,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 331,
+            "corrected_linear_rgb_disagreement": 0.04779364541172981
+          },
+          {
+            "frame": 170,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 180,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 297,
+            "corrected_linear_rgb_disagreement": 0.05263250321149826
+          },
+          {
+            "frame": 180,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 190,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 503,
+            "corrected_linear_rgb_disagreement": 0.08124314993619919
+          },
+          {
+            "frame": 190,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 200,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 468,
+            "corrected_linear_rgb_disagreement": 0.09089035540819168
+          },
+          {
+            "frame": 200,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 210,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 450,
+            "corrected_linear_rgb_disagreement": 0.09789985418319702
+          },
+          {
+            "frame": 210,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 220,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 418,
+            "corrected_linear_rgb_disagreement": 0.09121857583522797
+          },
+          {
+            "frame": 220,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 230,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 476,
+            "corrected_linear_rgb_disagreement": 0.05851577967405319
+          },
+          {
+            "frame": 230,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 240,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 431,
+            "corrected_linear_rgb_disagreement": 0.04455693066120148
+          },
+          {
+            "frame": 240,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 250,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 497,
+            "corrected_linear_rgb_disagreement": 0.08427247405052185
+          },
+          {
+            "frame": 250,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 260,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 459,
+            "corrected_linear_rgb_disagreement": 0.08871717751026154
+          },
+          {
+            "frame": 260,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 270,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 363,
+            "corrected_linear_rgb_disagreement": 0.05589655414223671
+          },
+          {
+            "frame": 270,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 280,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 402,
+            "corrected_linear_rgb_disagreement": 0.09215518087148666
+          },
+          {
+            "frame": 280,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 290,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 374,
+            "corrected_linear_rgb_disagreement": 0.09966743737459183
+          },
+          {
+            "frame": 290,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          },
+          {
+            "frame": 299,
+            "surface_class": 0,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 330,
+            "corrected_linear_rgb_disagreement": 0.09865615516901016
+          },
+          {
+            "frame": 299,
+            "surface_class": 1,
+            "minimum_camera_support": 2,
+            "supported_surface_points": 0,
+            "corrected_linear_rgb_disagreement": null
+          }
+        ],
+        "selected_frames": [
+          0,
+          30,
+          40,
+          50,
+          60,
+          140,
+          150,
+          160,
+          240
+        ],
+        "selected_frames_per_surface_class": {
+          "0": [
+            0,
+            30,
+            40,
+            50,
+            60,
+            140,
+            150,
+            160,
+            240
+          ],
+          "1": []
+        },
+        "minimum_camera_support": 2,
+        "maximum_disagreement": 0.08,
+        "kept_fraction_of_eligible": 0.6,
+        "scope": "Same-time corrected RGB disagreement on common visible candidate surface points, at least64 supported points. Top60percent passing.08 assumed-linear-RGB error gate, per surface class when requested; outer white surfaces must not decide lining visibility. Two-camera support is used for the separately scored cavity because the open hemisphere is seen by fewer cameras; pair agreement has weaker outlier rejection and cannot establish true geometry. No held/worn stage restriction or lining dark-pixel gate."
+      },
+      "source_uv": "helmet_depth_aware_profile_uv_v2",
+      "source_shell": "helmet_body_face_depth_aware_profile_v2"
+    },
+    "depth_aware_profile_input_comparison_v1": {
+      "success": true,
+      "frames": [
+        42,
+        180,
+        299
+      ],
+      "resolution": [
+        1008,
+        756
+      ],
+      "records": [
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "21305711",
+          "frame": 42,
+          "foreground_pixels": 105131,
+          "ssim_interior_pixels": 92933,
+          "foreground_mse_srgb": 0.12375368922948837,
+          "foreground_psnr_db": 9.074418454196284,
+          "foreground_ssim_interior": 0.3801726996898651,
+          "foreground_iou": 0.8246596016385558,
+          "visible_person_iou": 0.8169191347572956,
+          "visible_helmet_iou": 0.7652150145772595,
+          "helmet_psnr_db": 10.202890290133336,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "21305711",
+          "frame": 42,
+          "foreground_pixels": 105131,
+          "ssim_interior_pixels": 92933,
+          "foreground_mse_srgb": 0.11854617297649384,
+          "foreground_psnr_db": 9.261124617787377,
+          "foreground_ssim_interior": 0.3870343267917633,
+          "foreground_iou": 0.8272888852147315,
+          "visible_person_iou": 0.8165901704643184,
+          "visible_helmet_iou": 0.7861464270056993,
+          "helmet_psnr_db": 14.036320684231685,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "21305711",
+          "frame": 180,
+          "foreground_pixels": 128252,
+          "ssim_interior_pixels": 118121,
+          "foreground_mse_srgb": 0.14607959985733032,
+          "foreground_psnr_db": 8.354104294318423,
+          "foreground_ssim_interior": 0.35162001848220825,
+          "foreground_iou": 0.8776264507500036,
+          "visible_person_iou": 0.8763762331500866,
+          "visible_helmet_iou": 0.7023792563043169,
+          "helmet_psnr_db": 5.898716186938223,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "21305711",
+          "frame": 180,
+          "foreground_pixels": 128252,
+          "ssim_interior_pixels": 118121,
+          "foreground_mse_srgb": 0.14639732241630554,
+          "foreground_psnr_db": 8.344668663818451,
+          "foreground_ssim_interior": 0.3481017053127289,
+          "foreground_iou": 0.8804393110086339,
+          "visible_person_iou": 0.8721312712184082,
+          "visible_helmet_iou": 0.7042359115331751,
+          "helmet_psnr_db": 5.755792959864449,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "21305711",
+          "frame": 299,
+          "foreground_pixels": 110469,
+          "ssim_interior_pixels": 99402,
+          "foreground_mse_srgb": 0.14932405948638916,
+          "foreground_psnr_db": 8.258702119645012,
+          "foreground_ssim_interior": 0.37240928411483765,
+          "foreground_iou": 0.8590004931777083,
+          "visible_person_iou": 0.8546714583458415,
+          "visible_helmet_iou": 0.6177285318559557,
+          "helmet_psnr_db": 7.600276679142073,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "21305711",
+          "frame": 299,
+          "foreground_pixels": 110469,
+          "ssim_interior_pixels": 99402,
+          "foreground_mse_srgb": 0.15084978938102722,
+          "foreground_psnr_db": 8.214552918577136,
+          "foreground_ssim_interior": 0.3671128451824188,
+          "foreground_iou": 0.8587950621334537,
+          "visible_person_iou": 0.8554236587298852,
+          "visible_helmet_iou": 0.6189446366782007,
+          "helmet_psnr_db": 7.054274247019357,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "21305717",
+          "frame": 42,
+          "foreground_pixels": 56918,
+          "ssim_interior_pixels": 46647,
+          "foreground_mse_srgb": 0.06806416809558868,
+          "foreground_psnr_db": 11.670814592148291,
+          "foreground_ssim_interior": 0.41819992661476135,
+          "foreground_iou": 0.859226924574841,
+          "visible_person_iou": 0.8206990697047324,
+          "visible_helmet_iou": 0.5382262996941896,
+          "helmet_psnr_db": 11.261249228429717,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "21305717",
+          "frame": 42,
+          "foreground_pixels": 56918,
+          "ssim_interior_pixels": 46647,
+          "foreground_mse_srgb": 0.06976071745157242,
+          "foreground_psnr_db": 11.563890615666491,
+          "foreground_ssim_interior": 0.42145633697509766,
+          "foreground_iou": 0.8594211363120153,
+          "visible_person_iou": 0.8245319495319495,
+          "visible_helmet_iou": 0.6135110294117647,
+          "helmet_psnr_db": 10.36306722159914,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "21305717",
+          "frame": 180,
+          "foreground_pixels": 57464,
+          "ssim_interior_pixels": 47995,
+          "foreground_mse_srgb": 0.11252927035093307,
+          "foreground_psnr_db": 9.487344971217132,
+          "foreground_ssim_interior": 0.3128264844417572,
+          "foreground_iou": 0.8666132184196021,
+          "visible_person_iou": 0.8628984497474308,
+          "visible_helmet_iou": 0.5740013097576948,
+          "helmet_psnr_db": 11.542144443314399,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "21305717",
+          "frame": 180,
+          "foreground_pixels": 57464,
+          "ssim_interior_pixels": 47995,
+          "foreground_mse_srgb": 0.11179789155721664,
+          "foreground_psnr_db": 9.515663869120356,
+          "foreground_ssim_interior": 0.31234636902809143,
+          "foreground_iou": 0.8713567503465784,
+          "visible_person_iou": 0.860308335510844,
+          "visible_helmet_iou": 0.5673335323977307,
+          "helmet_psnr_db": 10.846177401746376,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "21305717",
+          "frame": 299,
+          "foreground_pixels": 57422,
+          "ssim_interior_pixels": 47210,
+          "foreground_mse_srgb": 0.06825075298547745,
+          "foreground_psnr_db": 11.658925528493473,
+          "foreground_ssim_interior": 0.39679813385009766,
+          "foreground_iou": 0.8627584529311603,
+          "visible_person_iou": 0.8588347888503409,
+          "visible_helmet_iou": 0.7094424208461754,
+          "helmet_psnr_db": 10.249424767391046,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "21305717",
+          "frame": 299,
+          "foreground_pixels": 57422,
+          "ssim_interior_pixels": 47210,
+          "foreground_mse_srgb": 0.0692748948931694,
+          "foreground_psnr_db": 11.594241244753757,
+          "foreground_ssim_interior": 0.387932687997818,
+          "foreground_iou": 0.8676834895808034,
+          "visible_person_iou": 0.8573014896815635,
+          "visible_helmet_iou": 0.7020020533880903,
+          "helmet_psnr_db": 8.482671320108276,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM21121414",
+          "frame": 42,
+          "foreground_pixels": 50994,
+          "ssim_interior_pixels": 41532,
+          "foreground_mse_srgb": 0.24975065886974335,
+          "foreground_psnr_db": 6.024933573837964,
+          "foreground_ssim_interior": 0.2681412398815155,
+          "foreground_iou": 0.7365657863048888,
+          "visible_person_iou": 0.7964864723974352,
+          "visible_helmet_iou": null,
+          "helmet_psnr_db": null,
+          "helmet_annotation_known": false
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121414",
+          "frame": 42,
+          "foreground_pixels": 50994,
+          "ssim_interior_pixels": 41532,
+          "foreground_mse_srgb": 0.24953413009643555,
+          "foreground_psnr_db": 6.028700452356773,
+          "foreground_ssim_interior": 0.2685101628303528,
+          "foreground_iou": 0.7360596584075054,
+          "visible_person_iou": 0.8020018548655222,
+          "visible_helmet_iou": null,
+          "helmet_psnr_db": null,
+          "helmet_annotation_known": false
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM21121414",
+          "frame": 180,
+          "foreground_pixels": 51940,
+          "ssim_interior_pixels": 44166,
+          "foreground_mse_srgb": 0.2846080958843231,
+          "foreground_psnr_db": 5.45752750253563,
+          "foreground_ssim_interior": 0.2834581434726715,
+          "foreground_iou": 0.7477731664506816,
+          "visible_person_iou": 0.730979872327066,
+          "visible_helmet_iou": 0.5089894606323621,
+          "helmet_psnr_db": 7.927180270486179,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121414",
+          "frame": 180,
+          "foreground_pixels": 51940,
+          "ssim_interior_pixels": 44166,
+          "foreground_mse_srgb": 0.2878336012363434,
+          "foreground_psnr_db": 5.408585085935624,
+          "foreground_ssim_interior": 0.2712855935096741,
+          "foreground_iou": 0.7497753451515399,
+          "visible_person_iou": 0.7282256660282083,
+          "visible_helmet_iou": 0.4921993911719939,
+          "helmet_psnr_db": 6.908523299501381,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM21121414",
+          "frame": 299,
+          "foreground_pixels": 50761,
+          "ssim_interior_pixels": 41928,
+          "foreground_mse_srgb": 0.28370365500450134,
+          "foreground_psnr_db": 5.471350690752751,
+          "foreground_ssim_interior": 0.2986864447593689,
+          "foreground_iou": 0.8075754747399324,
+          "visible_person_iou": 0.7992945582807586,
+          "visible_helmet_iou": 0.6836120401337793,
+          "helmet_psnr_db": 7.4454875743250915,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121414",
+          "frame": 299,
+          "foreground_pixels": 50761,
+          "ssim_interior_pixels": 41928,
+          "foreground_mse_srgb": 0.29060807824134827,
+          "foreground_psnr_db": 5.366923174747532,
+          "foreground_ssim_interior": 0.2841150760650635,
+          "foreground_iou": 0.8069669365721998,
+          "visible_person_iou": 0.8004666168455972,
+          "visible_helmet_iou": 0.6905920519059205,
+          "helmet_psnr_db": 5.86027267064151,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM21121415",
+          "frame": 42,
+          "foreground_pixels": 77390,
+          "ssim_interior_pixels": 64506,
+          "foreground_mse_srgb": 0.16179366409778595,
+          "foreground_psnr_db": 7.910384895299672,
+          "foreground_ssim_interior": 0.3147815763950348,
+          "foreground_iou": 0.7787055900064922,
+          "visible_person_iou": 0.7595934404630261,
+          "visible_helmet_iou": 0.623564218586843,
+          "helmet_psnr_db": 10.418288723717366,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121415",
+          "frame": 42,
+          "foreground_pixels": 77390,
+          "ssim_interior_pixels": 64506,
+          "foreground_mse_srgb": 0.16230353713035583,
+          "foreground_psnr_db": 7.896720153588807,
+          "foreground_ssim_interior": 0.3147594928741455,
+          "foreground_iou": 0.7792388007923097,
+          "visible_person_iou": 0.7640912905246486,
+          "visible_helmet_iou": 0.6817003628823225,
+          "helmet_psnr_db": 9.98303412556549,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM21121415",
+          "frame": 180,
+          "foreground_pixels": 90110,
+          "ssim_interior_pixels": 77620,
+          "foreground_mse_srgb": 0.2031591683626175,
+          "foreground_psnr_db": 6.9216357363565,
+          "foreground_ssim_interior": 0.3043428063392639,
+          "foreground_iou": 0.8263822518657096,
+          "visible_person_iou": 0.8204111108785297,
+          "visible_helmet_iou": 0.7406841783750764,
+          "helmet_psnr_db": 6.99016303858238,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121415",
+          "frame": 180,
+          "foreground_pixels": 90110,
+          "ssim_interior_pixels": 77620,
+          "foreground_mse_srgb": 0.2013741284608841,
+          "foreground_psnr_db": 6.959963261776808,
+          "foreground_ssim_interior": 0.3060901463031769,
+          "foreground_iou": 0.8275953174538655,
+          "visible_person_iou": 0.8205770985640713,
+          "visible_helmet_iou": 0.7525830773526948,
+          "helmet_psnr_db": 7.674409822831114,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM21121415",
+          "frame": 299,
+          "foreground_pixels": 74686,
+          "ssim_interior_pixels": 61763,
+          "foreground_mse_srgb": 0.20194783806800842,
+          "foreground_psnr_db": 6.94760791764406,
+          "foreground_ssim_interior": 0.33406341075897217,
+          "foreground_iou": 0.8099916461743009,
+          "visible_person_iou": 0.8124763381898562,
+          "visible_helmet_iou": 0.5611862942700835,
+          "helmet_psnr_db": 8.146625010506527,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121415",
+          "frame": 299,
+          "foreground_pixels": 74686,
+          "ssim_interior_pixels": 61763,
+          "foreground_mse_srgb": 0.20288877189159393,
+          "foreground_psnr_db": 6.927419866800635,
+          "foreground_ssim_interior": 0.33141028881073,
+          "foreground_iou": 0.8110157653163041,
+          "visible_person_iou": 0.8133026737444654,
+          "visible_helmet_iou": 0.6131797481918029,
+          "helmet_psnr_db": 7.2692514899026985,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM21121416",
+          "frame": 42,
+          "foreground_pixels": 67354,
+          "ssim_interior_pixels": 55898,
+          "foreground_mse_srgb": 0.08004146069288254,
+          "foreground_psnr_db": 10.966849944352486,
+          "foreground_ssim_interior": 0.32559046149253845,
+          "foreground_iou": 0.8495584707947526,
+          "visible_person_iou": 0.8412400378225043,
+          "visible_helmet_iou": 0.42738589211618255,
+          "helmet_psnr_db": 3.7112120617401168,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121416",
+          "frame": 42,
+          "foreground_pixels": 67354,
+          "ssim_interior_pixels": 55898,
+          "foreground_mse_srgb": 0.08020132035017014,
+          "foreground_psnr_db": 10.958184818894905,
+          "foreground_ssim_interior": 0.32562270760536194,
+          "foreground_iou": 0.8493528765508186,
+          "visible_person_iou": 0.8412400378225043,
+          "visible_helmet_iou": 0.41975308641975306,
+          "helmet_psnr_db": 3.603558591291056,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM21121416",
+          "frame": 180,
+          "foreground_pixels": 80017,
+          "ssim_interior_pixels": 68423,
+          "foreground_mse_srgb": 0.10308218747377396,
+          "foreground_psnr_db": 9.868163740005532,
+          "foreground_ssim_interior": 0.273273766040802,
+          "foreground_iou": 0.8262280770479143,
+          "visible_person_iou": 0.8255326073059891,
+          "visible_helmet_iou": 0.742147344374643,
+          "helmet_psnr_db": 10.930618614007916,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121416",
+          "frame": 180,
+          "foreground_pixels": 80017,
+          "ssim_interior_pixels": 68423,
+          "foreground_mse_srgb": 0.10193029791116714,
+          "foreground_psnr_db": 9.916967064758538,
+          "foreground_ssim_interior": 0.2755562663078308,
+          "foreground_iou": 0.8310743505657716,
+          "visible_person_iou": 0.8224341454904925,
+          "visible_helmet_iou": 0.7148893860303256,
+          "helmet_psnr_db": 10.69371141117227,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM21121416",
+          "frame": 299,
+          "foreground_pixels": 67558,
+          "ssim_interior_pixels": 55980,
+          "foreground_mse_srgb": 0.07327397167682648,
+          "foreground_psnr_db": 11.350502677133223,
+          "foreground_ssim_interior": 0.3512548506259918,
+          "foreground_iou": 0.8495218327991172,
+          "visible_person_iou": 0.8384937469009972,
+          "visible_helmet_iou": 0.7322274881516587,
+          "helmet_psnr_db": 10.681250537158935,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121416",
+          "frame": 299,
+          "foreground_pixels": 67558,
+          "ssim_interior_pixels": 55980,
+          "foreground_mse_srgb": 0.07141787558794022,
+          "foreground_psnr_db": 11.461930725716456,
+          "foreground_ssim_interior": 0.35022231936454773,
+          "foreground_iou": 0.8553710873416891,
+          "visible_person_iou": 0.8432329055683362,
+          "visible_helmet_iou": 0.8190911067623396,
+          "helmet_psnr_db": 10.072094013478598,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM22020159",
+          "frame": 42,
+          "foreground_pixels": 58675,
+          "ssim_interior_pixels": 47623,
+          "foreground_mse_srgb": 0.15137813985347748,
+          "foreground_psnr_db": 8.199368357108423,
+          "foreground_ssim_interior": 0.2677136957645416,
+          "foreground_iou": 0.8205528863706062,
+          "visible_person_iou": 0.8111526479750779,
+          "visible_helmet_iou": 0.7208205128205128,
+          "helmet_psnr_db": 7.796690310931566,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22020159",
+          "frame": 42,
+          "foreground_pixels": 58675,
+          "ssim_interior_pixels": 47623,
+          "foreground_mse_srgb": 0.15301191806793213,
+          "foreground_psnr_db": 8.152747407539323,
+          "foreground_ssim_interior": 0.27197426557540894,
+          "foreground_iou": 0.8268770084721005,
+          "visible_person_iou": 0.8119062105115364,
+          "visible_helmet_iou": 0.8258288988948015,
+          "helmet_psnr_db": 7.32932871899993,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM22020159",
+          "frame": 180,
+          "foreground_pixels": 68090,
+          "ssim_interior_pixels": 59243,
+          "foreground_mse_srgb": 0.20310109853744507,
+          "foreground_psnr_db": 6.922877275678161,
+          "foreground_ssim_interior": 0.1992560476064682,
+          "foreground_iou": 0.8307499835385527,
+          "visible_person_iou": 0.8270942048887668,
+          "visible_helmet_iou": 0.6894990093405038,
+          "helmet_psnr_db": 9.739307172832707,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22020159",
+          "frame": 180,
+          "foreground_pixels": 68090,
+          "ssim_interior_pixels": 59243,
+          "foreground_mse_srgb": 0.203821063041687,
+          "foreground_psnr_db": 6.907509376499946,
+          "foreground_ssim_interior": 0.1931551694869995,
+          "foreground_iou": 0.8353525244278227,
+          "visible_person_iou": 0.825778240785163,
+          "visible_helmet_iou": 0.6735302086155514,
+          "helmet_psnr_db": 8.258615009981142,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM22020159",
+          "frame": 299,
+          "foreground_pixels": 60286,
+          "ssim_interior_pixels": 49476,
+          "foreground_mse_srgb": 0.1754392832517624,
+          "foreground_psnr_db": 7.558731556148493,
+          "foreground_ssim_interior": 0.2541249990463257,
+          "foreground_iou": 0.8144350681143976,
+          "visible_person_iou": 0.7981549927290353,
+          "visible_helmet_iou": 0.7700898276280651,
+          "helmet_psnr_db": 7.533040032139252,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22020159",
+          "frame": 299,
+          "foreground_pixels": 60286,
+          "ssim_interior_pixels": 49476,
+          "foreground_mse_srgb": 0.17857176065444946,
+          "foreground_psnr_db": 7.481872193647398,
+          "foreground_ssim_interior": 0.24400343000888824,
+          "foreground_iou": 0.8155879606350118,
+          "visible_person_iou": 0.7999301304737457,
+          "visible_helmet_iou": 0.8001372055796936,
+          "helmet_psnr_db": 6.416802128738938,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM22020160",
+          "frame": 42,
+          "foreground_pixels": 81599,
+          "ssim_interior_pixels": 69115,
+          "foreground_mse_srgb": 0.06425560265779495,
+          "foreground_psnr_db": 11.92088998778275,
+          "foreground_ssim_interior": 0.39902186393737793,
+          "foreground_iou": 0.8339066501082525,
+          "visible_person_iou": 0.8339066501082525,
+          "visible_helmet_iou": null,
+          "helmet_psnr_db": null,
+          "helmet_annotation_known": false
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22020160",
+          "frame": 42,
+          "foreground_pixels": 81599,
+          "ssim_interior_pixels": 69115,
+          "foreground_mse_srgb": 0.06425560265779495,
+          "foreground_psnr_db": 11.92088998778275,
+          "foreground_ssim_interior": 0.39902186393737793,
+          "foreground_iou": 0.8339066501082525,
+          "visible_person_iou": 0.8339066501082525,
+          "visible_helmet_iou": null,
+          "helmet_psnr_db": null,
+          "helmet_annotation_known": false
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM22020160",
+          "frame": 180,
+          "foreground_pixels": 89986,
+          "ssim_interior_pixels": 77765,
+          "foreground_mse_srgb": 0.07153057307004929,
+          "foreground_psnr_db": 11.455082955740068,
+          "foreground_ssim_interior": 0.3413061201572418,
+          "foreground_iou": 0.8384277284951631,
+          "visible_person_iou": 0.8328996669442131,
+          "visible_helmet_iou": 0.6638537271448663,
+          "helmet_psnr_db": 10.582737220786205,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22020160",
+          "frame": 180,
+          "foreground_pixels": 89986,
+          "ssim_interior_pixels": 77765,
+          "foreground_mse_srgb": 0.07014608383178711,
+          "foreground_psnr_db": 11.539965700771056,
+          "foreground_ssim_interior": 0.3373897075653076,
+          "foreground_iou": 0.8414931513722342,
+          "visible_person_iou": 0.83362476048876,
+          "visible_helmet_iou": 0.7601762484263533,
+          "helmet_psnr_db": 12.297572266963858,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM22020160",
+          "frame": 299,
+          "foreground_pixels": 81218,
+          "ssim_interior_pixels": 68590,
+          "foreground_mse_srgb": 0.06214449554681778,
+          "foreground_psnr_db": 12.065973329839059,
+          "foreground_ssim_interior": 0.4188905358314514,
+          "foreground_iou": 0.820319728037524,
+          "visible_person_iou": 0.8037541323471732,
+          "visible_helmet_iou": 0.6440103647598167,
+          "helmet_psnr_db": 8.677899929127118,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22020160",
+          "frame": 299,
+          "foreground_pixels": 81218,
+          "ssim_interior_pixels": 68590,
+          "foreground_mse_srgb": 0.06002812460064888,
+          "foreground_psnr_db": 12.216452246653214,
+          "foreground_ssim_interior": 0.4171903133392334,
+          "foreground_iou": 0.8215686485208626,
+          "visible_person_iou": 0.8093338018749221,
+          "visible_helmet_iou": 0.7802948579647608,
+          "helmet_psnr_db": 9.676720457121263,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM22030167",
+          "frame": 42,
+          "foreground_pixels": 72028,
+          "ssim_interior_pixels": 62301,
+          "foreground_mse_srgb": 0.07114514708518982,
+          "foreground_psnr_db": 11.478547184328608,
+          "foreground_ssim_interior": 0.3931291997432709,
+          "foreground_iou": 0.8226319516967362,
+          "visible_person_iou": 0.8175448396458973,
+          "visible_helmet_iou": 0.5655322230267922,
+          "helmet_psnr_db": 9.89701128701548,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22030167",
+          "frame": 42,
+          "foreground_pixels": 72028,
+          "ssim_interior_pixels": 62301,
+          "foreground_mse_srgb": 0.07046201825141907,
+          "foreground_psnr_db": 11.520449214315118,
+          "foreground_ssim_interior": 0.3934965431690216,
+          "foreground_iou": 0.8239395212095758,
+          "visible_person_iou": 0.8175304804002526,
+          "visible_helmet_iou": 0.5858310626702997,
+          "helmet_psnr_db": 11.721183812492814,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM22030167",
+          "frame": 180,
+          "foreground_pixels": 65648,
+          "ssim_interior_pixels": 57096,
+          "foreground_mse_srgb": 0.0968124195933342,
+          "foreground_psnr_db": 10.140689255958616,
+          "foreground_ssim_interior": 0.3458348512649536,
+          "foreground_iou": 0.8288015568409103,
+          "visible_person_iou": 0.8253297018348624,
+          "visible_helmet_iou": 0.6739312657166806,
+          "helmet_psnr_db": 8.810467683657414,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22030167",
+          "frame": 180,
+          "foreground_pixels": 65648,
+          "ssim_interior_pixels": 57096,
+          "foreground_mse_srgb": 0.09284210205078125,
+          "foreground_psnr_db": 10.322550351838036,
+          "foreground_ssim_interior": 0.3453124165534973,
+          "foreground_iou": 0.8331195225041524,
+          "visible_person_iou": 0.8216854643802509,
+          "visible_helmet_iou": 0.6264049955396968,
+          "helmet_psnr_db": 9.950847293470753,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "camera": "FCM22030167",
+          "frame": 299,
+          "foreground_pixels": 70727,
+          "ssim_interior_pixels": 61759,
+          "foreground_mse_srgb": 0.05714648589491844,
+          "foreground_psnr_db": 12.430104704894994,
+          "foreground_ssim_interior": 0.41628193855285645,
+          "foreground_iou": 0.8279085661284614,
+          "visible_person_iou": 0.8151619590237947,
+          "visible_helmet_iou": 0.7325467059980334,
+          "helmet_psnr_db": 9.037598627188105,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22030167",
+          "frame": 299,
+          "foreground_pixels": 70727,
+          "ssim_interior_pixels": 61759,
+          "foreground_mse_srgb": 0.05575357750058174,
+          "foreground_psnr_db": 12.537272603172303,
+          "foreground_ssim_interior": 0.4108012616634369,
+          "foreground_iou": 0.8316370683665882,
+          "visible_person_iou": 0.8093320549696389,
+          "visible_helmet_iou": 0.6638735478956389,
+          "helmet_psnr_db": 9.183570680979111,
+          "helmet_annotation_known": true
+        }
+      ],
+      "summary": [
+        {
+          "scene": "shared_scene_shaped_body_face_v1",
+          "weighted_foreground_psnr_db": 8.790673477232989,
+          "mean_foreground_ssim_interior": 0.3342157707860072,
+          "mean_foreground_iou": 0.825830064875261,
+          "mean_visible_helmet_iou": 0.6539578811868859
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "weighted_foreground_psnr_db": 8.79710377112267,
+          "mean_foreground_ssim_interior": 0.33182922067741555,
+          "mean_foreground_iou": 0.8281215345152008,
+          "mean_visible_helmet_iou": 0.6769199466690276
+        }
+      ],
+      "seconds": 35.90495586395264,
+      "scope": "Same calibrated8 input cameras and explicit pixel-center1008x756 rendering, Gaussian-center mesh culling and saved neural decoder. Candidate SAM person/accepted helmet masks define FIXED source-foreground RGB support and eroded11pixel SSIM interior; missing rendered foreground counts as RGB error. White target background used only to avoid raw background contamination in SSIM windows. Mask IoUs include predicted leaks, separate visible body/helmet masks; unknown helmet annotations skipped. No per-candidate exposure fitting or color gains applied, so camera-response/light differences remain. Sampled or all-frame scope explicit. Input-view diagnostics only, not independent novel-view truth or contact certification; original-derived private sheets must not be published."
+    }
+  },
+  "adopted": false,
+  "correction": "Historical face coverage in body_face_20261018.json and older geometry reports is RAW projected helmet alpha, not visible face occlusion. A rear helmet surface can project onto a visible face. Reproduce historical scoring with --legacy-raw-face-coverage. New default requires reliable body depth and a helmet surface in front; unsupported points remain unknown. Only 490/1309 selected points depth-supported here; zero measured front overlap does not prove absence elsewhere.",
+  "scope": "One shared geometry/pose/UV/texture alternating block, fixed human. Three-frame eight-input-camera diagnostics and generated review only; gray texture patches persist. No final quality adoption, independent novel-view truth, or full-goal completion."
+}
