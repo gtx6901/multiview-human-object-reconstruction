@@ -1,0 +1,421 @@
+{
+  "status": "USER_RESUMED_WORK",
+  "reports": {
+    "feet_constraints_all300_v1": {
+      "success": true,
+      "avatar_source": "body_head_faces_all300_v1",
+      "screened_points": 9264,
+      "possible_points": 14400,
+      "triangulated_points": 1800,
+      "median_native_reprojection_px": 10.167007115774876,
+      "contact_frames_per_foot": [
+        172,
+        263
+      ],
+      "contact_segments": [
+        {
+          "side": 0,
+          "start": 30,
+          "stop_exclusive": 64,
+          "frames": 34,
+          "observed_radius_p90_model_units": 0.013950380155103812
+        },
+        {
+          "side": 0,
+          "start": 65,
+          "stop_exclusive": 112,
+          "frames": 47,
+          "observed_radius_p90_model_units": 0.012544567278132747
+        },
+        {
+          "side": 0,
+          "start": 124,
+          "stop_exclusive": 159,
+          "frames": 35,
+          "observed_radius_p90_model_units": 0.007725605736788741
+        },
+        {
+          "side": 0,
+          "start": 160,
+          "stop_exclusive": 175,
+          "frames": 15,
+          "observed_radius_p90_model_units": 0.013039379266893497
+        },
+        {
+          "side": 0,
+          "start": 185,
+          "stop_exclusive": 203,
+          "frames": 18,
+          "observed_radius_p90_model_units": 0.008960859354282685
+        },
+        {
+          "side": 0,
+          "start": 257,
+          "stop_exclusive": 280,
+          "frames": 23,
+          "observed_radius_p90_model_units": 0.01578176625764657
+        },
+        {
+          "side": 1,
+          "start": 1,
+          "stop_exclusive": 15,
+          "frames": 14,
+          "observed_radius_p90_model_units": 0.01445125478875306
+        },
+        {
+          "side": 1,
+          "start": 46,
+          "stop_exclusive": 79,
+          "frames": 33,
+          "observed_radius_p90_model_units": 0.01843361415049269
+        },
+        {
+          "side": 1,
+          "start": 81,
+          "stop_exclusive": 113,
+          "frames": 32,
+          "observed_radius_p90_model_units": 0.009688060423727014
+        },
+        {
+          "side": 1,
+          "start": 116,
+          "stop_exclusive": 300,
+          "frames": 184,
+          "observed_radius_p90_model_units": 0.008604137478937386
+        }
+      ],
+      "seconds": 1.9894933700561523,
+      "rules": {
+        "min_views": 3,
+        "reprojection_native_px": 20,
+        "max_ankle_distance_model_units": 0.35,
+        "min_ray_angle_deg": 3,
+        "contact_speed_model_units_per_sec": 0.08,
+        "speed_filter_window_frames": 21,
+        "min_contact_frames": 12,
+        "contact_radius_p90_model_units": 0.035
+      },
+      "scope": "All8x300 existing native RTMW six-foot detections, fixed calibration, RANSAC with anatomical proximity guard. Contact intervals from low-speed smoothed triangulated toes/heel, at least12 frames, robust observed fixed anchors; gaps remain unlabelled. Not interpolated motion observations, measured physical contact or calibrated metric ground truth. Raw arrays remain private."
+    },
+    "foot_surface_verification_v1": {
+      "success": true,
+      "random_nonzero_beta_samples": 3,
+      "foot_order": [
+        "left_big_toe",
+        "left_small_toe",
+        "left_heel",
+        "right_big_toe",
+        "right_small_toe",
+        "right_heel"
+      ],
+      "max_forward_error": 2.384185791015625e-07,
+      "max_gradient_error": 1.6689300537109375e-06,
+      "scope": "Actual full official LBS comparison for six-foot vertex subset and gradients, with nonzero shape. Validates implementation/indexing, not detection or reconstruction accuracy."
+    },
+    "surface_landmark_with_feet_verification_v2": {
+      "success": true,
+      "samples": 3,
+      "subset_vertices": 148,
+      "model_sha256": "376021446ddc86e99acacd795182bbef903e61d33b76b9d8b359c2b0865bd992",
+      "max_vertex_error": 2.384185791015625e-07,
+      "max_joint_error": 2.980232238769531e-07,
+      "max_coco17_error": 1.341104507446289e-07,
+      "max_axis_angle_gradient_error": 5.364418029785156e-07,
+      "max_left_hand_order_error": 2.980232238769531e-07,
+      "shape": "fixed neutral beta0, matching frozen avatar skeleton",
+      "scope": "Forward and autograd equivalence to full official LBS on random poses. Validates implementation and topology mapping, not detector accuracy, calibration, motion quality or fitted hands."
+    },
+    "grounded_legs_all300_v1": {
+      "success": true,
+      "source_avatar": "body_head_faces_all300_v1",
+      "constraints": "feet_constraints_all300_v1",
+      "steps": 600,
+      "lower_joint_ids": [
+        1,
+        2,
+        4,
+        5,
+        7,
+        8,
+        10,
+        11
+      ],
+      "upper_root_translation_canonical_frozen": true,
+      "before": {
+        "data": 9.515090942382812,
+        "temporal": 7.0113983154296875,
+        "contact_position": 4.7087225914001465,
+        "contact_velocity": 12.072275161743164,
+        "floor": 0.6396982073783875,
+        "foot_native_px": 36.3642463684082,
+        "body_native_px": 22.69991683959961,
+        "foot_d2_model_units_median": 0.015722567215561867,
+        "foot_d2_model_units_p95": 0.06234441325068474,
+        "projected_foot_d2_native_px_median": 7.302408218383789,
+        "contact_speed_model_units_per_sec_median": 0.30689969658851624,
+        "contact_speed_model_units_per_sec_p95": 1.177521824836731
+      },
+      "after": {
+        "data": 4.018929958343506,
+        "temporal": 0.9334758520126343,
+        "contact_position": 0.6091794967651367,
+        "contact_velocity": 0.258872926235199,
+        "floor": 0.05036037787795067,
+        "foot_native_px": 12.295674324035645,
+        "body_native_px": 23.786224365234375,
+        "foot_d2_model_units_median": 0.000950036512222141,
+        "foot_d2_model_units_p95": 0.004229522775858641,
+        "projected_foot_d2_native_px_median": 0.6711964011192322,
+        "contact_speed_model_units_per_sec_median": 0.01533668115735054,
+        "contact_speed_model_units_per_sec_p95": 0.07826819270849228
+      },
+      "history": [
+        {
+          "step": 0,
+          "loss": 27.31586456298828,
+          "data": 9.50173568725586,
+          "temporal": 7.184886455535889,
+          "contact_position": 4.674875736236572,
+          "contact_velocity": 11.779887199401855,
+          "floor": 0.6420556902885437,
+          "foot_native_px": 36.130958557128906,
+          "body_native_px": 23.13009262084961
+        },
+        {
+          "step": 100,
+          "loss": 8.835644721984863,
+          "data": 5.684802055358887,
+          "temporal": 0.9664748907089233,
+          "contact_position": 1.9446760416030884,
+          "contact_velocity": 0.4550413191318512,
+          "floor": 0.1132531464099884,
+          "foot_native_px": 19.653453826904297,
+          "body_native_px": 23.595809936523438
+        },
+        {
+          "step": 200,
+          "loss": 6.680579662322998,
+          "data": 4.460901260375977,
+          "temporal": 0.9539633393287659,
+          "contact_position": 1.0955055952072144,
+          "contact_velocity": 0.3294234275817871,
+          "floor": 0.0372670441865921,
+          "foot_native_px": 14.293622970581055,
+          "body_native_px": 23.611608505249023
+        },
+        {
+          "step": 300,
+          "loss": 6.033646106719971,
+          "data": 4.131390571594238,
+          "temporal": 0.9436585307121277,
+          "contact_position": 0.805708110332489,
+          "contact_velocity": 0.2926279604434967,
+          "floor": 0.042537622153759,
+          "foot_native_px": 12.832093238830566,
+          "body_native_px": 23.650775909423828
+        },
+        {
+          "step": 400,
+          "loss": 5.809744358062744,
+          "data": 4.044361591339111,
+          "temporal": 0.9411816596984863,
+          "contact_position": 0.679583728313446,
+          "contact_velocity": 0.2739582061767578,
+          "floor": 0.05009293928742409,
+          "foot_native_px": 12.427180290222168,
+          "body_native_px": 23.719139099121094
+        },
+        {
+          "step": 500,
+          "loss": 5.730554103851318,
+          "data": 4.02829647064209,
+          "temporal": 0.9349774122238159,
+          "contact_position": 0.627957284450531,
+          "contact_velocity": 0.2626864016056061,
+          "floor": 0.051911864429712296,
+          "foot_native_px": 12.34077262878418,
+          "body_native_px": 23.775848388671875
+        },
+        {
+          "step": 600,
+          "loss": 5.6989336013793945,
+          "data": 4.018929958343506,
+          "temporal": 0.9334758520126343,
+          "contact_position": 0.6091794967651367,
+          "contact_velocity": 0.258872926235199,
+          "floor": 0.05036037787795067,
+          "foot_native_px": 12.295674324035645,
+          "body_native_px": 23.786224365234375
+        }
+      ],
+      "seconds": 15.938839673995972,
+      "scope": "Single lower-body block on original accepted canonical human; eight views/all300 source observations. Foot6 data, hip/knee/ankle body data, model-normalized positional acceleration and SO3 matrix rotation acceleration at30fps, fixed observed contact anchors/low stance speed and fitted approximate contact plane. Root/upper body/fingers/beta/scale/appearance exactly unchanged. Foot-plane is an anatomical contact approximation, not measured shoe sole. Actual saved LHM render and integrated helmet sequence comparison required before adoption."
+    },
+    "grounded_legs_integrated_review_v1": {
+      "success": true,
+      "selected_real_camera_frames": [
+        0,
+        30,
+        42,
+        60,
+        90,
+        120,
+        135,
+        145,
+        155,
+        165,
+        175,
+        180,
+        190,
+        200,
+        210,
+        225,
+        240,
+        260,
+        280,
+        299
+      ],
+      "real_cameras": 8,
+      "continuous_novel_frames": [
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "videos": [
+        {
+          "novel_camera": 0,
+          "decoded_frames": 51
+        },
+        {
+          "novel_camera": 1,
+          "decoded_frames": 51
+        }
+      ],
+      "resolution_per_panel": [
+        567,
+        756
+      ],
+      "seconds": 69.4924590587616,
+      "scope": "Actual saved original accepted LHM canonical rig/features/decoder/upper body and SAME helmet mesh/texture/motion; only lower-body pose changes. 20phase-spanning frames at all8 true cameras, original photo sheets PRIVATE; generated sheets/videos contain only model renders. Two fixed novel cameras51continuous frames45..95 before/after. Actual image review required; selected sequence is not a full300-frame video."
+    },
+    "grounded_legs_rendered_jitter_v1": {
+      "success": true,
+      "records": [
+        {
+          "camera": 0,
+          "version": "before",
+          "frames": 51,
+          "fixed_roi": [
+            103,
+            673,
+            305,
+            728
+          ],
+          "body_height_pixels": 602,
+          "foot_region_centroid_d2_abs_median_pixels": 3.554724556906905,
+          "foot_region_centroid_d2_abs_p95_pixels": 9.104289881864151,
+          "normalized_median_per_thousand_height": 5.904858067951669,
+          "normalized_p95_per_thousand_height": 15.123405119375667
+        },
+        {
+          "camera": 0,
+          "version": "grounded_legs",
+          "frames": 51,
+          "fixed_roi": [
+            103,
+            673,
+            305,
+            728
+          ],
+          "body_height_pixels": 602,
+          "foot_region_centroid_d2_abs_median_pixels": 0.2627295372639651,
+          "foot_region_centroid_d2_abs_p95_pixels": 0.9868493854984016,
+          "normalized_median_per_thousand_height": 0.43642780276406157,
+          "normalized_p95_per_thousand_height": 1.6392846935189396
+        },
+        {
+          "camera": 1,
+          "version": "before",
+          "frames": 51,
+          "fixed_roi": [
+            173,
+            675,
+            409,
+            729
+          ],
+          "body_height_pixels": 598,
+          "foot_region_centroid_d2_abs_median_pixels": 1.340463313109126,
+          "foot_region_centroid_d2_abs_p95_pixels": 3.646346078959322,
+          "normalized_median_per_thousand_height": 2.241577446670779,
+          "normalized_p95_per_thousand_height": 6.09756869391191
+        },
+        {
+          "camera": 1,
+          "version": "grounded_legs",
+          "frames": 51,
+          "fixed_roi": [
+            173,
+            675,
+            409,
+            729
+          ],
+          "body_height_pixels": 598,
+          "foot_region_centroid_d2_abs_median_pixels": 0.18261064688118722,
+          "foot_region_centroid_d2_abs_p95_pixels": 0.4365117580307012,
+          "normalized_median_per_thousand_height": 0.30536897471770436,
+          "normalized_p95_per_thousand_height": 0.7299527726265906
+        }
+      ],
+      "scope": "Independent measurement from actually decoded generated before/after videos,51continuous frames45..95. RGB min-channel<230 foreground; SAME fixed bottom9percent of combined body-height bounding box per camera and both versions. Horizontal centroid of combined foot region, absolute second differences normalized by body height. Includes neural decoding/video encoding. Region can include ankle pixels; this is rendered temporal stability, not source-motion or contact accuracy. Both source-view comparison and animation require review."
+    }
+  },
+  "scope": "Lower-body stage of the resumed integrated project. Original accepted human appearance/shape/upper motion, fixed helmet motion/texture/shape. All300 feet fitted; actual render comparisons20phase-spanning times x8 real cameras and51continuous frames x2 novel directions. Further worn-head/helmet/hair and appearance/backpack work remains. Original assets preserved; raw videos/calibration/licensed human tensors/private source panels not published."
+}

@@ -31,8 +31,8 @@
   },
   {
     "file": "research/interaction_20261017/smplx_surface_landmarks.py",
-    "local_source_sha256": "fc5755de56fee07ad925867a1db2beb3fef1133bdcae4311bd0f6913dc7be09f",
-    "published_sha256": "d522d08f59fb4bd856948f6b33e6ce281655f509a905319a893349fac5d2f69b"
+    "local_source_sha256": "38c1f7fc51874899bac8eae8815e83c9645c185c95231a10eb4f9fef5cb3ac32",
+    "published_sha256": "99b7db26cbf78b04f4317f8aee0648257e54b90d12a9f2efcfbd9dfee8e04480"
   },
   {
     "file": "research/interaction_20261017/observe_full_action.py",

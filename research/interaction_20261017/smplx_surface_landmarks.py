@@ -22,10 +22,14 @@ class SMPLXSurfaceLandmarks(torch.nn.Module):
         assert coco.shape==(17,10475) and torch.isfinite(coco).all()
         assert torch.allclose(coco.sum(1),torch.ones(17),atol=1e-4)
         tips=torch.tensor([5361,4933,5058,5169,5286,8079,7669,7794,7905,8022])
-        ids=torch.unique(torch.cat([torch.where(coco.abs().sum(0)>0)[0],tips]),sorted=True)
+        from smplx.vertex_ids import vertex_ids
+        foot_names=['LBigToe','LSmallToe','LHeel','RBigToe','RSmallToe','RHeel']
+        feet=torch.tensor([vertex_ids['smplx'][name] for name in foot_names])
+        ids=torch.unique(torch.cat([torch.where(coco.abs().sum(0)>0)[0],tips,feet]),sorted=True)
         self.register_buffer('vertex_ids',ids)
         self.register_buffer('coco_regressor',coco[:,ids])
         self.register_buffer('tip_subset_ids',torch.searchsorted(ids,tips))
+        self.register_buffer('foot_subset_ids',torch.searchsorted(ids,feet))
         template=torch.tensor(d['v_template'],dtype=torch.float32)
         jreg=torch.tensor(d['J_regressor'],dtype=torch.float32)
         rest=jreg@template
@@ -67,6 +71,9 @@ class SMPLXSurfaceLandmarks(torch.nn.Module):
             joint=joints[:,ids];tip=vertices[:,self.tip_subset_ids[side*5:side*5+5]]
             hands.append(torch.cat([joint[:,:1],torch.stack([torch.cat([joint[:,1+i*3:4+i*3],tip[:,i:i+1]],1) for i in range(5)],1).reshape(B,20,3)],1))
         hands=torch.stack(hands,1)
+        feet=vertices[:,self.foot_subset_ids]
         if scale is not None:coco=coco*scale;hands=hands*scale;joints=joints*scale
+        if scale is not None:feet=feet*scale
         if translation is not None:coco=coco+translation[:,None];hands=hands+translation[:,None,None];joints=joints+translation[:,None]
-        return {'coco17':coco,'hands21':hands,'joints55':joints,'vertices_subset':vertices}
+        if translation is not None:feet=feet+translation[:,None]
+        return {'coco17':coco,'hands21':hands,'feet6':feet,'joints55':joints,'vertices_subset':vertices}

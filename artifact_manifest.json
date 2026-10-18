@@ -77,6 +77,11 @@
       "sha256": "3cf7fffff8280f7c233115d5bdc87b410a622666c85bea8db9dfb1d1662ac387"
     },
     {
+      "path": "evidence/grounded_legs_20261018.json",
+      "bytes": 14465,
+      "sha256": "85f47ae32205404a04d8691461a78eaee8d476c9d475b155b1340ed94ee7417d"
+    },
+    {
       "path": "evidence/helmet_followup_20261018.json",
       "bytes": 5154,
       "sha256": "0ec01bb62b2f7dc8a253111f89381eff921c76ab0fc0bfbb47cef0b073fee3f1"
@@ -109,7 +114,7 @@
     {
       "path": "evidence/optimization_source_mapping.json",
       "bytes": 11209,
-      "sha256": "796d85b76438e1abb95d3a4ed74291c9aa15a8e6ccb33a7c230cc10fbda337e6"
+      "sha256": "f19aacf727277516d3aaf2e2331ed91893e05e0dbb3999168e53e3508a61c587"
     },
     {
       "path": "evidence/outer_scene_20261018.json",
@@ -195,6 +200,31 @@
       "path": "media/depth_aware_helmet_generated_comparison.jpg",
       "bytes": 33840,
       "sha256": "de29533c2a34358d0c5a6a9e20e4e294641863a0da8fac4dd8b07bc052607af6"
+    },
+    {
+      "path": "media/grounded_legs_camera0_feet.gif",
+      "bytes": 795650,
+      "sha256": "98e8cbf14063b829bc2dda341e75c812dcecc0094f66fbad2540bd265ba08c0b"
+    },
+    {
+      "path": "media/grounded_legs_camera1_feet.gif",
+      "bytes": 761216,
+      "sha256": "b79d6ef5c7e3287ffd422c0bdc43f4233208e9c4bf952e507bef164cd4154747"
+    },
+    {
+      "path": "media/grounded_legs_generated_comparison.jpg",
+      "bytes": 60206,
+      "sha256": "190051b4fccfb2a9dd0ff6994067a0b1b8227b42a1e3aabb07f6b512219ec4ea"
+    },
+    {
+      "path": "media/grounded_legs_novel_0_before_after.mp4",
+      "bytes": 104957,
+      "sha256": "8264af1bd6f5e56ace4423457eaf97a3994cbea6cf0abb6475fe419ba829f2fa"
+    },
+    {
+      "path": "media/grounded_legs_novel_1_before_after.mp4",
+      "bytes": 151324,
+      "sha256": "303277e0973721ec9ae0c5614af116bdc3184dd3c96a006df716a9074f903867"
     },
     {
       "path": "media/helmet_full300_color_candidate.jpg",
@@ -353,8 +383,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 18093,
-      "sha256": "b0231f27444308a0ea9840099d0aa9ff2b68e3846c103143609347cb71c5e791"
+      "bytes": 19712,
+      "sha256": "97ef4cf4a893b9c5a45a0079fe54fdd8fe3ab64c5228f3702150e1d80fbe5f23"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -562,6 +592,11 @@
       "sha256": "c11d208f2726e442776a6b7a84f1934612fa883b97fd14ca40f24316d254c540"
     },
     {
+      "path": "research/interaction_20261017/fit_grounded_legs.py",
+      "bytes": 7316,
+      "sha256": "1341215bd5eeb8bebc5f51b11f2d8cbba6b5eed6d421162dc80e0264235a46b2"
+    },
+    {
       "path": "research/interaction_20261017/fit_inspection_opening_plane.py",
       "bytes": 5400,
       "sha256": "2120deae5d6aebbafe4fc7ff5dad577c27c1b378afd36d6e84c00af3fd6fa4b3"
@@ -707,6 +742,11 @@
       "sha256": "d3855759aa59f29f37529732418049e5debb8be75ca27fc42f231726cf200a23"
     },
     {
+      "path": "research/interaction_20261017/measure_rendered_foot_jitter.py",
+      "bytes": 2673,
+      "sha256": "370fa244c1f5a8eae4fa2e633e699b0bbcc19b82e3d9fcdad44e1dd4ca8b70e2"
+    },
+    {
       "path": "research/interaction_20261017/merge_joint_head_depth_cache.py",
       "bytes": 2886,
       "sha256": "d29ea9c76886158e906801fae329110fbd236ee051085ec0b045b2560f8d2cbf"
@@ -755,6 +795,11 @@
       "path": "research/interaction_20261017/prepare_face_head_helmet_priors.py",
       "bytes": 2382,
       "sha256": "611e60eeb4d06104091d6e64146690528c878284b06de3849a4f09b5163cc8a9"
+    },
+    {
+      "path": "research/interaction_20261017/prepare_foot_constraints.py",
+      "bytes": 4778,
+      "sha256": "de2f6f66ab196b376a2df20f1e8786a674b35b38914b48ff1f2fc6a46f492aa5"
     },
     {
       "path": "research/interaction_20261017/prepare_helmet.py",
@@ -822,9 +867,14 @@
       "sha256": "2b92487b82016c325016fee02156ed393ea1daa9107cc6ca26adebc59d16f750"
     },
     {
+      "path": "research/interaction_20261017/render_grounded_leg_review.py",
+      "bytes": 6733,
+      "sha256": "45359f895589b68857f3a4b7635efe8ba9113af523014abe83df6548dda2b07d"
+    },
+    {
       "path": "research/interaction_20261017/repair_derived_body_projection.py",
-      "bytes": 2169,
-      "sha256": "ddea7b3da82b850408399915417492a311ddfb1b48d29394f72f5ec48209e49e"
+      "bytes": 2279,
+      "sha256": "1396f2ecab44d857f5583eb9570119abec4ce8060f9703ff983aec43683bbe32"
     },
     {
       "path": "research/interaction_20261017/replay_coconet_batch.py",
@@ -938,8 +988,8 @@
     },
     {
       "path": "research/interaction_20261017/smplx_surface_landmarks.py",
-      "bytes": 4625,
-      "sha256": "d522d08f59fb4bd856948f6b33e6ce281655f509a905319a893349fac5d2f69b"
+      "bytes": 5083,
+      "sha256": "99b7db26cbf78b04f4317f8aee0648257e54b90d12a9f2efcfbd9dfee8e04480"
     },
     {
       "path": "research/interaction_20261017/texture_consensus.py",
@@ -987,6 +1037,11 @@
       "sha256": "2335115bbf1e72db3697e41bda82c4fbd3652080fe834f86c73964788b0735d5"
     },
     {
+      "path": "research/interaction_20261017/verify_foot_landmarks.py",
+      "bytes": 2034,
+      "sha256": "189b21fbae35699306dd42451d81d5c7425d6b20adf7350320595277c3c240b9"
+    },
+    {
       "path": "research/interaction_20261017/verify_helmet_profile_geometry.py",
       "bytes": 2500,
       "sha256": "728db0477ec183fb8708b63b6582848166c61123421a030b15f88ae655df2dd2"
@@ -1020,6 +1075,11 @@
       "path": "research/interaction_20261017/verify_shared_scene_update.py",
       "bytes": 2171,
       "sha256": "e85edd70c6f85e4678a7f17e2d36b84a9e708d611dbe19ff3f619f93fa8f327b"
+    },
+    {
+      "path": "research/interaction_20261017/verify_surface_landmarks.py",
+      "bytes": 2910,
+      "sha256": "4264a0340da51320f7cef721b9864123ff1044028775b9f2c4599040545b9b01"
     },
     {
       "path": "research/interaction_20261017/verify_texture_consensus.py",
