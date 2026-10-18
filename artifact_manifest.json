@@ -167,6 +167,11 @@
       "sha256": "bfbb3716d5169957405c3168d1da1bc456a2d7698e980215d4f3d48775877132"
     },
     {
+      "path": "evidence/user_pause_20261018.json",
+      "bytes": 49471,
+      "sha256": "f9f35012794de0fdae039c85381a1d2753dc35e4d55a2ffa85229ed5b78f6907"
+    },
+    {
       "path": "media/backpack_actor_canonical72.jpg",
       "bytes": 163518,
       "sha256": "ecbf0efc31ddf6880ced33aa520c7562699bd826f85781daf41d880f8b0c0fe6"
@@ -282,6 +287,11 @@
       "sha256": "4d33e4b2936461b8fdb5ed7264b2c7ae881a495c88eb87fc88322975a057ef98"
     },
     {
+      "path": "media/shaped_human_features_generated_control.jpg",
+      "bytes": 33985,
+      "sha256": "91c68ebd095e3f30a8bdb19e938e0cd9159f9ba9533d7bca0fe5e504b234879d"
+    },
+    {
       "path": "media/shared_feature_frame299_comparison.jpg",
       "bytes": 57246,
       "sha256": "8cb9d478cb5091dcf8e3186a2fa1bbdf8589ed2476a040d26d0cab0436cba6a7"
@@ -343,8 +353,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 17111,
-      "sha256": "16452e76b152ef141889e82f98a1594a83feaa1304eaff7c96abdc4120b74aa2"
+      "bytes": 18093,
+      "sha256": "b0231f27444308a0ea9840099d0aa9ff2b68e3846c103143609347cb71c5e791"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -588,8 +598,8 @@
     },
     {
       "path": "research/interaction_20261017/fit_shared_helmet_opening.py",
-      "bytes": 13909,
-      "sha256": "a6521e5794b512901beab4a88210107b0f73eada69855d979946353e4cb6af2a"
+      "bytes": 17344,
+      "sha256": "1b6c7a5596ec3ad19ff507532c1cc80edf7a083f966b93bc659516c9a2490766"
     },
     {
       "path": "research/interaction_20261017/fit_shared_shape_motion.py",
@@ -867,6 +877,11 @@
       "sha256": "b06ba374312c0ab577606b6a500ab106dfb069732ac06354dd934d52cdb8d931"
     },
     {
+      "path": "research/interaction_20261017/run_shaped_appearance_refinement.py",
+      "bytes": 1781,
+      "sha256": "3bef2b9e9bd40e5bf126a4c11c8fad05c7eaf673ebefc611009b5c1284784c2b"
+    },
+    {
       "path": "research/interaction_20261017/run_unidepth_shortclip.py",
       "bytes": 4786,
       "sha256": "de4fec1d95c8846559d450688860c63c6ee1b682e019d56040fca436dc9738fe"
@@ -880,6 +895,11 @@
       "path": "research/interaction_20261017/search_helmet_rotation_modes.py",
       "bytes": 10017,
       "sha256": "9ee75be31a962b1735256f9e063f68beea4e2e2b0ab0ab86a810d5676922249c"
+    },
+    {
+      "path": "research/interaction_20261017/search_shared_helmet_phase.py",
+      "bytes": 9316,
+      "sha256": "f001286da592b665a5df55dfff05f0526d5d56cf3af892ea7d0a1e4d4ddd254b"
     },
     {
       "path": "research/interaction_20261017/segment_full_action_sam2.py",
@@ -903,8 +923,8 @@
     },
     {
       "path": "research/interaction_20261017/SHARED_MODEL_PLAN.md",
-      "bytes": 2918,
-      "sha256": "151748da39a87498b1295c9d2a42035c2fce76757115be960bf6a7507e95efff"
+      "bytes": 3064,
+      "sha256": "ddaccb39240666daf2e7a4435437ab3c336d7e6ac0ab23104e0c239ca3509e34"
     },
     {
       "path": "research/interaction_20261017/shared_scene.py",
@@ -945,6 +965,11 @@
       "path": "research/interaction_20261017/unwrap_helmet_shell.py",
       "bytes": 2864,
       "sha256": "5788ae4e4322e26c33f1d3dec78c368d59ea40aedb4990306ccc6f82f8752ccd"
+    },
+    {
+      "path": "research/interaction_20261017/USER_PAUSE_20261018.md",
+      "bytes": 2796,
+      "sha256": "59a117ebe32e8ce936358c83d4358326fef7fd012acb47a75fe0317f79148c8b"
     },
     {
       "path": "research/interaction_20261017/verify_batched_depth.py",
