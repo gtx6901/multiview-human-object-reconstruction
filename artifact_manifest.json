@@ -87,6 +87,11 @@
       "sha256": "3cf7fffff8280f7c233115d5bdc87b410a622666c85bea8db9dfb1d1662ac387"
     },
     {
+      "path": "evidence/garment_body_features_20261018.json",
+      "bytes": 96027,
+      "sha256": "4bf46553a1d8b76d362f8f12b1df6bedda42d305ab639750e2bf10cc068dbe7e"
+    },
+    {
       "path": "evidence/garment_support_correction_20261018.json",
       "bytes": 49462,
       "sha256": "1cfa8c5612e1075aaca53d5e1d1e278cd357f55bc746445f5e7b7ef6f641fc79"
@@ -129,7 +134,7 @@
     {
       "path": "evidence/optimization_source_mapping.json",
       "bytes": 13932,
-      "sha256": "ea931854fe63b79ff45e054086478d1213d045b47cf07082fd4610105b0c6deb"
+      "sha256": "d66a456dbd6b4b90e2b99059c1c726fded384c4de39b576bd532ab8ded4ac337"
     },
     {
       "path": "evidence/outer_scene_20261018.json",
@@ -197,6 +202,11 @@
       "sha256": "f9f35012794de0fdae039c85381a1d2753dc35e4d55a2ffa85229ed5b78f6907"
     },
     {
+      "path": "GARMENT_BODY_FEATURE_STAGE.md",
+      "bytes": 1632,
+      "sha256": "30505e01d4e40a79bdd0109703d247d6cd96ec74736f1b33244f4352cec6eac7"
+    },
+    {
       "path": "GARMENT_SUPPORT_CORRECTION.md",
       "bytes": 1426,
       "sha256": "dad7c40e7fcef14dd8dfb182e1215a60dc692b9083131c082050b45bdd29ab31"
@@ -255,6 +265,41 @@
       "path": "media/depth_aware_helmet_generated_comparison.jpg",
       "bytes": 33840,
       "sha256": "de29533c2a34358d0c5a6a9e20e4e294641863a0da8fac4dd8b07bc052607af6"
+    },
+    {
+      "path": "media/garment_body_features_all8_0042_generated.jpg",
+      "bytes": 121886,
+      "sha256": "06bf2ab5e2a1a5cceca270a76232ded149657b7e879a332209dbf800c8678e1c"
+    },
+    {
+      "path": "media/garment_body_features_all8_0165_generated.jpg",
+      "bytes": 126484,
+      "sha256": "2ac128b22c320eba3269c1ee5aa756c1231c9fac6199449ea298f6b81cfce594"
+    },
+    {
+      "path": "media/garment_body_features_all8_0225_generated.jpg",
+      "bytes": 121054,
+      "sha256": "b9860655e3e96bc57b43d155d701591f9341c18f2a7b88582832ae1c5b8c3615"
+    },
+    {
+      "path": "media/garment_body_features_all8_0299_generated.jpg",
+      "bytes": 118966,
+      "sha256": "69a9ea43effb3ecea275d98b3363b5f2b40e7f3e146faee0e6fa218ab75df4b8"
+    },
+    {
+      "path": "media/garment_body_features_novel0_keyframes.mp4",
+      "bytes": 304997,
+      "sha256": "4431234f7e096878aff929abbab947ab2d9468be70cc9ed945b3bc4cb5686332"
+    },
+    {
+      "path": "media/garment_body_features_novel1_keyframes.mp4",
+      "bytes": 287706,
+      "sha256": "d6053efc6f0ea2fb8f60f0af606a68425c7568dd27884a0d1fe02b0d6976ef70"
+    },
+    {
+      "path": "media/garment_features165_threeway_generated.jpg",
+      "bytes": 49537,
+      "sha256": "a40732465c3bc4387e83d26035b5fcf4b7c00e7e26986f8575119dfd830909a2"
     },
     {
       "path": "media/grounded_legs_camera0_feet.gif",
@@ -473,8 +518,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 24754,
-      "sha256": "e94f73de056115e5973a3c5a11f1939f158eace6a7dedbeec20ef2994a0ac756"
+      "bytes": 26443,
+      "sha256": "a6e7511ad3b8c241fd78e0041301e5d1411ac11420dab11c6d6abbceb040c8ef"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -568,8 +613,8 @@
     },
     {
       "path": "research/interaction_20261017/audit_underarm_support.py",
-      "bytes": 4699,
-      "sha256": "87483b9ff9b6836e4ceecee1d067e52af96bb44332904b7ba10906c1b7962f52"
+      "bytes": 5568,
+      "sha256": "2fa11b4eb0f66604dd5b03c2da6b43c20d7d4277ca5f94cea94e545cc8653d8d"
     },
     {
       "path": "research/interaction_20261017/audit_visible_face_overlap.py",
@@ -988,8 +1033,8 @@
     },
     {
       "path": "research/interaction_20261017/run_aligned_body_feature_review.py",
-      "bytes": 2539,
-      "sha256": "b1d6d57e60a449acb5295f07fc4d8da25b326606818bbd77bd5ac1760fec3eb3"
+      "bytes": 2794,
+      "sha256": "1ba91d62b4e241817300cf1d34eedc25c1cf332ae8aa340e80bf7c333dcc05a3"
     },
     {
       "path": "research/interaction_20261017/run_blender_human_static.py",

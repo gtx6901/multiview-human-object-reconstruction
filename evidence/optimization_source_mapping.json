@@ -235,19 +235,19 @@
     "published_sha256": "73e74f3b9ec51207bc3c8465e815e53624fee1197e814dd05046c154771e8014"
   },
   {
-    "file": "research/interaction_20261017/refine_shared_human_features.py",
-    "local_source_sha256": "0a155e34f9b7aeef9725d053e83330b6aa55f765f4ca91b25cdd016567b778c8",
-    "published_sha256": "9fc35238246e270c1bea8e1c5f9918a4f397fe752ec1362d6436f96e5eddb6f3"
+    "file": "research/interaction_20261017/audit_underarm_support.py",
+    "local_source_sha256": "9f4ef25d3e7eb10aac2a578a3be62b7945d13b65bc5975a21d3773857beba6bf",
+    "published_sha256": "2fa11b4eb0f66604dd5b03c2da6b43c20d7d4277ca5f94cea94e545cc8653d8d"
   },
   {
     "file": "research/interaction_20261017/run_aligned_body_feature_review.py",
-    "local_source_sha256": "789ab18bb252e44d55173dcd021344a00b9c7ee95f45afe46107f40f172e42c9",
-    "published_sha256": "b1d6d57e60a449acb5295f07fc4d8da25b326606818bbd77bd5ac1760fec3eb3"
+    "local_source_sha256": "ebbd01158b5279fa58b027dc5a6fbcf9baf41665ead6d31ee685141e282a569d",
+    "published_sha256": "1ba91d62b4e241817300cf1d34eedc25c1cf332ae8aa340e80bf7c333dcc05a3"
   },
   {
-    "file": "research/interaction_20261017/verify_shared_feature_contract.py",
-    "local_source_sha256": "510d834542e1309408741205e7594aa5f8202084cc465c3f9d0a7b8a443925e8",
-    "published_sha256": "bd12c38213a64ff275c73e7f97f1b8c4b88137a81ce05a6f539fd5d4c866b5db"
+    "file": "research/interaction_20261017/refine_shared_human_features.py",
+    "local_source_sha256": "0a155e34f9b7aeef9725d053e83330b6aa55f765f4ca91b25cdd016567b778c8",
+    "published_sha256": "9fc35238246e270c1bea8e1c5f9918a4f397fe752ec1362d6436f96e5eddb6f3"
   },
   {
     "file": "research/interaction_20261017/prepare_shared_human_observations.py",
@@ -255,8 +255,8 @@
     "published_sha256": "8aaf7f7671ec8bd27085fe76e35eb0b6d3572ab5ee98494424b957ba36306cce"
   },
   {
-    "file": "research/interaction_20261017/audit_underarm_support.py",
-    "local_source_sha256": "2cd448426cae7b04dd12b77f4d846d45ed30a4538f928d0272449a2958535ac0",
-    "published_sha256": "87483b9ff9b6836e4ceecee1d067e52af96bb44332904b7ba10906c1b7962f52"
+    "file": "research/interaction_20261017/verify_shared_feature_contract.py",
+    "local_source_sha256": "510d834542e1309408741205e7594aa5f8202084cc465c3f9d0a7b8a443925e8",
+    "published_sha256": "bd12c38213a64ff275c73e7f97f1b8c4b88137a81ce05a6f539fd5d4c866b5db"
   }
 ]

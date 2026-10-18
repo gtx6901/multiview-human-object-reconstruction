@@ -5,7 +5,7 @@ import sys,json,time,argparse
 ROOT=Path(__file__).resolve().parent;sys.path[:0]=[str(ROOT/'deps'),str(ROOT.parent/'lhmpp_20261016/deps')]
 import numpy as np,torch,cv2
 from PIL import Image,ImageDraw
-p_arg=argparse.ArgumentParser();p_arg.add_argument('--cache',default='overhead_body_aligned_observations_all300_v2');p_arg.add_argument('--out',default='underarm_support_audit_v2');o=p_arg.parse_args()
+p_arg=argparse.ArgumentParser();p_arg.add_argument('--cache',default='overhead_body_aligned_observations_all300_v2');p_arg.add_argument('--out',default='underarm_support_audit_v2');p_arg.add_argument('--after',help='Optional same-camera render for fixed initial underarm-error pixel comparison');o=p_arg.parse_args()
 out=ROOT/o.out;out.mkdir(exist_ok=False);start=time.time();cv2.setNumThreads(2)
 cache=ROOT/o.cache;report=json.loads((cache/'report.json').read_text());crops={v['serial']:v['native_crop_xyxy'] for v in report['camera_crop_records']};frames=[145,165,200,225]
 render=ROOT/'overhead_body_appearance_after_review20_v2';cameras=json.loads((render/'cameras.json').read_text());cams={v['label']:v for v in cameras['views'][:8]};p=torch.load(ROOT/'grounded_legs_all300_v1/avatar.pt',weights_only=True)['poses'];gains=json.loads((ROOT/'overhead_body_aligned_features_v1/report.json').read_text())['fixed_camera_rgb_gains'];rows=[]
@@ -27,9 +27,15 @@ for path in sorted(cache.glob('*.npz')):
   mismatch=(roi>0)&core&(masks[i]>.8)&(a.mean(-1)>.5)&(b.mean(-1)<.2);unclipped=source.max(-1)<250;bad=mismatch&unclipped;good=supports[i]
   rows.append({'serial':serial,'frame':f,'bright_source_dark_model_pixels':int(mismatch.sum()),'unclipped_mismatch_pixels':int(bad.sum()),'selected_unclipped_mismatch_pixels':int((bad&good).sum()),'selected_fraction':float((bad&good).sum()/max(int(bad.sum()),1)),'clipped_fraction':float((mismatch&~unclipped).sum()/max(int(mismatch.sum()),1))})
   if reasons is not None:rows[-1]['exclusion_reasons']={name:int((bad&((reasons[i]&bit)>0)).sum()) for bit,name in [(1,'person_core'),(2,'object_union'),(4,'decoded_alpha'),(8,'gaussian_accumulated_alpha'),(16,'anatomical_region'),(32,'boundary_band'),(64,'clipping')]}
+  if o.after:
+   after=cv2.warpAffine(np.array(Image.open(ROOT/o.after/f'{f:04d}_{serial}.png').convert('RGB')),H[:2],(w,h),borderValue=(255,255,255));af=linear(after.astype('float32')/255)
+   rows[-1]['fixed_pixel_absolute_error_before_sum']=float(np.abs(a-b)[bad].sum());rows[-1]['fixed_pixel_absolute_error_after_sum']=float(np.abs(a-af)[bad].sum())
   overlay=source.copy();overlay[bad&~good]=[255,50,50];overlay[bad&good]=[30,230,80];sheet=Image.new('RGB',(w*3,h+24),'white')
   for j,(arr,label) in enumerate([(source,'PRIVATE source'),(prediction,'initial model'),(overlay,'red excluded / green selected')]):sheet.paste(Image.fromarray(arr),(j*w,24));ImageDraw.Draw(sheet).text((j*w+3,4),f'{serial} f{f} {label}',fill='black')
   sheet.save(out/f'{serial}_{f:04d}_private.jpg',quality=94)
  print('underarm support audited',serial,flush=True)
 total=sum(x['unclipped_mismatch_pixels'] for x in rows);kept=sum(x['selected_unclipped_mismatch_pixels'] for x in rows)
-(out/'report.json').write_text(json.dumps({'success':True,'frames':frames,'cameras':8,'records':rows,'unclipped_mismatch_pixels':total,'selected_unclipped_mismatch_pixels':kept,'pooled_selected_fraction':kept/max(total,1),'seconds':time.time()-start,'scope':'32 actual source/model/support comparisons, same projection and fixed calibrated response. Underarm ROIs from surface COCO shoulder/hip, conservative strong bright-source/dark-model thresholds. Tests whether such pixels entered the training loss, not ground-truth garment labels. Source-bearing panels PRIVATE; scalar counts may be shared.'},indent=2))
+r={'success':True,'frames':frames,'cameras':8,'records':rows,'unclipped_mismatch_pixels':total,'selected_unclipped_mismatch_pixels':kept,'pooled_selected_fraction':kept/max(total,1),'seconds':time.time()-start,'scope':'32 actual source/model/support comparisons, same projection and fixed calibrated response. Underarm ROIs from surface COCO shoulder/hip, conservative strong bright-source/dark-model thresholds. Tests whether such pixels entered the training loss, not ground-truth garment labels. Source-bearing panels PRIVATE; scalar counts may be shared.'}
+if o.after:
+ r['after_render']=o.after;r['fixed_initial_pixel_mae_before']=sum(x['fixed_pixel_absolute_error_before_sum'] for x in rows)/max(total*3,1);r['fixed_initial_pixel_mae_after']=sum(x['fixed_pixel_absolute_error_after_sum'] for x in rows)/max(total*3,1);r['scope']+=' After comparison uses the EXACT SAME initial error pixels and fixed old response, not a new after-dependent pixel set.'
+(out/'report.json').write_text(json.dumps(r,indent=2))
