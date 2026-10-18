@@ -87,6 +87,11 @@
       "sha256": "3cf7fffff8280f7c233115d5bdc87b410a622666c85bea8db9dfb1d1662ac387"
     },
     {
+      "path": "evidence/garment_support_correction_20261018.json",
+      "bytes": 49462,
+      "sha256": "1cfa8c5612e1075aaca53d5e1d1e278cd357f55bc746445f5e7b7ef6f641fc79"
+    },
+    {
       "path": "evidence/grounded_legs_20261018.json",
       "bytes": 14465,
       "sha256": "85f47ae32205404a04d8691461a78eaee8d476c9d475b155b1340ed94ee7417d"
@@ -123,8 +128,8 @@
     },
     {
       "path": "evidence/optimization_source_mapping.json",
-      "bytes": 13666,
-      "sha256": "d1a7968297a95b7ac00c08f9bc9cbda00f2bc85c78d7919b16ea588daa31af53"
+      "bytes": 13932,
+      "sha256": "ea931854fe63b79ff45e054086478d1213d045b47cf07082fd4610105b0c6deb"
     },
     {
       "path": "evidence/outer_scene_20261018.json",
@@ -190,6 +195,11 @@
       "path": "evidence/user_pause_20261018.json",
       "bytes": 49471,
       "sha256": "f9f35012794de0fdae039c85381a1d2753dc35e4d55a2ffa85229ed5b78f6907"
+    },
+    {
+      "path": "GARMENT_SUPPORT_CORRECTION.md",
+      "bytes": 1426,
+      "sha256": "dad7c40e7fcef14dd8dfb182e1215a60dc692b9083131c082050b45bdd29ab31"
     },
     {
       "path": "media/aligned_body_features_all8_0042_generated.jpg",
@@ -463,8 +473,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 23274,
-      "sha256": "d52f361236309537da11c1d222c7e6866a1ed9dd18574cf0b5f25dee00ae721e"
+      "bytes": 24754,
+      "sha256": "e94f73de056115e5973a3c5a11f1939f158eace6a7dedbeec20ef2994a0ac756"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -555,6 +565,11 @@
       "path": "research/interaction_20261017/audit_shared_head_render.py",
       "bytes": 8869,
       "sha256": "f66d2a0afe5cd1a1f59b2bd83addfde26da8bc142288811dab4e3cd82129887d"
+    },
+    {
+      "path": "research/interaction_20261017/audit_underarm_support.py",
+      "bytes": 4699,
+      "sha256": "87483b9ff9b6836e4ceecee1d067e52af96bb44332904b7ba10906c1b7962f52"
     },
     {
       "path": "research/interaction_20261017/audit_visible_face_overlap.py",
@@ -913,8 +928,8 @@
     },
     {
       "path": "research/interaction_20261017/prepare_shared_human_observations.py",
-      "bytes": 11085,
-      "sha256": "121719bbcdda6c8ac89032d248c1e3e499e164b7a16d654f0f0c27f921d576a9"
+      "bytes": 14517,
+      "sha256": "8aaf7f7671ec8bd27085fe76e35eb0b6d3572ab5ee98494424b957ba36306cce"
     },
     {
       "path": "research/interaction_20261017/refine_backpack_person_crops.py",

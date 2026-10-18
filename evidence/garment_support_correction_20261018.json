@@ -1,0 +1,1497 @@
+{
+  "status": "SUPERVISION_COVERAGE_FIX_VERIFIED_32_OBSERVATIONS",
+  "reports": {
+    "underarm_support_audit_v2": {
+      "success": true,
+      "frames": [
+        145,
+        165,
+        200,
+        225
+      ],
+      "cameras": 8,
+      "records": [
+        {
+          "serial": "21305711",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "21305711",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "21305711",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "21305711",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "21305717",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 442,
+          "unclipped_mismatch_pixels": 342,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.22624434389140272
+        },
+        {
+          "serial": "21305717",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 556,
+          "unclipped_mismatch_pixels": 551,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.008992805755395683
+        },
+        {
+          "serial": "21305717",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 314,
+          "unclipped_mismatch_pixels": 306,
+          "selected_unclipped_mismatch_pixels": 230,
+          "selected_fraction": 0.7516339869281046,
+          "clipped_fraction": 0.025477707006369428
+        },
+        {
+          "serial": "21305717",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 230,
+          "unclipped_mismatch_pixels": 193,
+          "selected_unclipped_mismatch_pixels": 100,
+          "selected_fraction": 0.5181347150259067,
+          "clipped_fraction": 0.1608695652173913
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 1525,
+          "unclipped_mismatch_pixels": 1053,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.30950819672131147
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 931,
+          "unclipped_mismatch_pixels": 696,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.25241675617615467
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 273,
+          "unclipped_mismatch_pixels": 240,
+          "selected_unclipped_mismatch_pixels": 33,
+          "selected_fraction": 0.1375,
+          "clipped_fraction": 0.12087912087912088
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 194,
+          "unclipped_mismatch_pixels": 184,
+          "selected_unclipped_mismatch_pixels": 30,
+          "selected_fraction": 0.16304347826086957,
+          "clipped_fraction": 0.05154639175257732
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 704,
+          "unclipped_mismatch_pixels": 563,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.2002840909090909
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 307,
+          "unclipped_mismatch_pixels": 269,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.1237785016286645
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 146,
+          "unclipped_mismatch_pixels": 144,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0136986301369863
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 9,
+          "unclipped_mismatch_pixels": 9,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 191,
+          "unclipped_mismatch_pixels": 190,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.005235602094240838
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 220,
+          "unclipped_mismatch_pixels": 204,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.07272727272727272
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 17,
+          "unclipped_mismatch_pixels": 17,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 21,
+          "unclipped_mismatch_pixels": 21,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0
+        }
+      ],
+      "unclipped_mismatch_pixels": 4982,
+      "selected_unclipped_mismatch_pixels": 393,
+      "pooled_selected_fraction": 0.07888398233641108,
+      "seconds": 12.792826175689697,
+      "scope": "32 actual source/model/support comparisons, same projection and fixed calibrated response. Underarm ROIs from surface COCO shoulder/hip, conservative strong bright-source/dark-model thresholds. Tests whether such pixels entered the training loss, not ground-truth garment labels. Source-bearing panels PRIVATE; scalar counts may be shared."
+    },
+    "underarm_garment_gates_audit_v1": {
+      "success": true,
+      "frames": [
+        145,
+        165,
+        200,
+        225
+      ],
+      "cameras": 8,
+      "records": [
+        {
+          "serial": "21305711",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305711",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305711",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305711",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305717",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 442,
+          "unclipped_mismatch_pixels": 342,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.22624434389140272,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 342,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305717",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 556,
+          "unclipped_mismatch_pixels": 551,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.008992805755395683,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 551,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305717",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 314,
+          "unclipped_mismatch_pixels": 306,
+          "selected_unclipped_mismatch_pixels": 230,
+          "selected_fraction": 0.7516339869281046,
+          "clipped_fraction": 0.025477707006369428,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 76,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305717",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 230,
+          "unclipped_mismatch_pixels": 193,
+          "selected_unclipped_mismatch_pixels": 100,
+          "selected_fraction": 0.5181347150259067,
+          "clipped_fraction": 0.1608695652173913,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 93,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 1525,
+          "unclipped_mismatch_pixels": 1053,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.30950819672131147,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 29,
+            "anatomical_region": 1053,
+            "boundary_band": 17,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 931,
+          "unclipped_mismatch_pixels": 696,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.25241675617615467,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 2,
+            "anatomical_region": 696,
+            "boundary_band": 1,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 273,
+          "unclipped_mismatch_pixels": 240,
+          "selected_unclipped_mismatch_pixels": 33,
+          "selected_fraction": 0.1375,
+          "clipped_fraction": 0.12087912087912088,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 207,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 194,
+          "unclipped_mismatch_pixels": 184,
+          "selected_unclipped_mismatch_pixels": 30,
+          "selected_fraction": 0.16304347826086957,
+          "clipped_fraction": 0.05154639175257732,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 21,
+            "anatomical_region": 131,
+            "boundary_band": 29,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 704,
+          "unclipped_mismatch_pixels": 563,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.2002840909090909,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 563,
+            "boundary_band": 107,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 307,
+          "unclipped_mismatch_pixels": 269,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.1237785016286645,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 7,
+            "anatomical_region": 269,
+            "boundary_band": 86,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 146,
+          "unclipped_mismatch_pixels": 144,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0136986301369863,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 144,
+            "boundary_band": 15,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 9,
+          "unclipped_mismatch_pixels": 9,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 9,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 191,
+          "unclipped_mismatch_pixels": 190,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.005235602094240838,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 190,
+            "boundary_band": 82,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 220,
+          "unclipped_mismatch_pixels": 204,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.07272727272727272,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 204,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 17,
+          "unclipped_mismatch_pixels": 17,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 17,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 21,
+          "unclipped_mismatch_pixels": 21,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 21,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        }
+      ],
+      "unclipped_mismatch_pixels": 4982,
+      "selected_unclipped_mismatch_pixels": 393,
+      "pooled_selected_fraction": 0.07888398233641108,
+      "seconds": 3.0039799213409424,
+      "scope": "32 actual source/model/support comparisons, same projection and fixed calibrated response. Underarm ROIs from surface COCO shoulder/hip, conservative strong bright-source/dark-model thresholds. Tests whether such pixels entered the training loss, not ground-truth garment labels. Source-bearing panels PRIVATE; scalar counts may be shared."
+    },
+    "underarm_local_garment_support_audit_v1": {
+      "success": true,
+      "frames": [
+        145,
+        165,
+        200,
+        225
+      ],
+      "cameras": 8,
+      "records": [
+        {
+          "serial": "21305711",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305711",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305711",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305711",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305717",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 442,
+          "unclipped_mismatch_pixels": 342,
+          "selected_unclipped_mismatch_pixels": 342,
+          "selected_fraction": 1.0,
+          "clipped_fraction": 0.22624434389140272,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305717",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 556,
+          "unclipped_mismatch_pixels": 551,
+          "selected_unclipped_mismatch_pixels": 551,
+          "selected_fraction": 1.0,
+          "clipped_fraction": 0.008992805755395683,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305717",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 314,
+          "unclipped_mismatch_pixels": 306,
+          "selected_unclipped_mismatch_pixels": 306,
+          "selected_fraction": 1.0,
+          "clipped_fraction": 0.025477707006369428,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "21305717",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 230,
+          "unclipped_mismatch_pixels": 193,
+          "selected_unclipped_mismatch_pixels": 192,
+          "selected_fraction": 0.9948186528497409,
+          "clipped_fraction": 0.1608695652173913,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 1,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 1525,
+          "unclipped_mismatch_pixels": 1053,
+          "selected_unclipped_mismatch_pixels": 1020,
+          "selected_fraction": 0.9686609686609686,
+          "clipped_fraction": 0.30950819672131147,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 29,
+            "anatomical_region": 0,
+            "boundary_band": 17,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 931,
+          "unclipped_mismatch_pixels": 696,
+          "selected_unclipped_mismatch_pixels": 693,
+          "selected_fraction": 0.9956896551724138,
+          "clipped_fraction": 0.25241675617615467,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 2,
+            "anatomical_region": 0,
+            "boundary_band": 1,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 273,
+          "unclipped_mismatch_pixels": 240,
+          "selected_unclipped_mismatch_pixels": 240,
+          "selected_fraction": 1.0,
+          "clipped_fraction": 0.12087912087912088,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 194,
+          "unclipped_mismatch_pixels": 184,
+          "selected_unclipped_mismatch_pixels": 155,
+          "selected_fraction": 0.842391304347826,
+          "clipped_fraction": 0.05154639175257732,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 21,
+            "anatomical_region": 0,
+            "boundary_band": 29,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 0,
+          "unclipped_mismatch_pixels": 0,
+          "selected_unclipped_mismatch_pixels": 0,
+          "selected_fraction": 0.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 704,
+          "unclipped_mismatch_pixels": 563,
+          "selected_unclipped_mismatch_pixels": 456,
+          "selected_fraction": 0.8099467140319716,
+          "clipped_fraction": 0.2002840909090909,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 107,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 307,
+          "unclipped_mismatch_pixels": 269,
+          "selected_unclipped_mismatch_pixels": 171,
+          "selected_fraction": 0.6356877323420075,
+          "clipped_fraction": 0.1237785016286645,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 7,
+            "anatomical_region": 6,
+            "boundary_band": 86,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 146,
+          "unclipped_mismatch_pixels": 144,
+          "selected_unclipped_mismatch_pixels": 129,
+          "selected_fraction": 0.8958333333333334,
+          "clipped_fraction": 0.0136986301369863,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 15,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 9,
+          "unclipped_mismatch_pixels": 9,
+          "selected_unclipped_mismatch_pixels": 9,
+          "selected_fraction": 1.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 145,
+          "bright_source_dark_model_pixels": 191,
+          "unclipped_mismatch_pixels": 190,
+          "selected_unclipped_mismatch_pixels": 108,
+          "selected_fraction": 0.5684210526315789,
+          "clipped_fraction": 0.005235602094240838,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 82,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 165,
+          "bright_source_dark_model_pixels": 220,
+          "unclipped_mismatch_pixels": 204,
+          "selected_unclipped_mismatch_pixels": 204,
+          "selected_fraction": 1.0,
+          "clipped_fraction": 0.07272727272727272,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 200,
+          "bright_source_dark_model_pixels": 17,
+          "unclipped_mismatch_pixels": 17,
+          "selected_unclipped_mismatch_pixels": 17,
+          "selected_fraction": 1.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 225,
+          "bright_source_dark_model_pixels": 21,
+          "unclipped_mismatch_pixels": 21,
+          "selected_unclipped_mismatch_pixels": 21,
+          "selected_fraction": 1.0,
+          "clipped_fraction": 0.0,
+          "exclusion_reasons": {
+            "person_core": 0,
+            "object_union": 0,
+            "decoded_alpha": 0,
+            "gaussian_accumulated_alpha": 0,
+            "anatomical_region": 0,
+            "boundary_band": 0,
+            "clipping": 0
+          }
+        }
+      ],
+      "unclipped_mismatch_pixels": 4982,
+      "selected_unclipped_mismatch_pixels": 4614,
+      "pooled_selected_fraction": 0.9261340826977118,
+      "seconds": 3.018500328063965,
+      "scope": "32 actual source/model/support comparisons, same projection and fixed calibrated response. Underarm ROIs from surface COCO shoulder/hip, conservative strong bright-source/dark-model thresholds. Tests whether such pixels entered the training loss, not ground-truth garment labels. Source-bearing panels PRIVATE; scalar counts may be shared."
+    }
+  },
+  "scope": "Same initial saved model, four original times/all8 cameras, exact same source/crop/projection/response. Admission policy uses pose confidence/local residual and person masks, never RGB-error thresholds. Bright-source/dark-model thresholds are audit-only. Full8x300 corrected cache and new optimization still pending; no new visual-quality claim. Raw source-bearing images/private caches not published."
+}

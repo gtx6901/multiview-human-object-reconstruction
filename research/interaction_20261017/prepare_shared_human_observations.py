@@ -19,7 +19,7 @@ from mesh_renderer import MeshRenderer
 spec=importlib.util.spec_from_file_location('gsplat_cuda',os.environ["HOI_GSPLAT_EXTENSION"])
 backend=importlib.util.module_from_spec(spec);spec.loader.exec_module(backend);sys.modules['gsplat.csrc']=backend
 from gsplat import rasterization
-p=argparse.ArgumentParser();p.add_argument('--out',required=True);p.add_argument('--scene',default='shared_scene_candidate_v1');p.add_argument('--frames',nargs='+',type=int);p.add_argument('--portrait-crops',action='store_true');p.add_argument('--crop-padding',type=float,default=.05);p.add_argument('--alignment-screen',action='store_true',help='Use only well-aligned anatomical regions, exclude clipping and wider silhouette boundary');o=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--out',required=True);p.add_argument('--scene',default='shared_scene_candidate_v1');p.add_argument('--frames',nargs='+',type=int);p.add_argument('--portrait-crops',action='store_true');p.add_argument('--crop-padding',type=float,default=.05);p.add_argument('--alignment-screen',action='store_true',help='Use only well-aligned anatomical regions, exclude clipping and wider silhouette boundary');p.add_argument('--alignment-policy',choices=['skeleton','garment'],default='skeleton');p.add_argument('--crop-reference',help='Reuse fixed native all-time crop boxes from an existing observation cache');o=p.parse_args()
 out=ROOT/o.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4);cv2.setNumThreads(2)
 def move(x):
  if isinstance(x,torch.Tensor):return x.cuda()
@@ -33,6 +33,10 @@ meta=json.loads((ROOT/'helmet_native000_299_v1/manifest.json').read_text());fram
 assert len(set(selected))==len(selected) and set(selected)<=set(frames)
 width,height=504,(756 if o.portrait_crops else 378);A=np.array([[width/2048,0,(width/2048-1)/2],[0,height/1536,(height/1536-1)/2],[0,0,1.]])
 records=[];crop_records=[]
+reference_crops=None
+if o.crop_reference:
+ cr=json.loads((ROOT/o.crop_reference/'report.json').read_text());assert cr['success'] and cr['portrait_crops'] and cr['scene']==o.scene and cr['resolution']==[width,height]
+ reference_crops={x['serial']:x['native_crop_xyxy'] for x in cr['camera_crop_records']}
 wholebody=np.load(ROOT/'observations_all300_v1/wholebody.npz') if o.alignment_screen else None
 surface_world=None
 if o.alignment_screen:
@@ -54,9 +58,11 @@ with torch.inference_mode():
     if box is not None:bounds.append(box)
    assert bounds,'No person mask support for crop'
    bounds=np.array(bounds);lo=bounds[:,:2].min(0);hi=bounds[:,2:].max(0);ratio=float(np.maximum((hi-lo)/[width,height],1e-5).max())*(1+2*o.crop_padding);size=np.ceil(np.array([width,height])*ratio).astype(int);origin=np.floor((lo+hi-size)/2).astype(int);crop_box=(*origin,*(origin+size));sx,sy=np.array([width,height])/size;C=np.array([[sx,0,sx*(.5-origin[0])-.5],[0,sy,sy*(.5-origin[1])-.5],[0,0,1.]])
+   if reference_crops is not None:
+    crop_box=tuple(reference_crops[serial]);origin=np.array(crop_box[:2]);size=np.array(crop_box[2:])-origin;sx,sy=np.array([width,height])/size;C=np.array([[sx,0,sx*(.5-origin[0])-.5],[0,sy,sy*(.5-origin[1])-.5],[0,0,1.]])
    crop_records.append({'serial':serial,'native_crop_xyxy':list(map(int,crop_box)),'scope':'Fixed per-camera envelope of all selected person masks, padded and aspect fitted. Does not follow the current fitted model or discard motion extrema.'})
   K=torch.tensor(C@np.array(v['K']),device='cuda',dtype=torch.float32);W=torch.tensor(v['W'],device='cuda',dtype=torch.float32)
-  targets=[];supports=[];masks=[];viewrecords=[]
+  targets=[];supports=[];masks=[];viewrecords=[];reasons=[]
   for f in selected:
    t=frames.index(f);g=animate(rig,poses,t)
    color,alpha,_=rasterization(means=g['xyz'],quats=g['rotation'],scales=g['scaling'],opacities=g['opacity'].flatten(),colors=torch.cat([g['shs'].squeeze(1),features],1),viewmats=W[None],Ks=K[None],width=width,height=height,backgrounds=torch.cat([torch.ones(3,device='cuda'),bg])[None],packed=False,near_plane=.01,far_plane=100.,eps2d=.3)
@@ -77,6 +83,7 @@ with torch.inference_mode():
    object_unknown=cv2.dilate((observed_object|rendered_object).astype('uint8'),np.ones((7,7),np.uint8))>0
    person_core=cv2.erode(person.astype('uint8'),np.ones((3,3),np.uint8))>0
    support=person_core&~object_unknown&(mask>.8)&(a>.8)
+   failure=((~person_core).astype('uint8')|object_unknown.astype('uint8')*2|(mask<=.8).astype('uint8')*4|(a<=.8).astype('uint8')*8)
    screen_record={}
    if o.alignment_screen:
     initial_count=int(support.sum());obs=wholebody['xy'][vi,f,:17];conf=wholebody['score'][vi,f,:17];in_image=wholebody['in_image'][vi,f,:17]
@@ -88,19 +95,41 @@ with torch.inference_mode():
     radius=max(2,int(torso*abs(C[0,0])*.12))
     for ja,jb in [(5,7),(7,9),(6,8),(8,10),(11,13),(13,15),(12,14),(14,16)]:
      if good[ja] and good[jb]:cv2.line(region,tuple(np.round(points[ja]).astype(int)),tuple(np.round(points[jb]).astype(int)),1,2*radius)
-    boundary_core=cv2.erode(person.astype('uint8'),np.ones((9,9),np.uint8))>0
+    garment_supported=False;boundary_kernel=9
+    if o.alignment_policy=='garment':
+     torso_ids=np.array([5,6,11,12]);observed_torso=in_image[torso_ids]&(conf[torso_ids]>2)&np.isfinite(obs[torso_ids]).all(-1);garment_supported=bool(observed_torso.sum()>=3)
+     if garment_supported:
+      hp=np.column_stack([pred,np.ones(17)])@C.T;projected_points=hp[:,:2]/hp[:,2:];corners=np.where(observed_torso[:,None],points[torso_ids],projected_points[torso_ids]);lo=np.floor(corners.min(0)-radius).astype(int);hi=np.ceil(corners.max(0)+radius).astype(int)
+      # Source person segmentation supplies garment extent, rather than treating
+      # the skeletal quadrilateral as a silhouette of the loose shirt.
+      region[max(0,lo[1]):min(height,hi[1]+1),max(0,lo[0]):min(width,hi[0]+1)]=1
+      # A bad shoulder must exclude its local neighborhood, not discard the
+      # entire visible shirt down to the waist.
+      for joint in torso_ids:
+       if not good[joint]:
+        center=points[joint] if in_image[joint] and conf[joint]>2 else projected_points[joint]
+        uncertainty=max(radius,int(min(residual[joint]*abs(C[0,0]),2*radius))) if np.isfinite(residual[joint]) else 2*radius
+        cv2.circle(region,tuple(np.round(center).astype(int)),uncertainty,0,-1)
+     sigma=float(np.median(residual[good])) if good.any() else threshold
+     boundary_kernel=int(2*np.clip(np.ceil(sigma*abs(C[0,0])),1,4)+1)
+     for wrist in [9,10]:
+      if in_image[wrist] and conf[wrist]>2:cv2.circle(region,tuple(np.round(points[wrist]).astype(int)),radius,0,-1)
+    boundary_core=cv2.erode(person.astype('uint8'),np.ones((boundary_kernel,boundary_kernel),np.uint8))>0
     unclipped=(target.max(-1)<250)&(target.max(-1)>3)
     support&=(region>0)&boundary_core&unclipped
-    screen_record={'pixels_before_alignment_screen':initial_count,'reliable_body_joints':int(good[5:].sum()),'joint_residual_threshold_native_px':threshold,'excluded_by_alignment_boundary_clipping':initial_count-int(support.sum())}
+    failure|=(region==0).astype('uint8')*16|(~boundary_core).astype('uint8')*32|(~unclipped).astype('uint8')*64
+    screen_record={'pixels_before_alignment_screen':initial_count,'reliable_body_joints':int(good[5:].sum()),'joint_residual_threshold_native_px':threshold,'excluded_by_alignment_boundary_clipping':initial_count-int(support.sum()),'garment_torso_supported':garment_supported,'boundary_kernel':boundary_kernel}
    n=int(support.sum());person_n=int(person_core.sum());mae=float(np.abs(prediction-target/255.)[support].mean()) if n else None
    row={'frame':f,'serial':serial,'person_core_pixels':person_n,'support_pixels':n,'coverage_fraction':n/max(person_n,1),'initial_rgb_mae_srgb':mae,'object_exclusion_pixels':int(object_unknown.sum()),'eligible':n>=128,**screen_record}
-   viewrecords.append(row);records.append(row);targets.append(target);supports.append(support);masks.append(mask.astype('float16'))
-  np.savez_compressed(out/f'{serial}.npz',frames=np.array(selected),target_rgb_u8=np.stack(targets),fixed_initial_support=np.stack(supports),initial_decoded_alpha=np.stack(masks),K=K.cpu().numpy(),W=W.cpu().numpy())
+   viewrecords.append(row);records.append(row);targets.append(target);supports.append(support);masks.append(mask.astype('float16'));reasons.append(failure)
+  np.savez_compressed(out/f'{serial}.npz',frames=np.array(selected),target_rgb_u8=np.stack(targets),fixed_initial_support=np.stack(supports),initial_decoded_alpha=np.stack(masks),selection_exclusion_bits=np.stack(reasons),K=K.cpu().numpy(),W=W.cpu().numpy())
   (out/'partial.json').write_text(json.dumps({'completed_views':serial,'records':records},indent=2));print(json.dumps({'serial':serial,'frames':len(selected),'eligible':sum(r['eligible'] for r in viewrecords),'mean_coverage':float(np.mean([r['coverage_fraction'] for r in viewrecords]))}),flush=True)
 assert len(records)==len(meta['views'])*len(selected)
 report={'success':True,'scene':o.scene,'scene_manifest_sha256':hashlib.sha256((ROOT/o.scene/'scene.json').read_bytes()).hexdigest(),'resolution':[width,height],'frames':selected,'observations_compared':len(records),'eligible_observations':sum(r['eligible'] for r in records),'records':records,'seconds':time.time()-start,'scope':'All selected frames and all8 cameras compared with shared animated LHM scene. Native RGB area-downsampled with exact pixel-center K. Eroded candidate person mask, union of observed and rendered helmet dilated3pixels excluded, initial decoded/accumulated alpha>.8. Fixed initial support and decoder alpha are cached for subsequent fitting and support accounting. Per-observation128pixel eligibility is minimum support only; no claim of segmentation accuracy, cross-camera consistency, dynamic selection, all-data feature fitting or novel-view quality. Appearance, shape and motion are unchanged. No camera gain fitted here; sRGB residual includes exposure, geometry, pose and segmentation errors. Private RGB/camera cache must not be published.'}
 report['portrait_crops']=o.portrait_crops;report['camera_crop_records']=crop_records
 report['alignment_screen']=o.alignment_screen
+report['alignment_policy']=o.alignment_policy;report['crop_reference']=o.crop_reference
 if o.alignment_screen:report['scope']+=' Additional local selection: native COCO17 surface-joint residual below4% observed torso length (4px floor), RTMW score>2/in-image/positive depth; torso polygon and limb capsules only when corresponding observed joints agree.9pixel eroded silhouette and any-channel>=250 clipping excluded. Head/hands are not feature-training targets in this conservative body pass. Selection uses geometry/detector evidence, not low photometric error; it is not a cross-view surface-correspondence verification.'
+if o.alignment_policy=='garment':report['scope']+=' GARMENT correction: at least3 confident in-image shoulder/hip detections define a segmented loose-clothing envelope plus the existing limb radius. An unavailable corner uses its saved surface projection. High-residual joints exclude only local uncertainty neighborhoods; one bad shoulder no longer discards the entire torso. Source segmentation/decoded and accumulated alpha/object exclusions still gate all pixels. Boundary erosion is3..9px from measured residual; observed wrist neighborhoods excluded. No RGB residual is used to admit pixels.'
 if o.portrait_crops:report['scope']+=' High-resolution portrait-crop comparison:504x756, fixed per-camera all-time person-mask envelope plus explicit padding/aspect fit, exact pixel-center K. Source RGB uses area box resampling, masks nearest; source beyond native canvas is masked-out padding. No model-derived crop or per-frame crop motion.'
 (out/'report.json').write_text(json.dumps(report,indent=2));print('shared human observation comparison complete',flush=True)
