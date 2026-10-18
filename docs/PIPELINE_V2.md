@@ -4,7 +4,7 @@
 
 ## 1. 关键点检测（单一模型）
 
-`research/pipeline_v2/detect_keypoints.py`
+`scripts/detect_keypoints.py`
 
 - 唯一检测器：RTMW wholebody onnx（288×384，onnxruntime CPU）。
 - 检测框：SAM2.1 人物掩码外接框 ×1.15，裁到图内。
@@ -16,7 +16,7 @@
 
 ## 2. 统一多视角筛选
 
-`research/pipeline_v2/screen_keypoints.py` → `assets/observations_all300_v1/`
+`scripts/screen_keypoints.py` → `assets/observations_all300_v1/`
 
 - 规则：分数 ≥0.5 + 图内 + 两两 RANSAC 三角化（8 视角 28 对）+ 内点重投影 ≤10 native px + ≥3 视角 + 射线夹角 ≥1.5°。
 - 身体/脚/脸/手共用同一函数。
@@ -37,23 +37,25 @@
 
 ## 4. 静态参照比例标定
 
-- 输入：同一人纯静态视频 `D:/Document/3dgs/data/organized/fcs/1_static`（2026-08-28 11:20，与动作同场同标定）。
-- `research/pipeline_v2/prepare_static_reference.py` 抽取 8 机位 × 3 帧去畸变原图。
-- `research/pipeline_v2/detect_static_keypoints.py`：bootstrap 框 + 精化，8.4 秒。
-- `research/pipeline_v2/fit_proportions.py`：三角化（f60/f240）→ 六项长度 → 拟合 SMPL-X beta/scale/neck + 肩/肘/踝偏移。
+- 输入：同一人纯静态视频 `<LOCAL_ROOT>/data/organized/fcs/1_static`（2026-08-28 11:20，与动作同场同标定）。
+- `scripts/prepare_static_reference.py` 抽取 8 机位 × 3 帧去畸变原图。
+- `scripts/detect_static_keypoints.py`：bootstrap 框 + 精化，8.4 秒。
+- `scripts/fit_proportions.py`：三角化（f60/f240）→ 六项长度 → 拟合 SMPL-X beta/scale/neck + 肩/肘/踝偏移。
 
 实测残差（应用全部偏移后）：肩宽 +2.4%、右上臂 −1.1%、前臂 +3.2/−2.1%、大腿 +0.6/+0.1%、小腿 +0.4/+1.7%、肩中点→耳 −1.2%；**左上臂 −7.8%** 是左右不对称（左 0.1637 vs 右 0.1566），判定为检测/三角化偏置。
 
 ## 5. 统一动作拟合
 
-`research/pipeline_v2/fit_motion.py`（body → feet → hands）
+`scripts/fit_motion.py`（body → feet → hands）
 
 - FK 与 avatar 存储的 `joints55_world` max 误差 0.0。
 - 参数：root/body/trans（阶段 A/B），hands（阶段 C）；beta/scale 冻结。
 - 损失：三角化 3D + 八视角 2D 重投影 + 时间二阶差分 + **trust-region 先验**（防止偏离已认可初始化）。
 - 实测：重投影 33.28 → 30.07 px（33 秒）。
 
-`research/pipeline_v2/fit_face_stage.py`（face）
+**主线默认动作 = `assets/human/motion_smooth_v1/`**（第 6 节批量 MAP 的输出，含可直接渲染的 `avatar.pt`）；`motion_face_v1` 只作为平滑前的中间结果保留。渲染时 `--avatar motion_smooth_v1` 即可。
+
+`scripts/fit_face_stage.py`（face）
 
 - 脸部 5 点（鼻/眼/耳）的 head-local 偏移从当前动作学习，只优化颈（body_pose[11]）与头（body_pose[14]）。
 - 实测：脸部 5 点重投影 27.19 → 22.10 px。
@@ -66,20 +68,35 @@
 | f0 | 73.91 | 69.26 |
 | 变差帧数 | — | **0 / 300** |
 
-## 6. 抖动与平滑（结论：暂不启用后处理）
+## 6. 抖动与平滑（批量 MAP，已采纳）
 
-尝试过三种：
+`scripts/smooth_batch.py`：把 300 帧作为整体做 MAP，数据项 = 12 关节八机位平均绝对重投影误差，先验 = 流形二阶平滑（局部旋转二阶差分、55 关节世界位置、根平移），单一 λ 扫描选择（λ=0.03），L-BFGS 从 motion_face_v1 热启动。
 
-- 轴角分量 RTS → 根旋转偏差 0.9 rad（错误参数化）。
-- 6D 分量 RTS → p95 23.6°（扭曲姿态）。
-- 流形随机游走 ESKF-RTS（δθ 切空间）→ 抖动 −62~76%，但 f0 回归 +20.9 px；锚定首帧后回归转移到 f5（+19 px）。
-- 常加速度 ESKF-RTS → 实现不稳定（回写后姿态崩到 90°）。
+实测（独立复算一致）：重投影 29.606→29.476 px，逐帧最大回退 +0.37 px；抖动 p95 平移 −77%、腕 −67~80%、踝 −67~72%；姿态相对基线中位 0.08°、p95 2.04°。面部 5 点 22.49→22.90、三角化 3D 误差 13.3→12.6 mm、脚部低速滑移 −43%。
 
-结论：**后处理平滑与开头的快速弯腰冲突**，数值抖动下降但真实姿态回归。采用未平滑的统一拟合结果（300/300 帧优于基线）。要真正降抖动，应在估计器内部用批量时间模型（样条/BA 或正确的常加速度滤波），而不是事后滤波。
+此前尝试过分量 RTS、6D 分量 RTS、流形随机游走 ESKF、常加速度 ESKF，均因参数化错误或与快速动作冲突而失败，记录在案。
 
-## 7. 未解决
+## 7. 30 px 跨视不一致的审计结论
 
-- 左上臂 +7.8% 的检测偏置。
-- ESKF 里偶发的单帧 42° 离群。
-- 相机外参审计（sub-agent 进行中）。
+`assets/bias_audit_v1/report.md`（外参已用背景 BA 验证到 0.5 px）：
+
+- 4.7 px 是“只在内点上算”的循环指标；同批 RANSAC 3D 对全部观测为 16.6 px，全视角三角化 26.0，留一相机 32.3。
+- 外参、畸变（5 参数足够）、整帧与亚帧同步均已排除。
+- 贡献：估计量口径约 48%、检测器视角相关 2D 偏差约 39%、运动 7%、逐相机稳定偏置 6%。
+- 共识三角化（`scripts/screen_consensus.py`）只在其自选内点上得到 8 px；对全部候选做无偏留一时仍为 31 px，不能宣称解决。
+
+## 8. 未解决
+
+- 检测器视角相关的 2D 偏差（缓变、时间自相关 0.69），要压到 10 px 需轮廓/多视角一致性约束。
+- 左上臂左右不对称（静态标定 −7.8%）。
+- 比例标定尚未接入资产（当前骨架与静态测量差：左上臂 −10.8%、小腿 +5~6%、肩宽 +4.7%）。
+- 面部点仍取自当前动作（自洽量），尚未换成模型自身面部点。
+- 头盔未随新头部动作重挂。
 - 背包场景未动。
+
+## 9. 2026-10-19：新体型与动作修正（采纳）
+
+- **体型**：用静态标定 beta/scale 重导出 `avatar_shape_v1`（旧资产保留）；骨架长度平均误差 3.92% → 2.16%。
+- **动作**：新体型动作 `motion_shape_fit_v2` 存在 root 轴角 180° 奇异面抖动（相邻帧步长 p95 31.4°，36 帧 >10°）。以旧平滑动作为锚做残差 MAP（λ=0.02，δ 的 p95 仅 2.2°），得到 `motion_shape_smooth_v2`：重投影 31.83 px，踝/腕/脚/头抖动 1.0/2.0/1.3/1.9 mm，root 步长 >10° 帧数 0。
+- **头盔**：关节系搬运会把源动作的平滑修正逐帧叠加（前 100 帧 0.0099、后 100 帧 0.0189），佩戴段越走越偏；颅顶点云约束下刚体重拟合的修正仅 0.05°/1.7 mm，说明原佩戴位置已是最优。最终**直接使用原头盔序列，不做搬运**。
+- **成片**：`runs/fcs_helmet_three_views_30fps.mp4`（GT 21305717 | 固定视角 | 旋转视角）。

@@ -12,6 +12,7 @@
 
 ## 直接查看
 
+- [FCS–头盔交互：GT｜固定视角｜旋转视角（300 帧）](media/fcs_helmet_three_views_30fps.mp4) · [旧/新平滑对比](media/smooth_compare_old_v1_v2_10fps.mp4)
 - [完整 300 帧，两新方向，30fps](media/temporal_body_full300_30fps.mp4) · [10fps 慢放](media/temporal_body_full300_slow10fps.mp4)
 - [方向 A：全 300 帧修改前后对照](media/temporal_body_novel0_continuous_before_after.mp4) · [方向 B](media/temporal_body_novel1_continuous_before_after.mp4)
 - [方向 A：佩戴段头手近景慢放](media/temporal_body_novel0_worn_hands_slow.mp4) · [方向 B](media/temporal_body_novel1_worn_hands_slow.mp4)

@@ -1,0 +1,15 @@
+{
+  "success": true,
+  "avatar": "assets/human/avatar_shape_smooth_v1",
+  "motion": "assets/helmet/worn_helmet_residual_refit_v1",
+  "worn_frames": 132,
+  "sample_frames": 27,
+  "correction_rotation_deg": 0.04706107825040817,
+  "correction_translation_model": [
+    0.00023147990577854216,
+    -0.0017393226735293865,
+    -0.000572572520468384
+  ],
+  "seconds": 295.2,
+  "scope": "Constant head-local rigid correction fitted to the new head Gaussian surface; held phase untouched; helmet geometry unchanged."
+}
