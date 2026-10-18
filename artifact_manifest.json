@@ -113,13 +113,18 @@
     },
     {
       "path": "evidence/optimization_source_mapping.json",
-      "bytes": 11209,
-      "sha256": "f19aacf727277516d3aaf2e2331ed91893e05e0dbb3999168e53e3508a61c587"
+      "bytes": 12845,
+      "sha256": "c19b8ea4a0b0c4f925793ddf170ec4100a554ab012341a8512ede4afacc4dc23"
     },
     {
       "path": "evidence/outer_scene_20261018.json",
       "bytes": 12390,
       "sha256": "b2b41aa3690d923372637e0343435ed17a96d6b7c6874de170c815c3044883fb"
+    },
+    {
+      "path": "evidence/overhead_appearance_20261018.json",
+      "bytes": 13631,
+      "sha256": "4e94234f6285c19c79a54f79995b2fca3270527011408b8aafee16891804aed2"
     },
     {
       "path": "evidence/shared_features_20261018.json",
@@ -292,6 +297,36 @@
       "sha256": "152929a775fdeaba6f9bb245e6f00152c23622097ef6729d02870d06f0fe9058"
     },
     {
+      "path": "media/overhead_appearance_all8_0042_generated.jpg",
+      "bytes": 121989,
+      "sha256": "396159d6ecb7d7bcff5f2c76d4197f909ffd4b1fcebdfcbdd7033ab90a504a9a"
+    },
+    {
+      "path": "media/overhead_appearance_all8_0165_generated.jpg",
+      "bytes": 127060,
+      "sha256": "b60d9037feedfb9a0504c70190bd46c3b52cc4294411ef3d1b7f5d2f3d5ae2c9"
+    },
+    {
+      "path": "media/overhead_appearance_all8_0225_generated.jpg",
+      "bytes": 121703,
+      "sha256": "4f56291725b2fcb35e7f77499a692832da7d6ec2790c73e8530a29cdc2055e94"
+    },
+    {
+      "path": "media/overhead_appearance_all8_0299_generated.jpg",
+      "bytes": 119441,
+      "sha256": "17165d7dee9b14746220eca0394535555c1d18f3e6bfd717ceb0d5c0787e8a73"
+    },
+    {
+      "path": "media/overhead_appearance_novel0_keyframes.mp4",
+      "bytes": 298462,
+      "sha256": "eb8980499159ae97fd22aa7f843376c1ee79338d202f88b6f251a331a596fe82"
+    },
+    {
+      "path": "media/overhead_appearance_novel1_keyframes.mp4",
+      "bytes": 284606,
+      "sha256": "9cd08ce0a3e1be83297242135d5634e5c18269680160558ef8f5ad1b034bedd4"
+    },
+    {
       "path": "media/pickup_inspection_color_attempt_30fps.mp4",
       "bytes": 170657,
       "sha256": "d926a2f12e55527bd73fe8f189b422592e0efa6386df3eddad436f8a83cbd994"
@@ -382,9 +417,14 @@
       "sha256": "da7889f5d9eeaccabb94327c45ee100cdd8702088193162543f08720dea1b6b2"
     },
     {
+      "path": "OVERHEAD_APPEARANCE_STAGE.md",
+      "bytes": 1922,
+      "sha256": "2c503addedef235bf4ac3e93f42cccec7dacf9ebe69d04cd37d31306b1e604d7"
+    },
+    {
       "path": "README.md",
-      "bytes": 19712,
-      "sha256": "97ef4cf4a893b9c5a45a0079fe54fdd8fe3ab64c5228f3702150e1d80fbe5f23"
+      "bytes": 21682,
+      "sha256": "d8add7f3c99599efe198907459616a3f0b35aa722f5ca3c8a7480bd0fb8e8d2d"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -683,8 +723,8 @@
     },
     {
       "path": "research/interaction_20261017/infer_lhm_multitime_appearance.py",
-      "bytes": 3529,
-      "sha256": "fe5bace660dc055a054feb2fadd69d0ff24c7847a77ace04d6b9b7ff0b2c2190"
+      "bytes": 3736,
+      "sha256": "a1b25644f05b5165b540c0f67cfefdd30d419ba07ec688446e1435e9ad22e799"
     },
     {
       "path": "research/interaction_20261017/initialize_heldout_body.py",
@@ -725,6 +765,11 @@
       "path": "research/interaction_20261017/make_helmet_shell.py",
       "bytes": 8335,
       "sha256": "022595e02927a78ee26648ddc1950ef1cfcddcfed7bfab5f106a07ff44df1515"
+    },
+    {
+      "path": "research/interaction_20261017/make_integrated_review_storyboard.py",
+      "bytes": 4820,
+      "sha256": "e03c0205f48acb64a4f3758e199cddaa410c1426523fe58bdb8dbb69b8da185c"
     },
     {
       "path": "research/interaction_20261017/make_pickup_anchor_prompts.py",
@@ -813,8 +858,8 @@
     },
     {
       "path": "research/interaction_20261017/prepare_lhm_multitime_inputs.py",
-      "bytes": 3337,
-      "sha256": "0dbee0a3cb85b1ce944b3e3b4c9e3c07d29e71aab09dc17d4537753332df4e2a"
+      "bytes": 4107,
+      "sha256": "bf41dcdafd9d15abe0e3736ba06ed4d48d25616af785f901d8b19189d60e3d5f"
     },
     {
       "path": "research/interaction_20261017/prepare_lhm_portrait_cameras.py",
@@ -828,8 +873,8 @@
     },
     {
       "path": "research/interaction_20261017/prepare_shared_human_observations.py",
-      "bytes": 8222,
-      "sha256": "02605b805e7b37c7527e21a581380a9391144285e2a51cf0e51a030efb4b0147"
+      "bytes": 11085,
+      "sha256": "121719bbcdda6c8ac89032d248c1e3e499e164b7a16d654f0f0c27f921d576a9"
     },
     {
       "path": "research/interaction_20261017/refine_backpack_person_crops.py",
@@ -863,8 +908,8 @@
     },
     {
       "path": "research/interaction_20261017/render_dynamic_hybrid.py",
-      "bytes": 10774,
-      "sha256": "2b92487b82016c325016fee02156ed393ea1daa9107cc6ca26adebc59d16f750"
+      "bytes": 11520,
+      "sha256": "e710e84a79b92d095c7b77337942f42ea034340a347bdf371743f5352616afc3"
     },
     {
       "path": "research/interaction_20261017/render_grounded_leg_review.py",
@@ -915,6 +960,11 @@
       "path": "research/interaction_20261017/run_nlf_observations.py",
       "bytes": 3970,
       "sha256": "feec8f53ed7711c9cddd0daee0233692821578a46d6734b511c63613d7defae7"
+    },
+    {
+      "path": "research/interaction_20261017/run_overhead_appearance_review.py",
+      "bytes": 3508,
+      "sha256": "38903217c388a34d2f47d3df374aa5b5b2d05986887af4a350c321f86f3722de"
     },
     {
       "path": "research/interaction_20261017/run_pickup_object_pipeline.py",
@@ -1110,6 +1160,11 @@
       "path": "research/interaction_20261017/vote_helmet_shape_all300.py",
       "bytes": 9421,
       "sha256": "764a76c7e5279d1277caea814f5b49a65eb2531970e611b6c357229ee09714e2"
+    },
+    {
+      "path": "research/interaction_20261017/worn_head_envelope.py",
+      "bytes": 4840,
+      "sha256": "73e74f3b9ec51207bc3c8465e815e53624fee1197e814dd05046c154771e8014"
     },
     {
       "path": "research/lhmpp_20261016/checkpoint_config.json",

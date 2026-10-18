@@ -21,6 +21,8 @@ p=argparse.ArgumentParser();p.add_argument('out');p.add_argument('reference',nar
 p.add_argument('--occlusion',choices=['expected-depth','gaussian-center'],default='expected-depth')
 p.add_argument('--frames',type=int,nargs='+',help='Optional selected original frame IDs for an explicit preview; default renders full saved sequence.')
 p.add_argument('--scene',help='Shared-scene directory: canonical human/helmet assets and separate per-frame states')
+p.add_argument('--all-input-frames',action='store_true',help='Render all eight real cameras for every selected review frame')
+p.add_argument('--head-envelope-shell',help='Worn-only head visibility prior from the specified shell opening and CLOSED source hull')
 options=p.parse_args()
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time()
 reference=ROOT/options.reference
@@ -51,14 +53,20 @@ cameras=scene_data['cameras'] if scene_data else json.loads((ROOT/options.camera
 novel=cameras['views'][8:] if len(cameras['views'])==10 else [cameras['views'][16],cameras['views'][40]]
 (out/'cameras.json').write_text(json.dumps({'width':width,'height':height,'views':cameras['views'][:8]+novel},indent=2))
 renderer=MeshRenderer();records=[];preview=[];checks=[]
+envelope=None
+if options.head_envelope_shell:
+    from worn_head_envelope import WornHeadEnvelope
+    envelope=WornHeadEnvelope(ROOT,rig,poses,motion,options.head_envelope_shell)
 render_indices=list(range(len(poses['frames']))) if options.frames is None else [poses['frames'].tolist().index(f) for f in options.frames]
 assert render_indices and len(set(render_indices))==len(render_indices)
 qa_indices=sorted(set([render_indices[0],render_indices[len(render_indices)//2],render_indices[-1]]))
 with torch.inference_mode():
  for t in render_indices:
     frame=int(poses['frames'][t])
-    g=animate(rig,poses,t);world=mesh['vertices_local'].float()@motion['R'][t].float().T*motion['logscale'].float().exp()+motion['translation_world'][t].float()
-    views=novel+(cameras['views'][:8] if t in qa_indices else [])
+    g=animate(rig,poses,t)
+    if envelope is not None:g=envelope.apply(frame,g)
+    world=mesh['vertices_local'].float()@motion['R'][t].float().T*motion['logscale'].float().exp()+motion['translation_world'][t].float()
+    views=novel+(cameras['views'][:8] if options.all_input_frames or t in qa_indices else [])
     pics=[]
     for c in views:
         K=torch.tensor(c['K'],device='cuda',dtype=torch.float32);W=torch.tensor(c['W'],device='cuda',dtype=torch.float32)
@@ -105,6 +113,7 @@ for name in ['source_vs_novel_30fps.mp4','source_vs_novel_slow10fps.mp4','novel_
     reader=imageio.get_reader(str(out/name),format='FFMPEG');count=sum(1 for _ in reader);reader.close();assert count==len(render_indices);video_checks.append({'file':name,'decoded_frames':count})
 report={'success':True,'helmet_material':'neutral gray plus synthetic headlight; geometry diagnostic only' if options.neutral_helmet else 'observed vertex colors plus gray for unobserved','object_motion_source':str(motion_source),'object_mesh_source':str(mesh_source),'frames':poses['frames'].tolist(),'seconds':time.time()-start,'real_cameras_used_in_body_fitting':8,'novel_fixed_cameras':len(novel),'records':records,'replay_checks':checks,'videos':video_checks,'scope':'Continuous sampled original-time frames, shared all8-fitted body and candidate object poses; object observed-view coverage detailed in its source report. Fixed original Gaussian appearance and zero finger articulation. Approximate Gaussian expected-depth compositing. Candidate geometry remains unaccepted; see object source report for method and limits. No CoCoNet predictions used or full-action completion claimed.'}
 report['occlusion_method']=options.occlusion
+report['avatar_source']=options.scene or options.avatar
 if options.scene:report['shared_scene_source']=options.scene
 report['frames']=[int(poses['frames'][t]) for t in render_indices]
 if options.frames is not None:report['scope']='Selected-frame preview only; not a continuous full-action video. '+report['scope']
@@ -117,3 +126,5 @@ if options.occlusion=='gaussian-center':
     report['scope']=report['scope'].replace('Approximate Gaussian expected-depth compositing.','Gaussian-center depth clipping before feature rasterization and neural decoding.')
     report['scope']+=' Gaussian-center clipping precedes feature rasterization/decoding; extended splats and decoder boundaries remain approximate. Not evidence of correct physical contact.'
 (out/'report.json').write_text(json.dumps(report,indent=2));print('complete',flush=True)
+if envelope is not None:
+    report['worn_head_envelope']={**envelope.scope,'records':envelope.records};(out/'report.json').write_text(json.dumps(report,indent=2))

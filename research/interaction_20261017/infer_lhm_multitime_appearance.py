@@ -1,10 +1,11 @@
 """Experimental16-image multi-pose LHM appearance; accepted avatar untouched."""
 import os
 from pathlib import Path
-import sys,runpy,json,time,random,dataclasses,hashlib
+import sys,runpy,json,time,random,dataclasses,hashlib,argparse
 ROOT=Path(__file__).resolve().parent;LHM=ROOT.parent/'lhmpp_20261016';sys.path[:0]=[str(LHM),str(ROOT/'deps')]
-source=ROOT/'lhm_multitime_inputs16_v2';assert json.loads((source/'report.json').read_text())['success']
-sys.argv=[str(LHM/'load_model_probe.py'),'--name','multitime16_appearance_v1'];scope=runpy.run_path(str(LHM/'load_model_probe.py'));model=scope['model'];out=scope['out']
+p=argparse.ArgumentParser();p.add_argument('--inputs',default='lhm_multitime_inputs16_v2');p.add_argument('--run',default='multitime16_appearance_v1');o=p.parse_args()
+source=ROOT/o.inputs;assert json.loads((source/'report.json').read_text())['success']
+sys.argv=[str(LHM/'load_model_probe.py'),'--name',o.run];scope=runpy.run_path(str(LHM/'load_model_probe.py'));model=scope['model'];out=scope['out']
 import torch,numpy as np
 from chunk_attention import install,validate
 torch.set_num_threads(4);torch._dynamo.config.disable=True;torch.manual_seed(0);np.random.seed(0);random.seed(0);start=time.time();validation=validate();install()
@@ -27,4 +28,4 @@ with torch.inference_mode():
  model.transformer.cpu();model.motion_embed_mlp.cpu();torch.cuda.empty_cache();model.renderer.cuda();model.renderer.hyper_step(10000000)
  with torch.autocast('cuda',dtype=torch.bfloat16):attrs,query,params=model.renderer.forward_gs(result[0],query,params)
  torch.save({'attrs':[cpu({f.name:getattr(a,f.name) for f in dataclasses.fields(a)}) for a in attrs],'query':cpu(query),'smplx':cpu(params)},out/'gaussian_attributes.pt')
-(out/'multitime_appearance_report.json').write_text(json.dumps({'success':True,'input_images':16,'static_images':8,'additional_dynamic_images':8,'inputs_sha256':hashlib.sha256((source/'inputs.pt').read_bytes()).hexdigest(),'seconds':time.time()-start,'attention_validation':validation,'scope':'New experimental LHM++ appearance from all8 static cameras plus8 multi-time held images. Original8 features reused exactly, added images independently encoded then all16 jointly fused. Same pretrained model/decoder and beta0. Neither accepted avatar nor motion overwritten. Multi-pose execution success is not image-quality improvement; export and same-camera visual comparison required before adoption.'},indent=2));print('experimental multitime appearance decoded',flush=True)
+(out/'multitime_appearance_report.json').write_text(json.dumps({'success':True,'input_source':o.inputs,'input_images':16,'static_images':8,'additional_dynamic_images':8,'dynamic_frames':[r['dynamic_frame'] for r in json.loads((source/'report.json').read_text())['extra_images']],'inputs_sha256':hashlib.sha256((source/'inputs.pt').read_bytes()).hexdigest(),'seconds':time.time()-start,'attention_validation':validation,'scope':'Shared experimental LHM++ appearance from all8 static cameras plus8 complementary multi-time images. Original8 features reused exactly, added images independently encoded then all16 jointly fused. Same pretrained model/decoder and beta0. Original accepted avatar preserved; export and same-camera visual comparison required before adoption.'},indent=2));print('experimental multitime appearance decoded',flush=True)

@@ -15,11 +15,6 @@
     "published_sha256": "6b5e5b2a2b243f4b01999a254ad12f9f0fcc3b369608f9d66df2264a33ffeeea"
   },
   {
-    "file": "research/interaction_20261017/render_dynamic_hybrid.py",
-    "local_source_sha256": "b4e4499e9928c6e1a6433c1ec633ef12df3e7388a51e1737ce4707c10457a0f9",
-    "published_sha256": "2b92487b82016c325016fee02156ed393ea1daa9107cc6ca26adebc59d16f750"
-  },
-  {
     "file": "research/interaction_20261017/mask_observations.py",
     "local_source_sha256": "7c7498c8b3e53d8ffe7e85de6606dcacdb13e5cd3f0295ed99c7dfaebada49c7",
     "published_sha256": "d3855759aa59f29f37529732418049e5debb8be75ca27fc42f231726cf200a23"
@@ -208,5 +203,40 @@
     "file": "research/interaction_20261017/prepare_backpack_native.py",
     "local_source_sha256": "392636162a5cb66be90fa537ec12af3f4bb4a668f26048830e77582a64887261",
     "published_sha256": "7c0376e2972756edc8376e2ad011bf43715d772270149dd53e385708bff3aac6"
+  },
+  {
+    "file": "research/interaction_20261017/prepare_lhm_multitime_inputs.py",
+    "local_source_sha256": "791f467c224aaf2546438142c803cae9c5d404cdd8dd451a486b11114926c6d3",
+    "published_sha256": "bf41dcdafd9d15abe0e3736ba06ed4d48d25616af785f901d8b19189d60e3d5f"
+  },
+  {
+    "file": "research/interaction_20261017/infer_lhm_multitime_appearance.py",
+    "local_source_sha256": "0e329d453cbad5705bb8d4b3f70c96679915a0f3ea86ff607b7be759280272c2",
+    "published_sha256": "a1b25644f05b5165b540c0f67cfefdd30d419ba07ec688446e1435e9ad22e799"
+  },
+  {
+    "file": "research/interaction_20261017/run_overhead_appearance_review.py",
+    "local_source_sha256": "c6f33cf95b61c634a20da1f2630d86bad2b4881087300ee2cbf3fbc48fc6343b",
+    "published_sha256": "38903217c388a34d2f47d3df374aa5b5b2d05986887af4a350c321f86f3722de"
+  },
+  {
+    "file": "research/interaction_20261017/make_integrated_review_storyboard.py",
+    "local_source_sha256": "64c1efadf27317655081e545d59d013dc1405d6bce43c217e61eb483db494c3f",
+    "published_sha256": "e03c0205f48acb64a4f3758e199cddaa410c1426523fe58bdb8dbb69b8da185c"
+  },
+  {
+    "file": "research/interaction_20261017/render_dynamic_hybrid.py",
+    "local_source_sha256": "dc8fc95a3e7969f75d972ce2357ee9baa31d90bd07490bd8241e1864f8b93d1e",
+    "published_sha256": "e710e84a79b92d095c7b77337942f42ea034340a347bdf371743f5352616afc3"
+  },
+  {
+    "file": "research/interaction_20261017/prepare_shared_human_observations.py",
+    "local_source_sha256": "ab03bd27e644b46a6caed386bce9bc8f60c3f9c6c8179ad79e94598751094685",
+    "published_sha256": "121719bbcdda6c8ac89032d248c1e3e499e164b7a16d654f0f0c27f921d576a9"
+  },
+  {
+    "file": "research/interaction_20261017/worn_head_envelope.py",
+    "local_source_sha256": "4965fc6f5b959b316d164e2b4118be4dcf39e2cec727255d9668df48e66ddb52",
+    "published_sha256": "73e74f3b9ec51207bc3c8465e815e53624fee1197e814dd05046c154771e8014"
   }
 ]
