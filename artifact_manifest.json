@@ -138,8 +138,8 @@
     },
     {
       "path": "evidence/optimization_source_mapping.json",
-      "bytes": 16623,
-      "sha256": "24780c86a9807cd571e980aac3c482d91d3218ba765e4d944849212304a1f24c"
+      "bytes": 17173,
+      "sha256": "e9c48a85c21338bcd530bd57f46d8a3efc94274af444c4fe7ac6d9c9abbb34db"
     },
     {
       "path": "evidence/outer_scene_20261018.json",
@@ -210,6 +210,11 @@
       "path": "evidence/temporal_body_20261018.json",
       "bytes": 29291,
       "sha256": "c6d50a18cc84a6b50482bf89704f1c5f6744aef561d458996e1a879577c91849"
+    },
+    {
+      "path": "evidence/temporal_body_continuous_20261018.json",
+      "bytes": 12347,
+      "sha256": "1a54f09690ca49b4ae61158344851c75a515b23fc1980263430b6866da23f947"
     },
     {
       "path": "evidence/user_pause_20261018.json",
@@ -582,6 +587,46 @@
       "sha256": "ae98bfcd126946acd3c04e5dd4b977b078babaf7b54033786a4d25892e3413ef"
     },
     {
+      "path": "media/temporal_body_final_all8_0165_generated.jpg",
+      "bytes": 127613,
+      "sha256": "4fba408dc98c411eec714010e24f6fe178ea08f02d53c7642cd68bad9a0be10f"
+    },
+    {
+      "path": "media/temporal_body_final_all8_0225_generated.jpg",
+      "bytes": 121551,
+      "sha256": "b5639ee313932477bd690b0aa9b90169d21938fadbc158a626f703785efdd1d3"
+    },
+    {
+      "path": "media/temporal_body_final_all8_0299_generated.jpg",
+      "bytes": 119899,
+      "sha256": "35ca10a9fd7f3da5be1cd6ede85c164f4f05e2cd53882b7bd6412d34dfe8044e"
+    },
+    {
+      "path": "media/temporal_body_final_head8_0225_generated.jpg",
+      "bytes": 241907,
+      "sha256": "fdcfa0fa468819c8d92f3ab3fd2f4b212f387ad070dd565b06b1cf502aa1575c"
+    },
+    {
+      "path": "media/temporal_body_final_novel0_keyframes.mp4",
+      "bytes": 305547,
+      "sha256": "43400b3e019a3f8d3631566c3867981a39796e41779d25121ac96382a4cfd9ec"
+    },
+    {
+      "path": "media/temporal_body_final_novel1_keyframes.mp4",
+      "bytes": 287407,
+      "sha256": "a377abd60d5e290e93d61ac489401c2eeb1bb10cd006c5c1a456915f856ef9d2"
+    },
+    {
+      "path": "media/temporal_body_full300_30fps.mp4",
+      "bytes": 1703361,
+      "sha256": "c758f00409657f4340df285c8674e2d38b34e08e0a34a3e25aff0e92a1c2d0fe"
+    },
+    {
+      "path": "media/temporal_body_full300_slow10fps.mp4",
+      "bytes": 2664491,
+      "sha256": "419254ba2c6a6dfbd6d906a92fbc5281842b47773b0b87d1a1d84bfc2685ba58"
+    },
+    {
       "path": "media/temporal_body_head8_0225_generated.jpg",
       "bytes": 242011,
       "sha256": "7157f2f77ec3feceb202563fa41c2a62f7e56e48ac297bd44ff54657922fb588"
@@ -592,14 +637,44 @@
       "sha256": "430f761cacf992c8acd5b14ad3c43ad5b4b1fcf4e4386af86eb1129ee59fe17d"
     },
     {
+      "path": "media/temporal_body_novel0_continuous_before_after.mp4",
+      "bytes": 592691,
+      "sha256": "dc3d938c234ff5e62f36c791097274e14effc74d30201db6471a99eb47c40e7c"
+    },
+    {
+      "path": "media/temporal_body_novel0_hands200_214_generated.jpg",
+      "bytes": 287764,
+      "sha256": "e38df390ed8e869dd4103782c78a6a357d4685eab4a5c028604d6684b47ee755"
+    },
+    {
       "path": "media/temporal_body_novel0_keyframes.mp4",
       "bytes": 305328,
       "sha256": "202d0744268159021146845cf05fe47ba668383a0a3c1174b90998e7c37da13f"
     },
     {
+      "path": "media/temporal_body_novel0_worn_hands_slow.mp4",
+      "bytes": 331185,
+      "sha256": "c7c244dfb2bc2902ea814edd635693006bd0df0540a45de92b3b3703fb63745e"
+    },
+    {
+      "path": "media/temporal_body_novel1_continuous_before_after.mp4",
+      "bytes": 594727,
+      "sha256": "5212e6733c947cd065695863eaecc9629864820e0820d5ea3e133c8c79dbe877"
+    },
+    {
+      "path": "media/temporal_body_novel1_hands200_214_generated.jpg",
+      "bytes": 295627,
+      "sha256": "ab95852e1bb0c91ed2e69a1e28c0869bee12ba4a17d4851eb4eabb531c16f1fb"
+    },
+    {
       "path": "media/temporal_body_novel1_keyframes.mp4",
       "bytes": 287921,
       "sha256": "309bd1f5ba572b0d6796a1180241cce85d512d79738e51e516976176b2aa1404"
+    },
+    {
+      "path": "media/temporal_body_novel1_worn_hands_slow.mp4",
+      "bytes": 348623,
+      "sha256": "d9465f379b2616ecdf9a542159103bf297daa82b2bee5ce5c5a3f915046f128e"
     },
     {
       "path": "media/texel_consensus_generated_comparison.jpg",
@@ -623,8 +698,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 35216,
-      "sha256": "297e55f80fdc0a2cff5af17676f3bf90beb8a91ed922348f52bc29db5d683f5d"
+      "bytes": 39332,
+      "sha256": "8f9f25731fbe97961c8baff61fc597fd573a3de217eb7c2cd8c6afff863ad1f1"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -1172,6 +1247,11 @@
       "sha256": "cabae504250feff44993fd82c052d4043d9dc4765d357364018b898b36f0d9cd"
     },
     {
+      "path": "research/interaction_20261017/review_temporal_body_continuity.py",
+      "bytes": 3186,
+      "sha256": "d035ea44bcbdc84814a289991ecaeb5c5ec76b48bd08865adc745fd77b4062dc"
+    },
+    {
       "path": "research/interaction_20261017/run_aligned_body_feature_review.py",
       "bytes": 2794,
       "sha256": "1ba91d62b4e241817300cf1d34eedc25c1cf332ae8aa340e80bf7c333dcc05a3"
@@ -1387,6 +1467,11 @@
       "sha256": "4264a0340da51320f7cef721b9864123ff1044028775b9f2c4599040545b9b01"
     },
     {
+      "path": "research/interaction_20261017/verify_temporal_weight_contract.py",
+      "bytes": 2310,
+      "sha256": "2d2589f4086adf3b5530ae06cdecdf2028575f1e367c03e680fe36bc8e5ae281"
+    },
+    {
       "path": "research/interaction_20261017/verify_texture_consensus.py",
       "bytes": 1340,
       "sha256": "36f1b09e7fffc1e020d8dd1dba4b4ff3911e2bb8b8c39160c1f5b2f3d2cf3ee7"
@@ -1430,6 +1515,11 @@
       "path": "research/lhmpp_20261016/runtime_imports.py",
       "bytes": 2603,
       "sha256": "5e005cce03f97fa52898d067059bc6def7d40fe20fc53e0a091a9ab68860f441"
+    },
+    {
+      "path": "TEMPORAL_BODY_CONTINUOUS_20261018.md",
+      "bytes": 4109,
+      "sha256": "fae7ba0a8227778b5d15a3aeb0d784d332e25caf1bc99bfeebbdfd7e1872dffe"
     },
     {
       "path": "TEMPORAL_BODY_STAGE_20261018.md",

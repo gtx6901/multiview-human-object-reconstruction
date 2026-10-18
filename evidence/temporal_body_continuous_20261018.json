@@ -1,0 +1,450 @@
+{
+  "underarm_weight_amount_fit_v3": {
+    "success": true,
+    "frames": [
+      145,
+      165,
+      200,
+      225
+    ],
+    "observations": 32,
+    "updates": 96,
+    "edited_gaussians": 1219,
+    "before_photo_mae": 0.18170479545369744,
+    "after_photo_mae": 0.1810592170804739,
+    "amount_mean": 0.9345134496688843,
+    "amount_min": 0.6822751760482788,
+    "amount_max": 0.9847821593284607,
+    "camera_gains_srgb": {
+      "21305711": [
+        1.3558117151260376,
+        1.307672142982483,
+        1.5481034517288208
+      ],
+      "21305717": [
+        1.2246419191360474,
+        1.2032818794250488,
+        1.195459246635437
+      ],
+      "FCM21121414": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "FCM21121415": [
+        0.8447093367576599,
+        0.8822340965270996,
+        0.9361462593078613
+      ],
+      "FCM21121416": [
+        1.0213305950164795,
+        0.9696969985961914,
+        0.9136217832565308
+      ],
+      "FCM22020159": [
+        1.6851541996002197,
+        1.6086229085922241,
+        1.6388342380523682
+      ],
+      "FCM22020160": [
+        0.8267589807510376,
+        0.7585185766220093,
+        0.6830806732177734
+      ],
+      "FCM22030167": [
+        0.9939817786216736,
+        1.1372548341751099,
+        1.2313292026519775
+      ]
+    },
+    "history": [
+      {
+        "step": 1,
+        "photo": 0.1131487637758255,
+        "amount_mean": 0.8841643929481506
+      },
+      {
+        "step": 17,
+        "photo": 0.08984369039535522,
+        "amount_mean": 0.9112962484359741
+      },
+      {
+        "step": 33,
+        "photo": 0.1124989464879036,
+        "amount_mean": 0.9229253530502319
+      },
+      {
+        "step": 49,
+        "photo": 0.0897551029920578,
+        "amount_mean": 0.9277700185775757
+      },
+      {
+        "step": 65,
+        "photo": 0.11210916936397552,
+        "amount_mean": 0.9310110211372375
+      },
+      {
+        "step": 81,
+        "photo": 0.08966367691755295,
+        "amount_mean": 0.9329511523246765
+      },
+      {
+        "step": 96,
+        "photo": 0.11352770775556564,
+        "amount_mean": 0.9345134496688843
+      }
+    ],
+    "seconds": 66.90381908416748,
+    "scope": "Only1219 source-supported dark sleeve Gaussian skinning amounts learned between original and proposed arm-only smoothed weights. Positions/features/decoder/poses fixed; rendering geometry changes only through skinning.32 all8x4 native-crop underarm observations; source clipping/person/object reliability masks fixed; camera gains fixed before training. Photo training loss not visual acceptance; same20frame review required."
+  },
+  "temporal_weight_contract_v4": {
+    "success": true,
+    "poses_all300_exact": true,
+    "features_decoder_geometry_exact": true,
+    "only_weight_rows": 1219,
+    "unchanged_weight_rows": 158781,
+    "amount_min": 0.682275116443634,
+    "amount_max": 0.9847821593284607,
+    "checks": [
+      {
+        "frame": 0,
+        "finite_gaussians": 160000
+      },
+      {
+        "frame": 42,
+        "finite_gaussians": 160000
+      },
+      {
+        "frame": 165,
+        "finite_gaussians": 160000
+      },
+      {
+        "frame": 225,
+        "finite_gaussians": 160000
+      },
+      {
+        "frame": 299,
+        "finite_gaussians": 160000
+      }
+    ],
+    "scope": "Independent saved-file comparison. Learned1219 weights remain convex combinations of original and proposed arm-only sleeve weights. All300 poses, Gaussian canonical geometry/attributes/features and decoder exact versus the prior integrated candidate. No visual acceptance implied."
+  },
+  "temporal_body_underarm_comparison_v4": {
+    "success": true,
+    "before": "grounded_shared_shape_review20_v2",
+    "after": "temporal_body_review20_v4",
+    "fixed_pixels": 20217,
+    "before_mae_srgb": 0.4761919587449118,
+    "after_mae_srgb": 0.4519924308730438,
+    "records": [
+      {
+        "serial": "21305711",
+        "frame": 145,
+        "pixels": 1062,
+        "before_abs_sum": 1666.61572265625,
+        "after_abs_sum": 1308.2431640625
+      },
+      {
+        "serial": "21305711",
+        "frame": 165,
+        "pixels": 1091,
+        "before_abs_sum": 1672.8509521484375,
+        "after_abs_sum": 1307.533447265625
+      },
+      {
+        "serial": "21305711",
+        "frame": 200,
+        "pixels": 2404,
+        "before_abs_sum": 2778.537353515625,
+        "after_abs_sum": 2775.498046875
+      },
+      {
+        "serial": "21305711",
+        "frame": 225,
+        "pixels": 2754,
+        "before_abs_sum": 3891.239501953125,
+        "after_abs_sum": 3870.419677734375
+      },
+      {
+        "serial": "21305717",
+        "frame": 145,
+        "pixels": 698,
+        "before_abs_sum": 1049.560791015625,
+        "after_abs_sum": 928.5686645507812
+      },
+      {
+        "serial": "21305717",
+        "frame": 165,
+        "pixels": 1182,
+        "before_abs_sum": 2054.34521484375,
+        "after_abs_sum": 1867.2392578125
+      },
+      {
+        "serial": "21305717",
+        "frame": 200,
+        "pixels": 500,
+        "before_abs_sum": 663.5921630859375,
+        "after_abs_sum": 652.3489990234375
+      },
+      {
+        "serial": "21305717",
+        "frame": 225,
+        "pixels": 268,
+        "before_abs_sum": 363.7059020996094,
+        "after_abs_sum": 363.8980712890625
+      },
+      {
+        "serial": "FCM21121414",
+        "frame": 145,
+        "pixels": 212,
+        "before_abs_sum": 365.8196105957031,
+        "after_abs_sum": 362.07452392578125
+      },
+      {
+        "serial": "FCM21121414",
+        "frame": 165,
+        "pixels": 90,
+        "before_abs_sum": 183.1372528076172,
+        "after_abs_sum": 182.72549438476562
+      },
+      {
+        "serial": "FCM21121414",
+        "frame": 200,
+        "pixels": 63,
+        "before_abs_sum": 127.41177368164062,
+        "after_abs_sum": 125.55686950683594
+      },
+      {
+        "serial": "FCM21121414",
+        "frame": 225,
+        "pixels": 54,
+        "before_abs_sum": 90.1568603515625,
+        "after_abs_sum": 87.76470947265625
+      },
+      {
+        "serial": "FCM21121415",
+        "frame": 145,
+        "pixels": 52,
+        "before_abs_sum": 97.02745056152344,
+        "after_abs_sum": 93.5294189453125
+      },
+      {
+        "serial": "FCM21121415",
+        "frame": 165,
+        "pixels": 45,
+        "before_abs_sum": 101.80392456054688,
+        "after_abs_sum": 95.74118041992188
+      },
+      {
+        "serial": "FCM21121415",
+        "frame": 200,
+        "pixels": 816,
+        "before_abs_sum": 1329.7098388671875,
+        "after_abs_sum": 1324.2236328125
+      },
+      {
+        "serial": "FCM21121415",
+        "frame": 225,
+        "pixels": 840,
+        "before_abs_sum": 1566.443115234375,
+        "after_abs_sum": 1574.1451416015625
+      },
+      {
+        "serial": "FCM21121416",
+        "frame": 145,
+        "pixels": 953,
+        "before_abs_sum": 1361.85498046875,
+        "after_abs_sum": 1316.0
+      },
+      {
+        "serial": "FCM21121416",
+        "frame": 165,
+        "pixels": 563,
+        "before_abs_sum": 708.9019775390625,
+        "after_abs_sum": 724.5451049804688
+      },
+      {
+        "serial": "FCM21121416",
+        "frame": 200,
+        "pixels": 53,
+        "before_abs_sum": 57.69411849975586,
+        "after_abs_sum": 58.10196304321289
+      },
+      {
+        "serial": "FCM21121416",
+        "frame": 225,
+        "pixels": 172,
+        "before_abs_sum": 213.86276245117188,
+        "after_abs_sum": 221.36863708496094
+      },
+      {
+        "serial": "FCM22020159",
+        "frame": 145,
+        "pixels": 1449,
+        "before_abs_sum": 2029.9608154296875,
+        "after_abs_sum": 2022.8275146484375
+      },
+      {
+        "serial": "FCM22020159",
+        "frame": 165,
+        "pixels": 1040,
+        "before_abs_sum": 1394.1961669921875,
+        "after_abs_sum": 1403.784423828125
+      },
+      {
+        "serial": "FCM22020159",
+        "frame": 200,
+        "pixels": 727,
+        "before_abs_sum": 892.61572265625,
+        "after_abs_sum": 901.674560546875
+      },
+      {
+        "serial": "FCM22020159",
+        "frame": 225,
+        "pixels": 597,
+        "before_abs_sum": 767.4078369140625,
+        "after_abs_sum": 770.682373046875
+      },
+      {
+        "serial": "FCM22020160",
+        "frame": 145,
+        "pixels": 842,
+        "before_abs_sum": 1043.066650390625,
+        "after_abs_sum": 858.439208984375
+      },
+      {
+        "serial": "FCM22020160",
+        "frame": 165,
+        "pixels": 485,
+        "before_abs_sum": 657.3529052734375,
+        "after_abs_sum": 630.7960815429688
+      },
+      {
+        "serial": "FCM22020160",
+        "frame": 200,
+        "pixels": 336,
+        "before_abs_sum": 406.7294006347656,
+        "after_abs_sum": 415.7882385253906
+      },
+      {
+        "serial": "FCM22020160",
+        "frame": 225,
+        "pixels": 57,
+        "before_abs_sum": 45.8431396484375,
+        "after_abs_sum": 48.82745361328125
+      },
+      {
+        "serial": "FCM22030167",
+        "frame": 145,
+        "pixels": 397,
+        "before_abs_sum": 600.921630859375,
+        "after_abs_sum": 527.8431396484375
+      },
+      {
+        "serial": "FCM22030167",
+        "frame": 165,
+        "pixels": 366,
+        "before_abs_sum": 639.4823608398438,
+        "after_abs_sum": 533.87451171875
+      },
+      {
+        "serial": "FCM22030167",
+        "frame": 200,
+        "pixels": 16,
+        "before_abs_sum": 19.901962280273438,
+        "after_abs_sum": 20.309804916381836
+      },
+      {
+        "serial": "FCM22030167",
+        "frame": 225,
+        "pixels": 33,
+        "before_abs_sum": 39.76863098144531,
+        "after_abs_sum": 39.41960906982422
+      }
+    ],
+    "scope": "Same baseline-defined bright-source/dark-rendered underarm pixels, original calibrated projection, source segmentation core and unclipped source, all8x4times. No after-dependent reselection or exposure recalibration. Input-image diagnostic; actual whole-candidate review determines adoption."
+  },
+  "temporal_body_comparison20_v4": {
+    "success": true,
+    "before": "grounded_shared_shape_review20_v2",
+    "after": "temporal_body_review20_v4",
+    "avatar": "avatar_grounded_shared_shape_v2",
+    "original_frame_ids": [
+      0,
+      30,
+      42,
+      60,
+      90,
+      120,
+      135,
+      145,
+      155,
+      165,
+      175,
+      180,
+      190,
+      200,
+      210,
+      225,
+      240,
+      260,
+      280,
+      299
+    ],
+    "real_cameras": 8,
+    "video_checks": [
+      {
+        "camera": 0,
+        "decoded_frames": 600,
+        "original_keyframes": 20
+      },
+      {
+        "camera": 1,
+        "decoded_frames": 600,
+        "original_keyframes": 20
+      }
+    ],
+    "seconds": 26.440253019332886,
+    "scope": "Matched-camera whole-candidate review. Each of20 original keyframes held1second for inspection, explicitly NOT continuous action video. Original RGB panels only in *_private.jpg; generated-only pages/videos may be published. Model-projected head crops use SAME rectangle for source/before/after. Camera matrices/raw source pixels are not in the public report."
+  },
+  "temporal_body_continuity_v4": {
+    "success": true,
+    "before": "grounded_shared_shape_full300_v2",
+    "after": "temporal_body_full300_v4",
+    "videos": [
+      {
+        "file": "novel0_continuous_before_after.mp4",
+        "decoded_frames": 300
+      },
+      {
+        "file": "novel0_worn_hands_slow.mp4",
+        "decoded_frames": 120
+      },
+      {
+        "file": "novel1_continuous_before_after.mp4",
+        "decoded_frames": 300
+      },
+      {
+        "file": "novel1_worn_hands_slow.mp4",
+        "decoded_frames": 120
+      }
+    ],
+    "scope": "Pure-generated actual continuous-frame comparisons, identical camera matrices. Full0..299 before/after at30fps; worn180..299 fixed head/hand crop at10fps. Head crop fixed across the entire worn interval to avoid camera-induced jitter. No raw source imagery or camera matrices in public report."
+  },
+  "full300": {
+    "success": true,
+    "frames": 300,
+    "videos": [
+      {
+        "file": "novel_only_30fps.mp4",
+        "decoded_frames": 300
+      },
+      {
+        "file": "novel_only_slow10fps.mp4",
+        "decoded_frames": 300
+      }
+    ],
+    "avatar": "underarm_weight_amount_fit_v3",
+    "motion": "temporal_body_helmet_transport_v3"
+  }
+}

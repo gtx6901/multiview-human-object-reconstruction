@@ -300,13 +300,23 @@
     "published_sha256": "c20f8e72b3a6dd36d9d02443582d95b812f71492de022e20dd6f23bc544a0500"
   },
   {
-    "file": "research/interaction_20261017/refine_underarm_weight_amount.py",
-    "local_source_sha256": "a428c46ac2b6af938a4472528dee223c3bc40d483d3759ce0dc8199a563e1e8c",
-    "published_sha256": "9a831d23fece9d025440acbc1b2b650be0b71b3f53afab44a38c195c0a564a48"
-  },
-  {
     "file": "research/interaction_20261017/fit_shared_shape_motion.py",
     "local_source_sha256": "8defdf2c96f84ad3ec2a583bda2097ae525e63e8b6ce590359ed6f4e8eade2a6",
     "published_sha256": "e1be4ea691032df38c57f7ff9c7474359d455ee41a40e02ca2f658213c832a14"
+  },
+  {
+    "file": "research/interaction_20261017/review_temporal_body_continuity.py",
+    "local_source_sha256": "5db1faf31710f409add58e39092f68c8983c107af592bcafcefc624d07837798",
+    "published_sha256": "d035ea44bcbdc84814a289991ecaeb5c5ec76b48bd08865adc745fd77b4062dc"
+  },
+  {
+    "file": "research/interaction_20261017/verify_temporal_weight_contract.py",
+    "local_source_sha256": "2eb37af514fbf630af998687f680f520d7f365910ea2317b7b5fe0b59b18c5de",
+    "published_sha256": "2d2589f4086adf3b5530ae06cdecdf2028575f1e367c03e680fe36bc8e5ae281"
+  },
+  {
+    "file": "research/interaction_20261017/refine_underarm_weight_amount.py",
+    "local_source_sha256": "a428c46ac2b6af938a4472528dee223c3bc40d483d3759ce0dc8199a563e1e8c",
+    "published_sha256": "9a831d23fece9d025440acbc1b2b650be0b71b3f53afab44a38c195c0a564a48"
   }
 ]
