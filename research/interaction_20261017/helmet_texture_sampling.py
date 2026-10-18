@@ -49,6 +49,8 @@ class NativeHelmetSampler:
             filters['body_depth_uncertainty']=~((silhouette>.5)&(ba<.5))
         stats={}
         if debug:stats['projected_hit']={str(c):int((good&(classes==c)).sum()) for c in [0,1,2]}
+        if debug:
+            stats['independent_filter_survivors']={key:{str(c):int((good&keep&(classes==c)).sum()) for c in [0,1,2]} for key,keep in filters.items()}
         for key,keep in filters.items():
             good&=keep
             if debug:stats[key]={str(c):int((good&(classes==c)).sum()) for c in [0,1,2]}

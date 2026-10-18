@@ -81,13 +81,13 @@
   },
   {
     "file": "research/interaction_20261017/helmet_texture_sampling.py",
-    "local_source_sha256": "567df6dcbd9cffd5242e5f204d90264f7a81a9e5f1fea29f48024a35f4b80571",
-    "published_sha256": "a7e0e9fd01832ed827188a83e219fa2e12c01b02e6377b2c20a9d4d98eb6c058"
+    "local_source_sha256": "9f35232b8221e34db400631d45ad1aa28934eeedbfcb09268260842eb54afabb",
+    "published_sha256": "11406efdd08e27adeccc99a73d4b94de93e69a8bb7f47d07bbf9f2a31e268f5f"
   },
   {
     "file": "research/interaction_20261017/bake_native_helmet_uv.py",
-    "local_source_sha256": "869b42d45695a75b179c27695d0a3714dc0b310627324739a19932f3e1f92d22",
-    "published_sha256": "4cdcb1d644f65442c918ce79c24e5988a0958f8ad040c279b2c7647d0fd876d3"
+    "local_source_sha256": "9e40fc7898a297b34f0c07a5445336ea3e20f2b44aedf33f9bce48dded8df596",
+    "published_sha256": "a190503509a9e22e25d2ecac8e86114bd6a3aa8a8158985b575a6144d4ce720f"
   },
   {
     "file": "research/interaction_20261017/audit_helmet_material_orientation.py",

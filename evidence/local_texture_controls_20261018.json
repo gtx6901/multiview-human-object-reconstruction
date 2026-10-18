@@ -1,0 +1,6295 @@
+{
+  "reports": {
+    "helmet_profile_sampling_audit_v1": {
+      "success": true,
+      "motion": "helmet_depth_aware_profile_pose_v2",
+      "mesh": "helmet_depth_aware_profile_texture_v2",
+      "body_depth": "shared_shape_body_face_occlusion_all300_v1",
+      "frames": [
+        30,
+        42,
+        60,
+        120,
+        180,
+        299
+      ],
+      "points_per_class": {
+        "0": 1200,
+        "1": 1200,
+        "2": 658
+      },
+      "records": [
+        {
+          "camera": "21305711",
+          "frame": 30,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1177,
+              "1": 1200,
+              "2": 658
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 725,
+                "1": 762,
+                "2": 490
+              },
+              "mesh_depth": {
+                "0": 592,
+                "1": 491,
+                "2": 601
+              },
+              "surface_class": {
+                "0": 908,
+                "1": 269,
+                "2": 421
+              },
+              "view_angle": {
+                "0": 315,
+                "1": 705,
+                "2": 459
+              },
+              "hand_unknown": {
+                "0": 668,
+                "1": 673,
+                "2": 474
+              },
+              "body_depth": {
+                "0": 998,
+                "1": 1021,
+                "2": 658
+              },
+              "body_depth_uncertainty": {
+                "0": 1005,
+                "1": 1024,
+                "2": 480
+              }
+            },
+            "candidate_label": {
+              "0": 725,
+              "1": 762,
+              "2": 490
+            },
+            "mesh_depth": {
+              "0": 410,
+              "1": 395,
+              "2": 433
+            },
+            "surface_class": {
+              "0": 187,
+              "1": 242,
+              "2": 257
+            },
+            "view_angle": {
+              "0": 176,
+              "1": 241,
+              "2": 239
+            },
+            "hand_unknown": {
+              "0": 161,
+              "1": 89,
+              "2": 199
+            },
+            "body_depth": {
+              "0": 161,
+              "1": 89,
+              "2": 199
+            },
+            "body_depth_uncertainty": {
+              "0": 135,
+              "1": 87,
+              "2": 139
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 129,
+              "mean_srgb": [
+                0.08230648934841156,
+                0.0814867913722992,
+                0.09511596709489822
+              ]
+            },
+            "1": {
+              "sample_count": 86,
+              "mean_srgb": [
+                0.08721119910478592,
+                0.08667998015880585,
+                0.10199835896492004
+              ]
+            },
+            "2": {
+              "sample_count": 128,
+              "mean_srgb": [
+                0.3051328659057617,
+                0.3167745769023895,
+                0.36055436730384827
+              ]
+            }
+          }
+        },
+        {
+          "camera": "21305711",
+          "frame": 42,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1184,
+              "1": 1200,
+              "2": 658
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 610,
+                "1": 647,
+                "2": 385
+              },
+              "mesh_depth": {
+                "0": 645,
+                "1": 438,
+                "2": 567
+              },
+              "surface_class": {
+                "0": 980,
+                "1": 205,
+                "2": 462
+              },
+              "view_angle": {
+                "0": 417,
+                "1": 624,
+                "2": 522
+              },
+              "hand_unknown": {
+                "0": 764,
+                "1": 782,
+                "2": 460
+              },
+              "body_depth": {
+                "0": 1022,
+                "1": 1042,
+                "2": 507
+              },
+              "body_depth_uncertainty": {
+                "0": 1080,
+                "1": 1091,
+                "2": 630
+              }
+            },
+            "candidate_label": {
+              "0": 610,
+              "1": 647,
+              "2": 385
+            },
+            "mesh_depth": {
+              "0": 374,
+              "1": 343,
+              "2": 296
+            },
+            "surface_class": {
+              "0": 208,
+              "1": 177,
+              "2": 194
+            },
+            "view_angle": {
+              "0": 199,
+              "1": 177,
+              "2": 165
+            },
+            "hand_unknown": {
+              "0": 175,
+              "1": 153,
+              "2": 165
+            },
+            "body_depth": {
+              "0": 175,
+              "1": 153,
+              "2": 165
+            },
+            "body_depth_uncertainty": {
+              "0": 174,
+              "1": 147,
+              "2": 152
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 157,
+              "mean_srgb": [
+                0.17941449582576752,
+                0.18199783563613892,
+                0.22569802403450012
+              ]
+            },
+            "1": {
+              "sample_count": 147,
+              "mean_srgb": [
+                0.12316438555717468,
+                0.11992143094539642,
+                0.14946000277996063
+              ]
+            },
+            "2": {
+              "sample_count": 106,
+              "mean_srgb": [
+                0.1710323542356491,
+                0.15873907506465912,
+                0.20460698008537292
+              ]
+            }
+          }
+        },
+        {
+          "camera": "21305711",
+          "frame": 60,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1175,
+              "1": 1200,
+              "2": 658
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 295,
+                "1": 316,
+                "2": 34
+              },
+              "mesh_depth": {
+                "0": 520,
+                "1": 245,
+                "2": 68
+              },
+              "surface_class": {
+                "0": 1174,
+                "1": 0,
+                "2": 6
+              },
+              "view_angle": {
+                "0": 433,
+                "1": 525,
+                "2": 239
+              },
+              "hand_unknown": {
+                "0": 604,
+                "1": 604,
+                "2": 320
+              },
+              "body_depth": {
+                "0": 920,
+                "1": 940,
+                "2": 597
+              },
+              "body_depth_uncertainty": {
+                "0": 1045,
+                "1": 1066,
+                "2": 572
+              }
+            },
+            "candidate_label": {
+              "0": 295,
+              "1": 316,
+              "2": 34
+            },
+            "mesh_depth": {
+              "0": 140,
+              "1": 131,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 140,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 140,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 102,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 102,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 102,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 101,
+              "mean_srgb": [
+                0.9152389168739319,
+                0.9223138689994812,
+                0.9269375205039978
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "21305711",
+          "frame": 120,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1185,
+              "1": 1200,
+              "2": 658
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 16,
+                "1": 21,
+                "2": 49
+              },
+              "mesh_depth": {
+                "0": 644,
+                "1": 394,
+                "2": 0
+              },
+              "surface_class": {
+                "0": 1185,
+                "1": 0,
+                "2": 0
+              },
+              "view_angle": {
+                "0": 599,
+                "1": 433,
+                "2": 139
+              },
+              "hand_unknown": {
+                "0": 712,
+                "1": 727,
+                "2": 531
+              },
+              "body_depth": {
+                "0": 1163,
+                "1": 1183,
+                "2": 658
+              },
+              "body_depth_uncertainty": {
+                "0": 290,
+                "1": 272,
+                "2": 153
+              }
+            },
+            "candidate_label": {
+              "0": 16,
+              "1": 21,
+              "2": 49
+            },
+            "mesh_depth": {
+              "0": 10,
+              "1": 5,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 10,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 9,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 8,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 8,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 0,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "21305711",
+          "frame": 180,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1178,
+              "1": 1200,
+              "2": 651
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 531,
+                "1": 559,
+                "2": 0
+              },
+              "mesh_depth": {
+                "0": 539,
+                "1": 354,
+                "2": 581
+              },
+              "surface_class": {
+                "0": 1090,
+                "1": 83,
+                "2": 353
+              },
+              "view_angle": {
+                "0": 454,
+                "1": 521,
+                "2": 312
+              },
+              "hand_unknown": {
+                "0": 745,
+                "1": 751,
+                "2": 313
+              },
+              "body_depth": {
+                "0": 1034,
+                "1": 1050,
+                "2": 515
+              },
+              "body_depth_uncertainty": {
+                "0": 531,
+                "1": 520,
+                "2": 243
+              }
+            },
+            "candidate_label": {
+              "0": 531,
+              "1": 559,
+              "2": 0
+            },
+            "mesh_depth": {
+              "0": 257,
+              "1": 141,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 257,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 226,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 203,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 203,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 112,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 80,
+              "mean_srgb": [
+                0.9690679907798767,
+                0.9722828269004822,
+                0.969533383846283
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "21305711",
+          "frame": 299,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1187,
+              "1": 1200,
+              "2": 658
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 348,
+                "1": 360,
+                "2": 0
+              },
+              "mesh_depth": {
+                "0": 590,
+                "1": 366,
+                "2": 534
+              },
+              "surface_class": {
+                "0": 1065,
+                "1": 122,
+                "2": 319
+              },
+              "view_angle": {
+                "0": 453,
+                "1": 554,
+                "2": 318
+              },
+              "hand_unknown": {
+                "0": 1187,
+                "1": 1200,
+                "2": 658
+              },
+              "body_depth": {
+                "0": 1082,
+                "1": 1087,
+                "2": 458
+              },
+              "body_depth_uncertainty": {
+                "0": 602,
+                "1": 572,
+                "2": 313
+              }
+            },
+            "candidate_label": {
+              "0": 348,
+              "1": 360,
+              "2": 0
+            },
+            "mesh_depth": {
+              "0": 194,
+              "1": 142,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 194,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 189,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 189,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 189,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 100,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 87,
+              "mean_srgb": [
+                0.7029028534889221,
+                0.685872495174408,
+                0.7253715395927429
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "21305717",
+          "frame": 30,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1168,
+              "1": 1200,
+              "2": 652
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 620,
+                "1": 648,
+                "2": 124
+              },
+              "mesh_depth": {
+                "0": 507,
+                "1": 317,
+                "2": 88
+              },
+              "surface_class": {
+                "0": 1167,
+                "1": 0,
+                "2": 21
+              },
+              "view_angle": {
+                "0": 474,
+                "1": 485,
+                "2": 189
+              },
+              "hand_unknown": {
+                "0": 175,
+                "1": 174,
+                "2": 332
+              },
+              "body_depth": {
+                "0": 1060,
+                "1": 1093,
+                "2": 573
+              },
+              "body_depth_uncertainty": {
+                "0": 607,
+                "1": 622,
+                "2": 521
+              }
+            },
+            "candidate_label": {
+              "0": 620,
+              "1": 648,
+              "2": 124
+            },
+            "mesh_depth": {
+              "0": 278,
+              "1": 211,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 278,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 257,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 42,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 42,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 8,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 8,
+              "mean_srgb": [
+                0.5806441307067871,
+                0.6151776313781738,
+                0.6341046094894409
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "21305717",
+          "frame": 42,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1173,
+              "1": 1200,
+              "2": 658
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 608,
+                "1": 640,
+                "2": 311
+              },
+              "mesh_depth": {
+                "0": 630,
+                "1": 387,
+                "2": 2
+              },
+              "surface_class": {
+                "0": 1173,
+                "1": 0,
+                "2": 0
+              },
+              "view_angle": {
+                "0": 601,
+                "1": 454,
+                "2": 133
+              },
+              "hand_unknown": {
+                "0": 484,
+                "1": 490,
+                "2": 311
+              },
+              "body_depth": {
+                "0": 1129,
+                "1": 1156,
+                "2": 652
+              },
+              "body_depth_uncertainty": {
+                "0": 104,
+                "1": 102,
+                "2": 57
+              }
+            },
+            "candidate_label": {
+              "0": 608,
+              "1": 640,
+              "2": 311
+            },
+            "mesh_depth": {
+              "0": 325,
+              "1": 260,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 325,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 321,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 95,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 95,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 0,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "21305717",
+          "frame": 60,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1182,
+              "1": 1200,
+              "2": 658
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 688,
+                "1": 731,
+                "2": 518
+              },
+              "mesh_depth": {
+                "0": 719,
+                "1": 567,
+                "2": 563
+              },
+              "surface_class": {
+                "0": 863,
+                "1": 317,
+                "2": 468
+              },
+              "view_angle": {
+                "0": 392,
+                "1": 661,
+                "2": 550
+              },
+              "hand_unknown": {
+                "0": 663,
+                "1": 670,
+                "2": 282
+              },
+              "body_depth": {
+                "0": 1161,
+                "1": 1180,
+                "2": 658
+              },
+              "body_depth_uncertainty": {
+                "0": 725,
+                "1": 727,
+                "2": 331
+              }
+            },
+            "candidate_label": {
+              "0": 688,
+              "1": 731,
+              "2": 518
+            },
+            "mesh_depth": {
+              "0": 491,
+              "1": 475,
+              "2": 427
+            },
+            "surface_class": {
+              "0": 196,
+              "1": 313,
+              "2": 338
+            },
+            "view_angle": {
+              "0": 191,
+              "1": 313,
+              "2": 282
+            },
+            "hand_unknown": {
+              "0": 89,
+              "1": 220,
+              "2": 120
+            },
+            "body_depth": {
+              "0": 89,
+              "1": 220,
+              "2": 120
+            },
+            "body_depth_uncertainty": {
+              "0": 75,
+              "1": 196,
+              "2": 96
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 60,
+              "mean_srgb": [
+                0.06459780037403107,
+                0.06894609332084656,
+                0.06330443173646927
+              ]
+            },
+            "1": {
+              "sample_count": 196,
+              "mean_srgb": [
+                0.05071602389216423,
+                0.05171362683176994,
+                0.04792916402220726
+              ]
+            },
+            "2": {
+              "sample_count": 87,
+              "mean_srgb": [
+                0.09591953456401825,
+                0.09935890883207321,
+                0.09948842227458954
+              ]
+            }
+          }
+        },
+        {
+          "camera": "21305717",
+          "frame": 120,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1158,
+              "1": 1200,
+              "2": 638
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 213,
+                "1": 221,
+                "2": 0
+              },
+              "mesh_depth": {
+                "0": 530,
+                "1": 356,
+                "2": 547
+              },
+              "surface_class": {
+                "0": 1094,
+                "1": 60,
+                "2": 323
+              },
+              "view_angle": {
+                "0": 479,
+                "1": 524,
+                "2": 299
+              },
+              "hand_unknown": {
+                "0": 532,
+                "1": 549,
+                "2": 241
+              },
+              "body_depth": {
+                "0": 978,
+                "1": 1013,
+                "2": 628
+              },
+              "body_depth_uncertainty": {
+                "0": 1019,
+                "1": 1048,
+                "2": 454
+              }
+            },
+            "candidate_label": {
+              "0": 213,
+              "1": 221,
+              "2": 0
+            },
+            "mesh_depth": {
+              "0": 90,
+              "1": 75,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 90,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 90,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 45,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 45,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 45,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 44,
+              "mean_srgb": [
+                0.4141674041748047,
+                0.41074255108833313,
+                0.3952277898788452
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "21305717",
+          "frame": 180,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1174,
+              "1": 1200,
+              "2": 644
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 569,
+                "1": 587,
+                "2": 0
+              },
+              "mesh_depth": {
+                "0": 514,
+                "1": 393,
+                "2": 590
+              },
+              "surface_class": {
+                "0": 1014,
+                "1": 150,
+                "2": 336
+              },
+              "view_angle": {
+                "0": 367,
+                "1": 635,
+                "2": 343
+              },
+              "hand_unknown": {
+                "0": 539,
+                "1": 549,
+                "2": 21
+              },
+              "body_depth": {
+                "0": 920,
+                "1": 940,
+                "2": 294
+              },
+              "body_depth_uncertainty": {
+                "0": 811,
+                "1": 811,
+                "2": 391
+              }
+            },
+            "candidate_label": {
+              "0": 569,
+              "1": 587,
+              "2": 0
+            },
+            "mesh_depth": {
+              "0": 203,
+              "1": 106,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 203,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 175,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 105,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 105,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 83,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 67,
+              "mean_srgb": [
+                0.8433235287666321,
+                0.8723733425140381,
+                0.8817057609558105
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "21305717",
+          "frame": 299,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1169,
+              "1": 1200,
+              "2": 644
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 590,
+                "1": 621,
+                "2": 87
+              },
+              "mesh_depth": {
+                "0": 561,
+                "1": 430,
+                "2": 573
+              },
+              "surface_class": {
+                "0": 1012,
+                "1": 160,
+                "2": 316
+              },
+              "view_angle": {
+                "0": 405,
+                "1": 677,
+                "2": 341
+              },
+              "hand_unknown": {
+                "0": 1128,
+                "1": 1160,
+                "2": 496
+              },
+              "body_depth": {
+                "0": 993,
+                "1": 1011,
+                "2": 439
+              },
+              "body_depth_uncertainty": {
+                "0": 827,
+                "1": 852,
+                "2": 254
+              }
+            },
+            "candidate_label": {
+              "0": 590,
+              "1": 621,
+              "2": 87
+            },
+            "mesh_depth": {
+              "0": 255,
+              "1": 183,
+              "2": 64
+            },
+            "surface_class": {
+              "0": 239,
+              "1": 16,
+              "2": 25
+            },
+            "view_angle": {
+              "0": 228,
+              "1": 16,
+              "2": 24
+            },
+            "hand_unknown": {
+              "0": 228,
+              "1": 16,
+              "2": 24
+            },
+            "body_depth": {
+              "0": 228,
+              "1": 15,
+              "2": 24
+            },
+            "body_depth_uncertainty": {
+              "0": 169,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 139,
+              "mean_srgb": [
+                0.7631723880767822,
+                0.7826077938079834,
+                0.7895801067352295
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM21121414",
+          "frame": 30,
+          "annotation_known": false
+        },
+        {
+          "camera": "FCM21121414",
+          "frame": 42,
+          "annotation_known": false
+        },
+        {
+          "camera": "FCM21121414",
+          "frame": 60,
+          "annotation_known": false
+        },
+        {
+          "camera": "FCM21121414",
+          "frame": 120,
+          "annotation_known": false
+        },
+        {
+          "camera": "FCM21121414",
+          "frame": 180,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1181,
+              "1": 1200,
+              "2": 640
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 758,
+                "1": 785,
+                "2": 178
+              },
+              "mesh_depth": {
+                "0": 560,
+                "1": 402,
+                "2": 556
+              },
+              "surface_class": {
+                "0": 1073,
+                "1": 103,
+                "2": 300
+              },
+              "view_angle": {
+                "0": 439,
+                "1": 646,
+                "2": 306
+              },
+              "hand_unknown": {
+                "0": 681,
+                "1": 688,
+                "2": 15
+              },
+              "body_depth": {
+                "0": 1057,
+                "1": 1072,
+                "2": 419
+              },
+              "body_depth_uncertainty": {
+                "0": 738,
+                "1": 738,
+                "2": 221
+              }
+            },
+            "candidate_label": {
+              "0": 758,
+              "1": 785,
+              "2": 178
+            },
+            "mesh_depth": {
+              "0": 338,
+              "1": 271,
+              "2": 162
+            },
+            "surface_class": {
+              "0": 297,
+              "1": 44,
+              "2": 46
+            },
+            "view_angle": {
+              "0": 282,
+              "1": 44,
+              "2": 46
+            },
+            "hand_unknown": {
+              "0": 164,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 164,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 110,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 78,
+              "mean_srgb": [
+                0.9634713530540466,
+                0.9780710935592651,
+                0.9711860418319702
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM21121414",
+          "frame": 299,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1174,
+              "1": 1200,
+              "2": 643
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 706,
+                "1": 736,
+                "2": 87
+              },
+              "mesh_depth": {
+                "0": 584,
+                "1": 367,
+                "2": 480
+              },
+              "surface_class": {
+                "0": 1079,
+                "1": 91,
+                "2": 257
+              },
+              "view_angle": {
+                "0": 461,
+                "1": 611,
+                "2": 288
+              },
+              "hand_unknown": {
+                "0": 1174,
+                "1": 1200,
+                "2": 643
+              },
+              "body_depth": {
+                "0": 1062,
+                "1": 1086,
+                "2": 502
+              },
+              "body_depth_uncertainty": {
+                "0": 735,
+                "1": 756,
+                "2": 155
+              }
+            },
+            "candidate_label": {
+              "0": 706,
+              "1": 736,
+              "2": 87
+            },
+            "mesh_depth": {
+              "0": 311,
+              "1": 241,
+              "2": 73
+            },
+            "surface_class": {
+              "0": 291,
+              "1": 20,
+              "2": 2
+            },
+            "view_angle": {
+              "0": 276,
+              "1": 20,
+              "2": 1
+            },
+            "hand_unknown": {
+              "0": 276,
+              "1": 20,
+              "2": 1
+            },
+            "body_depth": {
+              "0": 276,
+              "1": 20,
+              "2": 1
+            },
+            "body_depth_uncertainty": {
+              "0": 135,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 104,
+              "mean_srgb": [
+                0.9340850710868835,
+                0.9421563148498535,
+                0.9373989701271057
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM21121415",
+          "frame": 30,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1173,
+              "1": 1200,
+              "2": 652
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 383,
+                "1": 397,
+                "2": 356
+              },
+              "mesh_depth": {
+                "0": 575,
+                "1": 476,
+                "2": 539
+              },
+              "surface_class": {
+                "0": 978,
+                "1": 194,
+                "2": 334
+              },
+              "view_angle": {
+                "0": 419,
+                "1": 690,
+                "2": 388
+              },
+              "hand_unknown": {
+                "0": 577,
+                "1": 590,
+                "2": 405
+              },
+              "body_depth": {
+                "0": 1099,
+                "1": 1127,
+                "2": 652
+              },
+              "body_depth_uncertainty": {
+                "0": 467,
+                "1": 475,
+                "2": 43
+              }
+            },
+            "candidate_label": {
+              "0": 383,
+              "1": 397,
+              "2": 356
+            },
+            "mesh_depth": {
+              "0": 222,
+              "1": 244,
+              "2": 274
+            },
+            "surface_class": {
+              "0": 115,
+              "1": 133,
+              "2": 134
+            },
+            "view_angle": {
+              "0": 115,
+              "1": 133,
+              "2": 114
+            },
+            "hand_unknown": {
+              "0": 95,
+              "1": 96,
+              "2": 61
+            },
+            "body_depth": {
+              "0": 95,
+              "1": 96,
+              "2": 61
+            },
+            "body_depth_uncertainty": {
+              "0": 24,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 24,
+              "mean_srgb": [
+                0.9502116441726685,
+                0.9609098434448242,
+                0.9496192932128906
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM21121415",
+          "frame": 42,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1170,
+              "1": 1200,
+              "2": 651
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 714,
+                "1": 752,
+                "2": 53
+              },
+              "mesh_depth": {
+                "0": 502,
+                "1": 375,
+                "2": 589
+              },
+              "surface_class": {
+                "0": 1040,
+                "1": 124,
+                "2": 364
+              },
+              "view_angle": {
+                "0": 416,
+                "1": 563,
+                "2": 360
+              },
+              "hand_unknown": {
+                "0": 719,
+                "1": 745,
+                "2": 303
+              },
+              "body_depth": {
+                "0": 1135,
+                "1": 1167,
+                "2": 651
+              },
+              "body_depth_uncertainty": {
+                "0": 705,
+                "1": 718,
+                "2": 186
+              }
+            },
+            "candidate_label": {
+              "0": 714,
+              "1": 752,
+              "2": 53
+            },
+            "mesh_depth": {
+              "0": 306,
+              "1": 232,
+              "2": 49
+            },
+            "surface_class": {
+              "0": 300,
+              "1": 11,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 284,
+              "1": 11,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 199,
+              "1": 11,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 199,
+              "1": 11,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 122,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 117,
+              "mean_srgb": [
+                0.4012634754180908,
+                0.40704670548439026,
+                0.4167238175868988
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM21121415",
+          "frame": 60,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1169,
+              "1": 1200,
+              "2": 654
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 607,
+                "1": 635,
+                "2": 578
+              },
+              "mesh_depth": {
+                "0": 548,
+                "1": 453,
+                "2": 583
+              },
+              "surface_class": {
+                "0": 965,
+                "1": 201,
+                "2": 350
+              },
+              "view_angle": {
+                "0": 376,
+                "1": 703,
+                "2": 391
+              },
+              "hand_unknown": {
+                "0": 496,
+                "1": 510,
+                "2": 252
+              },
+              "body_depth": {
+                "0": 1098,
+                "1": 1125,
+                "2": 654
+              },
+              "body_depth_uncertainty": {
+                "0": 937,
+                "1": 966,
+                "2": 616
+              }
+            },
+            "candidate_label": {
+              "0": 607,
+              "1": 635,
+              "2": 578
+            },
+            "mesh_depth": {
+              "0": 295,
+              "1": 341,
+              "2": 508
+            },
+            "surface_class": {
+              "0": 151,
+              "1": 190,
+              "2": 283
+            },
+            "view_angle": {
+              "0": 149,
+              "1": 189,
+              "2": 260
+            },
+            "hand_unknown": {
+              "0": 37,
+              "1": 66,
+              "2": 70
+            },
+            "body_depth": {
+              "0": 37,
+              "1": 66,
+              "2": 70
+            },
+            "body_depth_uncertainty": {
+              "0": 37,
+              "1": 66,
+              "2": 70
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 37,
+              "mean_srgb": [
+                0.28890129923820496,
+                0.32171374559402466,
+                0.34726253151893616
+              ]
+            },
+            "1": {
+              "sample_count": 66,
+              "mean_srgb": [
+                0.09332925826311111,
+                0.10409874469041824,
+                0.12162961810827255
+              ]
+            },
+            "2": {
+              "sample_count": 59,
+              "mean_srgb": [
+                0.18605808913707733,
+                0.22984778881072998,
+                0.27108100056648254
+              ]
+            }
+          }
+        },
+        {
+          "camera": "FCM21121415",
+          "frame": 120,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1172,
+              "1": 1200,
+              "2": 653
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 677,
+                "1": 722,
+                "2": 608
+              },
+              "mesh_depth": {
+                "0": 659,
+                "1": 386,
+                "2": 84
+              },
+              "surface_class": {
+                "0": 1172,
+                "1": 0,
+                "2": 0
+              },
+              "view_angle": {
+                "0": 614,
+                "1": 429,
+                "2": 240
+              },
+              "hand_unknown": {
+                "0": 470,
+                "1": 485,
+                "2": 417
+              },
+              "body_depth": {
+                "0": 1108,
+                "1": 1138,
+                "2": 595
+              },
+              "body_depth_uncertainty": {
+                "0": 699,
+                "1": 699,
+                "2": 511
+              }
+            },
+            "candidate_label": {
+              "0": 677,
+              "1": 722,
+              "2": 608
+            },
+            "mesh_depth": {
+              "0": 410,
+              "1": 322,
+              "2": 84
+            },
+            "surface_class": {
+              "0": 410,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 402,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 215,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 215,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 178,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 169,
+              "mean_srgb": [
+                0.8362130522727966,
+                0.8371506929397583,
+                0.8329418301582336
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM21121415",
+          "frame": 180,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1183,
+              "1": 1200,
+              "2": 654
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 358,
+                "1": 381,
+                "2": 0
+              },
+              "mesh_depth": {
+                "0": 580,
+                "1": 392,
+                "2": 512
+              },
+              "surface_class": {
+                "0": 1051,
+                "1": 137,
+                "2": 290
+              },
+              "view_angle": {
+                "0": 471,
+                "1": 632,
+                "2": 313
+              },
+              "hand_unknown": {
+                "0": 851,
+                "1": 869,
+                "2": 372
+              },
+              "body_depth": {
+                "0": 1039,
+                "1": 1054,
+                "2": 491
+              },
+              "body_depth_uncertainty": {
+                "0": 665,
+                "1": 669,
+                "2": 275
+              }
+            },
+            "candidate_label": {
+              "0": 358,
+              "1": 381,
+              "2": 0
+            },
+            "mesh_depth": {
+              "0": 184,
+              "1": 156,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 184,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 184,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 169,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 169,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 83,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 83,
+              "mean_srgb": [
+                0.9565944075584412,
+                0.959623396396637,
+                0.9489704370498657
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM21121415",
+          "frame": 299,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1167,
+              "1": 1200,
+              "2": 658
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 296,
+                "1": 311,
+                "2": 45
+              },
+              "mesh_depth": {
+                "0": 577,
+                "1": 460,
+                "2": 587
+              },
+              "surface_class": {
+                "0": 945,
+                "1": 219,
+                "2": 330
+              },
+              "view_angle": {
+                "0": 391,
+                "1": 643,
+                "2": 361
+              },
+              "hand_unknown": {
+                "0": 1109,
+                "1": 1136,
+                "2": 542
+              },
+              "body_depth": {
+                "0": 1033,
+                "1": 1066,
+                "2": 537
+              },
+              "body_depth_uncertainty": {
+                "0": 711,
+                "1": 719,
+                "2": 210
+              }
+            },
+            "candidate_label": {
+              "0": 296,
+              "1": 311,
+              "2": 45
+            },
+            "mesh_depth": {
+              "0": 121,
+              "1": 107,
+              "2": 36
+            },
+            "surface_class": {
+              "0": 120,
+              "1": 0,
+              "2": 18
+            },
+            "view_angle": {
+              "0": 117,
+              "1": 0,
+              "2": 16
+            },
+            "hand_unknown": {
+              "0": 117,
+              "1": 0,
+              "2": 16
+            },
+            "body_depth": {
+              "0": 117,
+              "1": 0,
+              "2": 16
+            },
+            "body_depth_uncertainty": {
+              "0": 32,
+              "1": 0,
+              "2": 13
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 31,
+              "mean_srgb": [
+                0.6670385599136353,
+                0.690223217010498,
+                0.7140496969223022
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 6,
+              "mean_srgb": [
+                0.9799498319625854,
+                0.9972020387649536,
+                0.9804877042770386
+              ]
+            }
+          }
+        },
+        {
+          "camera": "FCM21121416",
+          "frame": 30,
+          "annotation_known": false
+        },
+        {
+          "camera": "FCM21121416",
+          "frame": 42,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1166,
+              "1": 1200,
+              "2": 643
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 118,
+                "1": 126,
+                "2": 0
+              },
+              "mesh_depth": {
+                "0": 496,
+                "1": 241,
+                "2": 80
+              },
+              "surface_class": {
+                "0": 1166,
+                "1": 0,
+                "2": 0
+              },
+              "view_angle": {
+                "0": 461,
+                "1": 500,
+                "2": 245
+              },
+              "hand_unknown": {
+                "0": 577,
+                "1": 597,
+                "2": 244
+              },
+              "body_depth": {
+                "0": 814,
+                "1": 834,
+                "2": 605
+              },
+              "body_depth_uncertainty": {
+                "0": 600,
+                "1": 630,
+                "2": 38
+              }
+            },
+            "candidate_label": {
+              "0": 118,
+              "1": 126,
+              "2": 0
+            },
+            "mesh_depth": {
+              "0": 37,
+              "1": 27,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 37,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 36,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 24,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 24,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 16,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 15,
+              "mean_srgb": [
+                0.9843119978904724,
+                0.9921590089797974,
+                0.9772470593452454
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM21121416",
+          "frame": 60,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1159,
+              "1": 1200,
+              "2": 655
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 455,
+                "1": 481,
+                "2": 205
+              },
+              "mesh_depth": {
+                "0": 669,
+                "1": 441,
+                "2": 19
+              },
+              "surface_class": {
+                "0": 1159,
+                "1": 0,
+                "2": 0
+              },
+              "view_angle": {
+                "0": 649,
+                "1": 414,
+                "2": 138
+              },
+              "hand_unknown": {
+                "0": 492,
+                "1": 502,
+                "2": 195
+              },
+              "body_depth": {
+                "0": 984,
+                "1": 1021,
+                "2": 655
+              },
+              "body_depth_uncertainty": {
+                "0": 830,
+                "1": 861,
+                "2": 389
+              }
+            },
+            "candidate_label": {
+              "0": 455,
+              "1": 481,
+              "2": 205
+            },
+            "mesh_depth": {
+              "0": 271,
+              "1": 210,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 271,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 262,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 195,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 195,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 195,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 171,
+              "mean_srgb": [
+                0.8435106873512268,
+                0.8667529225349426,
+                0.8844286203384399
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM21121416",
+          "frame": 120,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1159,
+              "1": 1200,
+              "2": 651
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 288,
+                "1": 296,
+                "2": 256
+              },
+              "mesh_depth": {
+                "0": 517,
+                "1": 423,
+                "2": 603
+              },
+              "surface_class": {
+                "0": 965,
+                "1": 186,
+                "2": 338
+              },
+              "view_angle": {
+                "0": 368,
+                "1": 653,
+                "2": 360
+              },
+              "hand_unknown": {
+                "0": 493,
+                "1": 502,
+                "2": 393
+              },
+              "body_depth": {
+                "0": 987,
+                "1": 1023,
+                "2": 651
+              },
+              "body_depth_uncertainty": {
+                "0": 501,
+                "1": 516,
+                "2": 321
+              }
+            },
+            "candidate_label": {
+              "0": 288,
+              "1": 296,
+              "2": 256
+            },
+            "mesh_depth": {
+              "0": 166,
+              "1": 167,
+              "2": 237
+            },
+            "surface_class": {
+              "0": 97,
+              "1": 78,
+              "2": 98
+            },
+            "view_angle": {
+              "0": 95,
+              "1": 78,
+              "2": 91
+            },
+            "hand_unknown": {
+              "0": 73,
+              "1": 78,
+              "2": 91
+            },
+            "body_depth": {
+              "0": 72,
+              "1": 78,
+              "2": 91
+            },
+            "body_depth_uncertainty": {
+              "0": 58,
+              "1": 78,
+              "2": 91
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 49,
+              "mean_srgb": [
+                0.07655556499958038,
+                0.057800207287073135,
+                0.05492444708943367
+              ]
+            },
+            "1": {
+              "sample_count": 78,
+              "mean_srgb": [
+                0.05487276241183281,
+                0.054801274091005325,
+                0.053675662726163864
+              ]
+            },
+            "2": {
+              "sample_count": 88,
+              "mean_srgb": [
+                0.14301979541778564,
+                0.14156126976013184,
+                0.13897140324115753
+              ]
+            }
+          }
+        },
+        {
+          "camera": "FCM21121416",
+          "frame": 180,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1176,
+              "1": 1200,
+              "2": 647
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 597,
+                "1": 617,
+                "2": 0
+              },
+              "mesh_depth": {
+                "0": 505,
+                "1": 322,
+                "2": 341
+              },
+              "surface_class": {
+                "0": 1131,
+                "1": 39,
+                "2": 223
+              },
+              "view_angle": {
+                "0": 462,
+                "1": 527,
+                "2": 300
+              },
+              "hand_unknown": {
+                "0": 816,
+                "1": 833,
+                "2": 344
+              },
+              "body_depth": {
+                "0": 1039,
+                "1": 1054,
+                "2": 549
+              },
+              "body_depth_uncertainty": {
+                "0": 698,
+                "1": 707,
+                "2": 230
+              }
+            },
+            "candidate_label": {
+              "0": 597,
+              "1": 617,
+              "2": 0
+            },
+            "mesh_depth": {
+              "0": 251,
+              "1": 170,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 251,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 241,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 221,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 221,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 170,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 131,
+              "mean_srgb": [
+                0.5719365477561951,
+                0.59229576587677,
+                0.5919471383094788
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM21121416",
+          "frame": 299,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1177,
+              "1": 1200,
+              "2": 649
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 756,
+                "1": 790,
+                "2": 281
+              },
+              "mesh_depth": {
+                "0": 552,
+                "1": 303,
+                "2": 134
+              },
+              "surface_class": {
+                "0": 1175,
+                "1": 0,
+                "2": 23
+              },
+              "view_angle": {
+                "0": 500,
+                "1": 502,
+                "2": 291
+              },
+              "hand_unknown": {
+                "0": 1177,
+                "1": 1200,
+                "2": 649
+              },
+              "body_depth": {
+                "0": 1083,
+                "1": 1103,
+                "2": 636
+              },
+              "body_depth_uncertainty": {
+                "0": 785,
+                "1": 788,
+                "2": 157
+              }
+            },
+            "candidate_label": {
+              "0": 756,
+              "1": 790,
+              "2": 281
+            },
+            "mesh_depth": {
+              "0": 348,
+              "1": 252,
+              "2": 49
+            },
+            "surface_class": {
+              "0": 348,
+              "1": 0,
+              "2": 23
+            },
+            "view_angle": {
+              "0": 335,
+              "1": 0,
+              "2": 23
+            },
+            "hand_unknown": {
+              "0": 335,
+              "1": 0,
+              "2": 23
+            },
+            "body_depth": {
+              "0": 335,
+              "1": 0,
+              "2": 23
+            },
+            "body_depth_uncertainty": {
+              "0": 214,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 179,
+              "mean_srgb": [
+                0.588189959526062,
+                0.6034571528434753,
+                0.6048346161842346
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM22020159",
+          "frame": 30,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1164,
+              "1": 1200,
+              "2": 658
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 784,
+                "1": 853,
+                "2": 583
+              },
+              "mesh_depth": {
+                "0": 666,
+                "1": 429,
+                "2": 0
+              },
+              "surface_class": {
+                "0": 1164,
+                "1": 0,
+                "2": 0
+              },
+              "view_angle": {
+                "0": 647,
+                "1": 363,
+                "2": 101
+              },
+              "hand_unknown": {
+                "0": 538,
+                "1": 554,
+                "2": 327
+              },
+              "body_depth": {
+                "0": 1062,
+                "1": 1094,
+                "2": 531
+              },
+              "body_depth_uncertainty": {
+                "0": 778,
+                "1": 796,
+                "2": 422
+              }
+            },
+            "candidate_label": {
+              "0": 784,
+              "1": 853,
+              "2": 583
+            },
+            "mesh_depth": {
+              "0": 510,
+              "1": 396,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 510,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 500,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 252,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 225,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 198,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 176,
+              "mean_srgb": [
+                0.9784875512123108,
+                0.9854792356491089,
+                0.9751543998718262
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM22020159",
+          "frame": 42,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1181,
+              "1": 1200,
+              "2": 658
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 843,
+                "1": 898,
+                "2": 606
+              },
+              "mesh_depth": {
+                "0": 581,
+                "1": 308,
+                "2": 0
+              },
+              "surface_class": {
+                "0": 1181,
+                "1": 0,
+                "2": 0
+              },
+              "view_angle": {
+                "0": 554,
+                "1": 435,
+                "2": 126
+              },
+              "hand_unknown": {
+                "0": 739,
+                "1": 748,
+                "2": 433
+              },
+              "body_depth": {
+                "0": 1176,
+                "1": 1200,
+                "2": 658
+              },
+              "body_depth_uncertainty": {
+                "0": 906,
+                "1": 918,
+                "2": 473
+              }
+            },
+            "candidate_label": {
+              "0": 843,
+              "1": 898,
+              "2": 606
+            },
+            "mesh_depth": {
+              "0": 427,
+              "1": 293,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 427,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 414,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 303,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 303,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 278,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 247,
+              "mean_srgb": [
+                0.9793683886528015,
+                0.9858807325363159,
+                0.9760127067565918
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM22020159",
+          "frame": 60,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1168,
+              "1": 1200,
+              "2": 639
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 500,
+                "1": 523,
+                "2": 118
+              },
+              "mesh_depth": {
+                "0": 605,
+                "1": 346,
+                "2": 193
+              },
+              "surface_class": {
+                "0": 1168,
+                "1": 0,
+                "2": 0
+              },
+              "view_angle": {
+                "0": 589,
+                "1": 469,
+                "2": 271
+              },
+              "hand_unknown": {
+                "0": 430,
+                "1": 431,
+                "2": 248
+              },
+              "body_depth": {
+                "0": 989,
+                "1": 1011,
+                "2": 639
+              },
+              "body_depth_uncertainty": {
+                "0": 1004,
+                "1": 1024,
+                "2": 589
+              }
+            },
+            "candidate_label": {
+              "0": 500,
+              "1": 523,
+              "2": 118
+            },
+            "mesh_depth": {
+              "0": 257,
+              "1": 174,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 257,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 250,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 135,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 135,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 135,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 108,
+              "mean_srgb": [
+                0.9688221216201782,
+                0.9751724004745483,
+                0.9719867706298828
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM22020159",
+          "frame": 120,
+          "annotation_known": false
+        },
+        {
+          "camera": "FCM22020159",
+          "frame": 180,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1172,
+              "1": 1200,
+              "2": 615
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 574,
+                "1": 596,
+                "2": 0
+              },
+              "mesh_depth": {
+                "0": 566,
+                "1": 340,
+                "2": 448
+              },
+              "surface_class": {
+                "0": 1096,
+                "1": 70,
+                "2": 246
+              },
+              "view_angle": {
+                "0": 462,
+                "1": 573,
+                "2": 263
+              },
+              "hand_unknown": {
+                "0": 552,
+                "1": 566,
+                "2": 134
+              },
+              "body_depth": {
+                "0": 1058,
+                "1": 1080,
+                "2": 567
+              },
+              "body_depth_uncertainty": {
+                "0": 612,
+                "1": 626,
+                "2": 92
+              }
+            },
+            "candidate_label": {
+              "0": 574,
+              "1": 596,
+              "2": 0
+            },
+            "mesh_depth": {
+              "0": 234,
+              "1": 172,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 234,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 224,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 183,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 183,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 115,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 79,
+              "mean_srgb": [
+                0.9034103155136108,
+                0.9110181927680969,
+                0.9047121405601501
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM22020159",
+          "frame": 299,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1173,
+              "1": 1200,
+              "2": 637
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 701,
+                "1": 755,
+                "2": 306
+              },
+              "mesh_depth": {
+                "0": 493,
+                "1": 311,
+                "2": 235
+              },
+              "surface_class": {
+                "0": 1154,
+                "1": 17,
+                "2": 151
+              },
+              "view_angle": {
+                "0": 457,
+                "1": 526,
+                "2": 284
+              },
+              "hand_unknown": {
+                "0": 1173,
+                "1": 1200,
+                "2": 637
+              },
+              "body_depth": {
+                "0": 1095,
+                "1": 1123,
+                "2": 601
+              },
+              "body_depth_uncertainty": {
+                "0": 687,
+                "1": 694,
+                "2": 102
+              }
+            },
+            "candidate_label": {
+              "0": 701,
+              "1": 755,
+              "2": 306
+            },
+            "mesh_depth": {
+              "0": 303,
+              "1": 269,
+              "2": 168
+            },
+            "surface_class": {
+              "0": 297,
+              "1": 12,
+              "2": 94
+            },
+            "view_angle": {
+              "0": 287,
+              "1": 10,
+              "2": 83
+            },
+            "hand_unknown": {
+              "0": 287,
+              "1": 10,
+              "2": 83
+            },
+            "body_depth": {
+              "0": 287,
+              "1": 7,
+              "2": 83
+            },
+            "body_depth_uncertainty": {
+              "0": 136,
+              "1": 0,
+              "2": 12
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 123,
+              "mean_srgb": [
+                0.8482306003570557,
+                0.8534873723983765,
+                0.852263331413269
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 7,
+              "mean_srgb": [
+                0.9843138456344604,
+                0.992156982421875,
+                0.9803922176361084
+              ]
+            }
+          }
+        },
+        {
+          "camera": "FCM22020160",
+          "frame": 30,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1182,
+              "1": 1200,
+              "2": 632
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 0,
+                "1": 0,
+                "2": 0
+              },
+              "mesh_depth": {
+                "0": 544,
+                "1": 314,
+                "2": 182
+              },
+              "surface_class": {
+                "0": 1182,
+                "1": 0,
+                "2": 0
+              },
+              "view_angle": {
+                "0": 507,
+                "1": 504,
+                "2": 245
+              },
+              "hand_unknown": {
+                "0": 257,
+                "1": 258,
+                "2": 82
+              },
+              "body_depth": {
+                "0": 697,
+                "1": 706,
+                "2": 632
+              },
+              "body_depth_uncertainty": {
+                "0": 485,
+                "1": 494,
+                "2": 0
+              }
+            },
+            "candidate_label": {
+              "0": 0,
+              "1": 0,
+              "2": 0
+            },
+            "mesh_depth": {
+              "0": 0,
+              "1": 0,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 0,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 0,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 0,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 0,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 0,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM22020160",
+          "frame": 42,
+          "annotation_known": false
+        },
+        {
+          "camera": "FCM22020160",
+          "frame": 60,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1172,
+              "1": 1200,
+              "2": 658
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 66,
+                "1": 76,
+                "2": 62
+              },
+              "mesh_depth": {
+                "0": 635,
+                "1": 450,
+                "2": 0
+              },
+              "surface_class": {
+                "0": 1172,
+                "1": 0,
+                "2": 0
+              },
+              "view_angle": {
+                "0": 603,
+                "1": 409,
+                "2": 58
+              },
+              "hand_unknown": {
+                "0": 738,
+                "1": 755,
+                "2": 316
+              },
+              "body_depth": {
+                "0": 277,
+                "1": 281,
+                "2": 110
+              },
+              "body_depth_uncertainty": {
+                "0": 1056,
+                "1": 1081,
+                "2": 592
+              }
+            },
+            "candidate_label": {
+              "0": 66,
+              "1": 76,
+              "2": 62
+            },
+            "mesh_depth": {
+              "0": 37,
+              "1": 33,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 37,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 37,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 28,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 28,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 20,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 19,
+              "mean_srgb": [
+                0.9851747751235962,
+                0.992598295211792,
+                0.9800509214401245
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM22020160",
+          "frame": 120,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1181,
+              "1": 1200,
+              "2": 635
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 422,
+                "1": 461,
+                "2": 214
+              },
+              "mesh_depth": {
+                "0": 522,
+                "1": 328,
+                "2": 525
+              },
+              "surface_class": {
+                "0": 1115,
+                "1": 62,
+                "2": 314
+              },
+              "view_angle": {
+                "0": 422,
+                "1": 630,
+                "2": 299
+              },
+              "hand_unknown": {
+                "0": 418,
+                "1": 415,
+                "2": 302
+              },
+              "body_depth": {
+                "0": 998,
+                "1": 1009,
+                "2": 635
+              },
+              "body_depth_uncertainty": {
+                "0": 933,
+                "1": 940,
+                "2": 453
+              }
+            },
+            "candidate_label": {
+              "0": 422,
+              "1": 461,
+              "2": 214
+            },
+            "mesh_depth": {
+              "0": 186,
+              "1": 122,
+              "2": 156
+            },
+            "surface_class": {
+              "0": 170,
+              "1": 16,
+              "2": 32
+            },
+            "view_angle": {
+              "0": 158,
+              "1": 16,
+              "2": 29
+            },
+            "hand_unknown": {
+              "0": 56,
+              "1": 3,
+              "2": 14
+            },
+            "body_depth": {
+              "0": 56,
+              "1": 3,
+              "2": 14
+            },
+            "body_depth_uncertainty": {
+              "0": 56,
+              "1": 3,
+              "2": 14
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 49,
+              "mean_srgb": [
+                0.5102717876434326,
+                0.5016698241233826,
+                0.4846101701259613
+              ]
+            },
+            "1": {
+              "sample_count": 3,
+              "mean_srgb": [
+                0.12754583358764648,
+                0.12012248486280441,
+                0.12007957696914673
+              ]
+            },
+            "2": {
+              "sample_count": 13,
+              "mean_srgb": [
+                0.2465183436870575,
+                0.24273192882537842,
+                0.22273065149784088
+              ]
+            }
+          }
+        },
+        {
+          "camera": "FCM22020160",
+          "frame": 180,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1182,
+              "1": 1200,
+              "2": 648
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 609,
+                "1": 643,
+                "2": 0
+              },
+              "mesh_depth": {
+                "0": 521,
+                "1": 292,
+                "2": 267
+              },
+              "surface_class": {
+                "0": 1172,
+                "1": 0,
+                "2": 80
+              },
+              "view_angle": {
+                "0": 464,
+                "1": 530,
+                "2": 311
+              },
+              "hand_unknown": {
+                "0": 697,
+                "1": 704,
+                "2": 136
+              },
+              "body_depth": {
+                "0": 968,
+                "1": 981,
+                "2": 357
+              },
+              "body_depth_uncertainty": {
+                "0": 766,
+                "1": 774,
+                "2": 361
+              }
+            },
+            "candidate_label": {
+              "0": 609,
+              "1": 643,
+              "2": 0
+            },
+            "mesh_depth": {
+              "0": 289,
+              "1": 180,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 289,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 264,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 236,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 236,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 164,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 108,
+              "mean_srgb": [
+                0.4164828956127167,
+                0.4454806447029114,
+                0.4488981366157532
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM22020160",
+          "frame": 299,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1168,
+              "1": 1200,
+              "2": 644
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 590,
+                "1": 633,
+                "2": 243
+              },
+              "mesh_depth": {
+                "0": 551,
+                "1": 309,
+                "2": 170
+              },
+              "surface_class": {
+                "0": 1168,
+                "1": 0,
+                "2": 0
+              },
+              "view_angle": {
+                "0": 488,
+                "1": 472,
+                "2": 283
+              },
+              "hand_unknown": {
+                "0": 1168,
+                "1": 1200,
+                "2": 644
+              },
+              "body_depth": {
+                "0": 1080,
+                "1": 1112,
+                "2": 542
+              },
+              "body_depth_uncertainty": {
+                "0": 643,
+                "1": 652,
+                "2": 310
+              }
+            },
+            "candidate_label": {
+              "0": 590,
+              "1": 633,
+              "2": 243
+            },
+            "mesh_depth": {
+              "0": 295,
+              "1": 222,
+              "2": 10
+            },
+            "surface_class": {
+              "0": 295,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 282,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 282,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 282,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 121,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 110,
+              "mean_srgb": [
+                0.4516090154647827,
+                0.45470720529556274,
+                0.44023534655570984
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM22030167",
+          "frame": 30,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1181,
+              "1": 1200,
+              "2": 655
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 319,
+                "1": 333,
+                "2": 412
+              },
+              "mesh_depth": {
+                "0": 607,
+                "1": 392,
+                "2": 538
+              },
+              "surface_class": {
+                "0": 1025,
+                "1": 156,
+                "2": 326
+              },
+              "view_angle": {
+                "0": 471,
+                "1": 636,
+                "2": 364
+              },
+              "hand_unknown": {
+                "0": 217,
+                "1": 216,
+                "2": 329
+              },
+              "body_depth": {
+                "0": 1019,
+                "1": 1036,
+                "2": 655
+              },
+              "body_depth_uncertainty": {
+                "0": 625,
+                "1": 631,
+                "2": 565
+              }
+            },
+            "candidate_label": {
+              "0": 319,
+              "1": 333,
+              "2": 412
+            },
+            "mesh_depth": {
+              "0": 222,
+              "1": 168,
+              "2": 331
+            },
+            "surface_class": {
+              "0": 118,
+              "1": 117,
+              "2": 159
+            },
+            "view_angle": {
+              "0": 116,
+              "1": 116,
+              "2": 133
+            },
+            "hand_unknown": {
+              "0": 80,
+              "1": 47,
+              "2": 100
+            },
+            "body_depth": {
+              "0": 80,
+              "1": 47,
+              "2": 100
+            },
+            "body_depth_uncertainty": {
+              "0": 80,
+              "1": 47,
+              "2": 100
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 62,
+              "mean_srgb": [
+                0.05243442580103874,
+                0.05527998507022858,
+                0.061302997171878815
+              ]
+            },
+            "1": {
+              "sample_count": 47,
+              "mean_srgb": [
+                0.05126986280083656,
+                0.051390018314123154,
+                0.05766812711954117
+              ]
+            },
+            "2": {
+              "sample_count": 82,
+              "mean_srgb": [
+                0.10532369464635849,
+                0.10722774267196655,
+                0.12418254464864731
+              ]
+            }
+          }
+        },
+        {
+          "camera": "FCM22030167",
+          "frame": 42,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1167,
+              "1": 1200,
+              "2": 658
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 88,
+                "1": 108,
+                "2": 178
+              },
+              "mesh_depth": {
+                "0": 621,
+                "1": 471,
+                "2": 534
+              },
+              "surface_class": {
+                "0": 943,
+                "1": 227,
+                "2": 386
+              },
+              "view_angle": {
+                "0": 391,
+                "1": 654,
+                "2": 487
+              },
+              "hand_unknown": {
+                "0": 523,
+                "1": 532,
+                "2": 283
+              },
+              "body_depth": {
+                "0": 811,
+                "1": 825,
+                "2": 377
+              },
+              "body_depth_uncertainty": {
+                "0": 660,
+                "1": 688,
+                "2": 545
+              }
+            },
+            "candidate_label": {
+              "0": 88,
+              "1": 108,
+              "2": 178
+            },
+            "mesh_depth": {
+              "0": 53,
+              "1": 57,
+              "2": 165
+            },
+            "surface_class": {
+              "0": 15,
+              "1": 44,
+              "2": 148
+            },
+            "view_angle": {
+              "0": 15,
+              "1": 44,
+              "2": 144
+            },
+            "hand_unknown": {
+              "0": 15,
+              "1": 44,
+              "2": 144
+            },
+            "body_depth": {
+              "0": 15,
+              "1": 44,
+              "2": 144
+            },
+            "body_depth_uncertainty": {
+              "0": 15,
+              "1": 44,
+              "2": 144
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 14,
+              "mean_srgb": [
+                0.14433257281780243,
+                0.16386575996875763,
+                0.18957284092903137
+              ]
+            },
+            "1": {
+              "sample_count": 41,
+              "mean_srgb": [
+                0.13982799649238586,
+                0.154846653342247,
+                0.17934712767601013
+              ]
+            },
+            "2": {
+              "sample_count": 134,
+              "mean_srgb": [
+                0.25009721517562866,
+                0.2776363492012024,
+                0.3141809403896332
+              ]
+            }
+          }
+        },
+        {
+          "camera": "FCM22030167",
+          "frame": 60,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1181,
+              "1": 1200,
+              "2": 658
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 534,
+                "1": 562,
+                "2": 446
+              },
+              "mesh_depth": {
+                "0": 622,
+                "1": 403,
+                "2": 0
+              },
+              "surface_class": {
+                "0": 1181,
+                "1": 0,
+                "2": 0
+              },
+              "view_angle": {
+                "0": 594,
+                "1": 478,
+                "2": 90
+              },
+              "hand_unknown": {
+                "0": 546,
+                "1": 553,
+                "2": 249
+              },
+              "body_depth": {
+                "0": 1055,
+                "1": 1067,
+                "2": 499
+              },
+              "body_depth_uncertainty": {
+                "0": 919,
+                "1": 942,
+                "2": 605
+              }
+            },
+            "candidate_label": {
+              "0": 534,
+              "1": 562,
+              "2": 446
+            },
+            "mesh_depth": {
+              "0": 323,
+              "1": 283,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 323,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 311,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 165,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 165,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 165,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 155,
+              "mean_srgb": [
+                0.8452219367027283,
+                0.856689453125,
+                0.8631554245948792
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM22030167",
+          "frame": 120,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1175,
+              "1": 1200,
+              "2": 657
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 730,
+                "1": 777,
+                "2": 226
+              },
+              "mesh_depth": {
+                "0": 503,
+                "1": 283,
+                "2": 46
+              },
+              "surface_class": {
+                "0": 1175,
+                "1": 0,
+                "2": 0
+              },
+              "view_angle": {
+                "0": 439,
+                "1": 479,
+                "2": 146
+              },
+              "hand_unknown": {
+                "0": 548,
+                "1": 551,
+                "2": 261
+              },
+              "body_depth": {
+                "0": 1012,
+                "1": 1027,
+                "2": 452
+              },
+              "body_depth_uncertainty": {
+                "0": 964,
+                "1": 987,
+                "2": 582
+              }
+            },
+            "candidate_label": {
+              "0": 730,
+              "1": 777,
+              "2": 226
+            },
+            "mesh_depth": {
+              "0": 327,
+              "1": 216,
+              "2": 9
+            },
+            "surface_class": {
+              "0": 327,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 300,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 175,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 175,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 175,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 151,
+              "mean_srgb": [
+                0.7859644293785095,
+                0.7844491004943848,
+                0.7793522477149963
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM22030167",
+          "frame": 180,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1168,
+              "1": 1200,
+              "2": 655
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 651,
+                "1": 676,
+                "2": 0
+              },
+              "mesh_depth": {
+                "0": 562,
+                "1": 295,
+                "2": 403
+              },
+              "surface_class": {
+                "0": 1145,
+                "1": 10,
+                "2": 201
+              },
+              "view_angle": {
+                "0": 495,
+                "1": 483,
+                "2": 295
+              },
+              "hand_unknown": {
+                "0": 875,
+                "1": 900,
+                "2": 253
+              },
+              "body_depth": {
+                "0": 1017,
+                "1": 1048,
+                "2": 425
+              },
+              "body_depth_uncertainty": {
+                "0": 623,
+                "1": 628,
+                "2": 258
+              }
+            },
+            "candidate_label": {
+              "0": 651,
+              "1": 676,
+              "2": 0
+            },
+            "mesh_depth": {
+              "0": 314,
+              "1": 143,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 314,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 273,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 241,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 241,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 154,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 85,
+              "mean_srgb": [
+                0.6021124720573425,
+                0.6273194551467896,
+                0.6408491134643555
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        },
+        {
+          "camera": "FCM22030167",
+          "frame": 299,
+          "annotation_known": true,
+          "filter_counts": {
+            "projected_hit": {
+              "0": 1160,
+              "1": 1200,
+              "2": 649
+            },
+            "independent_filter_survivors": {
+              "candidate_label": {
+                "0": 412,
+                "1": 447,
+                "2": 0
+              },
+              "mesh_depth": {
+                "0": 563,
+                "1": 340,
+                "2": 429
+              },
+              "surface_class": {
+                "0": 1122,
+                "1": 34,
+                "2": 191
+              },
+              "view_angle": {
+                "0": 498,
+                "1": 502,
+                "2": 304
+              },
+              "hand_unknown": {
+                "0": 1160,
+                "1": 1200,
+                "2": 649
+              },
+              "body_depth": {
+                "0": 1089,
+                "1": 1123,
+                "2": 569
+              },
+              "body_depth_uncertainty": {
+                "0": 594,
+                "1": 596,
+                "2": 147
+              }
+            },
+            "candidate_label": {
+              "0": 412,
+              "1": 447,
+              "2": 0
+            },
+            "mesh_depth": {
+              "0": 206,
+              "1": 130,
+              "2": 0
+            },
+            "surface_class": {
+              "0": 206,
+              "1": 0,
+              "2": 0
+            },
+            "view_angle": {
+              "0": 204,
+              "1": 0,
+              "2": 0
+            },
+            "hand_unknown": {
+              "0": 204,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth": {
+              "0": 204,
+              "1": 0,
+              "2": 0
+            },
+            "body_depth_uncertainty": {
+              "0": 120,
+              "1": 0,
+              "2": 0
+            }
+          },
+          "selected": {
+            "0": {
+              "sample_count": 93,
+              "mean_srgb": [
+                0.7722330689430237,
+                0.7870988845825195,
+                0.7892429828643799
+              ]
+            },
+            "1": {
+              "sample_count": 0,
+              "mean_srgb": null
+            },
+            "2": {
+              "sample_count": 0,
+              "mean_srgb": null
+            }
+          }
+        }
+      ],
+      "seconds": 6.903304815292358,
+      "scope": "Diagnostic only, exact baker smooth source normals at deterministic triangle centers. Cumulative and independent visibility-filter survivor counts locate evidence loss; selected RGB means are source-color diagnostics, not albedo or texture correctness. No thresholds relaxed, no source images exported, no assets modified."
+    },
+    "helmet_profile_local_consensus_texture_v1": {
+      "success": true,
+      "seconds": 35.70849871635437,
+      "source_mesh_sha256": "d1db7f3134d1ad127263087fe30d8bd202c157e33428cadb5cea4c4d94059ba2",
+      "source_motion": "helmet_depth_aware_profile_pose_v2",
+      "texture_resolution": [
+        1024,
+        1024
+      ],
+      "frame_stride": 10,
+      "sampled_frames": [
+        0,
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100,
+        110,
+        120,
+        130,
+        140,
+        150,
+        160,
+        170,
+        180,
+        190,
+        200,
+        210,
+        220,
+        230,
+        240,
+        250,
+        260,
+        270,
+        280,
+        290,
+        299
+      ],
+      "views": [
+        {
+          "serial": "21305711",
+          "sampled_candidate_frames": 29
+        },
+        {
+          "serial": "21305717",
+          "sampled_candidate_frames": 31
+        },
+        {
+          "serial": "FCM21121414",
+          "sampled_candidate_frames": 16
+        },
+        {
+          "serial": "FCM21121415",
+          "sampled_candidate_frames": 31
+        },
+        {
+          "serial": "FCM21121416",
+          "sampled_candidate_frames": 28
+        },
+        {
+          "serial": "FCM22020159",
+          "sampled_candidate_frames": 29
+        },
+        {
+          "serial": "FCM22020160",
+          "sampled_candidate_frames": 25
+        },
+        {
+          "serial": "FCM22030167",
+          "sampled_candidate_frames": 30
+        }
+      ],
+      "uv_texels": 537768,
+      "observed_uv_texels": 280401,
+      "observed_uv_fraction": 0.5214162984781542,
+      "estimated_area_weighted_observed_fraction": 0.52128046143072,
+      "class_priors": [
+        {
+          "class": 0,
+          "observed_texels": 185878,
+          "unobserved_texels": 86643,
+          "fallback_or_observed_class_median_srgb": [
+            0.5537100434303284,
+            0.5587118864059448,
+            0.5530107617378235
+          ]
+        },
+        {
+          "class": 1,
+          "observed_texels": 93553,
+          "unobserved_texels": 169313,
+          "fallback_or_observed_class_median_srgb": [
+            0.05667214095592499,
+            0.05679938197135925,
+            0.05704369395971298
+          ]
+        },
+        {
+          "class": 2,
+          "observed_texels": 970,
+          "unobserved_texels": 1411,
+          "fallback_or_observed_class_median_srgb": [
+            0.10400944203138351,
+            0.10360730439424515,
+            0.10604299604892731
+          ]
+        }
+      ],
+      "color_correction": {
+        "reference_serial": "21305717",
+        "frames": [
+          30,
+          60,
+          90,
+          120,
+          150,
+          180,
+          210,
+          240,
+          270,
+          299
+        ],
+        "correspondences": 1578,
+        "pair_support": [
+          [
+            0,
+            18,
+            0,
+            15,
+            0,
+            0,
+            26,
+            95
+          ],
+          [
+            18,
+            0,
+            138,
+            177,
+            1,
+            68,
+            0,
+            0
+          ],
+          [
+            0,
+            138,
+            0,
+            26,
+            22,
+            58,
+            4,
+            0
+          ],
+          [
+            15,
+            177,
+            26,
+            0,
+            0,
+            1,
+            0,
+            4
+          ],
+          [
+            0,
+            1,
+            22,
+            0,
+            0,
+            235,
+            294,
+            96
+          ],
+          [
+            0,
+            68,
+            58,
+            1,
+            235,
+            0,
+            99,
+            0
+          ],
+          [
+            26,
+            0,
+            4,
+            0,
+            294,
+            99,
+            0,
+            201
+          ],
+          [
+            95,
+            0,
+            0,
+            4,
+            96,
+            0,
+            201,
+            0
+          ]
+        ],
+        "gain_linear_rgb": [
+          [
+            0.3964346945285797,
+            0.41567954421043396,
+            0.3660549223423004
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            0.2916612923145294,
+            0.2995132505893707,
+            0.30177196860313416
+          ],
+          [
+            0.2933211922645569,
+            0.28661391139030457,
+            0.29065683484077454
+          ],
+          [
+            0.3434273898601532,
+            0.3331586718559265,
+            0.33363980054855347
+          ],
+          [
+            0.2865888774394989,
+            0.2912946343421936,
+            0.2884310781955719
+          ],
+          [
+            0.2784121334552765,
+            0.2775475084781647,
+            0.287869930267334
+          ],
+          [
+            0.4527270495891571,
+            0.4519660770893097,
+            0.42526501417160034
+          ]
+        ],
+        "bias_linear_rgb": [
+          [
+            0.002975698094815016,
+            0.002975698094815016,
+            0.002975698094815016
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.00965479388833046,
+            0.00965479388833046,
+            0.00965479388833046
+          ],
+          [
+            -0.009062820114195347,
+            -0.009062820114195347,
+            -0.009062820114195347
+          ],
+          [
+            0.009208847768604755,
+            0.009208847768604755,
+            0.009208847768604755
+          ],
+          [
+            -0.009303642436861992,
+            -0.009303642436861992,
+            -0.009303642436861992
+          ],
+          [
+            0.009329727850854397,
+            0.009329727850854397,
+            0.009329727850854397
+          ],
+          [
+            0.006699677091091871,
+            0.006699677091091871,
+            0.006699677091091871
+          ]
+        ],
+        "robust_color_loss_before": 0.18989744782447815,
+        "robust_color_loss_after": 0.08975376933813095,
+        "scope": "Approximate affine response fit in assumed linearized sRGB, same-time surface correspondences, robust loss, fixed reference camera and bounded coefficients. Not spectral/colorimetric calibration or recovered albedo; clipping, pose error and view-dependent lighting remain. Exposure gain is shared acrossRGB with bounded\u00b12EV, chromatic correction is limited to exp(\u00b1.15), and black-level bias is shared acrossRGB within\u00b1.01 assumed-linear units. This reduces artificial chroma in dark lining; it does not recover missing source detail or guarantee registration.",
+        "appearance_policy": "all-time",
+        "white_shell_support": [],
+        "exposure_prior_gain": [
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "scope": "Real original native PNG multiframe/multicamera UV appearance, two best-angle observations per camera then channelwise weighted median across up to16 samples. Positive candidate labels, native mesh self-depth and surface-class agreement, conservative body depth and hand-unknown exclusion. Unobserved texels explicitly marked and repaired by nearby observed same-class colors or class medians/design fallbacks. Not calibrated albedo, relighting or proof of correct geometry/texture; pose/segmentation/lighting errors remain. Requires actual real/novel-view rendering and held-out evaluation. No raw footage/model weights published.",
+      "appearance_policy": "all-time",
+      "source_body_depth": "shared_shape_body_face_occlusion_all300_v1",
+      "source_uv": "helmet_depth_aware_profile_uv_v2",
+      "source_shell": "helmet_body_face_depth_aware_profile_v2",
+      "texel_consensus": {
+        "minimum_independent_cameras": 2,
+        "maximum_mean_absolute_linear_rgb_difference": 0.08,
+        "minimum_camera_agreement_fraction": 0.6,
+        "candidate_texels": 431248,
+        "single_camera_texels": 67402,
+        "eligible_texels": 280401,
+        "conflicting_multicamera_texels": 83445,
+        "rejected_weight_fraction": 0.4315659999847412,
+        "scope": "Each camera contributes at most one best-angle representative to an unweighted median reference, so one high-angle view cannot dominate the consistency vote. Retain samples close to that reference only with enough distinct cameras agreeing; rejected/single-view texels remain unknown and any later fill is inference. No stage restriction, white-shell or dark-lining color gate; common multi-camera registration bias can survive. Fixed lighting/exposure/pose ambiguity remains."
+      }
+    },
+    "helmet_profile_shared_response_texture_v1": {
+      "success": true,
+      "seconds": 35.13882613182068,
+      "source_mesh_sha256": "d1db7f3134d1ad127263087fe30d8bd202c157e33428cadb5cea4c4d94059ba2",
+      "source_motion": "helmet_depth_aware_profile_pose_v2",
+      "texture_resolution": [
+        1024,
+        1024
+      ],
+      "frame_stride": 10,
+      "sampled_frames": [
+        0,
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100,
+        110,
+        120,
+        130,
+        140,
+        150,
+        160,
+        170,
+        180,
+        190,
+        200,
+        210,
+        220,
+        230,
+        240,
+        250,
+        260,
+        270,
+        280,
+        290,
+        299
+      ],
+      "views": [
+        {
+          "serial": "21305711",
+          "sampled_candidate_frames": 29
+        },
+        {
+          "serial": "21305717",
+          "sampled_candidate_frames": 31
+        },
+        {
+          "serial": "FCM21121414",
+          "sampled_candidate_frames": 16
+        },
+        {
+          "serial": "FCM21121415",
+          "sampled_candidate_frames": 31
+        },
+        {
+          "serial": "FCM21121416",
+          "sampled_candidate_frames": 28
+        },
+        {
+          "serial": "FCM22020159",
+          "sampled_candidate_frames": 29
+        },
+        {
+          "serial": "FCM22020160",
+          "sampled_candidate_frames": 25
+        },
+        {
+          "serial": "FCM22030167",
+          "sampled_candidate_frames": 30
+        }
+      ],
+      "uv_texels": 537768,
+      "observed_uv_texels": 242165,
+      "observed_uv_fraction": 0.45031500572737687,
+      "estimated_area_weighted_observed_fraction": 0.44898573983999274,
+      "class_priors": [
+        {
+          "class": 0,
+          "observed_texels": 147420,
+          "unobserved_texels": 125101,
+          "fallback_or_observed_class_median_srgb": [
+            0.5237196087837219,
+            0.5352593064308167,
+            0.5023795366287231
+          ]
+        },
+        {
+          "class": 1,
+          "observed_texels": 93778,
+          "unobserved_texels": 169088,
+          "fallback_or_observed_class_median_srgb": [
+            0.024522410705685616,
+            0.026819419115781784,
+            0.0267843808978796
+          ]
+        },
+        {
+          "class": 2,
+          "observed_texels": 967,
+          "unobserved_texels": 1414,
+          "fallback_or_observed_class_median_srgb": [
+            0.0688866376876831,
+            0.0782637819647789,
+            0.08690043538808823
+          ]
+        }
+      ],
+      "color_correction": {
+        "reference_serial": "21305717",
+        "frames": [
+          30,
+          60,
+          90,
+          120,
+          150,
+          180,
+          210,
+          240,
+          270,
+          299
+        ],
+        "correspondences": 1578,
+        "pair_support": [
+          [
+            0,
+            18,
+            0,
+            15,
+            0,
+            0,
+            26,
+            95
+          ],
+          [
+            18,
+            0,
+            138,
+            177,
+            1,
+            68,
+            0,
+            0
+          ],
+          [
+            0,
+            138,
+            0,
+            26,
+            22,
+            58,
+            4,
+            0
+          ],
+          [
+            15,
+            177,
+            26,
+            0,
+            0,
+            1,
+            0,
+            4
+          ],
+          [
+            0,
+            1,
+            22,
+            0,
+            0,
+            235,
+            294,
+            96
+          ],
+          [
+            0,
+            68,
+            58,
+            1,
+            235,
+            0,
+            99,
+            0
+          ],
+          [
+            26,
+            0,
+            4,
+            0,
+            294,
+            99,
+            0,
+            201
+          ],
+          [
+            95,
+            0,
+            0,
+            4,
+            96,
+            0,
+            201,
+            0
+          ]
+        ],
+        "gain_linear_rgb": [
+          [
+            0.2453192174434662,
+            0.2762928307056427,
+            0.22620941698551178
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            0.2706739604473114,
+            0.2556550204753876,
+            0.22620941698551178
+          ],
+          [
+            0.2566380798816681,
+            0.252623975276947,
+            0.2410043329000473
+          ],
+          [
+            0.7131839394569397,
+            0.7970232367515564,
+            0.8710848689079285
+          ],
+          [
+            0.2931992709636688,
+            0.3302519917488098,
+            0.2947968542575836
+          ],
+          [
+            1.0247822999954224,
+            1.1305292844772339,
+            1.2516720294952393
+          ],
+          [
+            0.7345962524414062,
+            0.8196658492088318,
+            0.8570442795753479
+          ]
+        ],
+        "bias_linear_rgb": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "robust_color_loss_before": 0.18989744782447815,
+        "robust_color_loss_after": 0.12291542440652847,
+        "scope": "Controlled response substitution, no acceptance claim. Reciprocal gains from a completed frozen human linear-reference observation fit, shared across human and helmet. These estimates inherit human model/lighting bias and are not measured camera calibration. Human convention observed/model is inverted for baker observed->reference; same reference camera fixes gauge.",
+        "response_mode": "human-reference",
+        "unused_helmet_fitted_response_diagnostic": {
+          "gain_linear_rgb": [
+            [
+              0.3964346945285797,
+              0.41567954421043396,
+              0.3660549223423004
+            ],
+            [
+              1.0,
+              1.0,
+              1.0
+            ],
+            [
+              0.2916612923145294,
+              0.2995132505893707,
+              0.30177196860313416
+            ],
+            [
+              0.2933211922645569,
+              0.28661391139030457,
+              0.29065683484077454
+            ],
+            [
+              0.3434273898601532,
+              0.3331586718559265,
+              0.33363980054855347
+            ],
+            [
+              0.2865888774394989,
+              0.2912946343421936,
+              0.2884310781955719
+            ],
+            [
+              0.2784121334552765,
+              0.2775475084781647,
+              0.287869930267334
+            ],
+            [
+              0.4527270495891571,
+              0.4519660770893097,
+              0.42526501417160034
+            ]
+          ],
+          "bias_linear_rgb": [
+            [
+              0.002975698094815016,
+              0.002975698094815016,
+              0.002975698094815016
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.00965479388833046,
+              0.00965479388833046,
+              0.00965479388833046
+            ],
+            [
+              -0.009062820114195347,
+              -0.009062820114195347,
+              -0.009062820114195347
+            ],
+            [
+              0.009208847768604755,
+              0.009208847768604755,
+              0.009208847768604755
+            ],
+            [
+              -0.009303642436861992,
+              -0.009303642436861992,
+              -0.009303642436861992
+            ],
+            [
+              0.009329727850854397,
+              0.009329727850854397,
+              0.009329727850854397
+            ],
+            [
+              0.006699677091091871,
+              0.006699677091091871,
+              0.006699677091091871
+            ]
+          ],
+          "robust_color_loss_after": 0.08975376933813095
+        },
+        "human_response_source": "shaped_human_linear_features_bound005_v1",
+        "appearance_policy": "all-time",
+        "white_shell_support": [],
+        "exposure_prior_gain": [
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "scope": "Real original native PNG multiframe/multicamera UV appearance, two best-angle observations per camera then channelwise weighted median across up to16 samples. Positive candidate labels, native mesh self-depth and surface-class agreement, conservative body depth and hand-unknown exclusion. Unobserved texels explicitly marked and repaired by nearby observed same-class colors or class medians/design fallbacks. Not calibrated albedo, relighting or proof of correct geometry/texture; pose/segmentation/lighting errors remain. Requires actual real/novel-view rendering and held-out evaluation. No raw footage/model weights published.",
+      "appearance_policy": "all-time",
+      "source_body_depth": "shared_shape_body_face_occlusion_all300_v1",
+      "source_uv": "helmet_depth_aware_profile_uv_v2",
+      "source_shell": "helmet_body_face_depth_aware_profile_v2",
+      "texel_consensus": {
+        "minimum_independent_cameras": 2,
+        "maximum_mean_absolute_linear_rgb_difference": 0.08,
+        "minimum_camera_agreement_fraction": 0.6,
+        "candidate_texels": 431248,
+        "single_camera_texels": 67402,
+        "eligible_texels": 242165,
+        "conflicting_multicamera_texels": 121681,
+        "rejected_weight_fraction": 0.5015614628791809,
+        "scope": "Each camera contributes at most one best-angle representative to an unweighted median reference, so one high-angle view cannot dominate the consistency vote. Retain samples close to that reference only with enough distinct cameras agreeing; rejected/single-view texels remain unknown and any later fill is inference. No stage restriction, white-shell or dark-lining color gate; common multi-camera registration bias can survive. Fixed lighting/exposure/pose ambiguity remains."
+      },
+      "metadata_correction": "Removed helmet-fitted-response explanatory suffix from transferred-human response. Active gains/bias, texture, geometry and samples unchanged; reciprocal response verified independently."
+    },
+    "transferred_camera_response_check_v1": {
+      "success": true,
+      "gain_inverse_max_error": 4.72701782161522e-08,
+      "zero_bias": true,
+      "reference_identity": true,
+      "explanatory_metadata_corrected": true,
+      "scope": "Checks actual saved gains equal inverse human observed/model convention, zero bias and identity reference. Only stale descriptive metadata corrected; no texture/sample/geometry change. Does not prove physical response accuracy."
+    },
+    "local_texture_controls_input_comparison_v1": {
+      "success": true,
+      "frames": [
+        42,
+        180,
+        299
+      ],
+      "resolution": [
+        1008,
+        756
+      ],
+      "records": [
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "21305711",
+          "frame": 42,
+          "foreground_pixels": 105131,
+          "ssim_interior_pixels": 92933,
+          "foreground_mse_srgb": 0.11854617297649384,
+          "foreground_psnr_db": 9.261124617787377,
+          "foreground_ssim_interior": 0.3870343267917633,
+          "foreground_iou": 0.8272888852147315,
+          "visible_person_iou": 0.8165901704643184,
+          "visible_helmet_iou": 0.7861464270056993,
+          "helmet_psnr_db": 14.036320684231685,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "21305711",
+          "frame": 42,
+          "foreground_pixels": 105131,
+          "ssim_interior_pixels": 92933,
+          "foreground_mse_srgb": 0.11858674883842468,
+          "foreground_psnr_db": 9.259638373450477,
+          "foreground_ssim_interior": 0.38370180130004883,
+          "foreground_iou": 0.8272888852147315,
+          "visible_person_iou": 0.8165901704643184,
+          "visible_helmet_iou": 0.7861464270056993,
+          "helmet_psnr_db": 14.033622961028772,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "21305711",
+          "frame": 42,
+          "foreground_pixels": 105131,
+          "ssim_interior_pixels": 92933,
+          "foreground_mse_srgb": 0.11859552562236786,
+          "foreground_psnr_db": 9.259316957455475,
+          "foreground_ssim_interior": 0.3773500621318817,
+          "foreground_iou": 0.8272888852147315,
+          "visible_person_iou": 0.8165901704643184,
+          "visible_helmet_iou": 0.7861464270056993,
+          "helmet_psnr_db": 14.047168216129416,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "21305711",
+          "frame": 180,
+          "foreground_pixels": 128252,
+          "ssim_interior_pixels": 118121,
+          "foreground_mse_srgb": 0.14639732241630554,
+          "foreground_psnr_db": 8.344668663818451,
+          "foreground_ssim_interior": 0.3481017053127289,
+          "foreground_iou": 0.8804393110086339,
+          "visible_person_iou": 0.8721312712184082,
+          "visible_helmet_iou": 0.7042359115331751,
+          "helmet_psnr_db": 5.755792959864449,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "21305711",
+          "frame": 180,
+          "foreground_pixels": 128252,
+          "ssim_interior_pixels": 118121,
+          "foreground_mse_srgb": 0.14351119101047516,
+          "foreground_psnr_db": 8.431142313021683,
+          "foreground_ssim_interior": 0.3466063439846039,
+          "foreground_iou": 0.8804393110086339,
+          "visible_person_iou": 0.8721312712184082,
+          "visible_helmet_iou": 0.7042359115331751,
+          "helmet_psnr_db": 6.857766161678297,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "21305711",
+          "frame": 180,
+          "foreground_pixels": 128252,
+          "ssim_interior_pixels": 118121,
+          "foreground_mse_srgb": 0.1446641981601715,
+          "foreground_psnr_db": 8.396389358147276,
+          "foreground_ssim_interior": 0.3467211425304413,
+          "foreground_iou": 0.8804393110086339,
+          "visible_person_iou": 0.8721312712184082,
+          "visible_helmet_iou": 0.7042359115331751,
+          "helmet_psnr_db": 6.405511099831392,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "21305711",
+          "frame": 299,
+          "foreground_pixels": 110469,
+          "ssim_interior_pixels": 99402,
+          "foreground_mse_srgb": 0.15084978938102722,
+          "foreground_psnr_db": 8.214552918577136,
+          "foreground_ssim_interior": 0.3671128451824188,
+          "foreground_iou": 0.8587950621334537,
+          "visible_person_iou": 0.8554236587298852,
+          "visible_helmet_iou": 0.6189446366782007,
+          "helmet_psnr_db": 7.054274247019357,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "21305711",
+          "frame": 299,
+          "foreground_pixels": 110469,
+          "ssim_interior_pixels": 99402,
+          "foreground_mse_srgb": 0.14891527593135834,
+          "foreground_psnr_db": 8.270607494445471,
+          "foreground_ssim_interior": 0.36560380458831787,
+          "foreground_iou": 0.8587950621334537,
+          "visible_person_iou": 0.8554236587298852,
+          "visible_helmet_iou": 0.6189446366782007,
+          "helmet_psnr_db": 8.222193733723874,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "21305711",
+          "frame": 299,
+          "foreground_pixels": 110469,
+          "ssim_interior_pixels": 99402,
+          "foreground_mse_srgb": 0.1503313034772873,
+          "foreground_psnr_db": 8.2295057688537,
+          "foreground_ssim_interior": 0.36788302659988403,
+          "foreground_iou": 0.8587950621334537,
+          "visible_person_iou": 0.8554236587298852,
+          "visible_helmet_iou": 0.6189446366782007,
+          "helmet_psnr_db": 7.251790687415113,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "21305717",
+          "frame": 42,
+          "foreground_pixels": 56918,
+          "ssim_interior_pixels": 46647,
+          "foreground_mse_srgb": 0.06976071745157242,
+          "foreground_psnr_db": 11.563890615666491,
+          "foreground_ssim_interior": 0.42145633697509766,
+          "foreground_iou": 0.8594211363120153,
+          "visible_person_iou": 0.8245319495319495,
+          "visible_helmet_iou": 0.6135110294117647,
+          "helmet_psnr_db": 10.36306722159914,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "21305717",
+          "frame": 42,
+          "foreground_pixels": 56918,
+          "ssim_interior_pixels": 46647,
+          "foreground_mse_srgb": 0.06909861415624619,
+          "foreground_psnr_db": 11.605306627608309,
+          "foreground_ssim_interior": 0.42049047350883484,
+          "foreground_iou": 0.8594211363120153,
+          "visible_person_iou": 0.8245319495319495,
+          "visible_helmet_iou": 0.6135110294117647,
+          "helmet_psnr_db": 10.600677106690007,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "21305717",
+          "frame": 42,
+          "foreground_pixels": 56918,
+          "ssim_interior_pixels": 46647,
+          "foreground_mse_srgb": 0.06901959329843521,
+          "foreground_psnr_db": 11.610276041399501,
+          "foreground_ssim_interior": 0.42157769203186035,
+          "foreground_iou": 0.8594211363120153,
+          "visible_person_iou": 0.8245319495319495,
+          "visible_helmet_iou": 0.6135110294117647,
+          "helmet_psnr_db": 10.568526554180748,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "21305717",
+          "frame": 180,
+          "foreground_pixels": 57464,
+          "ssim_interior_pixels": 47995,
+          "foreground_mse_srgb": 0.11179789155721664,
+          "foreground_psnr_db": 9.515663869120356,
+          "foreground_ssim_interior": 0.31234636902809143,
+          "foreground_iou": 0.8713567503465784,
+          "visible_person_iou": 0.860308335510844,
+          "visible_helmet_iou": 0.5673335323977307,
+          "helmet_psnr_db": 10.846177401746376,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "21305717",
+          "frame": 180,
+          "foreground_pixels": 57464,
+          "ssim_interior_pixels": 47995,
+          "foreground_mse_srgb": 0.11145075410604477,
+          "foreground_psnr_db": 9.529169886194902,
+          "foreground_ssim_interior": 0.312824547290802,
+          "foreground_iou": 0.8713567503465784,
+          "visible_person_iou": 0.860308335510844,
+          "visible_helmet_iou": 0.5673335323977307,
+          "helmet_psnr_db": 11.004962843476465,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "21305717",
+          "frame": 180,
+          "foreground_pixels": 57464,
+          "ssim_interior_pixels": 47995,
+          "foreground_mse_srgb": 0.11132726073265076,
+          "foreground_psnr_db": 9.533984768502654,
+          "foreground_ssim_interior": 0.31512799859046936,
+          "foreground_iou": 0.8713567503465784,
+          "visible_person_iou": 0.860308335510844,
+          "visible_helmet_iou": 0.5673335323977307,
+          "helmet_psnr_db": 10.63973716713144,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "21305717",
+          "frame": 299,
+          "foreground_pixels": 57422,
+          "ssim_interior_pixels": 47210,
+          "foreground_mse_srgb": 0.0692748948931694,
+          "foreground_psnr_db": 11.594241244753757,
+          "foreground_ssim_interior": 0.387932687997818,
+          "foreground_iou": 0.8676834895808034,
+          "visible_person_iou": 0.8573014896815635,
+          "visible_helmet_iou": 0.7020020533880903,
+          "helmet_psnr_db": 8.482671320108276,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "21305717",
+          "frame": 299,
+          "foreground_pixels": 57422,
+          "ssim_interior_pixels": 47210,
+          "foreground_mse_srgb": 0.0693984106183052,
+          "foreground_psnr_db": 11.586504757642214,
+          "foreground_ssim_interior": 0.39245325326919556,
+          "foreground_iou": 0.8676834895808034,
+          "visible_person_iou": 0.8573014896815635,
+          "visible_helmet_iou": 0.7020020533880903,
+          "helmet_psnr_db": 8.236129478226577,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "21305717",
+          "frame": 299,
+          "foreground_pixels": 57422,
+          "ssim_interior_pixels": 47210,
+          "foreground_mse_srgb": 0.06998904049396515,
+          "foreground_psnr_db": 11.549699603518897,
+          "foreground_ssim_interior": 0.3907018303871155,
+          "foreground_iou": 0.8676834895808034,
+          "visible_person_iou": 0.8573014896815635,
+          "visible_helmet_iou": 0.7020020533880903,
+          "helmet_psnr_db": 7.889162071639818,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121414",
+          "frame": 42,
+          "foreground_pixels": 50994,
+          "ssim_interior_pixels": 41532,
+          "foreground_mse_srgb": 0.24953413009643555,
+          "foreground_psnr_db": 6.028700452356773,
+          "foreground_ssim_interior": 0.2685101628303528,
+          "foreground_iou": 0.7360596584075054,
+          "visible_person_iou": 0.8020018548655222,
+          "visible_helmet_iou": null,
+          "helmet_psnr_db": null,
+          "helmet_annotation_known": false
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM21121414",
+          "frame": 42,
+          "foreground_pixels": 50994,
+          "ssim_interior_pixels": 41532,
+          "foreground_mse_srgb": 0.24951083958148956,
+          "foreground_psnr_db": 6.029105824326982,
+          "foreground_ssim_interior": 0.2685103118419647,
+          "foreground_iou": 0.7360596584075054,
+          "visible_person_iou": 0.8020018548655222,
+          "visible_helmet_iou": null,
+          "helmet_psnr_db": null,
+          "helmet_annotation_known": false
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM21121414",
+          "frame": 42,
+          "foreground_pixels": 50994,
+          "ssim_interior_pixels": 41532,
+          "foreground_mse_srgb": 0.24950778484344482,
+          "foreground_psnr_db": 6.029158994922691,
+          "foreground_ssim_interior": 0.2685096263885498,
+          "foreground_iou": 0.7360596584075054,
+          "visible_person_iou": 0.8020018548655222,
+          "visible_helmet_iou": null,
+          "helmet_psnr_db": null,
+          "helmet_annotation_known": false
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121414",
+          "frame": 180,
+          "foreground_pixels": 51940,
+          "ssim_interior_pixels": 44166,
+          "foreground_mse_srgb": 0.2878336012363434,
+          "foreground_psnr_db": 5.408585085935624,
+          "foreground_ssim_interior": 0.2712855935096741,
+          "foreground_iou": 0.7497753451515399,
+          "visible_person_iou": 0.7282256660282083,
+          "visible_helmet_iou": 0.4921993911719939,
+          "helmet_psnr_db": 6.908523299501381,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM21121414",
+          "frame": 180,
+          "foreground_pixels": 51940,
+          "ssim_interior_pixels": 44166,
+          "foreground_mse_srgb": 0.2880474030971527,
+          "foreground_psnr_db": 5.405360358190222,
+          "foreground_ssim_interior": 0.27771511673927307,
+          "foreground_iou": 0.7497753451515399,
+          "visible_person_iou": 0.7282256660282083,
+          "visible_helmet_iou": 0.4921993911719939,
+          "helmet_psnr_db": 6.846298810307713,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM21121414",
+          "frame": 180,
+          "foreground_pixels": 51940,
+          "ssim_interior_pixels": 44166,
+          "foreground_mse_srgb": 0.2886669337749481,
+          "foreground_psnr_db": 5.3960296084227295,
+          "foreground_ssim_interior": 0.2786010801792145,
+          "foreground_iou": 0.7497753451515399,
+          "visible_person_iou": 0.7282256660282083,
+          "visible_helmet_iou": 0.4921993911719939,
+          "helmet_psnr_db": 6.697803511661855,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121414",
+          "frame": 299,
+          "foreground_pixels": 50761,
+          "ssim_interior_pixels": 41928,
+          "foreground_mse_srgb": 0.29060807824134827,
+          "foreground_psnr_db": 5.366923174747532,
+          "foreground_ssim_interior": 0.2841150760650635,
+          "foreground_iou": 0.8069669365721998,
+          "visible_person_iou": 0.8004666168455972,
+          "visible_helmet_iou": 0.6905920519059205,
+          "helmet_psnr_db": 5.86027267064151,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM21121414",
+          "frame": 299,
+          "foreground_pixels": 50761,
+          "ssim_interior_pixels": 41928,
+          "foreground_mse_srgb": 0.290730357170105,
+          "foreground_psnr_db": 5.365096181672228,
+          "foreground_ssim_interior": 0.2865638732910156,
+          "foreground_iou": 0.8069669365721998,
+          "visible_person_iou": 0.8004666168455972,
+          "visible_helmet_iou": 0.6905920519059205,
+          "helmet_psnr_db": 5.839440435197437,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM21121414",
+          "frame": 299,
+          "foreground_pixels": 50761,
+          "ssim_interior_pixels": 41928,
+          "foreground_mse_srgb": 0.2908494174480438,
+          "foreground_psnr_db": 5.363318017275812,
+          "foreground_ssim_interior": 0.2893483638763428,
+          "foreground_iou": 0.8069669365721998,
+          "visible_person_iou": 0.8004666168455972,
+          "visible_helmet_iou": 0.6905920519059205,
+          "helmet_psnr_db": 5.8165257996334585,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121415",
+          "frame": 42,
+          "foreground_pixels": 77390,
+          "ssim_interior_pixels": 64506,
+          "foreground_mse_srgb": 0.16230353713035583,
+          "foreground_psnr_db": 7.896720153588807,
+          "foreground_ssim_interior": 0.3147594928741455,
+          "foreground_iou": 0.7792388007923097,
+          "visible_person_iou": 0.7640912905246486,
+          "visible_helmet_iou": 0.6817003628823225,
+          "helmet_psnr_db": 9.98303412556549,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM21121415",
+          "frame": 42,
+          "foreground_pixels": 77390,
+          "ssim_interior_pixels": 64506,
+          "foreground_mse_srgb": 0.16210244596004486,
+          "foreground_psnr_db": 7.902104320426871,
+          "foreground_ssim_interior": 0.3147783875465393,
+          "foreground_iou": 0.7792388007923097,
+          "visible_person_iou": 0.7640912905246486,
+          "visible_helmet_iou": 0.6817003628823225,
+          "helmet_psnr_db": 10.089589739113327,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM21121415",
+          "frame": 42,
+          "foreground_pixels": 77390,
+          "ssim_interior_pixels": 64506,
+          "foreground_mse_srgb": 0.16215460002422333,
+          "foreground_psnr_db": 7.900707266900518,
+          "foreground_ssim_interior": 0.31172680854797363,
+          "foreground_iou": 0.7792388007923097,
+          "visible_person_iou": 0.7640912905246486,
+          "visible_helmet_iou": 0.6817003628823225,
+          "helmet_psnr_db": 10.085246896610219,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121415",
+          "frame": 180,
+          "foreground_pixels": 90110,
+          "ssim_interior_pixels": 77620,
+          "foreground_mse_srgb": 0.2013741284608841,
+          "foreground_psnr_db": 6.959963261776808,
+          "foreground_ssim_interior": 0.3060901463031769,
+          "foreground_iou": 0.8275953174538655,
+          "visible_person_iou": 0.8205770985640713,
+          "visible_helmet_iou": 0.7525830773526948,
+          "helmet_psnr_db": 7.674409822831114,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM21121415",
+          "frame": 180,
+          "foreground_pixels": 90110,
+          "ssim_interior_pixels": 77620,
+          "foreground_mse_srgb": 0.20023642480373383,
+          "foreground_psnr_db": 6.984569176041458,
+          "foreground_ssim_interior": 0.3060127794742584,
+          "foreground_iou": 0.8275953174538655,
+          "visible_person_iou": 0.8205770985640713,
+          "visible_helmet_iou": 0.7525830773526948,
+          "helmet_psnr_db": 8.602127074394865,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM21121415",
+          "frame": 180,
+          "foreground_pixels": 90110,
+          "ssim_interior_pixels": 77620,
+          "foreground_mse_srgb": 0.20195253193378448,
+          "foreground_psnr_db": 6.947506975918979,
+          "foreground_ssim_interior": 0.30580368638038635,
+          "foreground_iou": 0.8275953174538655,
+          "visible_person_iou": 0.8205770985640713,
+          "visible_helmet_iou": 0.7525830773526948,
+          "helmet_psnr_db": 7.163647378236609,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121415",
+          "frame": 299,
+          "foreground_pixels": 74686,
+          "ssim_interior_pixels": 61763,
+          "foreground_mse_srgb": 0.20288877189159393,
+          "foreground_psnr_db": 6.927419866800635,
+          "foreground_ssim_interior": 0.33141028881073,
+          "foreground_iou": 0.8110157653163041,
+          "visible_person_iou": 0.8133026737444654,
+          "visible_helmet_iou": 0.6131797481918029,
+          "helmet_psnr_db": 7.2692514899026985,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM21121415",
+          "frame": 299,
+          "foreground_pixels": 74686,
+          "ssim_interior_pixels": 61763,
+          "foreground_mse_srgb": 0.20338821411132812,
+          "foreground_psnr_db": 6.916742170706772,
+          "foreground_ssim_interior": 0.32967016100883484,
+          "foreground_iou": 0.8110157653163041,
+          "visible_person_iou": 0.8133026737444654,
+          "visible_helmet_iou": 0.6131797481918029,
+          "helmet_psnr_db": 6.981400459774401,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM21121415",
+          "frame": 299,
+          "foreground_pixels": 74686,
+          "ssim_interior_pixels": 61763,
+          "foreground_mse_srgb": 0.204131081700325,
+          "foreground_psnr_db": 6.90090863078076,
+          "foreground_ssim_interior": 0.3333270251750946,
+          "foreground_iou": 0.8110157653163041,
+          "visible_person_iou": 0.8133026737444654,
+          "visible_helmet_iou": 0.6131797481918029,
+          "helmet_psnr_db": 6.5525647352299465,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121416",
+          "frame": 42,
+          "foreground_pixels": 67354,
+          "ssim_interior_pixels": 55898,
+          "foreground_mse_srgb": 0.08020132035017014,
+          "foreground_psnr_db": 10.958184818894905,
+          "foreground_ssim_interior": 0.32562270760536194,
+          "foreground_iou": 0.8493528765508186,
+          "visible_person_iou": 0.8412400378225043,
+          "visible_helmet_iou": 0.41975308641975306,
+          "helmet_psnr_db": 3.603558591291056,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM21121416",
+          "frame": 42,
+          "foreground_pixels": 67354,
+          "ssim_interior_pixels": 55898,
+          "foreground_mse_srgb": 0.08023811131715775,
+          "foreground_psnr_db": 10.95619302497484,
+          "foreground_ssim_interior": 0.3257104158401489,
+          "foreground_iou": 0.8493528765508186,
+          "visible_person_iou": 0.8412400378225043,
+          "visible_helmet_iou": 0.41975308641975306,
+          "helmet_psnr_db": 3.580273453440847,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM21121416",
+          "frame": 42,
+          "foreground_pixels": 67354,
+          "ssim_interior_pixels": 55898,
+          "foreground_mse_srgb": 0.08026614040136337,
+          "foreground_psnr_db": 10.954676195782255,
+          "foreground_ssim_interior": 0.32538360357284546,
+          "foreground_iou": 0.8493528765508186,
+          "visible_person_iou": 0.8412400378225043,
+          "visible_helmet_iou": 0.41975308641975306,
+          "helmet_psnr_db": 3.5925737646119185,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121416",
+          "frame": 180,
+          "foreground_pixels": 80017,
+          "ssim_interior_pixels": 68423,
+          "foreground_mse_srgb": 0.10193029791116714,
+          "foreground_psnr_db": 9.916967064758538,
+          "foreground_ssim_interior": 0.2755562663078308,
+          "foreground_iou": 0.8310743505657716,
+          "visible_person_iou": 0.8224341454904925,
+          "visible_helmet_iou": 0.7148893860303256,
+          "helmet_psnr_db": 10.69371141117227,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM21121416",
+          "frame": 180,
+          "foreground_pixels": 80017,
+          "ssim_interior_pixels": 68423,
+          "foreground_mse_srgb": 0.10249257832765579,
+          "foreground_psnr_db": 9.89307581515947,
+          "foreground_ssim_interior": 0.27351292967796326,
+          "foreground_iou": 0.8310743505657716,
+          "visible_person_iou": 0.8224341454904925,
+          "visible_helmet_iou": 0.7148893860303256,
+          "helmet_psnr_db": 10.375697525103236,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM21121416",
+          "frame": 180,
+          "foreground_pixels": 80017,
+          "ssim_interior_pixels": 68423,
+          "foreground_mse_srgb": 0.10262029618024826,
+          "foreground_psnr_db": 9.887667362284624,
+          "foreground_ssim_interior": 0.27323922514915466,
+          "foreground_iou": 0.8310743505657716,
+          "visible_person_iou": 0.8224341454904925,
+          "visible_helmet_iou": 0.7148893860303256,
+          "helmet_psnr_db": 10.30122241330226,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM21121416",
+          "frame": 299,
+          "foreground_pixels": 67558,
+          "ssim_interior_pixels": 55980,
+          "foreground_mse_srgb": 0.07141787558794022,
+          "foreground_psnr_db": 11.461930725716456,
+          "foreground_ssim_interior": 0.35022231936454773,
+          "foreground_iou": 0.8553710873416891,
+          "visible_person_iou": 0.8432329055683362,
+          "visible_helmet_iou": 0.8190911067623396,
+          "helmet_psnr_db": 10.072094013478598,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM21121416",
+          "frame": 299,
+          "foreground_pixels": 67558,
+          "ssim_interior_pixels": 55980,
+          "foreground_mse_srgb": 0.07132692635059357,
+          "foreground_psnr_db": 11.467464903735054,
+          "foreground_ssim_interior": 0.3487898111343384,
+          "foreground_iou": 0.8553710873416891,
+          "visible_person_iou": 0.8432329055683362,
+          "visible_helmet_iou": 0.8190911067623396,
+          "helmet_psnr_db": 10.212158944809534,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM21121416",
+          "frame": 299,
+          "foreground_pixels": 67558,
+          "ssim_interior_pixels": 55980,
+          "foreground_mse_srgb": 0.07113875448703766,
+          "foreground_psnr_db": 11.478937428069987,
+          "foreground_ssim_interior": 0.3480693995952606,
+          "foreground_iou": 0.8553710873416891,
+          "visible_person_iou": 0.8432329055683362,
+          "visible_helmet_iou": 0.8190911067623396,
+          "helmet_psnr_db": 10.364767394470093,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22020159",
+          "frame": 42,
+          "foreground_pixels": 58675,
+          "ssim_interior_pixels": 47623,
+          "foreground_mse_srgb": 0.15301191806793213,
+          "foreground_psnr_db": 8.152747407539323,
+          "foreground_ssim_interior": 0.27197426557540894,
+          "foreground_iou": 0.8268770084721005,
+          "visible_person_iou": 0.8119062105115364,
+          "visible_helmet_iou": 0.8258288988948015,
+          "helmet_psnr_db": 7.32932871899993,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM22020159",
+          "frame": 42,
+          "foreground_pixels": 58675,
+          "ssim_interior_pixels": 47623,
+          "foreground_mse_srgb": 0.1527804732322693,
+          "foreground_psnr_db": 8.159321490940117,
+          "foreground_ssim_interior": 0.26749488711357117,
+          "foreground_iou": 0.8268770084721005,
+          "visible_person_iou": 0.8119062105115364,
+          "visible_helmet_iou": 0.8258288988948015,
+          "helmet_psnr_db": 7.39206334777716,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM22020159",
+          "frame": 42,
+          "foreground_pixels": 58675,
+          "ssim_interior_pixels": 47623,
+          "foreground_mse_srgb": 0.15329964458942413,
+          "foreground_psnr_db": 8.144588520147105,
+          "foreground_ssim_interior": 0.258781760931015,
+          "foreground_iou": 0.8268770084721005,
+          "visible_person_iou": 0.8119062105115364,
+          "visible_helmet_iou": 0.8258288988948015,
+          "helmet_psnr_db": 7.243972982378376,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22020159",
+          "frame": 180,
+          "foreground_pixels": 68090,
+          "ssim_interior_pixels": 59243,
+          "foreground_mse_srgb": 0.203821063041687,
+          "foreground_psnr_db": 6.907509376499946,
+          "foreground_ssim_interior": 0.1931551694869995,
+          "foreground_iou": 0.8353525244278227,
+          "visible_person_iou": 0.825778240785163,
+          "visible_helmet_iou": 0.6735302086155514,
+          "helmet_psnr_db": 8.258615009981142,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM22020159",
+          "frame": 180,
+          "foreground_pixels": 68090,
+          "ssim_interior_pixels": 59243,
+          "foreground_mse_srgb": 0.20448164641857147,
+          "foreground_psnr_db": 6.893456667121188,
+          "foreground_ssim_interior": 0.19572526216506958,
+          "foreground_iou": 0.8353525244278227,
+          "visible_person_iou": 0.825778240785163,
+          "visible_helmet_iou": 0.6735302086155514,
+          "helmet_psnr_db": 8.020396695396308,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM22020159",
+          "frame": 180,
+          "foreground_pixels": 68090,
+          "ssim_interior_pixels": 59243,
+          "foreground_mse_srgb": 0.20500075817108154,
+          "foreground_psnr_db": 6.882445327544497,
+          "foreground_ssim_interior": 0.19599729776382446,
+          "foreground_iou": 0.8353525244278227,
+          "visible_person_iou": 0.825778240785163,
+          "visible_helmet_iou": 0.6735302086155514,
+          "helmet_psnr_db": 7.7780381849532985,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22020159",
+          "frame": 299,
+          "foreground_pixels": 60286,
+          "ssim_interior_pixels": 49476,
+          "foreground_mse_srgb": 0.17857176065444946,
+          "foreground_psnr_db": 7.481872193647398,
+          "foreground_ssim_interior": 0.24400343000888824,
+          "foreground_iou": 0.8155879606350118,
+          "visible_person_iou": 0.7999301304737457,
+          "visible_helmet_iou": 0.8001372055796936,
+          "helmet_psnr_db": 6.416802128738938,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM22020159",
+          "frame": 299,
+          "foreground_pixels": 60286,
+          "ssim_interior_pixels": 49476,
+          "foreground_mse_srgb": 0.1779513955116272,
+          "foreground_psnr_db": 7.4969860186849315,
+          "foreground_ssim_interior": 0.2463269978761673,
+          "foreground_iou": 0.8155879606350118,
+          "visible_person_iou": 0.7999301304737457,
+          "visible_helmet_iou": 0.8001372055796936,
+          "helmet_psnr_db": 6.591657973979035,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM22020159",
+          "frame": 299,
+          "foreground_pixels": 60286,
+          "ssim_interior_pixels": 49476,
+          "foreground_mse_srgb": 0.17801059782505035,
+          "foreground_psnr_db": 7.495541412870045,
+          "foreground_ssim_interior": 0.24792154133319855,
+          "foreground_iou": 0.8155879606350118,
+          "visible_person_iou": 0.7999301304737457,
+          "visible_helmet_iou": 0.8001372055796936,
+          "helmet_psnr_db": 6.570832689043432,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22020160",
+          "frame": 42,
+          "foreground_pixels": 81599,
+          "ssim_interior_pixels": 69115,
+          "foreground_mse_srgb": 0.06425560265779495,
+          "foreground_psnr_db": 11.92088998778275,
+          "foreground_ssim_interior": 0.39902186393737793,
+          "foreground_iou": 0.8339066501082525,
+          "visible_person_iou": 0.8339066501082525,
+          "visible_helmet_iou": null,
+          "helmet_psnr_db": null,
+          "helmet_annotation_known": false
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM22020160",
+          "frame": 42,
+          "foreground_pixels": 81599,
+          "ssim_interior_pixels": 69115,
+          "foreground_mse_srgb": 0.06425560265779495,
+          "foreground_psnr_db": 11.92088998778275,
+          "foreground_ssim_interior": 0.39902186393737793,
+          "foreground_iou": 0.8339066501082525,
+          "visible_person_iou": 0.8339066501082525,
+          "visible_helmet_iou": null,
+          "helmet_psnr_db": null,
+          "helmet_annotation_known": false
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM22020160",
+          "frame": 42,
+          "foreground_pixels": 81599,
+          "ssim_interior_pixels": 69115,
+          "foreground_mse_srgb": 0.06425560265779495,
+          "foreground_psnr_db": 11.92088998778275,
+          "foreground_ssim_interior": 0.39902186393737793,
+          "foreground_iou": 0.8339066501082525,
+          "visible_person_iou": 0.8339066501082525,
+          "visible_helmet_iou": null,
+          "helmet_psnr_db": null,
+          "helmet_annotation_known": false
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22020160",
+          "frame": 180,
+          "foreground_pixels": 89986,
+          "ssim_interior_pixels": 77765,
+          "foreground_mse_srgb": 0.07014608383178711,
+          "foreground_psnr_db": 11.539965700771056,
+          "foreground_ssim_interior": 0.3373897075653076,
+          "foreground_iou": 0.8414931513722342,
+          "visible_person_iou": 0.83362476048876,
+          "visible_helmet_iou": 0.7601762484263533,
+          "helmet_psnr_db": 12.297572266963858,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM22020160",
+          "frame": 180,
+          "foreground_pixels": 89986,
+          "ssim_interior_pixels": 77765,
+          "foreground_mse_srgb": 0.07033921778202057,
+          "foreground_psnr_db": 11.528024656301227,
+          "foreground_ssim_interior": 0.3342423737049103,
+          "foreground_iou": 0.8414931513722342,
+          "visible_person_iou": 0.83362476048876,
+          "visible_helmet_iou": 0.7601762484263533,
+          "helmet_psnr_db": 12.039258812753193,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM22020160",
+          "frame": 180,
+          "foreground_pixels": 89986,
+          "ssim_interior_pixels": 77765,
+          "foreground_mse_srgb": 0.07030455768108368,
+          "foreground_psnr_db": 11.530165197656046,
+          "foreground_ssim_interior": 0.33356741070747375,
+          "foreground_iou": 0.8414931513722342,
+          "visible_person_iou": 0.83362476048876,
+          "visible_helmet_iou": 0.7601762484263533,
+          "helmet_psnr_db": 12.133669183144352,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22020160",
+          "frame": 299,
+          "foreground_pixels": 81218,
+          "ssim_interior_pixels": 68590,
+          "foreground_mse_srgb": 0.06002812460064888,
+          "foreground_psnr_db": 12.216452246653214,
+          "foreground_ssim_interior": 0.4171903133392334,
+          "foreground_iou": 0.8215686485208626,
+          "visible_person_iou": 0.8093338018749221,
+          "visible_helmet_iou": 0.7802948579647608,
+          "helmet_psnr_db": 9.676720457121263,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM22020160",
+          "frame": 299,
+          "foreground_pixels": 81218,
+          "ssim_interior_pixels": 68590,
+          "foreground_mse_srgb": 0.059747565537691116,
+          "foreground_psnr_db": 12.236797856950814,
+          "foreground_ssim_interior": 0.41519349813461304,
+          "foreground_iou": 0.8215686485208626,
+          "visible_person_iou": 0.8093338018749221,
+          "visible_helmet_iou": 0.7802948579647608,
+          "helmet_psnr_db": 9.938797748324077,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM22020160",
+          "frame": 299,
+          "foreground_pixels": 81218,
+          "ssim_interior_pixels": 68590,
+          "foreground_mse_srgb": 0.059712328016757965,
+          "foreground_psnr_db": 12.239359965602635,
+          "foreground_ssim_interior": 0.41325634717941284,
+          "foreground_iou": 0.8215686485208626,
+          "visible_person_iou": 0.8093338018749221,
+          "visible_helmet_iou": 0.7802948579647608,
+          "helmet_psnr_db": 9.998365543985788,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22030167",
+          "frame": 42,
+          "foreground_pixels": 72028,
+          "ssim_interior_pixels": 62301,
+          "foreground_mse_srgb": 0.07046201825141907,
+          "foreground_psnr_db": 11.520449214315118,
+          "foreground_ssim_interior": 0.3934965431690216,
+          "foreground_iou": 0.8239395212095758,
+          "visible_person_iou": 0.8175304804002526,
+          "visible_helmet_iou": 0.5858310626702997,
+          "helmet_psnr_db": 11.721183812492814,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM22030167",
+          "frame": 42,
+          "foreground_pixels": 72028,
+          "ssim_interior_pixels": 62301,
+          "foreground_mse_srgb": 0.07027970999479294,
+          "foreground_psnr_db": 11.531700392644064,
+          "foreground_ssim_interior": 0.3939511775970459,
+          "foreground_iou": 0.8239395212095758,
+          "visible_person_iou": 0.8175304804002526,
+          "visible_helmet_iou": 0.5858310626702997,
+          "helmet_psnr_db": 11.948749760101832,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM22030167",
+          "frame": 42,
+          "foreground_pixels": 72028,
+          "ssim_interior_pixels": 62301,
+          "foreground_mse_srgb": 0.07047775387763977,
+          "foreground_psnr_db": 11.519479453180686,
+          "foreground_ssim_interior": 0.3932342827320099,
+          "foreground_iou": 0.8239395212095758,
+          "visible_person_iou": 0.8175304804002526,
+          "visible_helmet_iou": 0.5858310626702997,
+          "helmet_psnr_db": 11.623011788358253,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22030167",
+          "frame": 180,
+          "foreground_pixels": 65648,
+          "ssim_interior_pixels": 57096,
+          "foreground_mse_srgb": 0.09284210205078125,
+          "foreground_psnr_db": 10.322550351838036,
+          "foreground_ssim_interior": 0.3453124165534973,
+          "foreground_iou": 0.8331195225041524,
+          "visible_person_iou": 0.8216854643802509,
+          "visible_helmet_iou": 0.6264049955396968,
+          "helmet_psnr_db": 9.950847293470753,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM22030167",
+          "frame": 180,
+          "foreground_pixels": 65648,
+          "ssim_interior_pixels": 57096,
+          "foreground_mse_srgb": 0.0914309024810791,
+          "foreground_psnr_db": 10.389069934485722,
+          "foreground_ssim_interior": 0.3459899425506592,
+          "foreground_iou": 0.8331195225041524,
+          "visible_person_iou": 0.8216854643802509,
+          "visible_helmet_iou": 0.6264049955396968,
+          "helmet_psnr_db": 10.985372907433081,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM22030167",
+          "frame": 180,
+          "foreground_pixels": 65648,
+          "ssim_interior_pixels": 57096,
+          "foreground_mse_srgb": 0.09146110713481903,
+          "foreground_psnr_db": 10.387635457977549,
+          "foreground_ssim_interior": 0.34549129009246826,
+          "foreground_iou": 0.8331195225041524,
+          "visible_person_iou": 0.8216854643802509,
+          "visible_helmet_iou": 0.6264049955396968,
+          "helmet_psnr_db": 10.908164609603606,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "camera": "FCM22030167",
+          "frame": 299,
+          "foreground_pixels": 70727,
+          "ssim_interior_pixels": 61759,
+          "foreground_mse_srgb": 0.05575357750058174,
+          "foreground_psnr_db": 12.537272603172303,
+          "foreground_ssim_interior": 0.4108012616634369,
+          "foreground_iou": 0.8316370683665882,
+          "visible_person_iou": 0.8093320549696389,
+          "visible_helmet_iou": 0.6638735478956389,
+          "helmet_psnr_db": 9.183570680979111,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "camera": "FCM22030167",
+          "frame": 299,
+          "foreground_pixels": 70727,
+          "ssim_interior_pixels": 61759,
+          "foreground_mse_srgb": 0.05483090505003929,
+          "foreground_psnr_db": 12.609745855045558,
+          "foreground_ssim_interior": 0.4098404049873352,
+          "foreground_iou": 0.8316370683665882,
+          "visible_person_iou": 0.8093320549696389,
+          "visible_helmet_iou": 0.6638735478956389,
+          "helmet_psnr_db": 10.328459717184797,
+          "helmet_annotation_known": true
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "camera": "FCM22030167",
+          "frame": 299,
+          "foreground_pixels": 70727,
+          "ssim_interior_pixels": 61759,
+          "foreground_mse_srgb": 0.05539720505475998,
+          "foreground_psnr_db": 12.56512146100361,
+          "foreground_ssim_interior": 0.40807023644447327,
+          "foreground_iou": 0.8316370683665882,
+          "visible_person_iou": 0.8093320549696389,
+          "visible_helmet_iou": 0.6638735478956389,
+          "helmet_psnr_db": 9.885515257278366,
+          "helmet_annotation_known": true
+        }
+      ],
+      "summary": [
+        {
+          "scene": "shared_scene_depth_aware_profile_v2",
+          "weighted_foreground_psnr_db": 8.79710377112267,
+          "mean_foreground_ssim_interior": 0.33182922067741555,
+          "mean_foreground_iou": 0.8281215345152008,
+          "mean_visible_helmet_iou": 0.6769199466690276
+        },
+        {
+          "scene": "shared_scene_local_consensus_v1",
+          "weighted_foreground_psnr_db": 8.812638181915755,
+          "mean_foreground_ssim_interior": 0.3316971007734537,
+          "mean_foreground_iou": 0.8281215345152008,
+          "mean_visible_helmet_iou": 0.6769199466690276
+        },
+        {
+          "scene": "shared_scene_shared_response_v1",
+          "weighted_foreground_psnr_db": 8.799646698386427,
+          "mean_foreground_ssim_interior": 0.33119635842740536,
+          "mean_foreground_iou": 0.8281215345152008,
+          "mean_visible_helmet_iou": 0.6769199466690276
+        }
+      ],
+      "seconds": 48.51956081390381,
+      "scope": "Same calibrated8 input cameras and explicit pixel-center1008x756 rendering, Gaussian-center mesh culling and saved neural decoder. Candidate SAM person/accepted helmet masks define FIXED source-foreground RGB support and eroded11pixel SSIM interior; missing rendered foreground counts as RGB error. White target background used only to avoid raw background contamination in SSIM windows. Mask IoUs include predicted leaks, separate visible body/helmet masks; unknown helmet annotations skipped. No per-candidate exposure fitting or color gains applied, so camera-response/light differences remain. Sampled or all-frame scope explicit. Input-view diagnostics only, not independent novel-view truth or contact certification; original-derived private sheets must not be published."
+    },
+    "local_texture_controls_pipeline_v1": {
+      "success": true,
+      "steps": [
+        [
+          "export_shared_scene.py",
+          "--out",
+          "shared_scene_local_consensus_v1",
+          "--avatar",
+          "shared_shape_body_face_motion_v1",
+          "--motion",
+          "helmet_depth_aware_profile_pose_v2",
+          "--mesh",
+          "helmet_profile_local_consensus_texture_v1"
+        ],
+        [
+          "export_shared_scene.py",
+          "--out",
+          "shared_scene_shared_response_v1",
+          "--avatar",
+          "shared_shape_body_face_motion_v1",
+          "--motion",
+          "helmet_depth_aware_profile_pose_v2",
+          "--mesh",
+          "helmet_profile_shared_response_texture_v1"
+        ],
+        [
+          "evaluate_scene_input_views.py",
+          "--out",
+          "local_texture_controls_input_comparison_v1",
+          "--scenes",
+          "shared_scene_depth_aware_profile_v2",
+          "shared_scene_local_consensus_v1",
+          "shared_scene_shared_response_v1"
+        ],
+        [
+          "review_lhm_helmet_contacts.py",
+          "--out",
+          "helmet_profile_shared_response_contacts_v1",
+          "--avatar",
+          "shared_shape_body_face_motion_v1",
+          "--motion",
+          "helmet_depth_aware_profile_pose_v2",
+          "--mesh",
+          "helmet_profile_shared_response_texture_v1",
+          "--frames",
+          "42",
+          "180",
+          "299",
+          "--framing",
+          "shared_shape_body_face_object_contacts_v1"
+        ]
+      ],
+      "scope": "Controlled candidate renders; same geometry/human/poses, different texture evidence selection or camera response only. No adoption or quality assertion."
+    }
+  },
+  "adopted": false,
+  "scope": "Same fixed human/geometry/object motion, global-frame reliability vs local cross-time texel consensus, plus independent human-response substitution. Inner observed texels do not certify true geometry or registration; single-camera/conflicting texels explicitly unknown and later fills are inference. No original images, calibration, arrays, weights or licensed human tensors published. No novel-view truth or full-goal completion."
+}

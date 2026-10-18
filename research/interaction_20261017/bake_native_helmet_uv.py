@@ -8,7 +8,9 @@ import torch,numpy as np,trimesh,nvdiffrast.torch as dr
 from PIL import Image
 from scipy.ndimage import distance_transform_edt
 from helmet_texture_sampling import NativeHelmetSampler,linear_to_srgb
-p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_texture_native_all300_v2');p.add_argument('--stride',type=int,default=3);p.add_argument('--motion',default='helmet_shell_pose_all300_v1');p.add_argument('--uv',default='helmet_uv_all300_v1');p.add_argument('--policy',choices=['all-time','stage-separated'],default='stage-separated');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--consistent-frames',action='store_true');p.add_argument('--consistency-per-surface',action='store_true');p.add_argument('--texel-consensus',action='store_true');options=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--out',default='helmet_texture_native_all300_v2');p.add_argument('--stride',type=int,default=3);p.add_argument('--motion',default='helmet_shell_pose_all300_v1');p.add_argument('--uv',default='helmet_uv_all300_v1');p.add_argument('--policy',choices=['all-time','stage-separated'],default='stage-separated');p.add_argument('--body-depth',default='body_depth_all300_v1');p.add_argument('--consistent-frames',action='store_true');p.add_argument('--consistency-per-surface',action='store_true');p.add_argument('--texel-consensus',action='store_true')
+p.add_argument('--response-mode',choices=['fitted','identity','human-reference'],default='fitted');p.add_argument('--human-response',help='Completed linear-reference human refinement report; share its camera response across assets')
+options=p.parse_args()
 assert not options.consistency_per_surface or options.consistent_frames
 out=ROOT/options.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4)
 assert options.stride>0 and json.loads((ROOT/'uv_rendering_verification_v1/report.json').read_text())['success']
@@ -76,11 +78,25 @@ for step in range(201):
     loss=objective(g,b)+regularization
     if step<200:loss.backward();opt.step()
 gain,bias=[v.detach() for v in correction()];after=float(objective(gain,bias).detach())
+fitted_diagnostic={'gain_linear_rgb':gain.cpu().tolist(),'bias_linear_rgb':bias.cpu().tolist(),'robust_color_loss_after':after}
+if options.response_mode=='identity':gain=torch.ones_like(gain);bias=torch.zeros_like(bias)
+if options.response_mode=='human-reference':
+    assert options.human_response
+    human=json.loads((ROOT/options.human_response/'report.json').read_text());assert human['success'] and human['response']=='linear-reference' and human['reference_camera']==meta['views'][reference]['serial']
+    # Human convention: observed/model. Baker convention: observed->reference.
+    gain=torch.tensor([human['fixed_camera_rgb_gains'][v['serial']] for v in meta['views']],device='cuda',dtype=torch.float32).reciprocal();bias=torch.zeros_like(gain)
+    assert torch.isfinite(gain).all() and (gain>0).all() and torch.allclose(gain[reference],torch.ones(3,device='cuda'))
+after=float(objective(gain,bias).detach())
 calib={'reference_serial':meta['views'][reference]['serial'],'frames':calib_frames,'correspondences':len(c1),'pair_support':support.tolist(),'gain_linear_rgb':gain.cpu().tolist(),'bias_linear_rgb':bias.cpu().tolist(),'robust_color_loss_before':before,'robust_color_loss_after':after,'scope':'Approximate affine response fit in assumed linearized sRGB, same-time surface correspondences, robust loss, fixed reference camera and bounded coefficients. Not spectral/colorimetric calibration or recovered albedo; clipping, pose error and view-dependent lighting remain.'}
+calib['response_mode']=options.response_mode
+if options.response_mode!='fitted':
+    calib['unused_helmet_fitted_response_diagnostic']=fitted_diagnostic
+    calib['scope']='Controlled response substitution, no acceptance claim. '+('Identity gains/zero bias isolate the helmet-specific response fit.' if options.response_mode=='identity' else 'Reciprocal gains from a completed frozen human linear-reference observation fit, shared across human and helmet. These estimates inherit human model/lighting bias and are not measured camera calibration. Human convention observed/model is inverted for baker observed->reference; same reference camera fixes gauge.')
+    calib['human_response_source']=options.human_response
 (out/'camera_color_correction.json').write_text(json.dumps(calib,indent=2))
 calib['appearance_policy']=options.policy;calib['white_shell_support']=white_support;calib['exposure_prior_gain']=priorgain.cpu().tolist()
-if options.policy=='all-time':calib['scope']+=' Exposure gain is shared acrossRGB with bounded±2EV, chromatic correction is limited to exp(±.15), and black-level bias is shared acrossRGB within±.01 assumed-linear units. This reduces artificial chroma in dark lining; it does not recover missing source detail or guarantee registration.'
-if options.policy=='stage-separated':
+if options.policy=='all-time' and options.response_mode=='fitted':calib['scope']+=' Exposure gain is shared acrossRGB with bounded±2EV, chromatic correction is limited to exp(±.15), and black-level bias is shared acrossRGB within±.01 assumed-linear units. This reduces artificial chroma in dark lining; it does not recover missing source detail or guarantee registration.'
+if options.policy=='stage-separated' and options.response_mode=='fitted':
     calib['scope']+=' Restricted to unclipped near-neutral white exterior patches while worn; robust white-patch exposure priors and strong gain/bias regularization address false dark/white correspondences. Material/illumination assumptions explicitly introduced; not unrestricted measured camera calibration.'
 (out/'camera_color_correction.json').write_text(json.dumps(calib,indent=2))
 topweight=torch.zeros(8,2,M,device='cuda');topcolor=torch.zeros(8,2,M,3,device='cuda');topframe=torch.full((8,2,M),-1,device='cuda',dtype=torch.int16)

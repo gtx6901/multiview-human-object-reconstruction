@@ -92,6 +92,11 @@
       "sha256": "bd42fffde460c3a966655208d0efd44b37d73e4c8f28469269849f3939f6c233"
     },
     {
+      "path": "evidence/local_texture_controls_20261018.json",
+      "bytes": 174817,
+      "sha256": "c94fff4c1e56ba2eea8b18ca4817ec3be2cb13342a75a70a1b9674c682bf6643"
+    },
+    {
       "path": "evidence/milestone_20261018.json",
       "bytes": 4185,
       "sha256": "3be0c2e6e884dc7b4da72b4d47f934a7a3defec1fedc7cbe8d4e93ff6edc5eda"
@@ -104,7 +109,7 @@
     {
       "path": "evidence/optimization_source_mapping.json",
       "bytes": 11209,
-      "sha256": "1e5acae7130cc9ea9b764038cbfb9f519e2a8e6019521d094ed15c5b3048c452"
+      "sha256": "796d85b76438e1abb95d3a4ed74291c9aa15a8e6ccb33a7c230cc10fbda337e6"
     },
     {
       "path": "evidence/outer_scene_20261018.json",
@@ -232,6 +237,11 @@
       "sha256": "23e963d283914b37b4f88d84d7369c4e311fdd5a0512b28f1a1ca9da680e0412"
     },
     {
+      "path": "media/local_texture_generated_controls.jpg",
+      "bytes": 196538,
+      "sha256": "b5187979677f00c500fc1f4f559b399a6da5fa3ef715f0685172f0e3f50fc881"
+    },
+    {
       "path": "media/multitime16_portrait_full300.mp4",
       "bytes": 2033139,
       "sha256": "4bc5b71503c8ed906f64e9f8d7f4d4c735b3888777edf1d955033e6c81b62d65"
@@ -333,8 +343,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 15897,
-      "sha256": "b772a4d2582b038631767ff43d763d9905feab6ff777ad573494a9d7b7b8d3fc"
+      "bytes": 17111,
+      "sha256": "16452e76b152ef141889e82f98a1594a83feaa1304eaff7c96abdc4120b74aa2"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -407,6 +417,11 @@
       "sha256": "508dbe878144598b18458e4dea757cb44adc24e0fea045317c8326cb9ae625c4"
     },
     {
+      "path": "research/interaction_20261017/audit_native_helmet_sampling.py",
+      "bytes": 3331,
+      "sha256": "e9dd9a142f3c4aaf4464191a6ba2560b404b51ca0cd7a1f80feecb5000429373"
+    },
+    {
       "path": "research/interaction_20261017/audit_nlf_world_alignment.py",
       "bytes": 2967,
       "sha256": "912a3c696e2804b748e5d0c6f11aa9ab54a3c1247a8995b8d9f4dbe2c479e8dc"
@@ -443,8 +458,8 @@
     },
     {
       "path": "research/interaction_20261017/bake_native_helmet_uv.py",
-      "bytes": 18787,
-      "sha256": "4cdcb1d644f65442c918ce79c24e5988a0958f8ad040c279b2c7647d0fd876d3"
+      "bytes": 20729,
+      "sha256": "a190503509a9e22e25d2ecac8e86114bd6a3aa8a8158985b575a6144d4ce720f"
     },
     {
       "path": "research/interaction_20261017/blender_human_animation.py",
@@ -603,8 +618,8 @@
     },
     {
       "path": "research/interaction_20261017/helmet_texture_sampling.py",
-      "bytes": 4543,
-      "sha256": "a7e0e9fd01832ed827188a83e219fa2e12c01b02e6377b2c20a9d4d98eb6c058"
+      "bytes": 4711,
+      "sha256": "11406efdd08e27adeccc99a73d4b94de93e69a8bb7f47d07bbf9f2a31e268f5f"
     },
     {
       "path": "research/interaction_20261017/hybrid_compositor.py",
@@ -832,6 +847,11 @@
       "sha256": "ab166b9ac451316f1f6db24dfab89d64976cb92bcbbcb3b10dcfbae1be832ece"
     },
     {
+      "path": "research/interaction_20261017/run_local_texture_controls.py",
+      "bytes": 1831,
+      "sha256": "17c9c1ff5ec9ea4156d94bb42d3a49805febe91b28943025373787e781d5174e"
+    },
+    {
       "path": "research/interaction_20261017/run_nlf_observations.py",
       "bytes": 3970,
       "sha256": "feec8f53ed7711c9cddd0daee0233692821578a46d6734b511c63613d7defae7"
@@ -980,6 +1000,11 @@
       "path": "research/interaction_20261017/verify_texture_consensus.py",
       "bytes": 1340,
       "sha256": "36f1b09e7fffc1e020d8dd1dba4b4ff3911e2bb8b8c39160c1f5b2f3d2cf3ee7"
+    },
+    {
+      "path": "research/interaction_20261017/verify_transferred_response.py",
+      "bytes": 2069,
+      "sha256": "96556b274821748289500435dc2c05c552a8485185dd862df526bde235384c8e"
     },
     {
       "path": "research/interaction_20261017/verify_uv_rendering.py",
