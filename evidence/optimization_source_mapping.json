@@ -160,11 +160,6 @@
     "published_sha256": "55d16ab247bc079bd42a9b6c33d35157e7bf60e0ee2a22757b1d603271592f79"
   },
   {
-    "file": "research/interaction_20261017/export_avatar_motion.py",
-    "local_source_sha256": "ae9449c5a2897733e09f134b7bad635be52768f480566aefe6795ae2e622eee2",
-    "published_sha256": "4838e24ec56fca191e94559a84cfb72cc28a51f888913ee2b0633100b0e45b7f"
-  },
-  {
     "file": "research/interaction_20261017/audit_lhm_body_visual_regression.py",
     "local_source_sha256": "495b518a0325ec92afcf46940609efe124302e8f6cdc943d7d1a5cca2c4ac6b1",
     "published_sha256": "18fd22b033645c7a4bc9fa2df4d9605fad80f09dc362f3cfbba5d73a38888be8"
@@ -258,5 +253,20 @@
     "file": "research/interaction_20261017/verify_shared_feature_contract.py",
     "local_source_sha256": "510d834542e1309408741205e7594aa5f8202084cc465c3f9d0a7b8a443925e8",
     "published_sha256": "bd12c38213a64ff275c73e7f97f1b8c4b88137a81ce05a6f539fd5d4c866b5db"
+  },
+  {
+    "file": "research/interaction_20261017/fit_shared_shape_motion.py",
+    "local_source_sha256": "f59fd59e932a87440d78804e6f324c50af2bf05c2494d14a77a2eb64171bf43b",
+    "published_sha256": "d32e41166d7b0ebfcc13e9baff9915f2fd1c9ff721904c7d1f3b87182eea05d1"
+  },
+  {
+    "file": "research/interaction_20261017/verify_grounded_shape_state.py",
+    "local_source_sha256": "03bb5abfd44d68f1e772ea5a20a866c25f28d9d45dc35781993932df55c31eed",
+    "published_sha256": "56236d3477a1af4b35a874d13f7c510956b1c6c02a32d3b898bcc2957f16b37a"
+  },
+  {
+    "file": "research/interaction_20261017/export_avatar_motion.py",
+    "local_source_sha256": "ae9449c5a2897733e09f134b7bad635be52768f480566aefe6795ae2e622eee2",
+    "published_sha256": "4838e24ec56fca191e94559a84cfb72cc28a51f888913ee2b0633100b0e45b7f"
   }
 ]

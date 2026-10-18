@@ -17,6 +17,11 @@
       "sha256": "a53c23c93b6661a943e776dca930b176b5cd18c069a38dbc9cfab9e24ade5300"
     },
     {
+      "path": "BODY_PROGRESS_PAUSED_20261018.md",
+      "bytes": 4244,
+      "sha256": "0af044ceb6d511ca48f96755d7f86a7e774afd7877dc12edc02c975920a6c98d"
+    },
+    {
       "path": "docs/HELMET_FOLLOWUP_20261018.md",
       "bytes": 3838,
       "sha256": "0b93635da72d0737ffbad222a6551be662fcecc96099696d6768381c4c411054"
@@ -133,8 +138,8 @@
     },
     {
       "path": "evidence/optimization_source_mapping.json",
-      "bytes": 13932,
-      "sha256": "d66a456dbd6b4b90e2b99059c1c726fded384c4de39b576bd532ab8ded4ac337"
+      "bytes": 14470,
+      "sha256": "6e39143785e5cc03de49c5a761b5f04320195a4c7d90137879fb6ea037705723"
     },
     {
       "path": "evidence/outer_scene_20261018.json",
@@ -180,6 +185,11 @@
       "path": "evidence/shared_shape_20261018.json",
       "bytes": 5340,
       "sha256": "f121dfe441965f3fc9c02c79d1db6304ae12bc4f57463fc4593beb90d388242e"
+    },
+    {
+      "path": "evidence/shared_shape_paused_20261018.json",
+      "bytes": 12230,
+      "sha256": "963d54969cf783a756e7a41119d5bdfc2a9ca68ef50ca9fa7500156fc7e1d05f"
     },
     {
       "path": "evidence/source_snapshot_mapping.json",
@@ -502,9 +512,49 @@
       "sha256": "80f8264e6e20b076905aefa9e6bcc2385a9003dc889b24a6a1f66db9e5a6669e"
     },
     {
+      "path": "media/shared_shape_all8_0042_generated.jpg",
+      "bytes": 121787,
+      "sha256": "63ff900be12e5a5fac66f52acc583feaefec38dd06a0b4d5d3940b430cba1c6e"
+    },
+    {
+      "path": "media/shared_shape_all8_0165_generated.jpg",
+      "bytes": 126940,
+      "sha256": "2e9f004110913d101bf4d25ed0b05a08bcb208d0db4e76ebc53cce71f386718d"
+    },
+    {
+      "path": "media/shared_shape_all8_0225_generated.jpg",
+      "bytes": 121546,
+      "sha256": "35e8da7ce074bde75c011ef952d5727fdd70f4c1d4e819b5f8a284e9b6b34cc4"
+    },
+    {
+      "path": "media/shared_shape_all8_0299_generated.jpg",
+      "bytes": 119659,
+      "sha256": "6932b25273efbdc985a0dc4a8d7125e816f849e52e77a923e115a4e1cbee9ac3"
+    },
+    {
+      "path": "media/shared_shape_full300_30fps.mp4",
+      "bytes": 1725173,
+      "sha256": "42686166ce2863d0dde85b9246b7326e28e646bc24a146ccbc84332f169d66c5"
+    },
+    {
+      "path": "media/shared_shape_full300_slow10fps.mp4",
+      "bytes": 2700848,
+      "sha256": "4dbfb9155510c2f013a70ec258917d5c4fd477da276f336cdf5fcd6e99565197"
+    },
+    {
       "path": "media/shared_shape_motion_comparison.jpg",
       "bytes": 58024,
       "sha256": "ae48de6f06dc247fd696e6afbc804ee4b9982c3a13f533eed95b9d6f6f6f7278"
+    },
+    {
+      "path": "media/shared_shape_novel0_keyframes.mp4",
+      "bytes": 305405,
+      "sha256": "78e7c6260d21104cbe516e194917a791d2f175a7228bfe412d5e42a4e2631332"
+    },
+    {
+      "path": "media/shared_shape_novel1_keyframes.mp4",
+      "bytes": 288928,
+      "sha256": "881f065a89c865226cdd55a24e8e25f8ac11aa0ab75cb44b78555916f1edae03"
     },
     {
       "path": "media/texel_consensus_generated_comparison.jpg",
@@ -518,8 +568,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 26443,
-      "sha256": "a6e7511ad3b8c241fd78e0041301e5d1411ac11420dab11c6d6abbceb040c8ef"
+      "bytes": 30694,
+      "sha256": "502b7e56f9492eb957d78b94687f0506421a24be726f6b1e8c0b03ee85e15088"
     },
     {
       "path": "research/interaction_20261017/align_depth_shortclip.py",
@@ -778,8 +828,8 @@
     },
     {
       "path": "research/interaction_20261017/fit_shared_shape_motion.py",
-      "bytes": 5792,
-      "sha256": "73b30ba7dcf84377de80f9458e7ee0a28f2d171642e4417b106ecf052cbd7beb"
+      "bytes": 8969,
+      "sha256": "d32e41166d7b0ebfcc13e9baff9915f2fd1c9ff721904c7d1f3b87182eea05d1"
     },
     {
       "path": "research/interaction_20261017/fit_surface_body.py",
@@ -1195,6 +1245,11 @@
       "path": "research/interaction_20261017/verify_foot_landmarks.py",
       "bytes": 2034,
       "sha256": "189b21fbae35699306dd42451d81d5c7425d6b20adf7350320595277c3c240b9"
+    },
+    {
+      "path": "research/interaction_20261017/verify_grounded_shape_state.py",
+      "bytes": 2475,
+      "sha256": "56236d3477a1af4b35a874d13f7c510956b1c6c02a32d3b898bcc2957f16b37a"
     },
     {
       "path": "research/interaction_20261017/verify_helmet_profile_geometry.py",
