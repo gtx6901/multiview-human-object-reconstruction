@@ -1,0 +1,867 @@
+{
+  "status": "RESUMED_INTEGRATED_CANDIDATE_REPLAYED",
+  "reports": {
+    "grounded_axial_head_alignment_v3": {
+      "success": true,
+      "source_avatar": "avatar_grounded_shared_shape_v2",
+      "mode": "axial-pitch",
+      "history": [
+        {
+          "step": 0,
+          "loss": 6.398876667022705,
+          "train_native_px": 32.83024978637695
+        },
+        {
+          "step": 100,
+          "loss": 3.018887758255005,
+          "train_native_px": 18.177223205566406
+        },
+        {
+          "step": 200,
+          "loss": 2.8848788738250732,
+          "train_native_px": 17.557222366333008
+        },
+        {
+          "step": 300,
+          "loss": 2.8486452102661133,
+          "train_native_px": 17.388029098510742
+        },
+        {
+          "step": 400,
+          "loss": 2.832489490509033,
+          "train_native_px": 17.312650680541992
+        }
+      ],
+      "shared_translation_model_units": [
+        0.006988966837525368,
+        0.03825204446911812,
+        0.0038211666978895664
+      ],
+      "shared_rotation_axis_angle_rad": [
+        0.2308710366487503,
+        0.0,
+        0.0
+      ],
+      "shared_rotation_norm_deg": 13.227935791015625,
+      "phase_face_proxy_errors": {
+        "clean_train": {
+          "points": 2962,
+          "before_native_px": 36.720184326171875,
+          "after_native_px": 19.370481491088867
+        },
+        "transition": {
+          "points": 653,
+          "before_native_px": 40.732887268066406,
+          "after_native_px": 21.755184173583984
+        },
+        "worn_transfer": {
+          "points": 2428,
+          "before_native_px": 49.19132614135742,
+          "after_native_px": 31.277570724487305
+        }
+      },
+      "actual_gaussian_displacement_checks": [
+        {
+          "frame": 0,
+          "max_actual_center_displacement_error": 1.043081283569336e-07
+        },
+        {
+          "frame": 42,
+          "max_actual_center_displacement_error": 1.2852251529693604e-07
+        },
+        {
+          "frame": 180,
+          "max_actual_center_displacement_error": 1.341104507446289e-07
+        },
+        {
+          "frame": 299,
+          "max_actual_center_displacement_error": 1.3224780559539795e-07
+        }
+      ],
+      "affected_gaussians": 44005,
+      "unchanged_gaussians": 115995,
+      "seconds": 4.219697952270508,
+      "adopted": false,
+      "selected_cameras": [
+        "FCM21121415",
+        "FCM21121414",
+        "21305717",
+        "FCM22020160",
+        "21305711"
+      ],
+      "face_point_count": 5,
+      "degrees_of_freedom": 2,
+      "scope": "Shared canonical head correction; fixed all300 motion/camera/features/decoder/body shape/rest skeleton. Axial-pitch mode uses neck-axis translation and canonical X pitch only, nose/eyes/ears, clean0..135 and five lowest initial residual cameras. Bounds .04 model units/15deg; these are optimization bounds, not prescribed angles. Actual Gaussian centers and anisotropic axes transformed. Render and semantic remeasurement required."
+    },
+    "axial_temporal_head_faces_v3": {
+      "success": true,
+      "avatar": "grounded_axial_head_alignment_v3",
+      "anchors": "axial_head_face_anchors_v3",
+      "reference_head": "body_hands_all300_v1",
+      "frames": 300,
+      "screened_points": 6041,
+      "before_face_native_px": 25.2508544921875,
+      "after_face_native_px": 27.26663589477539,
+      "head_delta_max_norm_rad": 0.48954951763153076,
+      "neck_delta_max_norm_rad": 0.31355521082878113,
+      "head_bounds_rad": 0.5,
+      "neck_bounds_rad": 0.35,
+      "features_decoder_rig_body_legs_fingers_fixed": true,
+      "history": [
+        {
+          "step": 0,
+          "loss": 8.491681098937988,
+          "face_native_px": 40.75461959838867
+        },
+        {
+          "step": 100,
+          "loss": 5.469790935516357,
+          "face_native_px": 28.2036075592041
+        },
+        {
+          "step": 200,
+          "loss": 5.3241190910339355,
+          "face_native_px": 27.573942184448242
+        },
+        {
+          "step": 300,
+          "loss": 5.283041954040527,
+          "face_native_px": 27.39213752746582
+        },
+        {
+          "step": 400,
+          "loss": 5.264986991882324,
+          "face_native_px": 27.311059951782227
+        },
+        {
+          "step": 500,
+          "loss": 5.255323886871338,
+          "face_native_px": 27.26663589477539
+        }
+      ],
+      "seconds": 11.952939510345459,
+      "scope": "Corrected LHM-render semantic face5, hand-occlusion screen and directional nose/eye visibility. Strong bounded neck/head correction around smoothed pre-face-fitting head motion; rotation acceleration in seconds. Only neck/head local motion changes; no manual target angles. Candidate needs actual same-camera review."
+    },
+    "axial_temporal_hands_v3": {
+      "success": true,
+      "avatar": "axial_temporal_head_faces_v3",
+      "frames": 300,
+      "before": {
+        "hand_native_px": 17.30105209350586,
+        "wrist_rotation_acceleration_p95": 145.5225067138672,
+        "fingers_d2_p95": 1.2381079196929932
+      },
+      "after": {
+        "hand_native_px": 17.467395782470703,
+        "wrist_rotation_acceleration_p95": 26.567527770996094,
+        "fingers_d2_p95": 0.024367408826947212
+      },
+      "near_face_shared_grips": [
+        {
+          "start": 203,
+          "stop_exclusive": 272,
+          "side": 0
+        },
+        {
+          "start": 277,
+          "stop_exclusive": 289,
+          "side": 0
+        },
+        {
+          "start": 227,
+          "stop_exclusive": 243,
+          "side": 1
+        },
+        {
+          "start": 263,
+          "stop_exclusive": 274,
+          "side": 1
+        },
+        {
+          "start": 281,
+          "stop_exclusive": 300,
+          "side": 1
+        }
+      ],
+      "reliable_hand_frames": [
+        298,
+        299
+      ],
+      "history": [
+        {
+          "step": 0,
+          "loss": 3.443194627761841,
+          "hand_native_px": 18.370315551757812,
+          "penetration_mean_model": 6.050137471902417e-06
+        },
+        {
+          "step": 100,
+          "loss": 1.8913694620132446,
+          "hand_native_px": 17.581504821777344,
+          "penetration_mean_model": 9.14516749617178e-06
+        },
+        {
+          "step": 200,
+          "loss": 1.784800410270691,
+          "hand_native_px": 17.52182960510254,
+          "penetration_mean_model": 1.0633156307449099e-05
+        },
+        {
+          "step": 300,
+          "loss": 1.7534749507904053,
+          "hand_native_px": 17.50760269165039,
+          "penetration_mean_model": 1.1124747288704384e-05
+        },
+        {
+          "step": 400,
+          "loss": 1.7401269674301147,
+          "hand_native_px": 17.491008758544922,
+          "penetration_mean_model": 1.1248636837990489e-05
+        },
+        {
+          "step": 500,
+          "loss": 1.7331432104110718,
+          "hand_native_px": 17.47768211364746,
+          "penetration_mean_model": 1.1243570043006912e-05
+        },
+        {
+          "step": 600,
+          "loss": 1.7289135456085205,
+          "hand_native_px": 17.467395782470703,
+          "penetration_mean_model": 1.1059769349230919e-05
+        }
+      ],
+      "seconds": 16.13717222213745,
+      "scope": "Existing geometric-screened eight-view hand observations; interpolated reliable PCA anchor for sparse frames, robust seconds-based wrist rotation/PCA acceleration, shared grip in data-derived contiguous near-face worn intervals. Weak nonpenetration prior against convex envelope of corrected LHM head Gaussian centers, not exact skin or physical contact. Fixed head/neck/body/feet/shape/features/decoder; only wrist and decoded fingers change. Requires continuous rendered motion review."
+    },
+    "temporal_body_helmet_transport_v3": {
+      "success": true,
+      "source_avatar": "body_head_faces_all300_v1",
+      "avatar": "temporal_body_integrated_v3",
+      "motion": "helmet_lhm_depth_tight_all300_v1",
+      "scale_ratio": 1.0839956998825073,
+      "attached_frames": 132,
+      "checks": [
+        {
+          "start": 36,
+          "stop_exclusive": 48,
+          "joint": 20,
+          "relative_rotation_max_error": 7.152557373046875e-07,
+          "relative_translation_max_error": 5.960464477539063e-08
+        },
+        {
+          "start": 180,
+          "stop_exclusive": 300,
+          "joint": 15,
+          "relative_rotation_max_error": 6.556510925292969e-07,
+          "relative_translation_max_error": 5.21540641784668e-08
+        }
+      ],
+      "scope": "Old full relative transforms INCLUDING per-frame residuals transported exactly to new joint transforms; relative translation scaled by human scale ratio. Free object states/geometry/texture unchanged. No new helmet fitting or prescribed clearance/angle. Attachment transitions require actual review."
+    },
+    "underarm_decoded_chain_audit_v4": {
+      "success": true,
+      "avatar": "avatar_grounded_shared_shape_v2",
+      "frames": [
+        145,
+        165,
+        200,
+        225
+      ],
+      "views": 8,
+      "dark_mixed_gaussians": 7241,
+      "source_mismatch_supported_gaussians": 1219,
+      "edited_gaussians": 1219,
+      "records": [
+        {
+          "frame": 145,
+          "serial": "21305711",
+          "mismatch_pixels": 1062,
+          "mean_arm_weight": 0.21430571377277374,
+          "mean_spine_weight": 0.7773526310920715,
+          "mean_dark_marker": 0.33810269832611084,
+          "dark_mixed_pixel_fraction": 0.17890772128060264
+        },
+        {
+          "frame": 145,
+          "serial": "21305717",
+          "mismatch_pixels": 698,
+          "mean_arm_weight": 0.20490138232707977,
+          "mean_spine_weight": 0.784408450126648,
+          "mean_dark_marker": 0.21380825340747833,
+          "dark_mixed_pixel_fraction": 0.0
+        },
+        {
+          "frame": 145,
+          "serial": "FCM21121414",
+          "mismatch_pixels": 276,
+          "mean_arm_weight": 0.18376970291137695,
+          "mean_spine_weight": 0.8063236474990845,
+          "mean_dark_marker": 0.42806994915008545,
+          "dark_mixed_pixel_fraction": 0.07246376811594203
+        },
+        {
+          "frame": 145,
+          "serial": "FCM21121415",
+          "mismatch_pixels": 52,
+          "mean_arm_weight": 0.3260408639907837,
+          "mean_spine_weight": 0.6667069792747498,
+          "mean_dark_marker": 0.3413165807723999,
+          "dark_mixed_pixel_fraction": 0.11538461538461539
+        },
+        {
+          "frame": 145,
+          "serial": "FCM21121416",
+          "mismatch_pixels": 953,
+          "mean_arm_weight": 0.13546369969844818,
+          "mean_spine_weight": 0.8269407153129578,
+          "mean_dark_marker": 0.5147945284843445,
+          "dark_mixed_pixel_fraction": 0.3934942287513116
+        },
+        {
+          "frame": 145,
+          "serial": "FCM22020159",
+          "mismatch_pixels": 1449,
+          "mean_arm_weight": 0.13010531663894653,
+          "mean_spine_weight": 0.840377688407898,
+          "mean_dark_marker": 0.37795716524124146,
+          "dark_mixed_pixel_fraction": 0.23809523809523808
+        },
+        {
+          "frame": 145,
+          "serial": "FCM22020160",
+          "mismatch_pixels": 844,
+          "mean_arm_weight": 0.10380733013153076,
+          "mean_spine_weight": 0.8712992668151855,
+          "mean_dark_marker": 0.40624696016311646,
+          "dark_mixed_pixel_fraction": 0.26066350710900477
+        },
+        {
+          "frame": 145,
+          "serial": "FCM22030167",
+          "mismatch_pixels": 425,
+          "mean_arm_weight": 0.21921853721141815,
+          "mean_spine_weight": 0.7699151039123535,
+          "mean_dark_marker": 0.3816866874694824,
+          "dark_mixed_pixel_fraction": 0.25176470588235295
+        },
+        {
+          "frame": 165,
+          "serial": "21305711",
+          "mismatch_pixels": 1091,
+          "mean_arm_weight": 0.24812869727611542,
+          "mean_spine_weight": 0.7433090806007385,
+          "mean_dark_marker": 0.3338076174259186,
+          "dark_mixed_pixel_fraction": 0.05774518790100825
+        },
+        {
+          "frame": 165,
+          "serial": "21305717",
+          "mismatch_pixels": 1182,
+          "mean_arm_weight": 0.17984504997730255,
+          "mean_spine_weight": 0.8114625811576843,
+          "mean_dark_marker": 0.29270467162132263,
+          "dark_mixed_pixel_fraction": 0.05414551607445008
+        },
+        {
+          "frame": 165,
+          "serial": "FCM21121414",
+          "mismatch_pixels": 115,
+          "mean_arm_weight": 0.44772350788116455,
+          "mean_spine_weight": 0.5403713583946228,
+          "mean_dark_marker": 0.258295476436615,
+          "dark_mixed_pixel_fraction": 0.09565217391304348
+        },
+        {
+          "frame": 165,
+          "serial": "FCM21121415",
+          "mismatch_pixels": 33,
+          "mean_arm_weight": 0.5110742449760437,
+          "mean_spine_weight": 0.4823150932788849,
+          "mean_dark_marker": 0.2971874177455902,
+          "dark_mixed_pixel_fraction": 0.0
+        },
+        {
+          "frame": 165,
+          "serial": "FCM21121416",
+          "mismatch_pixels": 549,
+          "mean_arm_weight": 0.18466481566429138,
+          "mean_spine_weight": 0.7905364036560059,
+          "mean_dark_marker": 0.1964954286813736,
+          "dark_mixed_pixel_fraction": 0.052823315118397086
+        },
+        {
+          "frame": 165,
+          "serial": "FCM22020159",
+          "mismatch_pixels": 1040,
+          "mean_arm_weight": 0.18503068387508392,
+          "mean_spine_weight": 0.7937580347061157,
+          "mean_dark_marker": 0.4735908508300781,
+          "dark_mixed_pixel_fraction": 0.34807692307692306
+        },
+        {
+          "frame": 165,
+          "serial": "FCM22020160",
+          "mismatch_pixels": 489,
+          "mean_arm_weight": 0.07722785323858261,
+          "mean_spine_weight": 0.9073382616043091,
+          "mean_dark_marker": 0.3918682634830475,
+          "dark_mixed_pixel_fraction": 0.07975460122699386
+        },
+        {
+          "frame": 165,
+          "serial": "FCM22030167",
+          "mismatch_pixels": 366,
+          "mean_arm_weight": 0.27227896451950073,
+          "mean_spine_weight": 0.7096197605133057,
+          "mean_dark_marker": 0.12187505513429642,
+          "dark_mixed_pixel_fraction": 0.0
+        },
+        {
+          "frame": 200,
+          "serial": "21305711",
+          "mismatch_pixels": 2404,
+          "mean_arm_weight": 0.8071097135543823,
+          "mean_spine_weight": 0.17280961573123932,
+          "mean_dark_marker": 0.6063147187232971,
+          "dark_mixed_pixel_fraction": 0.06031613976705491
+        },
+        {
+          "frame": 200,
+          "serial": "21305717",
+          "mismatch_pixels": 500,
+          "mean_arm_weight": 0.9342621564865112,
+          "mean_spine_weight": 0.05690595880150795,
+          "mean_dark_marker": 0.5701406598091125,
+          "dark_mixed_pixel_fraction": 0.024
+        },
+        {
+          "frame": 200,
+          "serial": "FCM21121414",
+          "mismatch_pixels": 63,
+          "mean_arm_weight": 0.15902641415596008,
+          "mean_spine_weight": 0.833714485168457,
+          "mean_dark_marker": 0.13052840530872345,
+          "dark_mixed_pixel_fraction": 0.0
+        },
+        {
+          "frame": 200,
+          "serial": "FCM21121415",
+          "mismatch_pixels": 816,
+          "mean_arm_weight": 0.8532527685165405,
+          "mean_spine_weight": 0.12578022480010986,
+          "mean_dark_marker": 0.6016377210617065,
+          "dark_mixed_pixel_fraction": 0.00980392156862745
+        },
+        {
+          "frame": 200,
+          "serial": "FCM21121416",
+          "mismatch_pixels": 53,
+          "mean_arm_weight": 0.25693100690841675,
+          "mean_spine_weight": 0.7212680578231812,
+          "mean_dark_marker": 0.16413266956806183,
+          "dark_mixed_pixel_fraction": 0.2641509433962264
+        },
+        {
+          "frame": 200,
+          "serial": "FCM22020159",
+          "mismatch_pixels": 727,
+          "mean_arm_weight": 0.17887867987155914,
+          "mean_spine_weight": 0.8031601905822754,
+          "mean_dark_marker": 0.2809322476387024,
+          "dark_mixed_pixel_fraction": 0.09353507565337002
+        },
+        {
+          "frame": 200,
+          "serial": "FCM22020160",
+          "mismatch_pixels": 336,
+          "mean_arm_weight": 0.11481143534183502,
+          "mean_spine_weight": 0.8615639209747314,
+          "mean_dark_marker": 0.2826573848724365,
+          "dark_mixed_pixel_fraction": 0.08035714285714286
+        },
+        {
+          "frame": 200,
+          "serial": "FCM22030167",
+          "mismatch_pixels": 16,
+          "mean_arm_weight": 0.06979812681674957,
+          "mean_spine_weight": 0.9264463782310486,
+          "mean_dark_marker": 0.5124270915985107,
+          "dark_mixed_pixel_fraction": 0.0
+        },
+        {
+          "frame": 225,
+          "serial": "21305711",
+          "mismatch_pixels": 2754,
+          "mean_arm_weight": 0.7635622024536133,
+          "mean_spine_weight": 0.22601987421512604,
+          "mean_dark_marker": 0.6954737901687622,
+          "dark_mixed_pixel_fraction": 0.0032679738562091504
+        },
+        {
+          "frame": 225,
+          "serial": "21305717",
+          "mismatch_pixels": 268,
+          "mean_arm_weight": 0.9664736986160278,
+          "mean_spine_weight": 0.026709098368883133,
+          "mean_dark_marker": 0.5847040414810181,
+          "dark_mixed_pixel_fraction": 0.014925373134328358
+        },
+        {
+          "frame": 225,
+          "serial": "FCM21121414",
+          "mismatch_pixels": 54,
+          "mean_arm_weight": 0.1504928022623062,
+          "mean_spine_weight": 0.8429149985313416,
+          "mean_dark_marker": 0.1743319183588028,
+          "dark_mixed_pixel_fraction": 0.0
+        },
+        {
+          "frame": 225,
+          "serial": "FCM21121415",
+          "mismatch_pixels": 801,
+          "mean_arm_weight": 0.8533365726470947,
+          "mean_spine_weight": 0.13349013030529022,
+          "mean_dark_marker": 0.5781206488609314,
+          "dark_mixed_pixel_fraction": 0.06491885143570537
+        },
+        {
+          "frame": 225,
+          "serial": "FCM21121416",
+          "mismatch_pixels": 160,
+          "mean_arm_weight": 0.29797983169555664,
+          "mean_spine_weight": 0.6827055811882019,
+          "mean_dark_marker": 0.18601104617118835,
+          "dark_mixed_pixel_fraction": 0.19375
+        },
+        {
+          "frame": 225,
+          "serial": "FCM22020159",
+          "mismatch_pixels": 597,
+          "mean_arm_weight": 0.13100650906562805,
+          "mean_spine_weight": 0.8535881042480469,
+          "mean_dark_marker": 0.24725040793418884,
+          "dark_mixed_pixel_fraction": 0.05862646566164154
+        },
+        {
+          "frame": 225,
+          "serial": "FCM22020160",
+          "mismatch_pixels": 57,
+          "mean_arm_weight": 0.15149931609630585,
+          "mean_spine_weight": 0.8278655409812927,
+          "mean_dark_marker": 0.06089765205979347,
+          "dark_mixed_pixel_fraction": 0.0
+        },
+        {
+          "frame": 225,
+          "serial": "FCM22030167",
+          "mismatch_pixels": 42,
+          "mean_arm_weight": 0.051102083176374435,
+          "mean_spine_weight": 0.9436631798744202,
+          "mean_dark_marker": 0.47268053889274597,
+          "dark_mixed_pixel_fraction": 0.0
+        }
+      ],
+      "seconds": 7.289848566055298,
+      "scope": "Actual chain-weight and decoded-neural-color-marker rasterization. Source bright/model dark underarm ROIs fixed per source pose. Two-view projected center support selects dark arm/spine mixed Gaussians; center support is a conservative attribution proxy, not exact per-splat visibility. Optional candidate removes spine weights only on supported dark sleeve points and smooths within dark arm neighbors; white/other points, features, decoder and motion unchanged. Generated maps public; sources remain private. Actual RGB rerender determines benefit.",
+      "dark_marker_method": "Actual canonical neural decoded RGB: luminance<.45, at least3 depth-visible observations, dark vote fraction>.65"
+    },
+    "temporal_body_integrated_v3": {
+      "success": true,
+      "frames": 300,
+      "same_features_decoder": true,
+      "feet6_max_surface_displacement_world": 0.0005407333374023438,
+      "before_feet": {
+        "d2_model_p95": 0.000998454401269555,
+        "stance_speed_model_p95": 0.017310142517089844
+      },
+      "after_feet": {
+        "d2_model_p95": 0.0010081673972308636,
+        "stance_speed_model_p95": 0.017739368602633476
+      },
+      "root_body_legs_beta_scale_translation_exact": true,
+      "head_hands_changed": true,
+      "weight_edited_gaussians": 1219,
+      "scope": "Integrated single candidate: shared canonical axial/pitch head correction, bounded data-fitted neck/head, temporal wrists/fingers and source-supported local dark sleeve weight correction. Leg motion exact; globally coupled SMPL-X pose-corrective foot displacement and stability recorded explicitly, stability regression limited to10percent. Features/decoder exact. No automatic master adoption."
+    },
+    "temporal_body_underarm_comparison_v3": {
+      "success": true,
+      "before": "grounded_shared_shape_review20_v2",
+      "after": "temporal_body_review20_v3",
+      "fixed_pixels": 20217,
+      "before_mae_srgb": 0.4761919587449118,
+      "after_mae_srgb": 0.45192066102748757,
+      "records": [
+        {
+          "serial": "21305711",
+          "frame": 145,
+          "pixels": 1062,
+          "before_abs_sum": 1666.61572265625,
+          "after_abs_sum": 1312.2039794921875
+        },
+        {
+          "serial": "21305711",
+          "frame": 165,
+          "pixels": 1091,
+          "before_abs_sum": 1672.8509521484375,
+          "after_abs_sum": 1309.917724609375
+        },
+        {
+          "serial": "21305711",
+          "frame": 200,
+          "pixels": 2404,
+          "before_abs_sum": 2778.537353515625,
+          "after_abs_sum": 2775.7294921875
+        },
+        {
+          "serial": "21305711",
+          "frame": 225,
+          "pixels": 2754,
+          "before_abs_sum": 3891.239501953125,
+          "after_abs_sum": 3870.60400390625
+        },
+        {
+          "serial": "21305717",
+          "frame": 145,
+          "pixels": 698,
+          "before_abs_sum": 1049.560791015625,
+          "after_abs_sum": 927.2039184570312
+        },
+        {
+          "serial": "21305717",
+          "frame": 165,
+          "pixels": 1182,
+          "before_abs_sum": 2054.34521484375,
+          "after_abs_sum": 1860.470703125
+        },
+        {
+          "serial": "21305717",
+          "frame": 200,
+          "pixels": 500,
+          "before_abs_sum": 663.5921630859375,
+          "after_abs_sum": 652.2274780273438
+        },
+        {
+          "serial": "21305717",
+          "frame": 225,
+          "pixels": 268,
+          "before_abs_sum": 363.7059020996094,
+          "after_abs_sum": 363.9686279296875
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 145,
+          "pixels": 212,
+          "before_abs_sum": 365.8196105957031,
+          "after_abs_sum": 361.9921569824219
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 165,
+          "pixels": 90,
+          "before_abs_sum": 183.1372528076172,
+          "after_abs_sum": 182.686279296875
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 200,
+          "pixels": 63,
+          "before_abs_sum": 127.41177368164062,
+          "after_abs_sum": 126.498046875
+        },
+        {
+          "serial": "FCM21121414",
+          "frame": 225,
+          "pixels": 54,
+          "before_abs_sum": 90.1568603515625,
+          "after_abs_sum": 87.7882308959961
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 145,
+          "pixels": 52,
+          "before_abs_sum": 97.02745056152344,
+          "after_abs_sum": 93.57255554199219
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 165,
+          "pixels": 45,
+          "before_abs_sum": 101.80392456054688,
+          "after_abs_sum": 94.83529663085938
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 200,
+          "pixels": 816,
+          "before_abs_sum": 1329.7098388671875,
+          "after_abs_sum": 1329.839111328125
+        },
+        {
+          "serial": "FCM21121415",
+          "frame": 225,
+          "pixels": 840,
+          "before_abs_sum": 1566.443115234375,
+          "after_abs_sum": 1577.7490234375
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 145,
+          "pixels": 953,
+          "before_abs_sum": 1361.85498046875,
+          "after_abs_sum": 1311.662841796875
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 165,
+          "pixels": 563,
+          "before_abs_sum": 708.9019775390625,
+          "after_abs_sum": 725.6588134765625
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 200,
+          "pixels": 53,
+          "before_abs_sum": 57.69411849975586,
+          "after_abs_sum": 58.04313659667969
+        },
+        {
+          "serial": "FCM21121416",
+          "frame": 225,
+          "pixels": 172,
+          "before_abs_sum": 213.86276245117188,
+          "after_abs_sum": 224.38824462890625
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 145,
+          "pixels": 1449,
+          "before_abs_sum": 2029.9608154296875,
+          "after_abs_sum": 2023.7333984375
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 165,
+          "pixels": 1040,
+          "before_abs_sum": 1394.1961669921875,
+          "after_abs_sum": 1407.302001953125
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 200,
+          "pixels": 727,
+          "before_abs_sum": 892.61572265625,
+          "after_abs_sum": 903.1608276367188
+        },
+        {
+          "serial": "FCM22020159",
+          "frame": 225,
+          "pixels": 597,
+          "before_abs_sum": 767.4078369140625,
+          "after_abs_sum": 770.7647705078125
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 145,
+          "pixels": 842,
+          "before_abs_sum": 1043.066650390625,
+          "after_abs_sum": 852.552978515625
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 165,
+          "pixels": 485,
+          "before_abs_sum": 657.3529052734375,
+          "after_abs_sum": 627.419677734375
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 200,
+          "pixels": 336,
+          "before_abs_sum": 406.7294006347656,
+          "after_abs_sum": 411.8666687011719
+        },
+        {
+          "serial": "FCM22020160",
+          "frame": 225,
+          "pixels": 57,
+          "before_abs_sum": 45.8431396484375,
+          "after_abs_sum": 49.2156867980957
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 145,
+          "pixels": 397,
+          "before_abs_sum": 600.921630859375,
+          "after_abs_sum": 525.9647216796875
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 165,
+          "pixels": 366,
+          "before_abs_sum": 639.4823608398438,
+          "after_abs_sum": 530.6392211914062
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 200,
+          "pixels": 16,
+          "before_abs_sum": 19.901962280273438,
+          "after_abs_sum": 20.356863021850586
+        },
+        {
+          "serial": "FCM22030167",
+          "frame": 225,
+          "pixels": 33,
+          "before_abs_sum": 39.76863098144531,
+          "after_abs_sum": 39.42353057861328
+        }
+      ],
+      "scope": "Same baseline-defined bright-source/dark-rendered underarm pixels, original calibrated projection, source segmentation core and unclipped source, all8x4times. No after-dependent reselection or exposure recalibration. Input-image diagnostic; actual whole-candidate review determines adoption."
+    },
+    "temporal_body_comparison20_v3": {
+      "success": true,
+      "before": "grounded_shared_shape_review20_v2",
+      "after": "temporal_body_review20_v3",
+      "avatar": "avatar_grounded_shared_shape_v2",
+      "original_frame_ids": [
+        0,
+        30,
+        42,
+        60,
+        90,
+        120,
+        135,
+        145,
+        155,
+        165,
+        175,
+        180,
+        190,
+        200,
+        210,
+        225,
+        240,
+        260,
+        280,
+        299
+      ],
+      "real_cameras": 8,
+      "video_checks": [
+        {
+          "camera": 0,
+          "decoded_frames": 600,
+          "original_keyframes": 20
+        },
+        {
+          "camera": 1,
+          "decoded_frames": 600,
+          "original_keyframes": 20
+        }
+      ],
+      "seconds": 26.31086826324463,
+      "scope": "Matched-camera whole-candidate review. Each of20 original keyframes held1second for inspection, explicitly NOT continuous action video. Original RGB panels only in *_private.jpg; generated-only pages/videos may be published. Model-projected head crops use SAME rectangle for source/before/after. Camera matrices/raw source pixels are not in the public report."
+    }
+  },
+  "master_replaced": false
+}

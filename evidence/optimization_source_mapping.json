@@ -255,11 +255,6 @@
     "published_sha256": "bd12c38213a64ff275c73e7f97f1b8c4b88137a81ce05a6f539fd5d4c866b5db"
   },
   {
-    "file": "research/interaction_20261017/fit_shared_shape_motion.py",
-    "local_source_sha256": "f59fd59e932a87440d78804e6f324c50af2bf05c2494d14a77a2eb64171bf43b",
-    "published_sha256": "d32e41166d7b0ebfcc13e9baff9915f2fd1c9ff721904c7d1f3b87182eea05d1"
-  },
-  {
     "file": "research/interaction_20261017/verify_grounded_shape_state.py",
     "local_source_sha256": "03bb5abfd44d68f1e772ea5a20a866c25f28d9d45dc35781993932df55c31eed",
     "published_sha256": "56236d3477a1af4b35a874d13f7c510956b1c6c02a32d3b898bcc2957f16b37a"
@@ -268,5 +263,50 @@
     "file": "research/interaction_20261017/export_avatar_motion.py",
     "local_source_sha256": "ae9449c5a2897733e09f134b7bad635be52768f480566aefe6795ae2e622eee2",
     "published_sha256": "4838e24ec56fca191e94559a84cfb72cc28a51f888913ee2b0633100b0e45b7f"
+  },
+  {
+    "file": "research/interaction_20261017/fit_shared_head_alignment.py",
+    "local_source_sha256": "90c03668b5605ddbd83d115215321723c94c3c2ad15c12a24ac472af647974f2",
+    "published_sha256": "ec99865f93481a6540b065096bc897de6ebaa2dcbb8336bdb2d32b0b0a207e5e"
+  },
+  {
+    "file": "research/interaction_20261017/fit_temporal_head_faces.py",
+    "local_source_sha256": "9d78b2a3431cacffdd448f09046008f8d84152ba5e23963376f5367263cd5547",
+    "published_sha256": "e3120ab324fb97a2f9d86f0c09af17313a9456643087f5a44e824a0f2b1d8919"
+  },
+  {
+    "file": "research/interaction_20261017/reattach_helmet_motion.py",
+    "local_source_sha256": "a5ed891648a00b0442bf93118c3b9bf75f50d1df2bb4bc5d86ec00870ad79e67",
+    "published_sha256": "1d7b7ba29143cd2de216a07930915aae0d8ac8bfee0ca0a4ae2c943810ce9a74"
+  },
+  {
+    "file": "research/interaction_20261017/fit_temporal_hands.py",
+    "local_source_sha256": "7a478e604f999a5c4afe44ccfbf3a4b830a4422e1f533ace75b55b55e85df40c",
+    "published_sha256": "98c714661e4331cc5b68334d6db8be39dc935c0d9d66a5cec2b5ee6b0f90f021"
+  },
+  {
+    "file": "research/interaction_20261017/audit_underarm_skinning.py",
+    "local_source_sha256": "6dbaf929dfcc26d420585cf4ade557b1bbcdcf83e8a8cdb62de53577e505f677",
+    "published_sha256": "aea31670d1293abb3db87fcfc0e52ba4d240739f1fb67df9aebfcb4f4099a664"
+  },
+  {
+    "file": "research/interaction_20261017/assemble_temporal_body_candidate.py",
+    "local_source_sha256": "e9c225744231417fcebe160ee8e9504837d3e1c2f3422241e8e7b59bd90d3b3b",
+    "published_sha256": "a4507253c21f247e1798ffe120448e3683541d130199367544e8cb58f868e661"
+  },
+  {
+    "file": "research/interaction_20261017/compare_fixed_underarm_pixels.py",
+    "local_source_sha256": "14cddd1af42588c833f162f7efa4afba5ff730cfb2303b9f598e722a5c25ae9f",
+    "published_sha256": "c20f8e72b3a6dd36d9d02443582d95b812f71492de022e20dd6f23bc544a0500"
+  },
+  {
+    "file": "research/interaction_20261017/refine_underarm_weight_amount.py",
+    "local_source_sha256": "a428c46ac2b6af938a4472528dee223c3bc40d483d3759ce0dc8199a563e1e8c",
+    "published_sha256": "9a831d23fece9d025440acbc1b2b650be0b71b3f53afab44a38c195c0a564a48"
+  },
+  {
+    "file": "research/interaction_20261017/fit_shared_shape_motion.py",
+    "local_source_sha256": "8defdf2c96f84ad3ec2a583bda2097ae525e63e8b6ce590359ed6f4e8eade2a6",
+    "published_sha256": "e1be4ea691032df38c57f7ff9c7474359d455ee41a40e02ca2f658213c832a14"
   }
 ]

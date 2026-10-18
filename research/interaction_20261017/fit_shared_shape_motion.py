@@ -7,9 +7,10 @@ import torch,numpy as np
 from smplx_surface_landmarks import SMPLXSurfaceLandmarks
 from avatar_rig import pose_axis_angles
 from pytorch3d.transforms import axis_angle_to_matrix
-p=argparse.ArgumentParser();p.add_argument('--out',required=True);p.add_argument('--zero-shape',action='store_true');p.add_argument('--steps',type=int,default=300);p.add_argument('--avatar',default='body_head_faces_all300_v1');p.add_argument('--identity-init',action='store_true');p.add_argument('--rtmw-body',action='store_true');p.add_argument('--freeze-head-neck',action='store_true');p.add_argument('--feet-constraints');o=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--out',required=True);p.add_argument('--zero-shape',action='store_true');p.add_argument('--steps',type=int,default=300);p.add_argument('--avatar',default='body_head_faces_all300_v1');p.add_argument('--identity-init',action='store_true');p.add_argument('--rtmw-body',action='store_true');p.add_argument('--freeze-head-neck',action='store_true');p.add_argument('--feet-constraints');p.add_argument('--face-anchors');p.add_argument('--face-screen',default='body_head_faces_all300_v1');o=p.parse_args()
+assert not (o.face_anchors and o.freeze_head_neck),'Face-constrained refits must allow neck/head motion'
 out=ROOT/o.out;out.mkdir(exist_ok=False);start=time.time();torch.set_num_threads(4)
-base=torch.load(ROOT/o.avatar/'avatar.pt',weights_only=True)['poses'];model=SMPLXSurfaceLandmarks().cuda();T=len(base['frames']);assert T==300
+bundle=torch.load(ROOT/o.avatar/'avatar.pt',weights_only=True);base=bundle['poses'];model=SMPLXSurfaceLandmarks().cuda();T=len(base['frames']);assert T==300
 shape=torch.load(ROOT/'body_shape_conditional_probe_v1/shape_candidate.pt',weights_only=True)
 aa0=torch.cat([pose_axis_angles(base,t,'cpu') for t in range(T)]).cuda();root=torch.nn.Parameter(aa0[:,0].clone());body=torch.nn.Parameter(aa0[:,1:22].clone())
 beta0=torch.zeros(1,10) if o.zero_shape else (base['betas'] if o.identity_init else shape['betas']);rawbeta=torch.nn.Parameter(torch.atanh((beta0.cuda()/3).clamp(-.999,.999)),requires_grad=not o.zero_shape)
@@ -22,6 +23,11 @@ if o.rtmw_body:
  d=np.load(ROOT/'observations_all300_v1/wholebody.npz');xy=torch.tensor(d['xy'][:,:,5:17]*.5-.25,device='cuda',dtype=torch.float32);valid=torch.tensor((d['score'][:,:,5:17]>2)&d['in_image'][:,:,5:17],device='cuda')
 h=np.load(ROOT/'hands_multiview_screen_all300_v1/screened.npz');assert h['frames'].tolist()==base['frames'].tolist();hxy=torch.tensor(h['xy']*.5-.25,device='cuda',dtype=torch.float32);hw=torch.tensor(np.minimum(h['raw_score']/5,1)*h['inlier'],device='cuda',dtype=torch.float32)
 feet=None
+face=None
+if o.face_anchors:
+ from canonical_identity import semantic_identity
+ report=json.loads((ROOT/o.face_anchors/'report.json').read_text());assert report['semantic_identity_sha256']==semantic_identity(bundle)
+ fd=np.load(ROOT/o.face_screen/'face_screen.npz');face={'xy':torch.tensor(fd['xy']*.5-.25,device='cuda',dtype=torch.float32),'weight':torch.tensor(np.minimum(fd['scores']/5,1)*fd['inlier'],device='cuda',dtype=torch.float32),'local':torch.tensor(np.load(ROOT/o.face_anchors/'anchors.npz')['canonical_face_local'],device='cuda',dtype=torch.float32)}
 if o.feet_constraints:
  fd=np.load(ROOT/o.feet_constraints/'constraints.npz');feet={'xy':torch.tensor(fd['xy']*.5-.25,device='cuda',dtype=torch.float32),'weight':torch.tensor(np.minimum(fd['raw_score']/5,1)*fd['inlier'],device='cuda',dtype=torch.float32),'valid':torch.tensor(fd['inlier'],device='cuda'),'contact':torch.tensor(np.repeat(fd['contact'],3,axis=1),device='cuda'),'anchors':torch.tensor(fd['contact_anchors'],device='cuda',dtype=torch.float32)}
 def project(world):
@@ -33,6 +39,11 @@ def evaluate():
  error=(project(r['coco17'][:,5:17])-xy).norm(dim=-1);he=(project(r['hands21'].reshape(T,42,3))-hxy).norm(dim=-1)
  robust=lambda e:2*(torch.sqrt(1+(e/6)**2)-1)
  data=(robust(error)*valid).sum()/valid.sum()+.3*(robust(he)*hw).sum()/hw.sum().clamp_min(1)
+ if face is not None:
+  rotations=axis_angle_to_matrix(aa);head=rotations[:,0]
+  for j in [3,6,9,12,15]:head=head@rotations[:,j]
+  fp=r['joints55'][:,15,None]+torch.einsum('tij,kj->tki',head,face['local'])*scale
+  fe=(project(fp)-face['xy']).norm(dim=-1);data=data+.75*(robust(fe)*face['weight']).sum()/face['weight'].sum().clamp_min(1)
  poseprior=.1*(body-aa0[:,1:22]).square().mean()+.1*(root-aa0[:,0]).square().mean()
  world=r['joints55'];acc=(world[2:]-2*world[1:-1]+world[:-2])*30**2;smooth=.001*acc.square().mean()
  foot_terms={}
@@ -63,5 +74,7 @@ with torch.no_grad():
  views=[{'serial':v['serial'],'before_px1024':float(before[i][valid[i]].mean()),'after_px1024':float(error[i][valid[i]].mean())} for i,v in enumerate(meta['views'])]
 report={'success':True,'zero_shape_control':o.zero_shape,'frames':T,'views':views,'history':history,'beta_norm':float(beta.norm()),'scale_ratio':float(scale/s0),'seconds':time.time()-start,'scope':'Shared10-beta/scale and all300 body/root/translation jointly fitted to all8 surface COCO observations and previously screened21handpoints; fingers/head jaw/eyes inherited as priors. Shape±3 and scale±15percent bounds, weak pose and temporal acceleration priors. Joint fit can absorb detection/calibration errors; input residuals are not independent geometry truth. Zero-beta control uses same motion fitter. Must export through actual LHM dense shape blend and shaped rest rig and rerender before adoption; object motion not yet refitted and prior helmet attachment is not valid evidence of contact.'}
 report.update(source_avatar=o.avatar,identity_initialization=o.identity_init,rtmw_body=o.rtmw_body,head_neck_rotations_frozen=o.freeze_head_neck,feet_constraints=o.feet_constraints,feet_before=f_before,feet_after={k:float(v) for k,v in f_after.items()})
+report.update(face_anchor_source=o.face_anchors,face_screen_source=o.face_screen if face is not None else None)
+if face is not None:report['scope']+=' Face5 data term enabled with current canonical LHM semantic offsets and beta-consistent head-joint center; head/neck not frozen. Semantic face offsets are fixed within this body block and must be regenerated after a canonical shape update before another block.'
 if feet is not None:report['scope']+=' Grounded extension: screened foot6 reprojection, observed stance anchors/low velocity and scale-normalized body/foot acceleration plus SO3 acceleration; no manually prescribed head angles. Uses selected RTMW body data when flagged, and head/neck local rotations frozen when flagged. Existing accepted rig unchanged until separate shaped LHM export.'
 (out/'report.json').write_text(json.dumps(report,indent=2));print('shared shape/motion candidate complete',flush=True)
