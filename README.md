@@ -1,3 +1,5 @@
+> 2026-11-03 更新：已加入[双人交互与衣物动态代码及进展](work/mjj/README.md)。双人减抖/手形结果可看[完整渲染视频](media/two_person_interaction_current.mp4)；衣物尚在训练，当前发布不代表动态画质验收。
+
 # 八视角人—物动态重建
 
 > **2026-10-18 人体管线 v2**：单一 RTMW 检测 + 统一多视角筛选 → 静态参照一次性比例标定 → 统一动作拟合（body→feet→hands→face）。完整 300 帧见 [方向 A](media/final_full300_orbit_008.mp4)、[方向 B](media/final_full300_orbit_032.mp4)；方法、参数与实测数字见 [docs/PIPELINE_V2.md](docs/PIPELINE_V2.md)。

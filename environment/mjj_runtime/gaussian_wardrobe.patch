@@ -1,0 +1,54 @@
+diff --git a/config.py b/config.py
+index 4bcc130..1b5ed00 100644
+--- a/config.py
++++ b/config.py
+@@ -6 +6 @@ import os
+-device = torch.device('cuda:0')
++device = torch.device(os.environ.get('WARDROBE_DEVICE', 'cuda:0'))
+diff --git a/dataset/dataset_mv_rgb.py b/dataset/dataset_mv_rgb.py
+index 71b9a5d..7dd7c9b 100644
+--- a/dataset/dataset_mv_rgb.py
++++ b/dataset/dataset_mv_rgb.py
+@@ -152,2 +151,0 @@ class MvRgbDatasetBase(Dataset):
+-                jaw_pose = self.smpl_data['jaw_pose'][pose_idx][None],
+-                expression = self.smpl_data['expression'][pose_idx][None],
+diff --git a/gen_data/gen_pos_maps.py b/gen_data/gen_pos_maps.py
+index 2b18a9d..2dc2d83 100644
+--- a/gen_data/gen_pos_maps.py
++++ b/gen_data/gen_pos_maps.py
+@@ -116,0 +117 @@ def generate_cano_maps(cano_smpl_v_dup, cano_smpl_attr_dup, attr):
++    back_cano_pix_to_face = cv.flip(back_cano_pix_to_face, 1)
+diff --git a/main_avatar.py b/main_avatar.py
+index 01fcf20..69ca383 100644
+--- a/main_avatar.py
++++ b/main_avatar.py
+@@ -8 +7,0 @@ os.environ['OPENCV_IO_ENABLE_OPENEXR'] = '1'
+-from sklearn import neighbors
+@@ -232 +231 @@ class AvatarTrainer:
+-    def img_loss(self, gt_img, pred_img, boundary_mask_img=None, mask_img=None):
++    def img_loss(self, gt_img, pred_img, boundary_mask_img=None, mask_img=None, valid_mask_img=None):
+@@ -238,2 +237,12 @@ class AvatarTrainer:
+-        loss =  torch.abs(pred_img - gt_img).mean()
+-        return loss
++        diff = torch.abs(pred_img - gt_img)
++        if valid_mask_img is None:
++            return diff.mean()
++        valid = valid_mask_img.to(device=diff.device, dtype=torch.bool)
++        if valid.ndim == diff.ndim:
++            valid = valid.squeeze(0)
++        if valid.shape != diff.shape[1:]:
++            raise ValueError(f"valid_mask_img shape {tuple(valid.shape)} != image HW {tuple(diff.shape[1:])}")
++        denom = valid.sum() * diff.shape[0]
++        if int(denom.detach().cpu()) == 0:
++            return diff.sum() * 0.0
++        return (diff * valid[None]).sum() / denom.to(diff.dtype)
+@@ -289 +298 @@ class AvatarTrainer:
+-            total_loss += self.loss_weight['ssim'] * ssim_out.item()
++            total_loss += self.loss_weight['ssim'] * ssim_out
+@@ -305 +314,2 @@ class AvatarTrainer:
+-                                                boundary_mask_img=boundary_mask_img, mask_img=items['mask_img'])
++                                                boundary_mask_img=boundary_mask_img, mask_img=items['mask_img'],
++                                                valid_mask_img=items.get('label_valid_img'))
+@@ -357 +367 @@ class AvatarTrainer:
+-                total_loss += self.loss_weight['offset'] * offset_loss.item()
++                total_loss += self.loss_weight['offset'] * offset_loss

@@ -1,0 +1,13 @@
+{
+  "root": ".",
+  "search": [
+    "assets",
+    "assets/human",
+    "assets/helmet",
+    "runtime"
+  ],
+  "output": "runs",
+  "alias": {
+    "lhmpp_20261016": "lhmpp"
+  }
+}

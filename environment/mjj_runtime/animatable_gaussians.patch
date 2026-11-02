@@ -1,0 +1,16 @@
+diff --git a/dataset/dataset_mv_rgb.py b/dataset/dataset_mv_rgb.py
+index 439dca9..8dc1abc 100644
+--- a/dataset/dataset_mv_rgb.py
++++ b/dataset/dataset_mv_rgb.py
+@@ -54 +54 @@ class MvRgbDatasetBase(Dataset):
+-                frame_range = np.loadtxt(self.data_dir + '/' + frame_range).astype(np.int).tolist()
++                frame_range = np.loadtxt(self.data_dir + '/' + frame_range).astype(int).tolist()
+diff --git a/utils/nerf_util.py b/utils/nerf_util.py
+index 0e9fcd6..4dab950 100644
+--- a/utils/nerf_util.py
++++ b/utils/nerf_util.py
+@@ -254,2 +254,2 @@ def gen_uv(img_w, img_h):
+-    x, y = np.meshgrid(np.linspace(0, img_w - 1, img_w, dtype = np.int),
+-                       np.linspace(0, img_h - 1, img_h, dtype = np.int))
++    x, y = np.meshgrid(np.linspace(0, img_w - 1, img_w, dtype = int),
++                       np.linspace(0, img_h - 1, img_h, dtype = int))

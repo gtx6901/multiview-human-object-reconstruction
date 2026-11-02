@@ -18,3 +18,19 @@ hf_cache/
 build/
 .env
 .env.*
+
+# Local reconstruction data and dependencies
+/assets/
+/runs/
+/lhmpp/
+/runtime/
+/data/
+/work/mjj/**/data/
+/work/mjj/**/runs/
+/work/mjj/**/runtime/
+/work/mjj/**/author/
+/work/mjj/**/parser/
+/work/mjj/**/harness*/
+__pycache__/
+*.pyc
+*.log
