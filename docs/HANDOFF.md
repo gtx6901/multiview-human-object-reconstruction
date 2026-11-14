@@ -7,7 +7,7 @@
 - `pipeline.py` / `src/hoi` 已接通 prepare、identity、initialize、fit、render、run、plan。主链34个Python模块，约9200行；配置位于 `configs/datasets`。
 - FCS006、FCS008 使用同一算法。后者两身份的必要输入和已选资产在 `assets/scenes/fcs008`；FCS身份、动作和头盔基线仍在 `assets/human`、`assets/helmet`。
 - 衣物代码在 `src/hoi/clothing`，第三方在 `third_party/gaussian_wardrobe`、`third_party/human_parsing`，本地依赖在 `runtime/clothing`。唯一构建入口 `scripts/build_clothing.ps1` 已通过语法解析，尚未实际重编译。
-- 当前仍处于 `codex/interaction-cloth`，本轮尚未提交、清理旧树或同步远端。远端 main 为 `1524b56`；其历史不同于当前本地分支，须沿远端历史快进，禁止 force push。
+- 主链已沿远端 `1524b56` 历史整理到本地main（`4b38fd2`重构、`a2903ba`依赖来源），没有force push。旧开发分支及v1.0/full-pipeline历史保留。远端同步及正式衣物分支正在收尾。
 
 ## 已实际验证
 
@@ -27,7 +27,7 @@ Windows safetensors默认mmap曾在 `get_tensor → torch.storage.__getitem__` �
 
 ## 下一步
 
-完成展示机位视频检查、文档核对、main清理提交；保存衣物分支代码与必要依赖后，删除旧work脚本和差结果。主链不再依赖旧work代码。旧 `work/mjj/two_person/data/quaternion_fit/prior_control` 约128MiB曾被自动审批拒绝删除，不能借删除父目录绕过。
+完成展示机位视频检查和分支同步；按实际画面选择结果。主链不再依赖旧work代码。旧目录删除被执行策略拦截，缩小到单个 `work/mjj/reconstruction/stability` 仍被拒绝，工具只返回blocked by policy，没有具体原因。已向用户列出明确路径重新确认；未删除任何旧目录，不换API绕过。旧 `work/mjj/two_person/data/quaternion_fit/prior_control` 约128MiB也曾被拒绝删除，继续保留。
 
 保留原始视频、图片、标定、必要权重、已选资产、已交付PPT/GIF、v1.0/full-pipeline。不上传原图视频或模型权重，不用git add .。正常命名，原位迭代，版本进Git；不保留无用检查脚本、门限文件、失败结果和版本目录。
 
