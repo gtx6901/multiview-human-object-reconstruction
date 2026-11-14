@@ -42,7 +42,7 @@ python pipeline.py render --config runs/fcs008/config.json --serial 21305717 --f
 - `rigid_object`：可选的已有 mesh 和 rigid motion 路径；入口不重建该网格或位姿。
 - `rendering`：输出宽高与可选 cameras JSON；命令行尺寸和相机参数可覆盖它。
 
-`configs/reconstruction.json` 当前设置身体阶段 `[400, 200, 200]`、脸部 200 次、最终 MAP 600 次。短连接检查使用的少量迭代不代表这些完整设置已经收敛验证。
+`configs/reconstruction.json` 当前设置身体阶段 `[400, 200, 200]`、脸部 200 次、最终 MAP 600 次。FCS008两人全部300帧已按这些设置完成拟合和渲染审看；这次复用了已选身份与观测，不等同于全新数据端到端验收。
 
 观测使用 `raw_distorted_pixels` / `undistorted_pixels`，尺寸来自各相机记录。缺失点保留缺失掩码和 NaN，不补成有效观测。各人共享同一世界变换，不能独立重定心或缩放。
 
@@ -55,7 +55,7 @@ python pipeline.py render --config runs/fcs008/config.json --serial 21305717 --f
 `--cameras <json>` 支持 `{width, height, views: [{label 或 serial, K, W}]}`。K 为 3×3，静态 W 为 4×4；轨迹 W 为 T×4×4，须同时提供对应的实际 `frames`。自定义相机默认 `camera_space: normalized`，也可显式声明 raw。轨迹按帧 ID 查表，不把帧号当数组下标；缺少选中帧时会报错，不插值。
 
 ```powershell
-python pipeline.py render --config configs/datasets/fcs006.json --cameras runs/novel_fixed/cameras.json --serial all --frames 0
+python pipeline.py render --config configs/datasets/fcs006.json --cameras assets/scenes/fcs006/fixed_cameras.json --serial all --frames 0
 ```
 
 `--video` 取配置 FPS，要求选中源帧连续。稀疏帧可以输出 PNG，不能冒充原速视频。视频编码成功后默认删除本次PNG中间帧；需要保留时使用 `--keep-frames`。
