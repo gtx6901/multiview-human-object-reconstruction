@@ -139,7 +139,7 @@ def _ensure_wardrobe_rasterizer() -> None:
     if not pyds:
         raise FileNotFoundError(
             "Wardrobe six-channel rasterizer is not built at "
-            f"{pkg}; run runtime\\build_local.cmd wardrobe"
+            f"{pkg}; run scripts\\build_clothing.ps1"
         )
     if not (pkg / "__init__.py").is_file():
         raise FileNotFoundError(f"Wardrobe rasterizer package init missing: {pkg}")
@@ -231,14 +231,14 @@ def bootstrap(
     if AUTHOR not in Path(smpl_util.__file__).resolve().parents:
         raise RuntimeError(f"wrong smpl_util: {smpl_util.__file__}")
 
-    def mjj_smplx_model(dataset_dir):
+    def native_smplx_model(dataset_dir):
         # MJJ supplies 45-D hand poses and 100-D expression; do not use the
         # 4D-Dress PCA-12 branch.
         body = smplx.SMPLX(use_pca=False, num_pca_comps=45, flat_hand_mean=True, batch_size=1)
         fit = smplx.SMPLX(use_pca=False, num_pca_comps=45, flat_hand_mean=True, batch_size=1)
         return body, fit
 
-    smpl_util.smplx_model = mjj_smplx_model
+    smpl_util.smplx_model = native_smplx_model
     smpl_util.smpl_model = smplx.SMPLX(
         use_pca=False, num_pca_comps=45, flat_hand_mean=True, batch_size=1
     )

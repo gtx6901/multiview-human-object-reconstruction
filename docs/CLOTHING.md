@@ -27,6 +27,8 @@ python pipeline.py clothing --config configs/clothing/mjj001.json --stage train 
 
 本地编译依赖位于 `runtime/clothing`；唯一构建脚本为 `scripts/build_clothing.ps1`，需要匹配的PyTorch、CUDA、MSVC。Wardrobe的label+RGB必须一次联合六通道渲染，不能复用旧AG三通道扩展。脚本已做语法核对，重编译仍需在目标环境实际运行。
 
-当前保留检查点为author_train/update1800，迁移后内容签名一致，尚不代表衣物动态效果已验收。原始YAML中的历史数据类名仅作为兼容别名保留，同一个通用reader按metadata读取帧数、相机数、尺寸与FPS，不为MJJ另写算法。源模板canonical与Wardrobe canonical不同，不能直接换用后者解释旧模板。
+当前保留检查点为author_train/update1800，迁移后内容签名一致。已实际输出八机位0/49/98和cam04完整99帧/9fps视频；画面有明显彩色网格、重影和脸手模糊，尚未采用。相同输入的身体与衣物网络颜色图在光栅化前已有网格，需继续定位网络输出及其上游。六通道光栅器、StyleUNet上采样和激活的实际前反向检查通过；代码审计未找到当前训练/推理输入数值不一致的确证，也不能据此认定训练不足就是全部原因。
+
+原始YAML中的历史数据类名仅作为兼容别名保留，同一个通用reader按metadata读取帧数、相机数、尺寸与FPS，不为MJJ另写算法。源模板canonical与Wardrobe canonical不同，不能直接换用后者解释旧模板。
 
 分层模板生成与图像训练均属于探索，尚未证明能从任意新视频直接得到良好衣物动态。检查实际多机位和连续视频后才决定是否采用结果；原始数据和保留人体资产不覆盖。
