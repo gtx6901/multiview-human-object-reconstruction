@@ -7,7 +7,7 @@
 - `pipeline.py` / `src/hoi` 已接通 prepare、identity、initialize、fit、render、run、plan。主链34个Python模块，约9200行；配置位于 `configs/datasets`。
 - FCS006、FCS008 使用同一算法。后者两身份的必要输入和已选资产在 `assets/scenes/fcs008`；FCS身份、动作和头盔基线仍在 `assets/human`、`assets/helmet`。
 - 衣物源码在 `codex/clothing` 分支的 `src/hoi/clothing`，第三方在 `third_party/gaussian_wardrobe`、`third_party/human_parsing`，本地依赖在 `runtime/clothing`。唯一构建入口 `scripts/build_clothing.ps1` 已通过语法解析，尚未实际重编译。
-- main已沿远端历史快进同步至 `f62ca4a`，生产树54文件、自有主链34模块约9200行。当前 `codex/clothing` 从该最新main创建；顶层 `pipeline.py clothing` 使用 `configs/clothing/mjj001.json` 派发绑定、语义、分层、canonical、maps/masks、预训练、训练和渲染。旧历史、v1.0/full-pipeline保留，没有force push。
+- main已沿远端历史完成共享主链发布，生产树54文件、自有主链34模块约9200行。当前 `codex/clothing` 从整理后main创建并已合入共享更新；最新提交以实际Git refs为准。顶层 `pipeline.py clothing` 使用 `configs/clothing/mjj001.json` 派发各衣物阶段。旧历史、v1.0/full-pipeline保留，没有force push。
 
 ## 已实际验证
 
@@ -27,6 +27,8 @@ Windows safetensors默认mmap曾在 `get_tensor → torch.storage.__getitem__` �
 
 迁移后实际渲染八机位0/49/98及cam04完整99帧/9fps，退出0，已审看，彩色规则网格、重影和脸手模糊仍明显，未采用为良好动态结果。进一步抓取相同49帧/cam04的body/cloth颜色图，光栅化前即有同样网格：来源已缩小至网络颜色输出及其上游。独立六通道CUDA前向/颜色梯度、StyleUNet上采样/激活的CUDA与作者CPU参考检查通过，不支持把当前网格归因于这些算子；不代表整个模型训练正确。检查点仍1800，未加滤波或盲目续训。
 
+最后完成同一49帧/cam04的RGB网络初始值与checkpoint控制：初始化输出本身已有规则彩色网格，1800输出已经学到部分人体/衣物颜色但仍残留网格；身体和衣物全部color_net的Adam step均为1800，不能说RGB网络完全没更新。证据为唯一 `runs/mjj001/clothing/texture.log` 和可复用 `runtime/cache/review.png`，没有新增检查脚本。此结果不能保证长训会修好，仍需定位训练动力学及输入对应；不要重复已完成的CUDA/输入静态审计。
+
 DeepSeek首次启动因headless缺少provider失败；按桌面现有provider/model加入仅本次临时overlay后，代码只读审计已完成（exit0+final，session-664dd3ce-67cf-4b51-8806-39db7ab9e3f4）。未找到当前训练/推理输入数值不一致的确证；指出渲染签名覆盖不足，但没有当前输入变化证据，不把这类校验缺口当网格原因或先加护栏。结果在 `runtime/deepseek/observation_audit/answer.md`；代码审计没有读取原图/视频/权重。当前根因仍未闭合。
 
 ## 下一步
@@ -40,3 +42,5 @@ DeepSeek首次启动因headless缺少provider失败；按桌面现有provider/mo
 用户明确允许必要训练并持续工作至五小时额度接近用尽。唯一自动任务id `04-06` 当前使用简单每小时06分规则；多行DTSTART规则未得到实际触发确认，04:42由用户手动恢复。不要再建重复定时器。用户要求暂停时立即停用该任务并停工。每次先查实际额度、进程、GPU及输出，保留活任务，避免重复启动；不用重置券。
 
 worker为用户指定的GPT-6.1 Sol medium，负责明确可验收的实现；主代理独立审查、执行和看图。先找输入、算法、实现根因，不加像素补丁、关节锁或画质门槛，不按loss认定成功。
+
+本轮结束前未留训练/拟合/DeepSeek活任务，本轮只读视频服务已停止；下一次仍需先核实真实进程。main及衣物已同步，原始数据、PPT/GIF、v1.0/full-pipeline未变。旧目录清理问题等待用户回复，不能借全权限重试绕过此前拒绝。
