@@ -1,36 +1,20 @@
-__pycache__/
-*.py[cod]
-.venv/
-deps/
-vendor/
-weights/
-pretrained_models/
-dataAndVedio/
-*.pt
-*.pth
-*.pkl
-*.safetensors
-*.h5
-*.npy
-*.npz
-*.log
-hf_cache/
-build/
-.env
-.env.*
-
-# Local reconstruction data and dependencies
+# Large datasets and generated outputs, not source
 /assets/
 /runs/
+/renders/
 /lhmpp/
 /runtime/
 /data/
-/work/mjj/**/data/
-/work/mjj/**/runs/
-/work/mjj/**/runtime/
-/work/mjj/**/author/
-/work/mjj/**/parser/
-/work/mjj/**/harness*/
+/docs/reference/
+/third_party/*/
+/reports/
+
+# Python
 __pycache__/
 *.pyc
-*.log
+/configs/runtime.local.json
+
+# Office / DSH temp
+~$*
+*.tmp
+.dsh-office-*

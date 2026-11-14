@@ -1,0 +1,40 @@
+{
+  "id": "fcs008",
+  "fps": 30.0,
+  "rendering": {"width": 1008, "height": 756},
+  "camera_space": "raw",
+  "scene_path": "assets/scenes/fcs008/cameras.json",
+  "manifest_path": "assets/capture/manifest.json",
+  "world_up": [0.0497958211609707, -0.9978588791639914, -0.04240322474161076],
+  "world_up_source": "FCS shared camera-coordinate gravity estimate",
+  "preparation": {
+    "seeds": "assets/scenes/fcs008/identity_seeds.json",
+    "end": 300,
+    "identity_frame": 0,
+    "videos_root": "data/videos"
+  },
+  "actors": [
+    {
+      "id": "fcs",
+      "proportions": "assets/scenes/fcs006/proportions.pt",
+      "avatar": "assets/human/avatar/avatar.pt",
+      "motion": "assets/scenes/fcs008/fcs/motion.pt",
+      "initialization": "assets/scenes/fcs008/fcs/initialization.pt",
+      "manifest": "assets/scenes/fcs008/fcs/manifest.json",
+      "observations": "assets/scenes/fcs008/fcs/observations.npz",
+      "keypoints": "assets/scenes/fcs008/fcs/keypoints",
+      "hand_observations": "assets/scenes/fcs008/fcs/hand_observations.npz"
+    },
+    {
+      "id": "partner",
+      "proportions": "assets/scenes/fcs008/partner/proportions.pt",
+      "avatar": "assets/scenes/fcs008/partner/avatar.pt",
+      "motion": "assets/scenes/fcs008/partner/motion.pt",
+      "initialization": "assets/scenes/fcs008/partner/initialization.pt",
+      "manifest": "assets/scenes/fcs008/partner/manifest.json",
+      "observations": "assets/scenes/fcs008/partner/observations.npz",
+      "keypoints": "assets/scenes/fcs008/partner/keypoints",
+      "hand_observations": "assets/scenes/fcs008/partner/hand_observations.npz"
+    }
+  ]
+}

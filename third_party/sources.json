@@ -1,0 +1,26 @@
+{
+  "lhm": {
+    "repository": "https://github.com/aigc3d/LHM-plusplus",
+    "revision": "906b5d9fb967ab42efb92f6fa55bf22cac86b653",
+    "directory": "lhmpp/vendor"
+  },
+  "sam2": {
+    "repository": "https://github.com/facebookresearch/sam2",
+    "revision": "2b90b9f5ceec907a1c18123530e92e794ad901a4",
+    "directory": "runtime/vendor/sam2"
+  },
+  "hamer": {
+    "directory": "runtime/hamer",
+    "revision": null,
+    "note": "Existing local source and pretrained MANO/HaMeR assets; upstream revision was not recorded."
+  },
+  "nlf": {
+    "checkpoint": "runtime/weights/nlf.torchscript",
+    "release": "nlf_l_multi_0.3.2"
+  },
+  "rendering": {
+    "gsplat": "1.5.3",
+    "gsplat_extension": "runtime/extensions/gsplat_cuda.pyd",
+    "nvdiffrast_revision": "253ac4fcea7de5f396371124af597e6cc957bfae"
+  }
+}

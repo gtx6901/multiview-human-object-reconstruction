@@ -1,0 +1,5 @@
+{
+  "body_steps": [400, 200, 200],
+  "face_iterations": 200,
+  "motion_iterations": 600
+}

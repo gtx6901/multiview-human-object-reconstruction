@@ -1,0 +1,5 @@
+{
+  "lhm_root": "lhmpp",
+  "gsplat_extension": "runtime/extensions/gsplat_cuda.pyd",
+  "ffmpeg": "runtime/bin/ffmpeg.exe"
+}
