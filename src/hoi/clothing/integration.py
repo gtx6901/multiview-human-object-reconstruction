@@ -37,8 +37,9 @@ DATA = PROJECT / "assets/scenes/mjj001/clothing"
 RESULTS = PROJECT / "runs/mjj001/clothing"
 TRAIN_CURRENT = RESULTS
 TRAIN_CKPT = RESULTS / "checkpoint.pt"
-LOCAL_SMPLX = Path(runtime_settings()["lhm_root"]) / "pretrained_models/human_model_files/smplx"
-LOCAL_DEPS = [CLOTHING_RUNTIME / "python", PROJECT / "lhmpp/deps", PROJECT / "lhmpp"]
+LHM_ROOT = Path(runtime_settings()["lhm_root"])
+LOCAL_SMPLX = LHM_ROOT / "pretrained_models/human_model_files/smplx"
+LOCAL_DEPS = [CLOTHING_RUNTIME / "python", LHM_ROOT / "deps", LHM_ROOT]
 RUNTIME_EXT = CLOTHING_RUNTIME / "extensions"
 RUNTIME_WARDROBE = RUNTIME_EXT / "wardrobe"
 RUNTIME_STYLE = RUNTIME_EXT / "styleunet"
@@ -71,13 +72,13 @@ def _vgg_cache() -> Path:
 def _ffmpeg_exe() -> str:
     import shutil
 
+    configured = runtime_settings().get("ffmpeg")
+    if configured and Path(configured).is_file():
+        return str(configured)
     found = shutil.which("ffmpeg")
     if found:
         return found
-    known = Path("D:/Software/FormatFactory/ffmpeg.exe")
-    if known.is_file():
-        return str(known)
-    raise FileNotFoundError("ffmpeg not found in PATH or at D:/Software/FormatFactory/ffmpeg.exe")
+    raise FileNotFoundError("Set ffmpeg in the shared runtime configuration or add it to PATH")
 
 
 def _install_unicode_cv() -> Dict[str, Any]:
