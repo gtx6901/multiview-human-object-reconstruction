@@ -11,8 +11,9 @@
   },
   "hamer": {
     "directory": "runtime/hamer",
-    "revision": null,
-    "note": "Existing local source and pretrained MANO/HaMeR assets; upstream revision was not recorded."
+    "repository": "https://github.com/geopavlakos/hamer",
+    "revision": "3a01849f4148352e9260b69bf28b65d1671a4905",
+    "weight_revision": "aabc78ee4fd1f1ccf1a55fdd4225bf84df0e680a"
   },
   "nlf": {
     "checkpoint": "runtime/weights/nlf.torchscript",
