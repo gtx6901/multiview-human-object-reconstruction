@@ -7,7 +7,7 @@
 - `pipeline.py` / `src/hoi` 已接通 prepare、identity、initialize、fit、render、run、plan。主链34个Python模块，约9200行；配置位于 `configs/datasets`。
 - FCS006、FCS008 使用同一算法。后者两身份的必要输入和已选资产在 `assets/scenes/fcs008`；FCS身份、动作和头盔基线仍在 `assets/human`、`assets/helmet`。
 - 衣物代码在 `src/hoi/clothing`，第三方在 `third_party/gaussian_wardrobe`、`third_party/human_parsing`，本地依赖在 `runtime/clothing`。唯一构建入口 `scripts/build_clothing.ps1` 已通过语法解析，尚未实际重编译。
-- 主链已沿远端 `1524b56` 历史整理到本地main（`4b38fd2`重构、`a2903ba`依赖来源），没有force push。旧开发分支及v1.0/full-pipeline历史保留。远端同步及正式衣物分支正在收尾。
+- main已沿远端历史快进同步至 `f62ca4a`，生产树54文件、自有主链34模块约9200行。当前 `codex/clothing` 从该最新main创建；顶层 `pipeline.py clothing` 使用 `configs/clothing/mjj001.json` 派发绑定、语义、分层、canonical、maps/masks、预训练、训练和渲染。旧历史、v1.0/full-pipeline保留，没有force push。
 
 ## 已实际验证
 
@@ -23,7 +23,7 @@ Windows safetensors默认mmap曾在 `get_tensor → torch.storage.__getitem__` �
 
 绑定输入 `assets/scenes/mjj001/clothing`，原字节YAML `configs/clothing/mjj001.yaml`，唯一检查点 `runs/mjj001/clothing/checkpoint.pt`。检查点5386350370字节，SHA256 `EF2D3A4B343C174658CCD1E7385685FEAB62422E7A3F4E992813BEA923285FB9`，迁移前后一致；meta加载确认 author_train、updates1800，common和train内容签名均一致。未改写大检查点或继续训练。
 
-输入manifest与YAML保持原字节。签名比较只忽略限定位置的绝对config路径，保留config SHA、输入hash、counts和训练语义。源模板的AG canonical与Wardrobe姿态不同；必要源配置、模板和volume保留在 `clothing/source`，不可偷换。GaussianWardrobe五处本地修改已保存 `third_party/gaussian_wardrobe.patch`。衣物还需统一顶层配置入口、实际恢复/渲染验证及正式探索分支；模板和训练次数不能作为动态效果验收。
+输入manifest与YAML保持原字节。签名比较只忽略限定位置的绝对config路径，保留config SHA、输入hash、counts和训练语义。源模板的AG canonical与Wardrobe姿态不同；必要源配置、模板和volume保留在 `clothing/source`，不可偷换。GaussianWardrobe五处本地修改已保存 `third_party/gaussian_wardrobe.patch`。顶层入口已接通，下一步实际恢复/渲染验证；模板和训练次数不能作为动态效果验收。`--updates` 是累计目标，不是追加次数，1800检查点传1000不会再训练。
 
 ## 下一步
 

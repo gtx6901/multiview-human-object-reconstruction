@@ -19,6 +19,17 @@
     "checkpoint": "runtime/weights/nlf.torchscript",
     "release": "nlf_l_multi_0.3.2"
   },
+  "gaussian_wardrobe": {
+    "repository": "https://github.com/eth-ait/GaussianWardrobe",
+    "revision": "3e62461b724d546f368f72a6d5ef57a21c6e3635",
+    "directory": "third_party/gaussian_wardrobe",
+    "patch": "third_party/gaussian_wardrobe.patch"
+  },
+  "human_parsing": {
+    "repository": "https://github.com/GoGoDuck912/Self-Correction-Human-Parsing",
+    "revision": "eb84c432cc697f494d99662a05f2335eb2f26095",
+    "directory": "third_party/human_parsing"
+  },
   "rendering": {
     "gsplat": "1.5.3",
     "gsplat_extension": "runtime/extensions/gsplat_cuda.pyd",

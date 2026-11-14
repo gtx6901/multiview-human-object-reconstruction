@@ -1,0 +1,77 @@
+mode: train
+smpl_pos_map: smpl_pos_map_offset
+sequence_name: smpl_params
+train:
+  dataset: MvRgbDatasetMJJNative
+  data:
+    layers: ["body", "cloth"]
+    subject_name: mjj001
+    data_dir: ../data/mjj001
+    used_cam_ids: [0, 1, 2, 3, 4, 5, 6, 7]
+    frame_range: [0, 99, 1]
+    load_smpl_pos_map: true
+    use_label: true
+    use_body_label: true
+    use_normal: false
+  pretrained_dir: null
+  net_ckpt_dir: ../../runs/wardrobe/mjj001/avatar
+  inner_ckpt_dir: null
+  prev_ckpt: null
+  ckpt_interval:
+    epoch: 3
+    batch: 1000
+  eval_interval: 1000
+  dropout_interval: 10000
+  eval_training_ids: [0, 1]
+  eval_testing_ids: [49, 1]
+  eval_img_factor: 1.0
+  lr_init: 0.00015
+  loss_weight:
+    l1: 1
+    lpips: 0.1
+    face_lpips: 0.1
+    ssim: 0.05
+    offset: 0.005
+    laplacian: 0.01
+    body_loss: 0.5
+    consistent_body_color: 0.005
+    consistent_label: 0.5
+    consistent_label_body: 0.025
+    opacity_loss: 0.001
+    normal_loss: 0.
+    inner_cloth_laplacian: 0.00
+    inner_cloth_loss: 0
+    outer_to_body_loss: 0
+  finetune_color: false
+  batch_size: 1
+  num_workers: 0
+  random_bg_color: true
+  gd_clip: 0.0001
+test:
+  dataset: MvRgbDatasetMJJNative
+  render_layers: ["body", "cloth"]
+  data:
+    layers: ["body", "cloth"]
+    subject_name: mjj001
+    data_dir: ../data/mjj001
+    frame_range: [0, 99, 1]
+  view_setting: camera
+  render_view_idx: 0
+  global_orient: true
+  img_scale: 1
+  save_mesh: false
+  render_skeleton: false
+  save_tex_map: false
+  save_ply: true
+  fix_hand: false
+  fix_hand_id: 0
+  n_pca: -1
+  sigma_pca: 2.0
+  prev_ckpt: ../../runs/wardrobe/mjj001/avatar/epoch_latest
+model:
+  with_viewdirs: true
+  random_style: false
+  cover: true
+  offset_mode: original
+  module: network.multi_layer_avatar
+  network: MultiLAvatarNet

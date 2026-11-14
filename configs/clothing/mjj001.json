@@ -1,0 +1,9 @@
+{
+  "model_config": "configs/clothing/mjj001.yaml",
+  "data": "assets/scenes/mjj001/clothing",
+  "output": "runs/mjj001/clothing",
+  "source_template": "assets/scenes/mjj001/clothing/source/template.ply",
+  "source_weight_volume": "assets/scenes/mjj001/clothing/source/cano_weight_volume.npz",
+  "source_canonical_config": "assets/scenes/mjj001/clothing/source/canonical.py",
+  "video_camera": 4
+}

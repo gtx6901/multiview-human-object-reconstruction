@@ -414,6 +414,10 @@ def render_scene(config: SceneConfig, args: argparse.Namespace, fitted: bool) ->
 
 
 def main() -> int:
+    if len(sys.argv) > 1 and sys.argv[1] == "clothing":
+        from hoi.clothing.cli import main as clothing_main
+
+        return clothing_main(sys.argv[2:])
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "command", choices=("prepare", "identity", "initialize", "fit", "render", "run", "plan")

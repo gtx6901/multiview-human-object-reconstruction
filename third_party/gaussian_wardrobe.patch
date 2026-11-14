@@ -1,0 +1,243 @@
+diff --git a/config.py b/config.py
+index 4bcc130..1b5ed00 100644
+--- a/config.py
++++ b/config.py
+@@ -3,7 +3,7 @@ import numpy as np
+ import math
+ import os
+ 
+-device = torch.device('cuda:0')
++device = torch.device(os.environ.get('WARDROBE_DEVICE', 'cuda:0'))
+ 
+ # SMPL related
+ cano_smpl_pose = np.zeros(75, dtype = np.float32)
+diff --git a/dataset/dataset_mv_rgb.py b/dataset/dataset_mv_rgb.py
+index 71b9a5d..1a197f1 100644
+--- a/dataset/dataset_mv_rgb.py
++++ b/dataset/dataset_mv_rgb.py
+@@ -149,8 +149,6 @@ class MvRgbDatasetBase(Dataset):
+                 global_orient = config.cano_smpl_global_orient[None],
+                 transl = config.cano_smpl_transl[None],
+                 body_pose = config.cano_smpl_body_pose[None],
+-                jaw_pose = self.smpl_data['jaw_pose'][pose_idx][None],
+-                expression = self.smpl_data['expression'][pose_idx][None],
+             )
+             live_smpl_woRoot = self.smpl_model_fit.forward(
+                 betas = self.smpl_data['betas'][0][None],
+@@ -173,9 +171,12 @@ class MvRgbDatasetBase(Dataset):
+                     smpl_pos_map = process_pos_map(self.data_dir + '/{}/%08d.exr'.format(self.smpl_pos_map[layer]) % pose_idx)
+                     smpl_pos_maps[layer] = smpl_pos_map
+ 
+-                    smpl_cano_pos_map = process_pos_map(self.data_dir + '/{}/cano_smpl_pos_map.exr'.format(self.smpl_pos_map[layer]))
+-                    smpl_cano_pos_maps[layer] = smpl_cano_pos_map
+-                data_item['smpl_cano_pos_map'] = smpl_cano_pos_maps
++                    if not getattr(self, "defer_canonical_pos_maps", False):
++                        smpl_cano_pos_map = process_pos_map(self.data_dir + '/{}/cano_smpl_pos_map.exr'.format(self.smpl_pos_map[layer]))
++                        smpl_cano_pos_maps[layer] = smpl_cano_pos_map
++
++                if not getattr(self, "defer_canonical_pos_maps", False):
++                    data_item['smpl_cano_pos_map'] = smpl_cano_pos_maps
+                 data_item['smpl_pos_map'] = smpl_pos_maps
+                 
+ 
+@@ -212,7 +213,11 @@ class MvRgbDatasetBase(Dataset):
+         if training:
+             color_img, mask_img = self.load_color_mask_images(pose_idx, view_idx)
+ 
+-            color_img = (color_img / 255.).astype(np.float32)
++            defer_float_conversion = getattr(
++                self, "defer_float_image_conversion", False)
++            if not defer_float_conversion:
++                color_img = color_img.astype(np.float32)
++                color_img *= np.float32(1.0 / 255.0)
+ 
+             boundary_mask_img, mask_img = self.get_boundary_mask(mask_img)
+ 
+@@ -227,13 +232,23 @@ class MvRgbDatasetBase(Dataset):
+                     'boundary_mask_img': boundary_mask_img
+                 })
+                 if self.use_label:
+-                    label_img = (self.load_image(pose_idx, view_idx, "labels_color") / 255.).astype(np.float32)
++                    label_img = self.load_image(
++                        pose_idx, view_idx, "labels_color")
++                    if not defer_float_conversion:
++                        label_img = label_img.astype(np.float32)
++                        label_img *= np.float32(1.0 / 255.0)
+                     data_item["label_img"] = label_img
+                 if self.use_body_label:
+-                    label_body_img = (self.load_image(pose_idx, view_idx, "body_masks") / 255.).astype(np.float32)
++                    label_body_img = self.load_image(pose_idx, view_idx, "body_masks")
++                    if label_body_img.ndim == 2:
++                        label_body_img = label_body_img[:, :, None]
++                    if not defer_float_conversion:
++                        label_body_img = label_body_img.astype(np.float32)
++                        label_body_img *= np.float32(1.0 / 255.0)
+                     data_item["label_body_img"] = label_body_img
+                 if self.use_normal:
+-                    normal_img = (self.load_image(pose_idx, view_idx, "normals") / 255.).astype(np.float32)
++                    normal_img = self.load_image(pose_idx, view_idx, "normals").astype(np.float32)
++                    normal_img *= np.float32(1.0 / 255.0)
+                     data_item["normal_img"] = normal_img
+                 joints_3d = live_smpl["joints"][:, [config.JOINT_MAPPER["head"]]]
+                 extrinsic = self.extr_mats[view_idx]
+@@ -651,4 +666,4 @@ class MvRgbDatasetActorsHQ(MvRgbDatasetBase):
+             img = cv.imread(os.path.join(self.data_dir, '%s/%s/%s_rgb%06d.png' % (folder_name, cam_name, cam_name, pose_idx)), cv.IMREAD_UNCHANGED)
+         else:
+             img = cv.imread(os.path.join(self.data_dir, '%s/%s/%05d.png' % (folder_name, cam_name, pose_idx)), cv.IMREAD_UNCHANGED)
+-        return img
+\ No newline at end of file
++        return img
+diff --git a/gen_data/gen_pos_maps.py b/gen_data/gen_pos_maps.py
+index 2b18a9d..2dc2d83 100644
+--- a/gen_data/gen_pos_maps.py
++++ b/gen_data/gen_pos_maps.py
+@@ -114,6 +114,7 @@ def generate_cano_maps(cano_smpl_v_dup, cano_smpl_attr_dup, attr):
+     back_cano_attr_map, back_cano_pix_to_face = cano_renderer.render()
+     back_cano_attr_map = back_cano_attr_map[:, :, :3]
+     back_cano_attr_map = cv.flip(back_cano_attr_map, 1)
++    back_cano_pix_to_face = cv.flip(back_cano_pix_to_face, 1)
+     cano_attr_map = np.concatenate([front_cano_attr_map, back_cano_attr_map], 1)
+     cv.imwrite(data_dir + f'/{args.output_path}/cano_smpl_{attr}_map.exr', cano_attr_map)
+     # cano_attr_map_normalized = (cano_attr_map - cano_attr_map.min())
+diff --git a/main_avatar.py b/main_avatar.py
+index 01fcf20..eb5ab7e 100644
+--- a/main_avatar.py
++++ b/main_avatar.py
+@@ -5,7 +5,6 @@ from utils.geo_util import FaceNormals
+ # os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
+ # os.environ['TORCH_USE_CUDA_DSA'] = '1'
+ os.environ['OPENCV_IO_ENABLE_OPENEXR'] = '1'
+-from sklearn import neighbors
+ import yaml
+ import shutil
+ import collections
+@@ -229,14 +228,24 @@ class AvatarTrainer:
+         #     return img
+         # else:
+         return img * boundary_mask_img[None] + (1. - boundary_mask_img[None]) * torch.from_numpy(np.asarray([0.75, 0.75, 0.75])).to(torch.float32).to(config.device)[:, None, None]
+-    def img_loss(self, gt_img, pred_img, boundary_mask_img=None, mask_img=None):
++    def img_loss(self, gt_img, pred_img, boundary_mask_img=None, mask_img=None, valid_mask_img=None):
+         if (not (mask_img is None)) and (not (boundary_mask_img is None)):
+             pred_img = self.prepare_img(pred_img, boundary_mask_img)
+             gt_img[~mask_img] = self.bg_color_cuda
+             gt_img = self.prepare_img(gt_img, boundary_mask_img)
+         # loss =  ((pred_img - gt_img)**2).mean()
+-        loss =  torch.abs(pred_img - gt_img).mean()
+-        return loss
++        diff = torch.abs(pred_img - gt_img)
++        if valid_mask_img is None:
++            return diff.mean()
++        valid = valid_mask_img.to(device=diff.device, dtype=torch.bool)
++        if valid.ndim == diff.ndim:
++            valid = valid.squeeze(0)
++        if valid.shape != diff.shape[1:]:
++            raise ValueError(f"valid_mask_img shape {tuple(valid.shape)} != image HW {tuple(diff.shape[1:])}")
++        denom = valid.sum() * diff.shape[0]
++        if int(denom.detach().cpu()) == 0:
++            return diff.sum() * 0.0
++        return (diff * valid[None]).sum() / denom.to(diff.dtype)
+     def seg_loss(self, gt_img, pred_img, boundary_mask_img, mask_img):
+         pred_img = self.prepare_img(pred_img, boundary_mask_img)
+         gt_img[~mask_img] = self.bg_color_cuda
+@@ -286,7 +295,7 @@ class AvatarTrainer:
+         if self.loss_weight["ssim"] > 0.:
+             ssim_loss = pytorch_ssim.SSIM()
+             ssim_out = 1 - ssim_loss(image.unsqueeze(0), gt_image.unsqueeze(0))
+-            total_loss += self.loss_weight['ssim'] * ssim_out.item()
++            total_loss += self.loss_weight['ssim'] * ssim_out
+             batch_losses.update({
+                 'ssim': 1 - ssim_out.item()
+             })
+@@ -302,7 +311,8 @@ class AvatarTrainer:
+ 
+         if self.loss_weight['consistent_label'] > 0.:
+             consistent_label_loss = self.img_loss(gt_img=items['label_img'], pred_img=render_output['label_rgb_map'], 
+-                                                boundary_mask_img=boundary_mask_img, mask_img=items['mask_img'])
++                                                boundary_mask_img=boundary_mask_img, mask_img=items['mask_img'],
++                                                valid_mask_img=items.get('label_valid_img'))
+             total_loss += self.loss_weight['consistent_label'] * consistent_label_loss
+             batch_losses.update({
+                 'consistent_label_loss': consistent_label_loss.item()
+@@ -354,7 +364,7 @@ class AvatarTrainer:
+             if "offset" in render_output:
+                 offset = render_output["offset"]
+                 offset_loss = torch.linalg.norm(offset, dim = -1).mean()
+-                total_loss += self.loss_weight['offset'] * offset_loss.item()
++                total_loss += self.loss_weight['offset'] * offset_loss
+                 batch_losses.update({
+                     'offset_loss': offset_loss.item()
+                 })
+@@ -406,13 +416,22 @@ class AvatarTrainer:
+             })
+         if self.loss_weight['laplacian'] > 0.:
+             gaussian_offset = render_output["body_offset"] * 1000
+-            # read required data, convert and send to device
+-            neighbor_idx = np.load(config.opt['train']['data']['data_dir'] + '/{}_body/neighbor_idx.npy'
+-                                      .format(self.smpl_pos_map))
+-            self.neighbor_idx = torch.from_numpy(neighbor_idx).to(torch.int64).to(config.device)
+-            neighbor_weights = np.load(config.opt['train']['data']['data_dir'] + '/{}_body/neighbor_weights.npy'
+-                                      .format(self.smpl_pos_map))
+-            self.neighbor_weights = torch.from_numpy(neighbor_weights).to(torch.float32).to(config.device)
++            cache = getattr(self, "_mjj_laplacian_cache", None)
++            if cache is None:
++                cache = self._mjj_laplacian_cache = {}
++            if "body" not in cache:
++                root = config.opt['train']['data']['data_dir']
++                path = root + '/{}_body/'.format(self.smpl_pos_map)
++                neighbor_idx = np.load(path + 'neighbor_idx.npy')
++                neighbor_weights = np.load(path + 'neighbor_weights.npy')
++                cache["body"] = (
++                    torch.from_numpy(neighbor_idx).to(
++                        device=config.device, dtype=torch.int64),
++                    torch.from_numpy(neighbor_weights).to(
++                        device=config.device, dtype=torch.float32),
++                )
++                del neighbor_idx, neighbor_weights
++            self.neighbor_idx, self.neighbor_weights = cache["body"]
+ 
+             lap_out = gaussian_offset + (gaussian_offset[self.neighbor_idx, :] * self.neighbor_weights[:, :, None]).sum(1)
+             laplacian_loss = (lap_out ** 2).sum(1)[self.avatar_net.smplx_fix_offset_idx].mean()
+@@ -424,13 +443,22 @@ class AvatarTrainer:
+ 
+         if self.loss_weight['inner_cloth_laplacian'] > 0.:
+             gaussian_offset = render_output["cloth_offset"] * 1000
+-            # read required data, convert and send to device
+-            neighbor_idx = np.load(config.opt['train']['data']['data_dir'] + '/{}_cloth/neighbor_idx.npy'
+-                                      .format(self.smpl_pos_map))
+-            self.neighbor_idx = torch.from_numpy(neighbor_idx).to(torch.int64).to(config.device)
+-            neighbor_weights = np.load(config.opt['train']['data']['data_dir'] + '/{}_cloth/neighbor_weights.npy'
+-                                      .format(self.smpl_pos_map))
+-            self.neighbor_weights = torch.from_numpy(neighbor_weights).to(torch.float32).to(config.device)
++            cache = getattr(self, "_mjj_laplacian_cache", None)
++            if cache is None:
++                cache = self._mjj_laplacian_cache = {}
++            if "cloth" not in cache:
++                root = config.opt['train']['data']['data_dir']
++                path = root + '/{}_cloth/'.format(self.smpl_pos_map)
++                neighbor_idx = np.load(path + 'neighbor_idx.npy')
++                neighbor_weights = np.load(path + 'neighbor_weights.npy')
++                cache["cloth"] = (
++                    torch.from_numpy(neighbor_idx).to(
++                        device=config.device, dtype=torch.int64),
++                    torch.from_numpy(neighbor_weights).to(
++                        device=config.device, dtype=torch.float32),
++                )
++                del neighbor_idx, neighbor_weights
++            self.neighbor_idx, self.neighbor_weights = cache["cloth"]
+ 
+             lap_out = gaussian_offset + (gaussian_offset[self.neighbor_idx, :] * self.neighbor_weights[:, :, None]).sum(1)
+             inner_cloth_laplacian_loss = (lap_out ** 2).sum(1).mean()
+diff --git a/network/multi_layer_avatar.py b/network/multi_layer_avatar.py
+index d844f98..0d4663d 100644
+--- a/network/multi_layer_avatar.py
++++ b/network/multi_layer_avatar.py
+@@ -218,7 +218,8 @@ class MultiLAvatarNet(nn.Module):
+         bg_color = torch.from_numpy(np.asarray(bg_color)).to(torch.float32).to(config.device)
+         for layer in self.layers:
+             items["smpl_pos_map"][layer] = items["smpl_pos_map"][layer].squeeze(0)
+-            items["smpl_cano_pos_map"][layer] = items["smpl_cano_pos_map"][layer].squeeze(0)
++            if "smpl_cano_pos_map" in items:
++                items["smpl_cano_pos_map"][layer] = items["smpl_cano_pos_map"][layer].squeeze(0)
+ 
+         if len(self.layers) == 2:
+             gaussian_body_vals = self.layers_nn["body"].render(items, only_gaussian=True)

@@ -1,0 +1,32 @@
+# 衣物探索
+
+此分支在共享人体主链上接入GaussianWardrobe，保持独立的身体与衣物层。使用同一入口和一份场景JSON，YAML保留作者网络、损失及优化参数。
+
+```powershell
+python pipeline.py clothing --config configs/clothing/mjj001.json --stage render --frames 0 49 98 --video
+python pipeline.py clothing --config configs/clothing/mjj001.json --stage train --updates 2000
+```
+
+`--updates` 是累计目标更新数，不是本次追加量。已有1800次更新的检查点传1000不会再训练；传2000会继续至2000。每个输出目录仅保留一个 `checkpoint.pt`，包含模型、优化器、游标和随机状态。
+
+| 阶段 | 用途 |
+| --- | --- |
+| bind | 从配置的binding_source绑定已有同步图像、掩码、相机、SMPL参数；新数据需提供这些真实输入 |
+| parse | 对实例图像做SCHP语义观测 |
+| layers | 汇聚多视角语义，形成身体与衣物模板；需要原模板、权重volume和原canonical定义 |
+| canonicalize | 将已有分层模板转换至作者使用的canonical |
+| position_maps | 生成身体、衣物位置图 |
+| training_masks | 生成canonical手部/身体/衣物监督及邻接数据 |
+| pretrain | 作者模板预训练 |
+| train | 从现有检查点恢复图像监督训练 |
+| render | 从实际图像训练检查点输出相机帧和视频 |
+
+当前MJJ输入已绑定，不应重新bind或覆盖语义/模板来恢复训练；这些操作会改变输入签名。JSON中的source_template、source_weight_volume、source_canonical_config用于重新准备分层输入。该配置没有binding_source，已有绑定数据无需重复绑定。
+
+第三方源码分别位于 `third_party/gaussian_wardrobe` 和 `third_party/human_parsing`，保持其原始许可证。Wardrobe固定上游提交为 `3e62461b724d546f368f72a6d5ef57a21c6e3635`；本地五处修改保存为 `third_party/gaussian_wardrobe.patch`，在对应提交上应用。Human Parsing提交为 `eb84c432cc697f494d99662a05f2335eb2f26095`。
+
+本地编译依赖位于 `runtime/clothing`；唯一构建脚本为 `scripts/build_clothing.ps1`，需要匹配的PyTorch、CUDA、MSVC。Wardrobe的label+RGB必须一次联合六通道渲染，不能复用旧AG三通道扩展。脚本已做语法核对，重编译仍需在目标环境实际运行。
+
+当前保留检查点为author_train/update1800，迁移后内容签名一致，尚不代表衣物动态效果已验收。原始YAML中的历史数据类名仅作为兼容别名保留，同一个通用reader按metadata读取帧数、相机数、尺寸与FPS，不为MJJ另写算法。源模板canonical与Wardrobe canonical不同，不能直接换用后者解释旧模板。
+
+分层模板生成与图像训练均属于探索，尚未证明能从任意新视频直接得到良好衣物动态。检查实际多机位和连续视频后才决定是否采用结果；原始数据和保留人体资产不覆盖。

@@ -4,6 +4,8 @@
 
 人体主链与衣物探索分开管理；场景差异放在配置中，版本由Git提交和分支表达。
 
+当前衣物探索分支在共享主链上提供 `pipeline.py clothing`，各准备、训练和渲染阶段共用一份JSON配置。用法与实际边界见 [CLOTHING](docs/CLOTHING.md)。
+
 ## 安装与本机依赖
 
 在已有 PyTorch/CUDA 环境中安装本项目：
