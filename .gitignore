@@ -8,6 +8,8 @@
 /docs/reference/
 /third_party/*/
 /reports/
+/work/
+/.chart-data-*/
 
 # Python
 __pycache__/
