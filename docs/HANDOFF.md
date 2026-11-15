@@ -20,6 +20,7 @@
 - Windows safetensors默认mmap原生异常，用官方pread读取同一权重后strict加载与完整身份前向已通过，不改模型。
 - run已补齐分割输入依赖：重建身份/初始化/已配置但丢失的手观测且index缺失时先prepare；完整缓存不因缺index重跑。NLF与手观测各自复用，未配置手观测且已有初始化时继续保留该可选输入为空。调度/配置传递及部分缓存缺失的内联mock检查通过，不留测试脚本。
 - 视频编码成功后默认删除本次PNG中间帧，显式--keep-frames才保留。
+- 主链只读调用审查未发现按FCS/MJJ或人物名切换算法，也未发现可移除的整个旧模块；删除了6个无调用/无文档API引用的旧旋转与分割辅助函数及其无用导入。保留代码AST逐项不变，Black、diff检查和两份场景plan通过；未为该清理重复GPU拟合。
 
 ## 衣物唯一状态与问题
 
@@ -35,10 +36,12 @@
 - 光栅化前颜色图已有网格，随机初始化也有；1800时所有颜色网络Adam step均1800，排除完全没更新。六通道CUDA、StyleUNet上采样/激活对作者CPU参考的实际前反向已通过，不重复这些审计。
 - DeepSeek training_contract已exit0+final：原生5001预训练只监督位置/不透明度/尺度/旋转，不训练颜色/viewdir；图像总训练400001步，eval_interval1000只是审看间隔。没有颜色冻结/断梯度的确证。MJJ的clip/loss与作者4D-Dress配置相同，不能按Actor01配置差异擅改。
 - 2000的body色网frame49无viewdir CPU前向4.44秒；Haar往返最大误差小于8e-7，低频分量本身也有继承的多尺度格纹。不能仅归因于最后一个IWT算子。
-- 已用单个原生SMPL-X forward重放frame49/cam4矩阵，再调用原生get_viewdir_feat及实际色网/视角网权重，完成CPU真实视角条件对照，CUDA未初始化。加入真实视角条件会改变颜色，但手部UV输出仍有格纹；runtime/cache/review.png为当前实际视角UV图。该证据仅覆盖body、一个时刻/机位，未解决画质，不是新最终视频。
+- 已用单个原生SMPL-X forward重放frame49/cam4矩阵，再调用原生get_viewdir_feat及实际色网/视角网权重，完成CPU真实视角条件对照，CUDA未初始化。加入真实视角条件会改变颜色，但手部UV输出仍有格纹。该证据仅覆盖body、一个时刻/机位，未解决画质，不是新最终视频。
 - 首次原生Dataset CPU探针因自己先import cv2、后设置OPENCV_TEMP_PATH导致EXR临时路径失败，是诊断脚本导入顺序错误；正常入口原本正确设置相对ASCII临时路径，不误报生产根因。
 - 重型CPU Dataset探针随后触发分页峰值，自己的进程已退出，未得到其完整前向，不再重复该方式。改为分阶段单模型/单色网重放才完成上述对照，不改生产算法。
 - DeepSeek model_ownership已exit0+final，移除了工厂中参数相同的两套SMPL-X重复构造，canonical/fit角色共用一个只读实例，不共享另有设备约定的全局模型。主代理核对commons/调用方只读；一个真实原生模型canonical→live→canonical的vertices/joints/A逐项相同，全部参数/缓冲区指纹未变，约80157452字节的模型Tensor无需复制第二份。完整训练的分页收益尚未测量。
+- DeepSeek training_protocol已exit0+final；主代理直接核对论文§6及固定main_avatar源码：论文写300k、clip5e-4、两阶段先关闭face/smooth/penetration，固定4D-Dress代码为400001更新、clip1e-4、单阶段全损失，没有该coarse RGB切换。论文没有给出阶段分界，不能自行补造。本项目遵循固定代码，不能声称已复现完整论文协议。官网展示另含投稿后virtual-bone扩展，固定代码未见入口，不据此归因当前网格。
+- 已把2000渲染与同尺寸、同像素裁剪原图实际比较：frame49全部8机位，以及cam04/cam06的0/49/98。身体主要动作相符，局部肢体/轮廓仍有偏差；快速摆臂和弯腰的输入本身有明显运动模糊，无法从这几张图单独区分曝光、不同步和拟合误差。两机位0/49/98绑定图与assets/mjj/dynamic对应0/49/99的JPEG SHA逐项相同，未发现这一步额外合成模糊。未据此宣称标定正确或已找到网格唯一原因。runtime/cache/review.png已原位改为这些原图/渲染的同像素裁剪对照，不再是旧UV图。
 
 ## 清理与来源边界
 
