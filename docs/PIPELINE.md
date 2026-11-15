@@ -14,7 +14,7 @@
 | `render` | 渲染配置中 `actor.avatar` / `actor.motion` 指向的资产，可合成可选刚体。 |
 | `run` | 串联上述生产阶段；复用已有部分输入、身份和初始化，再拟合并渲染新动作。 |
 
-`run` 只有在任一人的 manifest、observations 或 keypoints 缺失时才执行准备；avatar 文件存在时跳过身份重建，initialization 文件存在时跳过初始化阶段。复用判断主要依据路径是否存在，不能据此断言旧缓存与更改后的输入、配置完全一致。实例观测和手部观测内部另有签名/恢复检查。
+`run` 在任一人的 manifest、observations 或 keypoints 缺失时执行准备。如果本次需要重建身份或初始化，而 segmentation index 未配置或文件不存在，也会先执行准备；相对 index 路径按项目根目录解析。已有有效 index 时直接复用；所有人的 avatar 和 initialization 文件完整时，不因缺少 index 重跑准备。avatar 文件存在时跳过身份重建，initialization 文件存在时跳过初始化阶段。复用判断主要依据路径是否存在，不能据此断言旧缓存与更改后的输入、配置完全一致。实例观测和手部观测内部另有签名/恢复检查。
 
 阶段之间的修改后配置保存在 `runs/<scene>/config.json`。分阶段继续时使用这份配置，避免回到原场景文件中的旧路径：
 
