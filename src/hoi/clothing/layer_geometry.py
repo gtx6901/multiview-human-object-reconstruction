@@ -174,16 +174,6 @@ def load_source_canonical_config(path: Path):
     return module, {"path": str(path), "sha256": sha256_file(path), "module": name}
 
 
-def vector_angle_deg(a, b) -> float:
-    ta = torch.as_tensor(a, dtype=torch.float64).reshape(-1)
-    tb = torch.as_tensor(b, dtype=torch.float64).reshape(-1)
-    denom = torch.linalg.norm(ta) * torch.linalg.norm(tb)
-    if float(denom) == 0.0:
-        return 0.0
-    c = torch.clamp(torch.dot(ta, tb) / denom, -1.0, 1.0)
-    return float(torch.rad2deg(torch.arccos(c)))
-
-
 def relative_canonical_vertices(
     ctx: Dict[str, Any],
     source_cfg,

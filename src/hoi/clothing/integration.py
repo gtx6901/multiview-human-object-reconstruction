@@ -129,7 +129,10 @@ def _expr_dim(data_dir: Path) -> int:
     if not p.is_file():
         raise FileNotFoundError(p)
     with np.load(p, allow_pickle=True) as sp:
-        return int(sp["expression"].shape[1])
+        shape = sp["expression"].shape
+        if len(shape) != 2 or min(shape) <= 0:
+            raise ValueError(f"expression must be a nonempty T,D matrix, got {shape}")
+        return int(shape[1])
 
 
 def _ensure_wardrobe_rasterizer() -> None:
@@ -163,7 +166,7 @@ def _ensure_wardrobe_rasterizer() -> None:
 def bootstrap(
     config_path: Path, device: str = "cpu", data_dir: Optional[Path] = None
 ) -> Dict[str, Any]:
-    """Author-first imports, local SMPLX/100-D expressions, local extensions."""
+    """Author imports, local SMPL-X with input expression dimensions, local extensions."""
     config_path = Path(config_path).resolve()
     if not config_path.is_file():
         raise FileNotFoundError(config_path)
@@ -171,8 +174,6 @@ def bootstrap(
     if not data_dir.is_dir():
         raise FileNotFoundError(data_dir)
     expr_dim = _expr_dim(data_dir)
-    if expr_dim != 100:
-        raise ValueError(f"expected 100-D expression, got {expr_dim}")
 
     for p in [RUNTIME_STYLE, RUNTIME_EXT, *LOCAL_DEPS, AUTHOR, RUNTIME_WARDROBE]:
         if p.is_dir():
@@ -223,6 +224,11 @@ def bootstrap(
                     kwargs["model_path"] = str(LOCAL_SMPLX)
                 kwargs["num_expression_coeffs"] = expr_dim
                 super().__init__(*args, **kwargs)
+                if self.num_expression_coeffs != expr_dim:
+                    raise ValueError(
+                        f"expression has {expr_dim} coefficients, but this SMPL-X model "
+                        f"provides {self.num_expression_coeffs}; dimensions must match"
+                    )
 
         mod.SMPLX = Patched
 
@@ -232,7 +238,7 @@ def bootstrap(
         raise RuntimeError(f"wrong smpl_util: {smpl_util.__file__}")
 
     def native_smplx_model(dataset_dir):
-        # Native inputs use 45-D hand poses and 100-D expression, not PCA-12.
+        # Native inputs use full 45-D hand poses; expression width comes from data.
         # The canonical and fitted roles are read-only
         # forwards over identical parameters, so one module owns both.
         model = smplx.SMPLX(use_pca=False, num_pca_comps=45, flat_hand_mean=True, batch_size=1)
@@ -1126,16 +1132,6 @@ def generate_training_masks(data: Path, config_path: Path = CONFIG) -> int:
     return 0 if segment_status == "generated" else 2
 
 
-def _scalar(value: Any) -> Any:
-    if hasattr(value, "detach"):
-        value = value.detach().cpu()
-    if hasattr(value, "numel") and int(value.numel()) == 1:
-        value = value.item()
-    if isinstance(value, (int, float, str, bool)):
-        return value
-    return None
-
-
 def _source_signature(config_path: Path) -> Dict[str, Any]:
     files = {
         "smpl_params": DATA / "smpl_params.npz",
@@ -1536,28 +1532,28 @@ def _prepare_lpips(trainer, opt: Dict[str, Any]) -> bool:
     return True
 
 
-def run_author_pretrain(config_path: Path, target_updates: int, step_only: bool) -> int:
+def run_author_pretrain(config_path: Path, target_updates: int) -> int:
     """Shared real author pretrain implementation for step and full modes."""
     os.environ["WANDB_MODE"] = "disabled"
     os.environ["WANDB_DISABLED"] = "true"
     out = RESULTS / "wardrobe_training.json"
     report: Dict[str, Any] = {
         "schema": "gaussian_wardrobe_training/v1",
-        "phase": "one_author_pretrain_update" if step_only else "author_pretrain",
+        "phase": "author_pretrain",
         "status": "failed",
         "config": str(config_path),
         "config_sha256": sha256(config_path) if config_path.is_file() else None,
         "data_dir": str(DATA),
         "target_updates": int(target_updates),
         "updates": 0,
-        "step_only": bool(step_only),
+        "step_only": False,
         "wandb_mode": os.environ["WANDB_MODE"],
         "wandb_disabled": os.environ["WANDB_DISABLED"],
         "optimizer": "CPUAdam(native torch.optim.Adam over CPU FP32 mirrors)",
         "activation_checkpointing": "6 DualStyleUNet forwards",
-        "no_checkpoint": bool(step_only),
+        "no_checkpoint": False,
         "no_mini_test": True,
-        "no_full_training": bool(step_only),
+        "no_full_training": False,
         "no_amp": True,
         "quality_claim": None,
     }
@@ -1627,7 +1623,7 @@ def run_author_pretrain(config_path: Path, target_updates: int, step_only: bool)
             sum(p.numel() for p in trainer.avatar_net.parameters() if p.requires_grad)
         )
         resumed = False
-        if not step_only and TRAIN_CKPT.is_file():
+        if TRAIN_CKPT.is_file():
             epoch, offset, updates = _load_training_checkpoint(TRAIN_CKPT, trainer, signature)
             resumed = True
             print(
@@ -1695,27 +1691,22 @@ def run_author_pretrain(config_path: Path, target_updates: int, step_only: bool)
                         f"epoch={epoch} offset={offset} loss={total_value:.6f}",
                         flush=True,
                     )
-                if not step_only and updates % 100 == 0:
+                if updates % 100 == 0:
                     checkpoint = _save_training_checkpoint(
                         TRAIN_CKPT, trainer, epoch, offset, updates, signature
                     )
         elapsed = time.time() - started
-        if not step_only:
-            checkpoint = _save_training_checkpoint(
-                TRAIN_CKPT, trainer, epoch, offset, updates, signature
-            )
+        checkpoint = _save_training_checkpoint(
+            TRAIN_CKPT, trainer, epoch, offset, updates, signature
+        )
         peak = int(torch.cuda.max_memory_allocated())
         report.update(
             {
                 "status": "ok",
                 "phase": (
-                    "one_author_pretrain_update"
-                    if step_only
-                    else (
-                        "pretrained"
-                        if updates >= int(opt.get("train", {}).get("pretrain_iters", 5001))
-                        else "author_pretrain"
-                    )
+                    "pretrained"
+                    if updates >= int(opt.get("train", {}).get("pretrain_iters", 5001))
+                    else "author_pretrain"
                 ),
                 "training_phase": "author_pretrain",
                 "updates": int(updates),
@@ -1728,8 +1719,8 @@ def run_author_pretrain(config_path: Path, target_updates: int, step_only: bool)
                 "peak_vram_bytes": peak,
                 "checkpoint": checkpoint,
                 "optimizer_steps": int(updates),
-                "no_checkpoint": bool(step_only),
-                "no_full_training": bool(step_only),
+                "no_checkpoint": False,
+                "no_full_training": False,
                 "scope": "real author pretrain updates; not dynamic RGB/cloth "
                 "training or quality",
             }
@@ -1741,7 +1732,7 @@ def run_author_pretrain(config_path: Path, target_updates: int, step_only: bool)
         print(json.dumps(report, indent=2))
         return 0
     except KeyboardInterrupt:
-        if trainer is not None and not step_only:
+        if trainer is not None:
             try:
                 checkpoint = _save_training_checkpoint(
                     TRAIN_CKPT, trainer, epoch, offset, updates, signature
@@ -2484,7 +2475,7 @@ def run_full_pretrain(config_path: Path, updates: Optional[int]) -> int:
     target = (
         updates if updates is not None else int(opt.get("train", {}).get("pretrain_iters", 5001))
     )
-    return run_author_pretrain(config_path, target_updates=target, step_only=False)
+    return run_author_pretrain(config_path, target_updates=target)
 
 
 def main() -> int:
