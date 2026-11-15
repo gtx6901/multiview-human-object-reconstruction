@@ -21,8 +21,7 @@ Legacy AA is converted only at the SMPL-X/LHM boundary.
 """
 from __future__ import annotations
 
-from typing import Any, Dict, Iterable, List, Sequence, Tuple
-import math
+from typing import Any, Dict, Sequence, Tuple
 
 import torch
 from pytorch3d.transforms import (
@@ -150,22 +149,6 @@ def temporal_angular_accel(q: torch.Tensor) -> torch.Tensor:
     return logs[1:] - logs[:-1]
 
 
-def body_trust_penalty(
-    q_current: torch.Tensor, q_initial: torch.Tensor, sigma: float = 1e-3
-) -> torch.Tensor:
-    """SO(3) body trust, 0.5*mean(log(qcur*inv(qinit))^2)/sigma."""
-    residual = relative_log(q_current, q_initial)
-    return 0.5 * residual.square().mean() / sigma
-
-
-def temporal_penalty(q: torch.Tensor, sigma: float = 5e-3) -> torch.Tensor:
-    """SO(3) temporal acceleration penalty, mean(abs(acc))/sigma."""
-    acc = temporal_angular_accel(q)
-    if acc.numel() == 0:
-        return torch.zeros((), dtype=q.dtype, device=q.device)
-    return acc.abs().mean() / sigma
-
-
 def body_motion_temporal(
     q_root: torch.Tensor, q_body: torch.Tensor, translation: torch.Tensor
 ) -> torch.Tensor:
@@ -217,36 +200,6 @@ def hemisphere_continuous(q: torch.Tensor) -> torch.Tensor:
         dot = (prev * qt).sum(-1, keepdim=True)
         out.append(torch.where(dot < 0, -qt, qt))
     return normalize_quaternions(torch.stack(out, dim=0))
-
-
-def slerp(q0: torch.Tensor, q1: torch.Tensor, t: Any, eps: float = 1e-8) -> torch.Tensor:
-    """Shortest-path SLERP with stable small-angle limit and exact endpoints."""
-    q0 = normalize_quaternions(q0)
-    q1 = normalize_quaternions(q1)
-    dot = (q0 * q1).sum(-1, keepdim=True)
-    q1 = torch.where(dot < 0, -q1, q1)
-    dot = dot.abs().clamp(-1.0, 1.0)
-    tt = torch.as_tensor(t, dtype=q0.dtype, device=q0.device)
-    if tt.ndim == 0:
-        tt = tt.expand(q0.shape[:-1]).unsqueeze(-1)
-    elif tt.shape != q0.shape[:-1]:
-        tt = tt.expand(q0.shape[:-1]).unsqueeze(-1)
-    else:
-        tt = tt.unsqueeze(-1)
-    small = dot > 1.0 - 1e-6
-    # Do not evaluate acos at 1 even in an unused torch.where branch: its
-    # infinite derivative can contaminate the identity interpolation gradient.
-    theta = torch.acos(torch.where(small, torch.zeros_like(dot), dot))
-    sin_theta = torch.sin(theta)
-    denom = torch.where(small, torch.ones_like(sin_theta), sin_theta)
-    a = torch.sin((1.0 - tt) * theta) / denom
-    b = torch.sin(tt * theta) / denom
-    linear = normalize_quaternions((1.0 - tt) * q0 + tt * q1)
-    curved = normalize_quaternions(torch.where(small, q0, a * q0 + b * q1))
-    out = torch.where(small, linear, curved)
-    out = torch.where((tt <= 0).expand_as(out), q0, out)
-    out = torch.where((tt >= 1).expand_as(out), q1, out)
-    return normalize_quaternions(out)
 
 
 def _alias_values(
@@ -381,10 +334,6 @@ def load_motion_quaternions(
     return normalize_quaternions(q), info
 
 
-def motion_to_local_quaternions(motion: Dict[str, Any], verify_legacy: bool = True) -> torch.Tensor:
-    return load_motion_quaternions(motion, verify_legacy=verify_legacy)[0]
-
-
 def quaternions_to_legacy(q: torch.Tensor) -> Dict[str, torch.Tensor]:
     """Legacy AA boundary conversion from canonical local quaternions."""
     q = normalize_quaternions(q)
@@ -427,37 +376,3 @@ def export_motion_with_quaternions(
         for key in ("jaw_pose", "leye_pose", "reye_pose"):
             out.pop(key, None)
     return out
-
-
-def lift_axis_angles_continuous(aa: torch.Tensor) -> torch.Tensor:
-    """Equivalent continuous AA representation; diagnostic/export only.
-
-    Uses quaternion sign continuity and nearest 2*pi angle lifting.  No smoothing
-    and no forced axis at zero.
-    """
-    aa = torch.as_tensor(aa)
-    if not aa.is_floating_point():
-        aa = aa.float()
-    orig_shape = aa.shape
-    q = axis_angle_to_quaternion(aa.reshape(-1, 3))
-    q = hemisphere_continuous(q.reshape(-1, 4)).reshape(-1, 1, 4)
-    q = q.reshape(-1, 4)
-    lifted = []
-    prev_angle = None
-    for t in range(q.shape[0]):
-        qv = q[t, 1:]
-        qw = float(q[t, 0])
-        n = float(torch.linalg.norm(qv))
-        if n < 1e-12:
-            aa_t = torch.zeros(3, dtype=q.dtype, device=q.device)
-            angle = 0.0
-        else:
-            axis = qv / n
-            angle = 2.0 * math.atan2(n, qw)
-            if prev_angle is not None:
-                k = round((prev_angle - angle) / (2.0 * torch.pi))
-                angle += 2.0 * torch.pi * k
-            aa_t = axis * angle
-        lifted.append(aa_t)
-        prev_angle = angle
-    return torch.stack(lifted, 0).reshape(orig_shape)

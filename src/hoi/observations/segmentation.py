@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 import cv2
-from hoi.image_io import read_image, write_image
+from hoi.image_io import write_image
 
 THIS_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
@@ -240,30 +240,6 @@ def build_predictor(args: argparse.Namespace) -> Any:
     finally:
         os.chdir(cwd)
     return predictor
-
-
-def empty_camera(
-    view: Dict[str, Any],
-    frames: Sequence[Dict[str, Any]],
-    actors: Sequence[str],
-    reasons: Dict[str, str],
-) -> Dict[str, Any]:
-    f_count = len(frames)
-    w, h = native_size(view)
-    k = len(actors)
-    return {
-        "present": np.zeros((f_count, k), dtype=bool),
-        "raw_area": np.zeros((f_count, k), dtype=np.int32),
-        "areas": np.zeros((f_count, k), dtype=np.int32),
-        "bboxes": np.full((f_count, k, 4), np.nan, dtype=np.float32),
-        "scores": np.zeros((f_count, k), dtype=np.float32),
-        "border_touch": np.zeros((f_count, k), dtype=bool),
-        "packed": np.zeros((f_count, k, h, (w + 7) // 8), dtype=np.uint8),
-        "mask_shape": (h, w),
-        "reasons": reasons,
-        "seed_boxes": {a: None for a in actors},
-        "obj_ids": {},
-    }
 
 
 def propagate_camera(
