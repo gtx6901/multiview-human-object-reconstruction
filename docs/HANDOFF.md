@@ -50,7 +50,7 @@ DeepSeek首次启动因headless缺少provider失败；按桌面现有provider/mo
 
 头盔生成来源另有边界：当前入口只消费选定mesh/轨迹。tag中的clean_helmet_motion是选定pose报告的直接producer，要求清理前轨迹、原人体动作和phases(start/stop_exclusive/joint)；这些旧名字在当前resolver及已检查的lhmpp/work位置未找到，不能断言全盘丢失，也不能仅从最终轨迹反推出清理前自由运动。full-pipeline的baker已有后续响应模型修改，不能称它精确复现选定纹理。后续清理若发现阶段表、锚点、原壳/UV、原分割/深度输入，先保全必要输入，不能凭目录名删掉。
 
-主链不再依赖旧work代码。旧目录删除被执行策略拦截，缩小到单个 `work/mjj/reconstruction/stability` 仍被拒绝，工具只返回blocked by policy，没有具体原因。已向用户列出明确路径重新确认；未删除任何旧目录，不换API绕过。旧 `work/mjj/two_person/data/quaternion_fit/prior_control` 约128MiB也曾被拒绝删除，继续保留。
+主链不再依赖旧work代码。用户已明确再次授权删除旧work（保留prior_control）、lhmpp/runs、lhmpp/inputs和旧7个基线脚本，不需要再次询问授权。本轮已核对迁出衣物输入/唯一检查点存在、当前生产没有这些旧路径的引用、待删树没有reparse point，并建立排除prior_control及其祖先的绝对路径删除计划。但执行审查仍在进程启动前拒绝整个批次，只返回blocked by policy，没有具体原因，删除没有执行。阻碍是执行拒绝，不是缺少用户授权；不换API、父目录或权限绕过。旧 `work/mjj/two_person/data/quaternion_fit/prior_control` 约128MiB继续保留。
 
 保留原始视频、图片、标定、必要权重、已选资产、已交付PPT/GIF、v1.0/full-pipeline。不上传原图视频或模型权重，不用git add .。正常命名，原位迭代，版本进Git；不保留无用检查脚本、门限文件、失败结果和版本目录。
 
@@ -60,4 +60,4 @@ DeepSeek首次启动因headless缺少provider失败；按桌面现有provider/mo
 
 worker为用户指定的GPT-6.1 Sol medium，负责明确可验收的实现；主代理独立审查、执行和看图。先找输入、算法、实现根因，不加像素补丁、关节锁或画质门槛，不按loss认定成功。
 
-共享验证文档与Black100配置已同步remote main=d0d28ad，已合入clothing；衣物IO实现已发布f97de2e，最新审看记录随本轮提交发布，以实际refs为准。远端只有main与codex/clothing；本地已合并的codex/publish-main引用已删除，未合并历史WIP codex/interaction-cloth保留，不能强删未核对历史。临时历史源码文本、过期委派日志的本轮删除也被执行审查拒绝，尚保留；不换API绕过。原始数据、PPT/GIF、v1.0/full-pipeline未变。旧目录清理问题等待用户回复，不能借全权限重试绕过此前拒绝。
+共享验证文档与Black100配置已同步remote main=d0d28ad，已合入clothing；衣物IO实现已发布f97de2e，最新审看记录随本轮提交发布，以实际refs为准。远端只有main与codex/clothing；本地已合并的codex/publish-main引用已删除，未合并历史WIP codex/interaction-cloth保留，不能强删未核对历史。临时历史源码文本、过期委派日志的删除也被执行审查拒绝，尚保留；不换API绕过。原始数据、PPT/GIF、v1.0/full-pipeline未变。旧目录删除授权已收到且持续有效，但本次执行仍被拒绝，不能借全权限重试绕过。
