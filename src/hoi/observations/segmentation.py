@@ -19,6 +19,7 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 import numpy as np
 import cv2
 from hoi.image_io import write_image
+from hoi.capture.scene import read_timeline
 
 THIS_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
@@ -92,17 +93,10 @@ def timeline_pts(view: Dict[str, Any]) -> Tuple[np.ndarray, List[str]]:
     path = Path(tp)
     if not path.is_file():
         return pts, tags
-    with np.load(path, allow_pickle=False) as z:
-        ff = np.asarray(z["ffprobe_pts_sec"], dtype=np.float64)
-        cv = np.asarray(z["cv2_pos_msec"], dtype=np.float64) / 1000.0
-        m = min(n, ff.size, cv.size)
-        for i in range(m):
-            if np.isfinite(ff[i]):
-                pts[i] = ff[i]
-                tags[i] = "ffprobe_pts"
-            elif np.isfinite(cv[i]):
-                pts[i] = cv[i]
-                tags[i] = "cv2_pos_msec"
+    measured, sources = read_timeline(path)
+    m = min(n, len(measured))
+    pts[:m] = measured[:m]
+    tags[:m] = sources[:m]
     return pts, tags
 
 

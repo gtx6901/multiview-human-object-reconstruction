@@ -20,6 +20,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
+from hoi.capture.scene import read_timeline
 
 try:
     import cv2
@@ -170,11 +171,9 @@ def load_scene(path: Path) -> Tuple[Dict[str, Any], List[Camera], List[str]]:
                 tp = path.parent / tp
             if tp.is_file():
                 try:
-                    with np.load(tp, allow_pickle=False) as z:
-                        ff = np.asarray(z["ffprobe_pts_sec"], dtype=np.float64)
-                        cv = np.asarray(z["cv2_pos_msec"], dtype=np.float64) / 1000.0
-                        n = min(frame_count, ff.size, cv.size)
-                        pts[:n] = np.where(np.isfinite(ff[:n]), ff[:n], cv[:n])
+                    measured, _ = read_timeline(tp)
+                    n = min(frame_count, len(measured))
+                    pts[:n] = measured[:n]
                 except Exception as exc:
                     warnings.append(f"{serial}: cannot read timeline ({exc}); PTS marked unknown")
             else:
