@@ -265,7 +265,10 @@ def native_layout(
     import yaml
 
     data = Path(data).resolve()
-    binding_path, source_path = data / "binding_manifest.json", data / "source_frames.json"
+    binding_path, source_path = (
+        data / "binding_manifest.json",
+        data / "source_frames.json",
+    )
     binding = json.loads(binding_path.read_text(encoding="utf-8"))
     source = json.loads(source_path.read_text(encoding="utf-8"))
     source_frames = [int(frame) for frame in source["source_frames"]]
@@ -936,7 +939,12 @@ def generate_training_masks(data: Path, config_path: Path = CONFIG) -> int:
     if np.any((cloth_face_ids >= 0) & (cloth_face_ids >= len(selected_faces))):
         raise RuntimeError("rendered face id outside selected cloth face order")
     body_adjacency = rebuild_adjacency(
-        body_dir, body_template, body_template_path, body_face_ids, body_support, body_pos_path
+        body_dir,
+        body_template,
+        body_template_path,
+        body_face_ids,
+        body_support,
+        body_pos_path,
     )
     cloth_adjacency = rebuild_adjacency(
         cloth_dir,
@@ -1237,6 +1245,8 @@ def _save_training_checkpoint(
     }
     if extra_signature is not None:
         payload["train_source_signature"] = extra_signature
+    if getattr(trainer, "checkpoint_recovery", None):
+        payload["recovery"] = trainer.checkpoint_recovery
     if iter_idx is not None:
         payload["iter_idx"] = int(iter_idx)
     if epoch_idx is not None:
@@ -1245,7 +1255,11 @@ def _save_training_checkpoint(
     tmp = path.with_name(path.name + ".tmp")
     torch.save(payload, tmp)
     os.replace(tmp, path)
-    return {"path": str(path), "bytes": int(path.stat().st_size), "sha256": sha256(path)}
+    return {
+        "path": str(path),
+        "bytes": int(path.stat().st_size),
+        "sha256": sha256(path),
+    }
 
 
 def signature_equal(actual: Any, expected: Any) -> bool:
@@ -1278,8 +1292,9 @@ def signature_equal(actual: Any, expected: Any) -> bool:
 
 def _load_training_checkpoint(path: Path, trainer, signature: Dict[str, Any]):
     import torch
+    from hoi.clothing.training_memory import load_checkpoint
 
-    payload = torch.load(path, map_location="cpu", weights_only=False, mmap=True)
+    payload = load_checkpoint(path)
     if payload.get("phase") == "author_train":
         raise RuntimeError(
             "pretrain refuses to load an author_train checkpoint; "
@@ -1428,11 +1443,19 @@ def _train_source_signature(config_path: Path) -> Dict[str, Any]:
     adjacency_paths = {
         "body": {
             name: DATA / "smpl_pos_map_offset_body" / name
-            for name in ("neighbor_idx.npy", "neighbor_weights.npy", "with_neighbor.npy")
+            for name in (
+                "neighbor_idx.npy",
+                "neighbor_weights.npy",
+                "with_neighbor.npy",
+            )
         },
         "cloth": {
             name: DATA / "smpl_pos_map_offset_cloth" / name
-            for name in ("neighbor_idx.npy", "neighbor_weights.npy", "with_neighbor.npy")
+            for name in (
+                "neighbor_idx.npy",
+                "neighbor_weights.npy",
+                "with_neighbor.npy",
+            )
         },
     }
     for layer, paths in adjacency_paths.items():
@@ -1782,14 +1805,16 @@ def _load_train_checkpoint(
     warmup: int,
 ):
     import torch
+    from hoi.clothing.training_memory import load_checkpoint
 
-    payload = torch.load(path, map_location="cpu", weights_only=False, mmap=True)
+    payload = load_checkpoint(path)
     if not signature_equal(payload.get("source_signature"), common_signature):
         raise RuntimeError(
             "training checkpoint common geometry/source signature mismatch; "
             "refusing to start image training"
         )
     phase = payload.get("phase")
+    trainer.checkpoint_recovery = payload.get("recovery")
     updates = int(payload.get("updates", 0))
     if phase == "author_train":
         if not signature_equal(payload.get("train_source_signature"), train_signature):
@@ -2167,10 +2192,11 @@ def run_render(
     import cv2 as cv
     import subprocess
     import torch
+    from hoi.clothing.training_memory import load_checkpoint
 
     if not TRAIN_CKPT.is_file():
         raise FileNotFoundError(f"render checkpoint missing: {TRAIN_CKPT}")
-    payload = torch.load(TRAIN_CKPT, map_location="cpu", weights_only=False, mmap=True)
+    payload = load_checkpoint(TRAIN_CKPT)
     phase = payload.get("phase")
     if phase != "author_train":
         raise RuntimeError(
@@ -2313,7 +2339,10 @@ def run_render(
         proc = None
         try:
             proc = subprocess.Popen(
-                cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE
+                cmd,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.PIPE,
             )
             if proc.stdin is None:
                 raise RuntimeError("ffmpeg stdin unavailable")
