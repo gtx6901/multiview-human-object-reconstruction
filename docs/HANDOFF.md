@@ -42,7 +42,11 @@ DeepSeek首次启动因headless缺少provider失败；按桌面现有provider/mo
 
 保存已改为每个原生状态Tensor各自的紧凑storage view（不复制数据、不保存预留尾部），避免单个3.578GB存储块。小CPU保存/加载、原生Adam数值、延迟梯度、重复恢复及临时文件释放通过。真实1802→1803更新退出0，C盘最小余量约1.98GB；完整5.386GB保存重新加载通过，1304项状态覆盖447297872参数，全部有限、Adam step=1，recovery保留。当前检查点SHA256为258e2e1d54f76bc6f0a5cd51214935af97be0fcafd09cd900baf625b08398bf1。
 
-目前唯一GPU任务是1803→2000统一入口训练，启动器PID23376/session14357，唯一日志runs/mjj001/clothing/wardrobe_training.log，已实际看到1810，C盘约2GB余量。先查真实进程/日志/检查点，不重复启动。成功后重新加载完整保存，再全八机位0/49/98及cam04完整99帧/9fps渲染并亲自审看；不能只看exit0或loss。
+1803→2000统一入口训练已退出0，约920.6秒，C盘最小余量2007314432字节；完整检查点再次加载通过，1304项状态全部有限、Adam step=198，recovery保留。当前唯一检查点5386350562字节，SHA256 b54b59e337fec58dbfb957ba18a115b392fab4b3c5d10a4706e8e0fe6c295311。日志runs/mjj001/clothing/wardrobe_training.log。
+
+2000检查点八机位0/49/98与cam04完整99帧/9fps渲染退出0，已逐机位看图、正面高分辨率图及完整视频播放到结尾，并对照1800 reference。网格、重影、脸手模糊仍明显，没有实质解决，未采用为良好动态结果。2000画面在review/cam00至cam07，唯一新完整视频review/cam04/preview.mp4；1800 reference仅作为尚未闭合颜色网络机制的必要对照，不新增轮次目录。不继续盲目加训练或重复CUDA/输入静态审计。下次先查颜色网络输出/监督与训练动力学，注意本轮Adam已重置这一混杂因素，不能当无损续训对照。
+
+当前无GPU/DeepSeek训练任务，临时本地视频服务已停止；继续前仍核对真实进程。主链工程整理的物理清理仍受下述执行拒绝影响，不能宣称整个整理完成。额度本轮已用92%，保留准确交接，下一次按实际额度判断，不使用重置券。
 
 头盔生成来源另有边界：当前入口只消费选定mesh/轨迹。tag中的clean_helmet_motion是选定pose报告的直接producer，要求清理前轨迹、原人体动作和phases(start/stop_exclusive/joint)；这些旧名字在当前resolver及已检查的lhmpp/work位置未找到，不能断言全盘丢失，也不能仅从最终轨迹反推出清理前自由运动。full-pipeline的baker已有后续响应模型修改，不能称它精确复现选定纹理。后续清理若发现阶段表、锚点、原壳/UV、原分割/深度输入，先保全必要输入，不能凭目录名删掉。
 
@@ -56,4 +60,4 @@ DeepSeek首次启动因headless缺少provider失败；按桌面现有provider/mo
 
 worker为用户指定的GPT-6.1 Sol medium，负责明确可验收的实现；主代理独立审查、执行和看图。先找输入、算法、实现根因，不加像素补丁、关节锁或画质门槛，不按loss认定成功。
 
-共享验证文档与Black100配置已同步remote main=d0d28ad，已合入当前clothing。当前新IO实现及交接变更待真实GPU验收后提交发布。临时历史源码文本、过期委派日志的本轮删除也被执行审查拒绝，尚保留；不换API绕过。原始数据、PPT/GIF、v1.0/full-pipeline未变。旧目录清理问题等待用户回复，不能借全权限重试绕过此前拒绝。
+共享验证文档与Black100配置已同步remote main=d0d28ad，已合入clothing；衣物IO实现已发布f97de2e，最新审看记录随本轮提交发布，以实际refs为准。远端只有main与codex/clothing；本地已合并的codex/publish-main引用已删除，未合并历史WIP codex/interaction-cloth保留，不能强删未核对历史。临时历史源码文本、过期委派日志的本轮删除也被执行审查拒绝，尚保留；不换API绕过。原始数据、PPT/GIF、v1.0/full-pipeline未变。旧目录清理问题等待用户回复，不能借全权限重试绕过此前拒绝。
