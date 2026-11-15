@@ -17,6 +17,7 @@
 4. 单人含头盔和固定新视角首帧已渲染并查看。双人新拟合的八机位0/149/299与21305717完整300帧/30fps视频已实际审看，未发现明显大幅抽动回归；握手接触和脸手外观仍不足。临时保留 `runs/fcs008/render/reference.mp4` 为整理前选定动作的同相机对照，选择完成后清理。21305711靠右与原JPEG一致，属于采集构图。
 5. 视频编码成功后默认删除这次编码使用的PNG；显式 `--keep-frames` 才保留，不积累轮次副本。
 6. 新生成partner身份进一步完成全部300帧默认身体、脸、MAP拟合，再与另一身份合成八机位0/149/299及完整300帧/30fps视频，均退出0并已审看。新旧身份的rig相同；以相同完整观测拟合，动作Tensor逐项相同，外观Tensor有变化，不能称文件重复。未见明显大幅抽动回归，抓握接触与脸手外观仍不足。
+7. 已补齐run的真实阶段依赖：当avatar或初始化需要重建，且分割index缺失时先prepare；完整缓存不因index缺失重建，有有效index时直接复用。worker内联11种调度/返回配置传递检查通过，主代理另核对实际完整FCS008、局部缓存缺失和异工作目录的相对index解析；未运行新GPU拟合，不保留测试脚本。
 
 Windows safetensors默认mmap曾在 `get_tensor → torch.storage.__getitem__` 原生访问异常。使用官方pread读取同一checkpoint后，相同上下文严格加载和完整身份前向已通过；不改网络或权重。此前一次exit1原因未独立确认，不推断成模型质量问题。16GB RAM下注意系统分页，所有显式临时、缓存和输出用D盘，不擅改系统分页设置或删除C盘个人/系统文件。
 
@@ -33,6 +34,8 @@ Windows safetensors默认mmap曾在 `get_tensor → torch.storage.__getitem__` �
 最后完成同一49帧/cam04的RGB网络初始值与checkpoint控制：初始化输出本身已有规则彩色网格，1800输出已经学到部分人体/衣物颜色但仍残留网格；身体和衣物全部color_net的Adam step均为1800，不能说RGB网络完全没更新。证据为唯一 `runs/mjj001/clothing/texture.log` 和可复用 `runtime/cache/review.png`，没有新增检查脚本。此结果不能保证长训会修好，仍需定位训练动力学及输入对应；不要重复已完成的CUDA/输入静态审计。
 
 DeepSeek首次启动因headless缺少provider失败；按桌面现有provider/model加入仅本次临时overlay后，代码只读审计已完成（exit0+final，session-664dd3ce-67cf-4b51-8806-39db7ab9e3f4）。未找到当前训练/推理输入数值不一致的确证；指出渲染签名覆盖不足，但没有当前输入变化证据，不把这类校验缺口当网格原因或先加护栏。结果在 `runtime/deepseek/observation_audit/answer.md`；代码审计没有读取原图/视频/权重。当前根因仍未闭合。
+
+后续training_contract阶段核对也已exit0+final：pretrain原生只监督位置/不透明度/尺度/旋转，不训练颜色与viewdir；图像阶段才训练颜色，5001预训练和400001图像总更新含义与作者一致，eval_interval1000仅是审看间隔。未发现颜色冻结/断梯度的确证。DeepSeek对Actor01指出的clip/loss差异不能当MJJ自改：主代理核对4d_dress/avatar.yaml，当前MJJ的1e-4 clip及相关loss权重与这份作者配置一致，不据此改成1e-3。现检查点iter_idx/updates、epoch_idx/epoch应以实际读取为准，未因假设不一致增加护栏或改计数。
 
 ## 下一步
 
@@ -51,6 +54,14 @@ DeepSeek首次启动因headless缺少provider失败；按桌面现有provider/mo
 头盔生成来源另有边界：当前入口只消费选定mesh/轨迹。tag中的clean_helmet_motion是选定pose报告的直接producer，要求清理前轨迹、原人体动作和phases(start/stop_exclusive/joint)；这些旧名字在当前resolver及已检查的lhmpp/work位置未找到，不能断言全盘丢失，也不能仅从最终轨迹反推出清理前自由运动。full-pipeline的baker已有后续响应模型修改，不能称它精确复现选定纹理。后续清理若发现阶段表、锚点、原壳/UV、原分割/深度输入，先保全必要输入，不能凭目录名删掉。
 
 主链不再依赖旧work代码。用户已明确再次授权删除旧work（保留prior_control）、lhmpp/runs、lhmpp/inputs和旧7个基线脚本，不需要再次询问授权。本轮已核对迁出衣物输入/唯一检查点存在、当前生产没有这些旧路径的引用、待删树没有reparse point，并建立排除prior_control及其祖先的绝对路径删除计划。但执行审查仍在进程启动前拒绝整个批次，只返回blocked by policy，没有具体原因，删除没有执行。阻碍是执行拒绝，不是缺少用户授权；不换API、父目录或权限绕过。旧 `work/mjj/two_person/data/quaternion_fit/prior_control` 约128MiB继续保留。
+
+用户随后要求提供脚本由其手动删除。已提供scripts/cleanup_legacy.ps1，默认仅预览，用户显式-Execute才删除上述范围；先检查目录链接/完整绝对路径计划并排除保留目录及其祖先，执行前后比较prior_control文件SHA256。已运行默认只读预览，列出437项，未运行-Execute，不能称清理完成。scripts/README.md已按当前入口和维护脚本重写。后续以真实目录与用户执行结果核实清理，不替用户重试被拒绝的删除。
+
+17:06核对：上述push已退出0，remote main=426f76e、clothing=2e891ed，均包含调度修正及手动清理脚本。无GPU/DeepSeek任务；用户游戏仍在使用GPU，本轮没有启动新GPU计算。
+
+手动清理的实际结果已核实：lhmpp/runs、lhmpp/inputs及旧7个脚本均已不存在；work内除prior_control外没有其他文件。保留目录现612文件、134432521字节，衣物唯一检查点SHA仍为b54b59e337fec58dbfb957ba18a115b392fab4b3c5d10a4706e8e0fe6c295311。两份场景配置的全部人物输入及衣物source必要文件仍存在；D盘可用空间约从60GiB增加到86GiB。不能把执行者说成代理：代理只运行过脚本预览，删除由用户手动进行。
+
+还留四个未跟踪的旧副本：configs/paths.json、docs/README.md、docs/DESIGN.md、docs/DECISIONS.md。逐字节规范换行比较，均与v1.0对应文件相同；生产代码/当前文档没有引用。针对这四个确切文件的一次删除也被执行审查在启动前拒绝，只返回blocked by policy，无具体原因，文件未删除。不要换工具/权限/父目录或扩展用户脚本来绕过；其余此前被拒绝的临时缓存也保留。当前代码集中仍有这四个历史文件残留，不能宣称整个物理整理完成。
 
 保留原始视频、图片、标定、必要权重、已选资产、已交付PPT/GIF、v1.0/full-pipeline。不上传原图视频或模型权重，不用git add .。正常命名，原位迭代，版本进Git；不保留无用检查脚本、门限文件、失败结果和版本目录。
 
