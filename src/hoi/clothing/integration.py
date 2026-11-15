@@ -66,7 +66,9 @@ def _find_lpips() -> Optional[Path]:
 
 
 def _vgg_cache() -> Path:
-    return Path.home() / ".cache/torch/hub/checkpoints/vgg16-397923af.pth"
+    from torch.hub import get_dir
+
+    return Path(get_dir()) / "checkpoints/vgg16-397923af.pth"
 
 
 def _ffmpeg_exe() -> str:
@@ -183,6 +185,7 @@ def bootstrap(
     if str(device).startswith("cuda"):
         _ensure_wardrobe_rasterizer()
     os.environ.setdefault("TORCH_EXTENSIONS_DIR", str(CLOTHING_RUNTIME / "torch_extensions"))
+    os.environ.setdefault("TORCH_HOME", str(CLOTHING_RUNTIME / "torch"))
     os.environ["OPENCV_IO_ENABLE_OPENEXR"] = "1"
     io = _install_unicode_cv()
 

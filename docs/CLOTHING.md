@@ -27,6 +27,8 @@ python pipeline.py clothing --config configs/clothing/mjj001.json --stage train 
 
 本地编译依赖位于 `runtime/clothing`；唯一构建脚本为 `scripts/build_clothing.ps1`，需要匹配的PyTorch、CUDA、MSVC。Wardrobe的label+RGB必须一次联合六通道渲染，不能复用旧AG三通道扩展。脚本已做语法核对，重编译仍需在目标环境实际运行。
 
+Torch模型缓存默认在`runtime/clothing/torch`，也可通过标准`TORCH_HOME`指定；VGG主干权重为其`hub/checkpoints/vgg16-397923af.pth`，LPIPS线性权重为`runtime/clothing/weights/vgg.pth`。训练入口不会自动下载缺失权重。
+
 已实际输出1800更新的八机位0/49/98和cam04完整99帧/9fps视频；画面有明显彩色网格、重影和脸手模糊，尚未采用。相同输入的身体与衣物网络颜色图在光栅化前已有网格，需继续定位网络输出及其上游。六通道光栅器、StyleUNet上采样和激活的实际前反向检查通过；代码审计未找到当前训练/推理输入数值不一致的确证，也不能据此认定训练不足就是全部原因。
 
 同一输入的初始化网络颜色图也有网格；1800检查点已经学到部分人体/衣物颜色，规则网格仍在。两层全部颜色网络的Adam step均为1800，排除了“颜色网络完全没有更新”的解释。该控制只定位现象来源，不保证继续训练即可消除它。
