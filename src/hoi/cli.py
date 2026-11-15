@@ -85,6 +85,30 @@ def person_file(config: SceneConfig, actor: ActorConfig) -> Path:
     return person
 
 
+def _run_needs_preparation(config: SceneConfig) -> bool:
+    if any(
+        path is None or not path.exists()
+        for actor in config.actors
+        for path in (actor.manifest, actor.observations, actor.keypoints)
+    ):
+        return True
+    needs_segmentation = any(
+        not actor.avatar.is_file()
+        or actor.initialization is None
+        or not actor.initialization.is_file()
+        for actor in config.actors
+    )
+    if not needs_segmentation:
+        return False
+    segment_index = config.preparation.get("segment_index")
+    if not segment_index:
+        return True
+    segment_path = Path(segment_index)
+    if not segment_path.is_absolute():
+        segment_path = PROJECT_ROOT / segment_path
+    return not segment_path.is_file()
+
+
 def prepare_scene(config: SceneConfig) -> SceneConfig:
     from hoi.capture.scene import prepare_capture
 
@@ -456,14 +480,7 @@ def main() -> int:
         )
         return 0
     activate_runtime(config)
-    if args.command == "prepare" or (
-        args.command == "run"
-        and any(
-            path is None or not path.exists()
-            for actor in config.actors
-            for path in (actor.manifest, actor.observations, actor.keypoints)
-        )
-    ):
+    if args.command == "prepare" or (args.command == "run" and _run_needs_preparation(config)):
         config = prepare_scene(config)
     if args.command in ("identity", "run"):
         config = identity_scene(config, reuse=args.command == "run")
