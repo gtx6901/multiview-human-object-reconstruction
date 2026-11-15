@@ -37,7 +37,18 @@ Windows恢复使用只读检查点映射，Adam状态使用项目D盘临时文�
 
 当前模型的颜色输出为多尺度Haar表示。2000检查点的body色网CPU重放中，最后一级Haar往返误差小于8e-7，低频分量也继承格纹；用原生SMPL-X及视角特征重放frame49/cam4后，手部UV颜色仍有格纹。该控制只覆盖一个时刻/机位的body输出，说明不能把问题仅归为最后IWT或无视角条件的诊断图；没有滤除高频或改变最终输出。
 
-原生预训练只学习几何与其他高斯参数，不训练颜色/viewdir。图像阶段的作者总步数为400001，eval_interval1000是审看间隔；当前2000更新尚非完整训练。当前clip和loss参数与作者4D-Dress配置一致，不因其他作者场景参数不同就改变它们。
+## 论文与发布代码的训练协议
+
+[论文 §6 Training](https://arxiv.org/html/2603.04290v1#S6) 与固定提交 [`3e62461`](https://github.com/eth-ait/GaussianWardrobe/commit/3e62461b724d546f368f72a6d5ef57a21c6e3635) 的 [`main_avatar.py`](https://github.com/eth-ait/GaussianWardrobe/blob/3e62461b724d546f368f72a6d5ef57a21c6e3635/main_avatar.py#L50)、[`configs/4d_dress/avatar.yaml`](https://github.com/eth-ait/GaussianWardrobe/blob/3e62461b724d546f368f72a6d5ef57a21c6e3635/configs/4d_dress/avatar.yaml#L52) 存在协议差异：
+
+| 项目 | 论文 | 固定代码及本项目 |
+| --- | --- | --- |
+| 图像迭代 | 300k | `iter_num=400000`，含起始0共400001次更新；本项目当前2000。`eval_interval=1000`只是审看间隔。 |
+| clip | `5e-4` | 官方4D-Dress与该项目均为`1e-4`，与作者配置相同；不能因Actor01使用`1e-3`就擅改。 |
+| 阶段 | 先将face/smooth/penetration权重归零，再切换全损失 | [`main_avatar` 训练循环](https://github.com/eth-ait/GaussianWardrobe/blob/3e62461b724d546f368f72a6d5ef57a21c6e3635/main_avatar.py#L616-L669)为单阶段全loss，未见切换入口；5001次几何pretrain只训练geometry/opacity/scale/rotation，不训练color/viewdir，不能当作coarse RGB阶段。 |
+| virtual bone | — | [官方项目页](https://eth-ait.github.io/GaussianWardrobe/)说明展示结果含投稿后virtual bone扩展；固定源码未见实现入口。这不证明当前网格由缺该扩展导致。 |
+
+因此，2000次不是完成训练；论文两阶段的切分时刻未公布、固定源码也未实现，暂不能宣称本项目复现完整论文协议。
 
 原生数据工厂中的canonical和fit角色原本分别构造相同参数的SMPL-X模型，现共用一个只读实例。实际原生模型canonical→live→canonical的vertices/joints/A一致，全部模型参数及缓冲区指纹未变；约80MB模型Tensor无需再复制一份。此改动不改变网络/损失/输入约定，完整训练的分页收益仍待测量。
 
