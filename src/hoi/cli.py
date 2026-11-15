@@ -96,6 +96,7 @@ def _run_needs_preparation(config: SceneConfig) -> bool:
         not actor.avatar.is_file()
         or actor.initialization is None
         or not actor.initialization.is_file()
+        or (actor.hand_observations is not None and not actor.hand_observations.is_file())
         for actor in config.actors
     )
     if not needs_segmentation:
@@ -261,7 +262,13 @@ def initialize_scene(config: SceneConfig, reuse: bool = False) -> SceneConfig:
     actors = []
     segment_index = config.preparation.get("segment_index")
     for actor in config.actors:
-        if reuse and actor.initialization is not None and actor.initialization.is_file():
+        reuse_initial = (
+            reuse and actor.initialization is not None and actor.initialization.is_file()
+        )
+        reuse_hands = (
+            reuse and actor.hand_observations is not None and actor.hand_observations.is_file()
+        )
+        if reuse_initial and (actor.hand_observations is None or reuse_hands):
             actors.append(actor)
             continue
         if not segment_index:
@@ -292,25 +299,29 @@ def initialize_scene(config: SceneConfig, reuse: bool = False) -> SceneConfig:
             arguments.extend(["--source-motion", str(actor.motion)])
         if config.runtime.get("nlf_model"):
             arguments.extend(["--model", config.runtime["nlf_model"]])
-        run_stage("hoi.motion.initialize", arguments, initial)
-        run_stage(
-            "hoi.observations.instances",
-            [
-                "observe-hands",
-                "--person",
-                str(person),
-                "--scene-index",
-                str(segment_index),
-                "--out",
-                str(hands),
-            ],
-            hands,
-        )
+        if not reuse_initial:
+            run_stage("hoi.motion.initialize", arguments, initial)
+        if not reuse_hands:
+            run_stage(
+                "hoi.observations.instances",
+                [
+                    "observe-hands",
+                    "--person",
+                    str(person),
+                    "--scene-index",
+                    str(segment_index),
+                    "--out",
+                    str(hands),
+                ],
+                hands,
+            )
         actors.append(
             replace(
                 actor,
-                initialization=initial / "motion.pt",
-                hand_observations=hands / "observations.npz",
+                initialization=actor.initialization if reuse_initial else initial / "motion.pt",
+                hand_observations=(
+                    actor.hand_observations if reuse_hands else hands / "observations.npz"
+                ),
             )
         )
     result = replace(config, actors=tuple(actors))
