@@ -232,11 +232,11 @@ def bootstrap(
         raise RuntimeError(f"wrong smpl_util: {smpl_util.__file__}")
 
     def native_smplx_model(dataset_dir):
-        # MJJ supplies 45-D hand poses and 100-D expression; do not use the
-        # 4D-Dress PCA-12 branch.
-        body = smplx.SMPLX(use_pca=False, num_pca_comps=45, flat_hand_mean=True, batch_size=1)
-        fit = smplx.SMPLX(use_pca=False, num_pca_comps=45, flat_hand_mean=True, batch_size=1)
-        return body, fit
+        # Native inputs use 45-D hand poses and 100-D expression, not PCA-12.
+        # The canonical and fitted roles are read-only
+        # forwards over identical parameters, so one module owns both.
+        model = smplx.SMPLX(use_pca=False, num_pca_comps=45, flat_hand_mean=True, batch_size=1)
+        return model, model
 
     smpl_util.smplx_model = native_smplx_model
     smpl_util.smpl_model = smplx.SMPLX(
