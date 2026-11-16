@@ -539,7 +539,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--frames", nargs="+")
     parser.add_argument("--serial", default="all")
     parser.add_argument("--video", action="store_true")
-    parser.add_argument("--keep-frames", action="store_true", help="retain PNG inputs after successful video encoding")
+    parser.add_argument(
+        "--keep-frames",
+        action="store_true",
+        help="retain PNG inputs after successful video encoding",
+    )
     parser.add_argument("--width", type=int)
     parser.add_argument("--height", type=int)
     args = parser.parse_args(argv)
