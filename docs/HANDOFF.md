@@ -1,12 +1,12 @@
 # 工程交接
 
-更新：2026-11-16。先读最新人类消息，核对真实进程/GPU、日志、检查点、C/D空间与Git；保留活任务，不重复启动。衣物任务的当前运行状态只在clothing分支的`docs/CLOTHING.md`开头维护，避免两处快照矛盾。
+更新：2026-11-17。先读最新人类消息，核对真实进程/GPU、日志、检查点、C/D空间与Git；保留活任务，不重复启动。衣物任务的当前运行状态只在clothing分支的`docs/CLOTHING.md`开头维护，避免两处快照矛盾。
 
 ## 工程与分支
 
-`main`保留一套单人/多人共用的人体管线：入口`pipeline.py`/`hoi`，源码`src/hoi`，配置`configs`，输入`assets`，输出`runs/<scene>/<actor或用途>`，第三方与权重外置。同一算法处理不同数据，差异由配置表达。main现有55个跟踪文件、34个src模块，含入口9240行（含空行/注释）。
+`main`保留一套单人/多人共用的人体管线：入口`pipeline.py`/`hoi`，源码`src/hoi`，配置`configs`，输入`assets`，输出`runs/<scene>/<actor或用途>`，第三方与权重外置。同一算法处理不同数据，差异由配置表达。文件数量与行数以当前Git树为准；渲染相机生成集中在rendering/cameras.py。
 
-main的`af372b0`已发布，通用初始化修正位于`c43a36d`；clothing的`e285ec6`已合并该main并发布。后续以真实refs为准。衣物实现留在`codex/clothing`，运行状态、命令与恢复记录见[该分支衣物说明](https://github.com/gtx6901/multiview-human-object-reconstruction/blob/codex/clothing/docs/CLOTHING.md)。共享修改先进入main，再合入探索分支；衣物训练活着时保持当前checkout，不切换导致源码移走，也不修改运行源。
+共享初始化、静态源姿态/输出相机帧分离和缺失脸锚点处理已进入main；最新refs与remote状态以Git为准。衣物实现留在`codex/clothing`，运行状态、命令与恢复记录见[该分支衣物说明](https://github.com/gtx6901/multiview-human-object-reconstruction/blob/codex/clothing/docs/CLOTHING.md)。共享修改先进入main，再合入探索分支；衣物训练活着时保持当前checkout，不切换导致源码移走，也不修改运行源。
 
 文件/函数snake_case，类PascalCase，产物按用途命名。原位迭代，历史进入Git，不叠版本目录，不留无用检查/门限脚本、失败轮次或重复缓存；约一万行不是删除必要功能的理由。只提交明确文件，定期同步remote，不force、不git add .。本机依赖与配置见[DEPENDENCIES.md](DEPENDENCIES.md)。
 
@@ -21,6 +21,24 @@ FCS008已完成八机位、300源时刻的完整原片prepare、新NLF和真实�
 缺少时间轴时已改为顺序探测实际帧数和整数PTS，不用旧清单声明帧数合成时间；MJJ原片实际99帧，旧JPEG曾在66附近重复一帧。容器PTS一致不代表物理曝光同步。具体输入、缓存、源帧和坐标约定见[PIPELINE.md](PIPELINE.md)。
 
 新问题先查输入、算法与实现，不加像素补丁、关节锁或画质门槛，不按loss采用。明显画面问题不反复做无必要定量试验。`render/contact.png`是21305717机位149帧的原图、手部二维观测、最终FK投影和外观近景；原图有遮挡与模糊，此单帧不能解释全部接触误差。选定资产及已交付PPT/GIF不覆盖。
+
+## 汇报视频队列（11月19日）
+
+| 原始片段 | 交付内容 | 当前真实状态 |
+| --- | --- | --- |
+| FCS003 | 单人静态环绕 | 真实003源帧0拟合完成；300帧、30fps、1008×1344视频在runs/fcs003/render/camera_orbit/preview.mp4。八方向关键帧已审看，连续审看待完成。 |
+| FCS005 | 单人动态环绕 | 独立005原片、八机位提示及统一配置已准备；尚未完成拟合/渲染。 |
+| FCS008 | 双人交互 | 已有最新300帧正面结果在runs/fcs008/render；不把它当MJJ003。 |
+| FCS006 | 单人-头盔 | 已有选定三视角30fps成片，必要时从选定动作/刚体资产重渲染。 |
+| MJJ000 | 单人静态环绕 | 原片99帧；当前main资产尚需重建，不冒用001姿态。 |
+| MJJ001 | 单人动态环绕 | 衣物绑定输入与单滚动检查点保留；main人体avatar/motion尚需按共享入口重建。 |
+| MJJ003 | 双人交互 | 独立150帧片段；partner为灰上衣/黑长裤，不同于FCS008绿衣partner。 |
+
+全部八段原片已顺序解码确认场景与实际帧数，索引在runs/delivery/sources.json；MJJ002是后续背包交互探索。静态环绕只固定真实源姿态，用独立相机时间轴渲染，不复制动作、不拿动态弯腰姿态充当静态输入。
+
+FCS003暴露了face阶段要求五个脸点均有三维支持的假设：左眼无三机一致3D，其他四点有效。现只估计有原valid且有限3D的头局部锚点，未改变三角化条件；二维仍取这些锚点全部原合格观测，不用inlier裁二维。完全无锚点时保留输入颈/头并导出空约束。真实四点全阶段运行、全点数值等价及空点完整导出/加载已验证。
+
+MJJ重建需使用保留的balanced_a修正外参，不能重新使用原不一致外参或FCS外参。衣物source/calibration.json已是模型米制T，不要再次除1081.964233。cam00的K与原noon内参alpha=0去畸变K完全一致；实际衣物RGB与原片去畸变图MAE约1.13，相比未去畸变约12.08。重建scene应保持原始K/distortion和去畸变K的同一坐标约定；此核验不是重新证明绝对标定精度。
 
 ## 保护、清理与来源
 
