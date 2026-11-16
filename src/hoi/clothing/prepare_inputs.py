@@ -42,6 +42,16 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
+def expression_dim(data_dir: Path) -> int:
+    """Read the expression width shared by binding and native model creation."""
+    path = data_dir / "smpl_params.npz"
+    with np.load(path, allow_pickle=True) as params:
+        shape = params["expression"].shape
+    if len(shape) != 2 or min(shape) <= 0:
+        raise ValueError(f"expression must be a nonempty T,D matrix, got {shape}")
+    return int(shape[1])
+
+
 def hardlink(src: Path, dst: Path, ident: List[Dict[str, Any]]) -> None:
     """Hardlink only; never silently copy. Records inode identity."""
     src = src.resolve()
@@ -219,11 +229,12 @@ def main() -> int:
     sp_path = source / "smpl_params.npz"
     if not sp_path.is_file():
         raise FileNotFoundError(sp_path)
+    expr_dim = expression_dim(source)
     with np.load(sp_path, allow_pickle=True) as sp:
         if sp["body_pose"].shape[0] != len(src_frames) or sp["betas"].shape != (1, 10):
             raise ValueError("expected mapped native timestep count, betas (1,10)")
-        if sp["expression"].shape[1] != 100:
-            raise ValueError("expected 100-D expression")
+        if sp["expression"].shape[0] != len(src_frames):
+            raise ValueError("expression timesteps must match the explicit frame mapping")
         transl = np.asarray(sp["transl"], np.float64)
         body_pose = np.asarray(sp["body_pose"], np.float64)
 
@@ -308,7 +319,7 @@ def main() -> int:
         "no_resampling": True,
         "no_rectification": True,
         "no_person_recenter": True,
-        "smpl_expression_dim": 100,
+        "smpl_expression_dim": expr_dim,
         "labels_linked": labels_ok,
         "body_masks_linked": body_masks_ok,
         "templates_linked": tpl_report,

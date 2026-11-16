@@ -28,6 +28,7 @@ from typing import Any, Dict, List, Optional
 import numpy as np
 
 from hoi.runtime import PROJECT_ROOT as PROJECT, runtime_settings
+from hoi.clothing.prepare_inputs import expression_dim
 
 HERE = Path(__file__).resolve().parent
 CLOTHING_RUNTIME = PROJECT / "runtime/clothing"
@@ -126,17 +127,6 @@ def _install_unicode_cv() -> Dict[str, Any]:
     return {"installed": True, "already": False}
 
 
-def _expr_dim(data_dir: Path) -> int:
-    p = data_dir / "smpl_params.npz"
-    if not p.is_file():
-        raise FileNotFoundError(p)
-    with np.load(p, allow_pickle=True) as sp:
-        shape = sp["expression"].shape
-        if len(shape) != 2 or min(shape) <= 0:
-            raise ValueError(f"expression must be a nonempty T,D matrix, got {shape}")
-        return int(shape[1])
-
-
 def _ensure_wardrobe_rasterizer() -> None:
     """Require the isolated Wardrobe six-channel extension, never AG's 3ch pyd."""
     pkg = RUNTIME_WARDROBE / "diff_gaussian_rasterization_depth_alpha"
@@ -175,7 +165,7 @@ def bootstrap(
     data_dir = Path(data_dir).resolve() if data_dir is not None else DATA
     if not data_dir.is_dir():
         raise FileNotFoundError(data_dir)
-    expr_dim = _expr_dim(data_dir)
+    expr_dim = expression_dim(data_dir)
 
     for p in [RUNTIME_STYLE, RUNTIME_EXT, *LOCAL_DEPS, AUTHOR, RUNTIME_WARDROBE]:
         if p.is_dir():
