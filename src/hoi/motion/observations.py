@@ -17,6 +17,8 @@ from typing import Any, Dict, List, Sequence, Tuple
 import numpy as np
 import torch
 
+from hoi.motion.landmarks import WORLD_HUBER_SCALE
+
 THIS_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = THIS_DIR.parents[2]
 LANDMARKS_SOURCE = THIS_DIR / "landmarks.py"
@@ -241,7 +243,7 @@ class FullObservations58:
             if not bool(m.any()):
                 continue
             # Mask BEFORE subtraction/norm; no fake xyz for missing joints.
-            d = (points[m, k] - self.xyz[m, coco]).norm(dim=-1) / 0.02
+            d = (points[m, k] - self.xyz[m, coco]).norm(dim=-1) / WORLD_HUBER_SCALE
             term = torch.nn.functional.huber_loss(
                 d, torch.zeros_like(d), reduction="mean", delta=1.0
             )
@@ -274,7 +276,7 @@ class FullObservations58:
             "triangulation_inlier": "retained only in observations for 3D/source audit; not used by base 2D loss",
             "score_threshold": 0.5,
             "huber_2d_px": 5.0,
-            "huber_3d_world": 0.02,
+            "huber_3d_world": WORLD_HUBER_SCALE,
             "face": (
                 "face-stage exact valid mask appended to the constructor's base mask; "
                 "no score/inlier second gate"

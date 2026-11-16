@@ -3,8 +3,8 @@
 
 Per-camera estimates are fused in the supplied shared camera gauge. Requested
 source indices are retained; unavailable evidence remains explicitly missing.
-Hip anchoring, optional source-motion priors and FK checks use the same
-production contracts as the image estimator.
+World translation uses the same body landmarks and 3D Huber scale as fitting.
+Previously reconstructed motion is not an implicit initialization input.
 """
 from __future__ import annotations
 
@@ -22,6 +22,7 @@ import torch
 THIS_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = THIS_DIR.parents[2]
 from hoi.runtime import runtime_settings
+from hoi.motion.landmarks import BODY, WORLD_HUBER_SCALE
 
 LHM = Path(runtime_settings()["lhm_root"])
 DEFAULT_MODEL = PROJECT_ROOT / "runtime" / "weights" / "nlf.torchscript"
@@ -216,6 +217,37 @@ def consensus(poses: np.ndarray, uncert: np.ndarray) -> Tuple[np.ndarray, np.nda
     return rot, disagreement
 
 
+def estimate_translation(xyz, valid, joints, scale):
+    """Fit translation for a fixed pose and scale with the body 3D Huber term."""
+    coco_ids = np.asarray(list(BODY), dtype=np.int64)
+    joint_ids = np.asarray(list(BODY.values()), dtype=np.int64)
+    observed = np.asarray(xyz, dtype=np.float64)[coco_ids]
+    predicted = np.asarray(joints, dtype=np.float64)[joint_ids] * float(scale)
+    usable = (
+        np.asarray(valid, dtype=bool)[coco_ids]
+        & np.isfinite(observed).all(axis=1)
+        & np.isfinite(predicted).all(axis=1)
+    )
+    if not usable.any():
+        raise ValueError("No valid BODY observations for translation initialization")
+    offsets = observed[usable] - predicted[usable]
+    translation = offsets.mean(axis=0)
+    tolerance = np.sqrt(np.finfo(np.float64).eps)
+    for _ in range(128):
+        residual = np.linalg.norm(translation[None] - offsets, axis=1)
+        weights = np.ones_like(residual)
+        outside = residual > WORLD_HUBER_SCALE
+        weights[outside] = WORLD_HUBER_SCALE / residual[outside]
+        updated = (weights[:, None] * offsets).sum(axis=0) / weights.sum()
+        converged = np.linalg.norm(updated - translation) <= tolerance * (
+            1.0 + np.linalg.norm(translation)
+        )
+        translation = updated
+        if converged:
+            break
+    return translation, coco_ids[usable]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
@@ -230,11 +262,6 @@ def main() -> int:
     ap.add_argument("--out", required=True)
     ap.add_argument("--world-up", type=float, nargs=3, required=True)
     ap.add_argument("--world-up-source", required=True)
-    ap.add_argument(
-        "--source-motion",
-        default=None,
-        help="existing hand-pose source for requested source frames",
-    )
     ap.add_argument("--smplx", default=str(SMPLX_DEFAULT))
     ap.add_argument("--model", default=str(DEFAULT_MODEL))
     ap.add_argument("--device", default="cuda")
@@ -276,19 +303,13 @@ def main() -> int:
     configure_runtime()
     torch.set_num_threads(4)
     from smplx.lbs import batch_rigid_transform
-    from pytorch3d.transforms import (
-        axis_angle_to_matrix,
-        matrix_to_axis_angle,
-        quaternion_to_matrix,
-    )
+    from pytorch3d.transforms import axis_angle_to_matrix
     from hoi.motion.rotations import load_motion_quaternions, export_motion_with_quaternions
 
     model_path = Path(args.model).resolve()
     model = None  # Load only when an uncached image really needs inference.
     model_sha = sha256_file(model_path)
     smplx_path = Path(args.smplx).resolve()
-    smplx = np.load(smplx_path, allow_pickle=True)
-    rest_parents = None
     av = torch.load(avatar, map_location="cpu", weights_only=False)
     rest = av["rig"]["rest_joints"][0].double()
     parents = av["rig"]["parents"].to(torch.long)
@@ -304,62 +325,15 @@ def main() -> int:
     seed_flags = load_seed_flags(segment)
     obs = np.load(Path(info["observations"]), allow_pickle=False)
     obs_xyz = np.asarray(obs["xyz"], np.float64)
+    obs_valid = np.asarray(obs["valid"], bool) & np.isfinite(obs_xyz).all(-1)
     person_frames = [int(x) for x in info["frames"]]
     person_frame_index = {f: i for i, f in enumerate(person_frames)}
-    source_motion = None
-    source_motion_path = None
-    source_motion_sha = None
-    source_q_info = None
-    source_frames: List[int] = []
-    source_index: Dict[int, int] = {}
-    source_hips_world = None
-    source_scale = None
-    source_betas = None
-    source_scale_match = None
-    source_beta_match = None
-    source_joints55_ignored = True
-    if args.source_motion:
-        source_motion_path = Path(args.source_motion).resolve()
-        source_motion = torch.load(source_motion_path, map_location="cpu", weights_only=False)
-        source_motion_sha = sha256_file(source_motion_path)
-        source_q, source_q_info = load_motion_quaternions(source_motion, verify_legacy=True)
-        source_q = source_q.double()
-        sframes_raw = source_motion["frames"]
-        source_frames = [
-            int(x)
-            for x in (sframes_raw.tolist() if hasattr(sframes_raw, "tolist") else sframes_raw)
-        ]
-        if source_frames and len(source_frames) != source_q.shape[0]:
-            raise ValueError("source_motion frames/q T mismatch")
-        source_index = {f: i for i, f in enumerate(source_frames)}
-        if "scale" not in source_motion or "betas" not in source_motion:
-            raise ValueError("source_motion must provide scale and betas for the explicit prior")
-        source_scale = float(torch.as_tensor(source_motion["scale"]).reshape(-1)[0])
-        source_betas = torch.as_tensor(source_motion["betas"], dtype=torch.float32).reshape(-1)
-        source_scale_match = bool(abs(source_scale - scale) <= 1e-6)
-        source_beta_match = bool(
-            source_betas.shape == betas.reshape(-1).shape
-            and torch.allclose(source_betas, betas.reshape(-1), rtol=1e-5, atol=1e-6)
-        )
-        if not source_scale_match or not source_beta_match:
-            raise ValueError(
-                "source_motion scale/beta are inconsistent with the current avatar: "
-                f"scale {source_scale} vs {scale}; beta_match={source_beta_match}"
-            )
-        source_trans = torch.as_tensor(
-            source_motion["translation_world"], dtype=torch.float64
-        ).reshape(-1, 3)
-        if len(source_trans) != source_q.shape[0]:
-            raise ValueError("source_motion translation/q T mismatch")
-        with torch.inference_mode():
-            source_joints, _ = batch_rigid_transform(
-                quaternion_to_matrix(source_q),
-                rest[None].expand(source_q.shape[0], -1, -1),
-                parents,
-            )
-            source_hips_world = (source_joints * source_scale + source_trans[:, None])[
-                :, [1, 2]
-            ].mean(dim=1)
+    apose = av.get("poses", {})
+    if "left_hand_pose" in apose and "right_hand_pose" in apose:
+        lh = torch.as_tensor(apose["left_hand_pose"], dtype=torch.float32).reshape(-1, 15, 3)[0]
+        rh = torch.as_tensor(apose["right_hand_pose"], dtype=torch.float32).reshape(-1, 15, 3)[0]
+    else:
+        lh, rh = torch.zeros(15, 3), torch.zeros(15, 3)
     up = np.asarray(args.world_up, np.float64)
     up = up / (np.linalg.norm(up) + 1e-12)
     up_t = torch.tensor(up, dtype=torch.float32, device=args.device)
@@ -370,30 +344,14 @@ def main() -> int:
     computed_frames: List[int] = []
     motions: List[Dict[str, Any]] = []
     anchor_records: List[Dict[str, Any]] = []
-    screen_hip_missing_frames: List[int] = []
-    screen_anchor_frames: List[int] = []
-    source_prior_frames: List[int] = []
-
     with torch.inference_mode():
         for frame in frames_requested:
             preds = []
             frame_unavailable = []
-            pi0 = person_frame_index.get(frame)
-            screen_hips0 = obs_xyz[pi0, [11, 12]] if pi0 is not None else None
-            screen_ok0 = bool(screen_hips0 is not None and np.isfinite(screen_hips0).all())
-            if not screen_ok0:
-                screen_hip_missing_frames.append(int(frame))
             anchor = {
                 "source_frame": int(frame),
-                "screen_hip_finite": screen_ok0,
-                "screen_hip_status": (
-                    "screen_triangulated_hip_pair" if screen_ok0 else "screen_hip_pair_missing"
-                ),
-                "source_motion_frame": (
-                    int(frame) if source_motion is not None and int(frame) in source_index else None
-                ),
-                "source_motion_hip_fk_finite": None,
                 "anchor_type": None,
+                "body_landmarks": [],
                 "used_for_translation": False,
             }
             for serial, view in views.items():
@@ -552,65 +510,6 @@ def main() -> int:
                 )
                 continue
             pi = person_frame_index[frame]
-            hips = obs_xyz[pi, [11, 12]]
-            screen_ok = bool(np.isfinite(hips).all())
-            source_hip = None
-            if source_motion is not None and int(frame) in source_index:
-                si_prior = source_index[int(frame)]
-                if source_hips_world is not None:
-                    source_hip = source_hips_world[si_prior].detach().cpu().numpy()
-                    anchor["source_motion_hip_fk_finite"] = bool(np.isfinite(source_hip).all())
-            if screen_ok:
-                hip_target = torch.tensor(hips.mean(axis=0), dtype=torch.float64)
-                anchor["anchor_type"] = "screen_triangulated_hip_pair"
-                screen_anchor_frames.append(int(frame))
-            elif source_hip is not None and np.isfinite(source_hip).all():
-                hip_target = torch.tensor(source_hip, dtype=torch.float64)
-                anchor["anchor_type"] = "explicit_source_motion_posterior_fk"
-                source_prior_frames.append(int(frame))
-                print(
-                    f"[nlf] frame {frame}: screen hips missing; using explicit source_motion posterior FK hip prior",
-                    flush=True,
-                )
-            else:
-                if source_motion is None:
-                    reason = "screen hip 3D missing and no explicit --source-motion"
-                elif int(frame) not in source_index:
-                    reason = (
-                        "screen hip 3D missing and explicit source_motion lacks this source frame"
-                    )
-                else:
-                    reason = "screen hip 3D missing and explicit source_motion FK hip is non-finite"
-                unavailable.append({"source_frame": int(frame), "reason": reason})
-                anchor["anchor_type"] = "unavailable_hip_anchor"
-                anchor_records.append(anchor)
-                continue
-            anchor["used_for_translation"] = True
-            # Hands: existing source motion if supplied; otherwise avatar hands.
-            if source_motion is not None:
-                if int(frame) not in source_index:
-                    raise ValueError(f"source-motion lacks requested frame {frame}")
-                si = source_index[int(frame)]
-                lh = source_motion.get("left_hand_pose", source_motion.get("lhand_pose"))
-                rh = source_motion.get("right_hand_pose", source_motion.get("rhand_pose"))
-                if lh is None or rh is None:
-                    raise ValueError("source-motion lacks hand poses")
-                lh = torch.as_tensor(lh[si], dtype=torch.float32).reshape(15, 3)
-                rh = torch.as_tensor(rh[si], dtype=torch.float32).reshape(15, 3)
-                hands_source = str(Path(args.source_motion).resolve())
-            else:
-                apose = av.get("poses", {})
-                if "left_hand_pose" in apose:
-                    lh = torch.as_tensor(apose["left_hand_pose"], dtype=torch.float32).reshape(
-                        -1, 15, 3
-                    )[0]
-                    rh = torch.as_tensor(apose["right_hand_pose"], dtype=torch.float32).reshape(
-                        -1, 15, 3
-                    )[0]
-                else:
-                    lh = torch.zeros(15, 3)
-                    rh = torch.zeros(15, 3)
-                hands_source = "avatar_pose_or_neutral"
             aa = torch.cat(
                 [
                     torch.tensor(rot[0], dtype=torch.float64).reshape(1, 3),
@@ -622,7 +521,21 @@ def main() -> int:
                 0,
             )[None]
             j, _ = batch_rigid_transform(axis_angle_to_matrix(aa), rest[None], parents)
-            trans = hip_target - j[0, [1, 2]].mean(0) * scale
+            try:
+                translation, body_landmarks = estimate_translation(
+                    obs_xyz[pi], obs_valid[pi], j[0].numpy(), scale
+                )
+            except ValueError as error:
+                unavailable.append({"source_frame": int(frame), "reason": str(error)})
+                anchor["anchor_type"] = "unavailable_body_anchor"
+                anchor_records.append(anchor)
+                continue
+            trans = torch.tensor(translation, dtype=torch.float64)
+            anchor.update(
+                anchor_type="screen_body_huber_translation",
+                body_landmarks=body_landmarks.tolist(),
+                used_for_translation=True,
+            )
             root = torch.tensor(rot[0], dtype=torch.float32)
             body = torch.tensor(rot[1:22], dtype=torch.float32)
             motion = {
@@ -642,7 +555,7 @@ def main() -> int:
             motions.append(motion)
             computed_frames.append(frame)
             anchor_records.append(anchor)
-            print(f"[nlf] frame {frame}: N={len(preds)} hip_translation finite", flush=True)
+            print(f"[nlf] frame {frame}: N={len(preds)} body_translation finite", flush=True)
 
     if not motions:
         raise RuntimeError("no requested source frame had a usable NLF consensus")
@@ -686,7 +599,7 @@ def main() -> int:
         "calibration_sha256": (info.get("gauge") or {}).get("calibration_sha256"),
         "world_up": up.tolist(),
         "world_up_source": args.world_up_source,
-        "inventory_cameras": 8,
+        "inventory_cameras": len(cams_by_serial),
         "visible_predictions_per_frame": {
             str(f): sum(1 for r in raw_records if int(r["source_frame"]) == f)
             for f in frames_requested
@@ -694,28 +607,11 @@ def main() -> int:
         "requested_frames": frames_requested,
         "computed_frames": computed_frames,
         "unavailable": unavailable,
-        "source_motion": {
-            "path": str(source_motion_path) if source_motion_path else None,
-            "sha256": source_motion_sha,
-            "frames": source_frames,
-            "q_validation": source_q_info,
-            "scale": source_scale,
-            "scale_matches_avatar": source_scale_match,
-            "betas": None if source_betas is None else source_betas.tolist(),
-            "betas_match_avatar": source_beta_match,
-            "fk_inputs": "shared quaternion contract -> matrix; own avatar rest/parents; source scale/translation",
-            "joints55_world_stored_field_ignored": bool(source_joints55_ignored),
-        },
         "translation_anchor": {
-            "screen_type": "screen_triangulated_hip_pair",
-            "missing_screen_type": "explicit_source_motion_posterior_fk",
-            "missing_screen_is_prior_only": True,
-            "missing_screen_not_new_measurement": True,
-            "screen_hip_missing_frames": screen_hip_missing_frames,
-            "screen_hip_missing_count": len(screen_hip_missing_frames),
-            "screen_anchored_frames": screen_anchor_frames,
-            "source_prior_frames": source_prior_frames,
-            "source_prior_count": len(source_prior_frames),
+            "type": "screen_body_huber_translation",
+            "landmark_mapping": BODY,
+            "huber_3d_world": WORLD_HUBER_SCALE,
+            "validity": "observations.valid and finite xyz/FK; no new screening",
             "per_frame": anchor_records,
             "no_interpolation": True,
             "no_zero_fill": True,
@@ -725,13 +621,12 @@ def main() -> int:
         "internal_batch_size": 1,
         "extrinsics": "rotation-only shared unit-gauge W; translation zero",
         "consensus": "existing NLF uncertainty^-1.5 + inverse-angle IRLS, no additional trim",
-        "hands": "existing source-motion hands if supplied, else avatar hand pose/neutral; no NLF hands",
+        "hands": "avatar hand pose/neutral; image hand observations fitted in the body stage",
         "beta_scale": "avatar-provided beta/scale; NLF beta/translation not adopted",
         "translation": (
-            "screen double-hip mean when both screen hips are finite; otherwise explicit "
-            "same-person source-motion FK hip mean is used ONLY as initialization translation "
-            "anchor/prior for the missing screen frame. It is not a new observation; the "
-            "subsequent full-view fit still optimizes translation against all valid measurements."
+            "IRLS translation from all valid shared BODY correspondences at fixed NLF pose "
+            "and avatar scale, using the fitting term's radial Huber objective. "
+            "No previously reconstructed motion is read."
         ),
         "face": "not fitted; NLF body/pose only",
         "interpolation": "none; motion.pt contains only requested computed source frames",

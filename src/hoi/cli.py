@@ -335,8 +335,6 @@ def initialize_scene(config: SceneConfig, reuse: bool = False) -> SceneConfig:
             "--out",
             str(initial),
         ]
-        if actor.motion.is_file():
-            arguments.extend(["--source-motion", str(actor.motion)])
         if config.runtime.get("nlf_model"):
             arguments.extend(["--model", config.runtime["nlf_model"]])
         if not reuse_initial:
