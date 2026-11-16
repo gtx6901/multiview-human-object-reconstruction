@@ -85,11 +85,42 @@ def person_file(config: SceneConfig, actor: ActorConfig) -> Path:
     return person
 
 
+def _actor_has_requested_frames(actor: ActorConfig, end: int) -> bool:
+    import numpy as np
+
+    expected = np.arange(end)
+    try:
+        manifest = json.loads(actor.manifest.read_text(encoding="utf-8-sig"))
+        keypoint_frames = None
+        for view in manifest["views"]:
+            with np.load(
+                actor.keypoints / f"{view['serial']}.npz", allow_pickle=False
+            ) as keypoints:
+                frames = keypoints["frames"]
+                if not np.array_equal(frames, expected):
+                    return False
+                if any(keypoints[key].shape[0] != len(frames) for key in ("xy", "score")):
+                    return False
+                keypoint_frames = frames
+        if keypoint_frames is None:
+            return False
+        with np.load(actor.observations, allow_pickle=False) as observations:
+            frames = observations["frames"] if "frames" in observations else keypoint_frames
+            return np.array_equal(frames, expected) and observations["xyz"].shape[0] == len(frames)
+    except (OSError, ValueError, KeyError, TypeError, IndexError):
+        return False
+
+
 def _run_needs_preparation(config: SceneConfig) -> bool:
     if any(
         path is None or not path.exists()
         for actor in config.actors
         for path in (actor.manifest, actor.observations, actor.keypoints)
+    ):
+        return True
+    if "end" in config.preparation and any(
+        not _actor_has_requested_frames(actor, int(config.preparation["end"]))
+        for actor in config.actors
     ):
         return True
     needs_segmentation = any(
@@ -107,7 +138,16 @@ def _run_needs_preparation(config: SceneConfig) -> bool:
     segment_path = Path(segment_index)
     if not segment_path.is_absolute():
         segment_path = PROJECT_ROOT / segment_path
-    return not segment_path.is_file()
+    if not segment_path.is_file():
+        return True
+    if "end" in config.preparation:
+        end = int(config.preparation["end"])
+        try:
+            index = json.loads(segment_path.read_text(encoding="utf-8-sig"))
+            return index.get("frame_range") != [0, end] or index.get("frame_count") != end
+        except (OSError, ValueError, TypeError):
+            return True
+    return False
 
 
 def prepare_scene(config: SceneConfig) -> SceneConfig:

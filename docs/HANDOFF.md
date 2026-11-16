@@ -6,7 +6,7 @@
 
 - main 只保留一套可用的单人/多人通用人体管线；codex/clothing 从整理后 main 建立，持续包含 main 共享修正，衣物实现不混 main。
 - 统一 pipeline.py / hoi 入口，源码 src/hoi，配置 configs，必要输入 assets，输出 runs/<scene>/<actor或用途>，第三方与权重外置。不同数据集共用算法，仅换配置。
-- main共55个跟踪文件，其中src/hoi为34个Python模块，含pipeline.py共9303行（含空行/注释）；规模目标不是删除必要功能的理由。文件/函数 snake_case，类 PascalCase，产物按用途命名；原位迭代，历史进 Git，不叠放版本目录。
+- main共55个跟踪文件，其中src/hoi为34个Python模块，含入口约9.3千行（含空行/注释）；规模目标不是删除必要功能的理由。文件/函数 snake_case，类 PascalCase，产物按用途命名；原位迭代，历史进 Git，不叠放版本目录。
 - 不加无用检查/门限脚本、像素补丁、关节锁或画质门槛，不按 loss 宣称成功。自有代码/配置/文档定期同步 remote，不 force、不 git add .。
 - 保留原始数据、标定、必要依赖/权重、选定资产、已交付 PPT/GIF、v1.0/full-pipeline。原图/视频/权重不上传；assets/runs/lhmpp/runtime/data 不加入 Git 跟踪。
 
@@ -29,7 +29,7 @@
 - 必须保留恢复说明：第一次合并保存3.578GB单storage触发Windows PyTorch INT_MAX写截断，损坏1802保存，这是本次实现引入的问题。全部模型/辅助记录经2188个storage CRC恢复，但原Adam历史不可无损恢复，已明确重置。checkpoint.recovery随以后保存保留，不能称无损续训。
 - Windows检查点现用只读映射，Adam状态为D盘每dtype临时可写文件映射；保存逐个状态Tensor的紧凑storage view，避免整块大写入。原生Adam数学、FP32、网络/损失不改，重复恢复/延迟梯度/保存加载/临时文件回收已验证。
 - 1803→2000训练约920.6秒，C盘最低2007314432字节，未再次耗尽；这只是资源验收。2000全八机位0/49/98及cam04完整99帧/9fps视频已审看，网格、重影、脸手模糊仍明显，未采用为良好动态结果。
-- 当前画面在 review/cam00至cam07、完整视频review/cam04/preview.mp4，均为3000，已实际审看。review/reference.mp4是2000的唯一前对照，0/49/98同机同像素比较显示肤色偏紫有所减轻，但四肢/衣物规则格纹、局部重影、脸手模糊仍明显，未采用为良好动态结果；已比较过的1800旧视频不另留副本。runtime/cache/review.png现为此对照图。
+- 当前画面在 review/cam00至cam07、完整视频review/cam04/preview.mp4，均为3000，已实际审看。review/reference.mp4是2000的唯一前对照，0/49/98同机同像素比较显示肤色偏紫有所减轻，但四肢/衣物规则格纹、局部重影、脸手模糊仍明显，未采用为良好动态结果；已比较过的1800旧视频不另留副本。runtime/cache/review.png现为原生产3000的八机位关键帧合图。
 
 ## 已排查与新证据
 
@@ -58,7 +58,7 @@
 
 1. 先查真实Git、进程/GPU、C/D空间与检查点。01:44→03:00的2000→3000训练exec77270已exit0，耗时4539.855秒，峰值CUDA分配6657123328字节。C余量从约10.5GB到训练中约1.89GB并稳定，退出后恢复约10.67GB；D临时Adam映射自动回收。后继渲染exec49579已exit0，strict加载相同SHA模型，全8机位0/49/98、cam04完整99帧9fps均生成并实际审看。GPU任务已结束。03:04临时本地视频服务exec50862只绑定127.0.0.1:8766，180秒后自动退出；浏览器审看已结束，不留常驻服务。一次性脚本清理提交bf05621应包含在main与clothing中，实际refs为准。
 2. 2026-11-16用户明确表示不用电脑、可继续使用，要求避免蓝屏；仍不终止用户应用、不改分页、不删C个人/系统文件。01:02统一入口恢复2000→3000，log到2050时C余量最低约342MB，主代理在2100保存前停止唯一GPU叶进程31532，故磁盘检查点仍2000，完整SHA未变，D临时映射已自动回收。日志2050不是已保存进度；报告JSON仍是旧2000记录。本次没有损坏模型、没有新增检查点副本。
-3. 时间索引/原生算子/颜色梯度路径已核验，3000仍是未完成的早期图像训练。本次1000更新改变了颜色但未解决主要画质缺陷；不能把算子通过等同于已找到唯一根因，也不自动开启下一个1000更新。后续先查输入/几何与网络输出的实际对应关系，再决定下一项有依据的工作。保留单检查点和2000唯一视频对照、Adam历史重置边界，不盲目排除曝光/拟合问题、不按loss采用。
+3. 11月16日10:08用户指出没有持续工作，已恢复当前轮；原04-06仍ACTIVE但03:08后到本轮前聊天没有新的触发记录，原因未确认，不能归因额度。已通过官方工具重新保存原任务并清除旧2000快照，不另建任务。绑定入口残留100维expression限制已修，和bootstrap共用prepare_inputs.expression_dim；真实2帧/1相机的10/100维临时输入经统一bind入口通过、硬链接和数值不变，临时fixture已移除；clothing已推送8846995。
 4. 用户明确授权唯一每小时任务04-06续接，直到五小时额度接近用尽；不要重复建聊天/定时器。用户要求暂停时立即停用该任务并停工。2026-11-16最新授权：仅当周额度剩余严格低于4%时可使用可用额度重置，操作前后实时核实；五小时不足但周剩余仍不少于4%时等待正常重置，不混淆两个窗口、不擅自付费充值。额度未重置或接近耗尽不启动重任务、不频繁轮询，不标工程完成。
 5. 复用指定GPT-6.1 Sol medium worker做明确任务；DeepSeek官方skill会话session-664dd3ce-67cf-4b51-8806-39db7ab9e3f4，只发代码/数值。成功须exit0且final，超时/权限/runner失败不循环修权限。主代理负责设计、独立审查、运行和实际看图。仅实质成果、失败或需用户行动时通知。
 6. DeepSeek最新native_contract任务exit1/402 Insufficient Balance，final为空，未执行代码修改、无遗留进程；用户充值前不重复调用。现有worker删除了无调用的vector_angle_deg；等待后主代理接管并完成integration的_scalar及不可达step_only=True模式清理，False生产路径经常量折叠AST逐项一致，保留恢复/保存/中断语义，不重新预训练。
@@ -66,3 +66,9 @@
 8. 衣物GPU任务存活时保持codex/clothing检出，不切到main（衣物源码会移走）、不修改运行中源码。先核对真实进程/日志，结束后再做分支切换与共享修改发布。
 9. 新分阶段只读资源测量：imports/bootstrap私有提交约2.60GB，模型构造7.77GB（CUDA分配2.35GB）；LPIPS准备后降至6.64GB，检查点只读映射6.66GB，Adam的D映射加载6.67GB。可见大头在模型初始化，不能说把Adam映射到D就消除了C分页需求；此测量没有Dataset/前后向/优化器更新/保存。01:38结束后C约12.97GB，GPU空闲；旧重型CPU Dataset方式不再运行。
 10. 测量时发现旧C盘VGG主干缓存已缺失（原因未确定）；从Torchvision安装代码给出的官方URL恢复到runtime/clothing/torch/hub/checkpoints/vgg16-397923af.pth，553433881字节，SHA397923af8e79cdbb6a7127f12361acd7a2f83e06b05044ddf496e83de57a5bf0。bootstrap默认TORCH_HOME在runtime/clothing/torch，尊重显式环境值；_vgg_cache使用torch.hub.get_dir，与上游实际读取位置一致。真实LPIPS加载和完整只读模型/Adam恢复已通过，网络/损失/FP32均未改变。
+11. 新只读检查未发现canonical位置/法线mask换序：body295580、cloth262214点的两mask逐像素相同，LBS行数对应。三套source/beta/zero坐标数据流未发现直接混用；作者viewdir以zero点套beta矩阵、实际render另加shape offset，是原生条件近似，未证明解释格纹，不先修改。以上无Torch/GPU前向。
+12. 3000检查点全部1304参数与m/v形状匹配、step均1198；只读CPU分析显示body/cloth颜色网络非零sqrt(vhat)<Adam eps1e-8的项约99.8%/99.9%。同起点、同输入签名、完整恢复模型/Adam/RNG，分别eps1e-8/1e-12各续训100步到3100，其他设置相同。reference训练exec52694、501.75秒；candidate训练exec72274、472.142秒，均exit0；两组输入签名、所有最终随机状态、epoch/offset、其他优化器选项及1304项step=1298对齐。全8机0/49/98和99帧同步视频均已实际审看：较小epsilon加重红紫色偏，格纹仍在，未采用。临时3个源码参数入口已完整撤回到8846995（含expression修正）。这说明只放大更新没有解决画质，不排除优化迟缓，也不能宣称已找到唯一根因。
+13. 11:21实时周剩余3%，满足用户<4%授权，随后通过桌面“使用情况→使用限额重置→最早到期的完全重置→确认”使用一次免费重置。11:54官方get_usage_limits核实primary剩余99%、secondary剩余100%、resetCredits从2到1、付费credits仍0。不能重复消耗第二次；以后仍须周剩余严格低于4%才用。没有调用私有重置接口。
+14. 两组渲染exec46733/9957和本地同步视频服务exec2074均已退出。12:46完整SHA重新确认原生产3000仍为58b6fbb55c3b665820d4eef7de0e74c9db86bbef20dcad4f2e6fdaae134423fc，正式review未覆盖。删除临时runtime/cache/optimizer_control被执行审查在启动前拒绝，仅blocked by policy；66文件10793937102字节仍保留（两份必要控制权重现已完成使命），不换API/父目录/权限重删，不能声称已清理。新控制不得继续制造轮次副本。
+15. 发现并修正主链run的partial-cache错误：显式preparation.end时核对每人的3D与各机2D时间轴，逐项同序匹配0:end:1，并核对数组T；legacy 3D无frames仍从2D取时钟。只有需要分割的缺失阶段才检查index范围，完整缓存不要求index。真实FCS006/008完整缓存仍复用；临时3帧/乱序/多帧/legacy与依赖分割范围用例通过并自动清理，无Torch/GPU或永久测试文件。此前原片prepare只验证三帧，下一步用现有fcs008配置完成300帧全8机双人prepare；保留assets/PPT/motion/render，写规范runs/fcs008输入和缓存。
+16. worker的两次工具实现迟滞已核实为waitingOnApproval，未擅自修改子会话权限或代点审批；改为worker只给文本patch/只读审查，主会话在已有授权下独立审查和执行。后续不要让子会话的执行审批再次卡住主工作。
