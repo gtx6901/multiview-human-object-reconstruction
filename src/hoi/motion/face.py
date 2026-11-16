@@ -67,6 +67,17 @@ def q_with_face(q_base: torch.Tensor, q_neck: torch.Tensor, q_head: torch.Tensor
     return q
 
 
+def observed_head_anchors(local: torch.Tensor, valid: torch.Tensor):
+    """Estimate only anchors supported by finite, screened 3D observations."""
+    valid = valid & torch.isfinite(local).all(-1)
+    indices = torch.nonzero(valid.any(0), as_tuple=False).flatten()
+    anchors = [local[valid[:, k], k].median(0).values for k in indices.tolist()]
+    return (
+        torch.stack(anchors) if anchors else local.new_empty((0, 3)),
+        indices,
+    )
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
@@ -147,7 +158,6 @@ def main() -> int:
 
     # Original selection: score>=0.5 and finite source xy; no front/inlier gate.
     valid = (score >= 0.5) & torch.isfinite(xy).all(-1)  # T,V,5
-    valid_face = valid.permute(1, 0, 2)  # V,T,5
 
     q_base = q.clone()
     q_neck0 = q_base[:, NECK_JOINT : NECK_JOINT + 1].clone()
@@ -158,15 +168,19 @@ def main() -> int:
         tg, Rg = fk_q(q_base, rest, parents)
         head_w = tg[:, HEAD_JOINT] * scale + trans
         local = torch.einsum("tji,tkj->tki", Rg[:, HEAD_JOINT], (xyz - head_w[:, None]) / scale)
-        L = []
-        for k in range(len(FACE_KP)):
-            good = valid3[:, k] & torch.isfinite(xyz[:, k]).all(-1)
-            if not bool(good.any()):
-                raise RuntimeError(
-                    f"no real triangulated 3D for face point {k}; refusing zero/SMPL proxy L"
-                )
-            L.append(local[good, k].median(0).values)
-        L = torch.stack(L, 0).float()  # 5,3
+        L, anchor_indices = observed_head_anchors(local, valid3)
+        L = L.float()
+
+    # A missing 3D landmark has no estimated head-local position. Retain the
+    # other measured anchors without inventing that position or relaxing DLT.
+    face_kp = [FACE_KP[k] for k in anchor_indices.tolist()]
+    xy, score, valid = (value[:, :, anchor_indices] for value in (xy, score, valid))
+    inlier = inlier[:, :, anchor_indices]
+    valid_face = valid.permute(1, 0, 2)  # V,T,N
+    point_count = len(face_kp)
+    iterations = args.iters if point_count else 0
+    if not point_count:
+        print("[q-face] no measured head-local anchors; preserving input neck/head", flush=True)
 
     q_neck = q_neck0.clone().requires_grad_(True)
     q_head = q_head0.clone().requires_grad_(True)
@@ -177,12 +191,12 @@ def main() -> int:
         tg2, Rg2 = fk_q(q_cur, rest, parents)
         head2 = tg2[:, HEAD_JOINT] * scale + trans
         world = head2[:, None] + scale * torch.einsum("tij,kj->tki", Rg2[:, HEAD_JOINT], L)
-        homo = torch.cat([world, torch.ones(T, len(FACE_KP), 1, dtype=world.dtype)], -1)
+        homo = torch.cat([world, torch.ones(T, point_count, 1, dtype=world.dtype)], -1)
         p = torch.einsum("vij,tkj->tvki", P, homo)
         uv = p[..., :2] / p[..., 2:3].clamp_min(1e-6)
         m = valid & torch.isfinite(uv).all(-1)
         # Mask BEFORE residual: unselected/missing xy may be NaN.
-        err = torch.zeros((T, len(cams), len(FACE_KP)), dtype=uv.dtype)
+        err = torch.zeros((T, len(cams), point_count), dtype=uv.dtype)
         if bool(m.any()):
             err[m] = (uv[m] - xy[m]).norm(dim=-1)
         huber = torch.nn.functional.huber_loss(
@@ -215,7 +229,7 @@ def main() -> int:
         before_px = float((err0 * m0).sum() / m0.sum().clamp_min(1.0))
     started = time.time()
     history = []
-    for it in range(args.iters):
+    for it in range(iterations):
         opt.zero_grad()
         loss, err, mask, stats = face_loss()
         loss.backward()
@@ -223,7 +237,7 @@ def main() -> int:
         with torch.no_grad():
             q_neck.copy_(normalize_quaternions(q_neck))
             q_head.copy_(normalize_quaternions(q_head))
-        if it % 40 == 0 or it == args.iters - 1:
+        if it % 40 == 0 or it == iterations - 1:
             with torch.no_grad():
                 _loss, err2, mask2, stats2 = face_loss()
                 cur = float((err2 * mask2).sum() / mask2.sum().clamp_min(1.0))
@@ -288,8 +302,8 @@ def main() -> int:
     np.savez_compressed(
         face_constraints_path,
         local=L.detach().cpu().numpy().astype(np.float32),
-        coco=np.asarray(FACE_KP, np.int32),
-        face_kp=np.asarray(FACE_KP, np.int32),
+        coco=np.asarray(face_kp, np.int32),
+        face_kp=np.asarray(face_kp, np.int32),
         valid=valid_face.numpy(),
         xy=xy.detach().cpu().numpy().astype(np.float32),
         score=score.detach().cpu().numpy().astype(np.float32),
@@ -297,11 +311,11 @@ def main() -> int:
         cameras=np.asarray(cams),
         inlier=inlier.numpy(),
         selection=np.asarray(
-            "score>=0.5 & finite(xy); original 5 COCO points; no front/inlier gate"
+            "score>=0.5 & finite(xy) for measured head-local anchors; no front/inlier gate"
         ),
-        xy_layout=np.asarray("T,V,5,2"),
-        valid_layout=np.asarray("V,T,5"),
-        inlier_layout=np.asarray("V,T,5; recorded, NOT used for selection"),
+        xy_layout=np.asarray("T,V,N,2"),
+        valid_layout=np.asarray("V,T,N"),
+        inlier_layout=np.asarray("V,T,N; recorded, NOT used for 2D selection"),
     )
 
     report = {
@@ -321,8 +335,13 @@ def main() -> int:
         "q_input_validation": q_info,
         "identity": info.get("identity"),
         "frames": frames.tolist(),
-        "face_kp": FACE_KP,
-        "face_point_names": ["nose", "left_eye", "right_eye", "left_ear", "right_ear"],
+        "face_kp": face_kp,
+        "face_point_names": [
+            ["nose", "left_eye", "right_eye", "left_ear", "right_ear"][k] for k in face_kp
+        ],
+        "unobserved_anchor_ids": [k for k in FACE_KP if k not in face_kp],
+        "anchor_count": point_count,
+        "skipped": not bool(point_count),
         "camera_order": cams,
         "L": L.tolist(),
         "L_source": "current-person screened observations xyz in current q head frame, median over valid frames",
@@ -330,7 +349,8 @@ def main() -> int:
         "valid_count": int(valid.sum()),
         "inlier_recorded_not_used": True,
         "huber_px": 20.0,
-        "steps": args.iters,
+        "steps": iterations,
+        "requested_steps": args.iters,
         "lr": 0.01,
         "optimizer": "Adam",
         "optimized_joints": {"neck_joint": NECK_JOINT, "head_joint": HEAD_JOINT},
@@ -339,7 +359,7 @@ def main() -> int:
         "q_export_consistency": q_export_info,
         "q_export_shape": list(q_exported.shape),
         "objective": {
-            "data": "masked 5-point Huber 20px on matrix-direct q FK projection",
+            "data": "masked measured-anchor Huber 20px on matrix-direct q FK projection",
             "correction_regularizer": "0.002 * sum(relative_log(qcur*inv(qinit))^2)/T for neck and head",
             "time_prior": "5.0 * mean-square relative angular acceleration of q_delta for neck+head",
             "changed_from_original_aa": True,
@@ -368,7 +388,7 @@ def main() -> int:
         "no_front_or_inlier_gate": True,
         "no_expression_or_head_model": True,
         "cpu_threads": 4,
-        "scope": "Direct q-native original 5-point neck/head stage; L and face ghosts are not fixed or quality-accepted.",
+        "scope": "Q-native neck/head stage using measured anchors among five COCO points; empty support preserves input rotations.",
     }
     atomic_write_json(out / "report.json", report)
     print(
