@@ -36,6 +36,20 @@ python pipeline.py render --config configs/datasets/fcs008.json --serial 2130571
 
 FCS006 配置包含一人和头盔；FCS008 配置包含两人。算法不按这两个场景名称分支。固定新视角或相机轨迹通过 `--cameras <json>` 提供，`--serial all` 使用所选相机文件的全部视角。
 
+已提供以下统一场景配置；首次重建用`run --config configs/datasets/<场景>.json --video`，接续已有阶段用`runs/<场景>/config.json`保留已生成的真实路径。数据、身份提示与标定仍是本地输入。
+
+| 配置 | 原始场景 | 渲染任务 |
+| --- | --- | --- |
+| fcs003 | 静态，300源帧 | 固定实际源姿态0，独立相机时间轴环绕 |
+| fcs005 | 单人动作，300帧/30fps | 原动作与相机同时推进 |
+| fcs006 | 单人-头盔，300帧/30fps | 已有人体、刚体联合渲染 |
+| fcs008 | 双人，300帧/30fps | 两个独立身份与同步动作 |
+| mjj000 | 静态，99源帧 | 从静态原片重建身份，固定源姿态环绕 |
+| mjj001 | 单人动作，99帧/9fps | 复用mjj000身份，独立拟合动态 |
+| mjj003 | 双人，150帧/9fps | MJJ与灰衣partner分别观测、共用世界坐标 |
+
+相机环绕由`rendering.orbit`配置生成；`rendering.pose_frame`只固定真实源姿态，输出相机帧与源帧含义分别记录，不复制motion。新受试者也走同一套观测、身份、初始化、拟合和渲染实现。
+
 `prepare`、`identity`、`initialize`、`fit`、`render` 可分阶段调用；`run` 串联这些阶段。它会复用配置中已提供的观测、身份和初始化，再执行拟合及渲染。视频编码成功后默认清理本次PNG中间帧，需要保留时加 `--keep-frames`。
 
 ## 目录和状态

@@ -1,0 +1,36 @@
+{
+  "id": "mjj000",
+  "fps": 9.0,
+  "camera_space": "raw",
+  "scene_path": "assets/scenes/mjj000/cameras.json",
+  "manifest_path": "assets/scenes/mjj001/manifest.json",
+  "world_up": [
+    -0.14638102054595947,
+    -0.9851372241973877,
+    -0.08987335115671158
+  ],
+  "world_up_source": "preserved standing MJJ001 source root orientation applied to SMPL-X up; approximate gravity, not independent floor calibration",
+  "preparation": {
+    "seeds": "assets/scenes/mjj000/identity_seeds.json",
+    "end": 1,
+    "identity_frame": 0,
+    "videos_root": "data/videos"
+  },
+  "rendering": {
+    "width": 1008,
+    "height": 1344,
+    "pose_frame": 0,
+    "orbit": {
+      "reference_serial": "FCM22020159",
+      "frame_count": 270,
+      "turns": 1
+    }
+  },
+  "actors": [
+    {
+      "id": "mjj",
+      "avatar": "runs/mjj000/mjj/identity/avatar.pt",
+      "motion": "runs/mjj000/mjj/motion/motion.pt"
+    }
+  ]
+}
