@@ -34,5 +34,29 @@
     "gsplat": "1.5.3",
     "gsplat_extension": "runtime/extensions/gsplat_cuda.pyd",
     "nvdiffrast_revision": "253ac4fcea7de5f396371124af597e6cc957bfae"
+  },
+  "multi4d": {
+    "repository": "https://github.com/BatFaceWayne/Multi4D",
+    "revision": "415793949758807902dbe97cea3df21da476126f",
+    "directory": "third_party/multi4d",
+    "sparse_directories": [
+      "arguments",
+      "gaussian_renderer",
+      "scene",
+      "utils",
+      "diff_gaussian_rasterization_hybrid",
+      "submodules"
+    ],
+    "purpose": "soft-object exploration; native 3D/kNN/hybrid builds and tiny real forward/backward passed; full dataset adapter/training pending",
+    "runtime": "runtime/soft_objects; isolated from clothing/AG extensions",
+    "patch": "third_party/multi4d.patch",
+    "python_dependencies": {
+      "mmcv": "1.6.0",
+      "natsort": "8.4.0",
+      "lpips": "0.1.4",
+      "yapf": "0.40.1",
+      "tomli": "2.2.1",
+      "platformdirs": "4.3.6"
+    }
   }
 }

@@ -1,0 +1,22 @@
+diff --git a/gaussian_renderer/diff_gaussian_rasterization_hybrid.py b/gaussian_renderer/diff_gaussian_rasterization_hybrid.py
+index f8c7779..9e2d1c5 100644
+--- a/gaussian_renderer/diff_gaussian_rasterization_hybrid.py
++++ b/gaussian_renderer/diff_gaussian_rasterization_hybrid.py
+@@ -17 +17 @@ import os
+-from torch.utils.cpp_extension import load
++from importlib import import_module
+@@ -19,12 +19,2 @@ from torch.utils.cpp_extension import load
+-parent_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+-                          "diff_gaussian_rasterization_hybrid")
+-_C = load(
+-    name='diff_gaussian_rasterization_hybrid',
+-    extra_cuda_cflags=["-I " + os.path.join(parent_dir, "third_party/glm/"), "-g"],
+-    sources=[
+-        os.path.join(parent_dir, "cuda_rasterizer/rasterizer_impl.cu"),
+-        os.path.join(parent_dir, "cuda_rasterizer/forward.cu"),
+-        os.path.join(parent_dir, "cuda_rasterizer/backward.cu"),
+-        os.path.join(parent_dir, "rasterize_points.cu"),
+-        os.path.join(parent_dir, "ext.cpp")],
+-    verbose=True)
++# Build once with scripts/build_soft_objects.ps1; runtime never invokes a compiler.
++_C = import_module("diff_gaussian_rasterization_hybrid")
