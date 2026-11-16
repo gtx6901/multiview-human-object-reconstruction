@@ -13,6 +13,7 @@ import hashlib
 import json
 import os
 from fractions import Fraction
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, List, Sequence, Tuple
 
@@ -173,6 +174,19 @@ def load_model(path: Path, device: str = "cuda") -> Any:
     return model
 
 
+@lru_cache(maxsize=1)
+def _fk_model_arrays(path: str):
+    """Keep only immutable model data; predictions and shape remain per call."""
+    with np.load(path, allow_pickle=True) as model:
+        template = np.array(model["v_template"], dtype=np.float64, copy=True)
+        shapedirs = np.array(model["shapedirs"][:, :, :10], dtype=np.float64, copy=True)
+        regressor = model["J_regressor"]
+    for array in (template, shapedirs, regressor):
+        if isinstance(array, np.ndarray):
+            array.setflags(write=False)
+    return template, shapedirs, regressor
+
+
 def fk_check(
     pose: np.ndarray,
     betas: np.ndarray,
@@ -185,11 +199,9 @@ def fk_check(
     from pytorch3d.transforms import axis_angle_to_matrix
     from smplx.lbs import batch_rigid_transform
 
-    d = np.load(smplx_path, allow_pickle=True)
-    template = np.asarray(d["v_template"], np.float64) + np.einsum(
-        "vcl,l->vc", np.asarray(d["shapedirs"], np.float64)[:, :, :10], betas.reshape(10)
-    )
-    J = d["J_regressor"] @ template
+    base, shapedirs, regressor = _fk_model_arrays(str(Path(smplx_path).resolve()))
+    template = base + np.einsum("vcl,l->vc", shapedirs, betas.reshape(10))
+    J = regressor @ template
     J = J.toarray() if hasattr(J, "toarray") else np.asarray(J, np.float64)
     pose_t = torch.tensor(pose, dtype=torch.float32).reshape(1, 55, 3)
     J_t = torch.tensor(J, dtype=torch.float32)[None]
