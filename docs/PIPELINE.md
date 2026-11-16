@@ -66,6 +66,12 @@ python pipeline.py render --config configs/datasets/fcs006.json --cameras assets
 
 `--video` 取配置 FPS，要求选中源帧连续。稀疏帧可以输出 PNG，不能冒充原速视频。视频编码成功后默认删除本次PNG中间帧；需要保留时使用 `--keep-frames`。
 
+静态旋转视角通过场景 `rendering.pose_frame` 或命令行 `--pose-frame <源帧ID>` 指定固定姿态。此时人物和刚体都读取该真实源帧；相机按输出帧 ID 推进。输出时间轴来自显式 `--frames`，否则取所选动态相机轨迹的帧交集；只有静态相机时必须显式给出输出帧。相机不插值，固定源帧必须同时存在于所有人物和刚体中。
+
+未设置 `pose_frame` 时，输出帧仍与原动作源帧一一对应，动态渲染行为不变。报告分别保存 `frames`（输出帧）和 `source_pose_frames`（姿态源帧）；静态旋转可以只有一个姿态源帧却输出完整相机轨迹，不能通过复制动作张量伪造动态片段。静态模式的视频要求输出帧连续，帧率仍由场景配置指定。
+
+场景 `rendering.orbit` 可直接生成旋转相机，无需另写相机脚本。它从实际动作的世界关节范围计算取景，以 `world_up` 为轴、指定 `reference_serial` 为起始方向，输出到 `runs/<scene>/cameras/orbit.json`。可配置 `turns`、`vertical_fov_degrees`、`elevation_degrees`、`margin`；静态模式另用 `frame_count` 指定相机帧数，动态模式沿用真实动作帧 ID。显式 `--cameras` 或 `rendering.cameras` 优先于自动orbit。该路径只移动相机，不改变人体动作或插值姿态；取景依据人体关节范围，较大附属物需自行配置足够的margin。
+
 ## 产物与外置依赖
 
 ```text

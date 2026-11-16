@@ -309,6 +309,26 @@ def safe_segment(value: Any) -> str:
     return value
 
 
+def parse_frame_selection(requested: Sequence[str]) -> set[int]:
+    selected: set[int] = set()
+    for token in requested:
+        for part in str(token).split(","):
+            part = part.strip()
+            if not part:
+                continue
+            if ":" in part:
+                bits = part.split(":")
+                if len(bits) != 2:
+                    raise ValueError("frame ranges use inclusive start:end")
+                start, end = map(int, bits)
+                if end < start:
+                    raise ValueError("frame range end precedes start")
+                selected.update(range(start, end + 1))
+            else:
+                selected.add(int(part))
+    return selected
+
+
 def select_frames(
     motions: Sequence[Dict[str, Any]], requested: Optional[Sequence[str]]
 ) -> Tuple[List[int], List[Dict[int, int]]]:
@@ -322,22 +342,7 @@ def select_frames(
         common = set(frames) if common is None else common.intersection(frames)
     available = sorted(common or [])
     if requested is not None:
-        selected = set()
-        for token in requested:
-            for part in str(token).split(","):
-                part = part.strip()
-                if not part:
-                    continue
-                if ":" in part:
-                    bits = part.split(":")
-                    if len(bits) != 2:
-                        raise ValueError("frame ranges use inclusive start:end")
-                    start, end = map(int, bits)
-                    if end < start:
-                        raise ValueError("frame range end precedes start")
-                    selected.update(range(start, end + 1))
-                else:
-                    selected.add(int(part))
+        selected = parse_frame_selection(requested)
         missing = selected - set(available)
         if missing:
             raise ValueError(
@@ -347,6 +352,36 @@ def select_frames(
     if not available:
         raise ValueError("no common motion frames selected")
     return available, indices
+
+
+def select_render_frames(
+    motions: Sequence[Dict[str, Any]],
+    requested: Optional[Sequence[str]],
+    trajectories: Sequence[Dict[str, Any]],
+    pose_frame: Optional[int] = None,
+) -> Tuple[List[int], List[Dict[int, int]]]:
+    """Select output frames independently of an explicitly fixed source pose."""
+    if pose_frame is None:
+        return select_frames(motions, requested)
+    if isinstance(pose_frame, bool) or not isinstance(pose_frame, (int, np.integer)):
+        raise ValueError("pose_frame must be an integer source frame")
+    _, indices = select_frames(motions, [str(pose_frame)])
+    if trajectories:
+        camera_frames = set.intersection(*(set(view["frame_index"]) for view in trajectories))
+        selected = camera_frames if requested is None else parse_frame_selection(requested)
+        missing = selected - camera_frames
+        if missing:
+            raise ValueError(
+                f"requested output frames missing from camera trajectories: {sorted(missing)}"
+            )
+        frames = sorted(selected)
+    elif requested is not None:
+        frames = sorted(parse_frame_selection(requested))
+    else:
+        raise ValueError("a fixed pose needs explicit output frames or a camera trajectory")
+    if not frames:
+        raise ValueError("no output frames selected for the fixed pose")
+    return frames, indices
 
 
 def load_scene_config(
@@ -537,6 +572,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "--cameras", help="custom fixed cameras or source-indexed camera trajectories JSON"
     )
     parser.add_argument("--frames", nargs="+")
+    parser.add_argument(
+        "--pose-frame", type=int, help="hold this source pose while output camera frames advance"
+    )
     parser.add_argument("--serial", default="all")
     parser.add_argument("--video", action="store_true")
     parser.add_argument(
@@ -640,7 +678,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             "compositing": "expected_depth",
         }
     frame_motions = motions if object_motion is None else [*motions, object_motion]
-    frames, frame_indices = select_frames(frame_motions, args.frames)
+    pose_frame = args.pose_frame
+    if pose_frame is None:
+        pose_frame = (config.get("rendering") or {}).get("pose_frame")
+    frames, frame_indices = select_render_frames(
+        frame_motions, args.frames, list(trajectories.values()), pose_frame
+    )
     indices = frame_indices[: len(motions)]
     object_index = None if object_motion is None else frame_indices[-1]
     for serial, view in trajectories.items():
@@ -651,7 +694,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             )
     if args.video and any(b != a + 1 for a, b in zip(frames, frames[1:])):
         raise ValueError(
-            "--video requires consecutive source frames at config fps; use PNG output for sparse frames"
+            "--video requires consecutive output frames at config fps; use PNG output for sparse frames"
         )
     background_cpu = bundles[0]["background_embedding"][2]
     backgrounds_differ = [
@@ -690,12 +733,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         cameras.append((serial, K, W, directory, frame_dir))
     with torch.inference_mode():
         for frame in frames:
+            source_frame = frame if pose_frame is None else int(pose_frame)
             gaussians = [
-                animate(rig, pose, index[frame]) for rig, pose, index in zip(rigs, poses, indices)
+                animate(rig, pose, index[source_frame])
+                for rig, pose, index in zip(rigs, poses, indices)
             ]
             world = None
             if object_mesh is not None:
-                object_t = object_index[frame]
+                object_t = object_index[source_frame]
                 world = (
                     object_mesh["vertices_local"].float()
                     @ object_motion["R"][object_t].float().T
@@ -773,6 +818,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             for actor_id, actor, motion in zip(actor_ids, actors, motions)
         ],
         "frames": frames,
+        "pose_frame": pose_frame,
+        "source_pose_frames": [
+            frame if pose_frame is None else int(pose_frame) for frame in frames
+        ],
+        "frame_semantics": "output IDs index camera poses; source_pose_frames index actor and rigid motions",
         "fps": fps,
         "video": bool(args.video),
         "image_size": [args.width, args.height],
