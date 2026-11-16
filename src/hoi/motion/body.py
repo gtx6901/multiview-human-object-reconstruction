@@ -15,6 +15,7 @@ import numpy as np
 
 from hoi.motion.landmarks import (
     BODY,
+    WORLD_HUBER_SCALE,
     FOOT_VERTEX,
     HAND_OFFSET,
     HAND_BASE,
@@ -318,7 +319,7 @@ def main() -> int:
             m = valid3d[:, cj]
             if not bool(m.any()):
                 continue
-            d = (world[m, k] - xyz[m, cj]).norm(dim=-1) / 0.02
+            d = (world[m, k] - xyz[m, cj]).norm(dim=-1) / WORLD_HUBER_SCALE
             data3d = data3d + wgt[k] * torch.nn.functional.huber_loss(
                 d, torch.zeros_like(d), reduction="mean", delta=1.0
             )
