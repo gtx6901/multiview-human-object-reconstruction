@@ -41,6 +41,8 @@ Windows恢复使用只读检查点映射，Adam状态使用项目D盘临时文�
 
 当前模型的颜色输出为多尺度Haar表示。2000检查点的body色网CPU重放中，最后一级Haar往返误差小于8e-7，低频分量也继承格纹；用原生SMPL-X及视角特征重放frame49/cam4后，手部UV颜色仍有格纹。该控制只覆盖一个时刻/机位的body输出，说明不能把问题仅归为最后IWT或无视角条件的诊断图；没有滤除高频或改变最终输出。
 
+3000的Adam状态显示，大部分颜色参数处于epsilon主导区。以同一3000为起点、完整恢复模型/Adam/RNG、保持其他设置，分别用原生`eps=1e-8`与`1e-12`续训100步至3100；输入签名、最终各随机状态和1304项step=1298逐项对齐。两组均完成并审看八机位0/49/98及正面99帧同步视频：较小epsilon加重了红紫色偏，格纹仍在。因此未采用该改动，临时参数入口已撤回，生产检查点仍为3000。临时对照目录的删除被执行审查拒绝，目前仍在`runtime/cache/optimizer_control`，不是选定训练成果；不换方式绕过删除拒绝。
+
 ## 论文与发布代码的训练协议
 
 [论文 §6 Training](https://arxiv.org/html/2603.04290v1#S6) 与固定提交 [`3e62461`](https://github.com/eth-ait/GaussianWardrobe/commit/3e62461b724d546f368f72a6d5ef57a21c6e3635) 的 [`main_avatar.py`](https://github.com/eth-ait/GaussianWardrobe/blob/3e62461b724d546f368f72a6d5ef57a21c6e3635/main_avatar.py#L50)、[`configs/4d_dress/avatar.yaml`](https://github.com/eth-ait/GaussianWardrobe/blob/3e62461b724d546f368f72a6d5ef57a21c6e3635/configs/4d_dress/avatar.yaml#L52) 存在协议差异：
