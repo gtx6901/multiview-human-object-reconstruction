@@ -469,6 +469,21 @@ def render_scene(config: SceneConfig, args: argparse.Namespace, fitted: bool) ->
         str(height),
     ]
     cameras = args.cameras or config.rendering.get("cameras")
+    if cameras is None and config.rendering.get("orbit"):
+        cameras = config.output / "cameras/orbit.json"
+        camera_arguments = [
+            "--config",
+            str(path),
+            "--out",
+            str(cameras),
+            "--width",
+            str(width),
+            "--height",
+            str(height),
+        ]
+        if args.pose_frame is not None:
+            camera_arguments.extend(["--pose-frame", str(args.pose_frame)])
+        run_stage("hoi.rendering.cameras", camera_arguments, config.output / "cameras")
     if cameras:
         camera_path = Path(cameras)
         flags.extend(
@@ -483,6 +498,8 @@ def render_scene(config: SceneConfig, args: argparse.Namespace, fitted: bool) ->
         flags.append("--video")
     if args.keep_frames:
         flags.append("--keep-frames")
+    if args.pose_frame is not None:
+        flags.extend(["--pose-frame", str(args.pose_frame)])
     run_stage("hoi.rendering.scene", flags, config.output / "render")
 
 
@@ -498,6 +515,7 @@ def main() -> int:
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--serial", default="all")
     parser.add_argument("--frames", nargs="+", type=int)
+    parser.add_argument("--pose-frame", type=int)
     parser.add_argument("--video", action="store_true")
     parser.add_argument("--keep-frames", action="store_true")
     parser.add_argument("--width", type=int)
