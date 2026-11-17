@@ -20,3 +20,6 @@ __pycache__/
 ~$*
 *.tmp
 .dsh-office-*
+
+# DSH local recovery records
+/.acl-recovery/
