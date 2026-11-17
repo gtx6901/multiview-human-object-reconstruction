@@ -11,6 +11,7 @@
 | 身份重建 | `lhmpp/vendor`、`checkpoint_config.json`、LHMPP-700M、ArcFace、FLAME 和 SMPL-X 预训练资源 |
 | 分割 | SAM2 源码与 `runtime/sam2/checkpoints/sam2.1_hiera_tiny.pt` |
 | 身体关键点 | `runtime/wholebody/rtmw.onnx`，rtmlib 0.0.13，ONNX Runtime 1.20.1 |
+| 人脸观测探索 | 本地3DDFA-V2、FaceBoxes及BFM资源；使用完整原图ROI，Windows复用上游NumPy NMS且保留原抑制语义，未修改模型阈值 |
 | 动作初始化 | `runtime/weights/nlf.torchscript` |
 | 图像手部观测 | `runtime/hamer` 的源码、配置、HaMeR 与 MANO 权重 |
 | 几何和渲染 | PyTorch3D 0.7.8、SMPL-X 0.1.28、gsplat 1.5.3 及匹配 Python/PyTorch/CUDA 的编译扩展 |

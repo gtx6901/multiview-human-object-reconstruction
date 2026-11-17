@@ -88,6 +88,8 @@ def main() -> int:
     ap.add_argument("--out", required=True)
     ap.add_argument("--fps", type=float, default=30.0)
     ap.add_argument("--iters", type=int, default=200)
+    ap.add_argument("--avatar-bindings", type=Path)
+    ap.add_argument("--face-observations", type=Path)
     args = ap.parse_args()
 
     torch.set_num_threads(4)
@@ -177,6 +179,43 @@ def main() -> int:
     xy, score, valid = (value[:, :, anchor_indices] for value in (xy, score, valid))
     inlier = inlier[:, :, anchor_indices]
     valid_face = valid.permute(1, 0, 2)  # V,T,N
+    observation_files = {}
+    landmark_indices = np.asarray(face_kp)
+    local_source = (
+        "current-person screened observations xyz in current q head frame, median over valid frames"
+    )
+    selection = "score>=0.5 & finite(xy) for measured head-local anchors; no front/inlier gate"
+    weights = np.ones(len(face_kp), np.float32)
+    if args.avatar_bindings is not None or args.face_observations is not None:
+        if args.avatar_bindings is None or args.face_observations is None:
+            raise ValueError(
+                "Avatar bindings and independent face observations must be supplied together"
+            )
+        from hoi.observations.face import assemble_face_observations
+
+        with np.load(args.avatar_bindings, allow_pickle=False) as bindings:
+            selected = np.asarray(bindings["valid"], bool)
+            landmark_indices = np.asarray(bindings["indices"], np.int64)[selected]
+            L = torch.tensor(np.asarray(bindings["local"], np.float32)[selected])
+        measured = assemble_face_observations(
+            args.face_observations,
+            frames,
+            meta["views"],
+            landmark_indices,
+            identity=info["identity"],
+        )
+        xy = torch.tensor(measured["xy"], dtype=torch.float32)
+        score = torch.tensor(measured["score"], dtype=torch.float32)
+        valid_face = torch.tensor(measured["valid"])
+        valid = valid_face.permute(1, 0, 2)
+        face_kp = (23 + landmark_indices).tolist()
+        inlier = torch.zeros((len(cams), T, len(face_kp)), dtype=torch.bool)
+        observation_files = measured["sources"]
+        local_source = f"actual avatar render bindings: {args.avatar_bindings.resolve()}"
+        selection = "detected face, finite detection score>=0.5, finite xy within native camera image; no 3D inlier selection"
+        # Preserve the existing five-point face group's total MAP weight when
+        # increasing landmark density; body/hand terms retain their weight.
+        weights = np.full(len(face_kp), len(FACE_KP) / max(1, len(face_kp)), np.float32)
     point_count = len(face_kp)
     iterations = args.iters if point_count else 0
     if not point_count:
@@ -310,9 +349,14 @@ def main() -> int:
         frames=frames.astype(np.int32),
         cameras=np.asarray(cams),
         inlier=inlier.numpy(),
-        selection=np.asarray(
-            "score>=0.5 & finite(xy) for measured head-local anchors; no front/inlier gate"
+        selection=np.asarray(selection),
+        weights=weights,
+        observation_source=np.asarray("3ddfa_v2" if args.face_observations else "rtmw"),
+        observation_directory=np.asarray(
+            str(args.face_observations.resolve()) if args.face_observations else ""
         ),
+        observation_files=np.asarray(json.dumps(observation_files, sort_keys=True)),
+        landmark_indices=landmark_indices,
         xy_layout=np.asarray("T,V,N,2"),
         valid_layout=np.asarray("V,T,N"),
         inlier_layout=np.asarray("V,T,N; recorded, NOT used for 2D selection"),
@@ -336,16 +380,24 @@ def main() -> int:
         "identity": info.get("identity"),
         "frames": frames.tolist(),
         "face_kp": face_kp,
-        "face_point_names": [
-            ["nose", "left_eye", "right_eye", "left_ear", "right_ear"][k] for k in face_kp
-        ],
-        "unobserved_anchor_ids": [k for k in FACE_KP if k not in face_kp],
+        "face_point_names": (
+            [["nose", "left_eye", "right_eye", "left_ear", "right_ear"][k] for k in face_kp]
+            if args.face_observations is None
+            else [f"ibug68_{k}" for k in landmark_indices]
+        ),
+        "unobserved_anchor_ids": (
+            [k for k in FACE_KP if k not in face_kp] if args.face_observations is None else []
+        ),
         "anchor_count": point_count,
         "skipped": not bool(point_count),
         "camera_order": cams,
         "L": L.tolist(),
-        "L_source": "current-person screened observations xyz in current q head frame, median over valid frames",
-        "valid_selection": "score>=0.5 and finite source xy; no front/inlier/rank gate",
+        "L_source": local_source,
+        "valid_selection": selection,
+        "independent_observations": observation_files,
+        "avatar_binding_sha256": (
+            sha256_file(args.avatar_bindings) if args.avatar_bindings else None
+        ),
         "valid_count": int(valid.sum()),
         "inlier_recorded_not_used": True,
         "huber_px": 20.0,
@@ -384,11 +436,12 @@ def main() -> int:
             "joints55_world": "actual q FK",
         },
         "no_quality_threshold": True,
-        "no_faceboxes": True,
+        "no_faceboxes": args.face_observations is None,
         "no_front_or_inlier_gate": True,
-        "no_expression_or_head_model": True,
+        "no_expression_or_head_model": args.face_observations is None,
+        "no_expression_or_face_shape_fitting": True,
         "cpu_threads": 4,
-        "scope": "Q-native neck/head stage using measured anchors among five COCO points; empty support preserves input rotations.",
+        "scope": "Q-native neck/head stage using fixed correspondences and measured image landmarks; empty support preserves input rotations. Avatar geometry and RGB features fixed.",
     }
     atomic_write_json(out / "report.json", report)
     print(

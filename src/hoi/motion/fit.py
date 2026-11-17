@@ -92,6 +92,28 @@ def attach_face(full, face_path: Path, frames: np.ndarray, cameras: List[str]) -
     coco_t = torch.as_tensor(coco, dtype=torch.long)
     actual_xy = full.xy[:, :, coco_t]  # T,V,N,2
     actual_score = full.score[:, :, coco_t]  # T,V,N
+    independent = None
+    if "observation_source" in fcz.files and str(fcz["observation_source"].item()) == "3ddfa_v2":
+        from hoi.observations.face import assemble_face_observations
+
+        independent = assemble_face_observations(
+            Path(str(fcz["observation_directory"].item())),
+            frames,
+            full.views,
+            np.asarray(fcz["landmark_indices"], np.int64),
+            identity=full.info["identity"],
+        )
+        expected_sources = json.loads(str(fcz["observation_files"].item()))
+        if independent["sources"] != expected_sources:
+            raise ValueError("Independent facial observations changed after the head fit")
+        if not np.array_equal(coco, 23 + independent["landmark_indices"]):
+            raise ValueError("Independent facial landmark identities differ")
+        actual_xy = torch.tensor(independent["xy"], dtype=full.xy.dtype)
+        actual_score = torch.tensor(independent["score"], dtype=full.score.dtype)
+        full.xy = full.xy.clone()
+        full.score = full.score.clone()
+        full.xy[:, :, coco_t] = actual_xy
+        full.score[:, :, coco_t] = actual_score
     if "xy" in fcz.files:
         fxy = torch.tensor(np.asarray(fcz["xy"], np.float64))
         if tuple(fxy.shape) != tuple(actual_xy.shape):
@@ -127,6 +149,8 @@ def attach_face(full, face_path: Path, frames: np.ndarray, cameras: List[str]) -
     else:
         serr = None
     derived_valid = (actual_score >= 0.5) & torch.isfinite(actual_xy).all(-1)
+    if independent is not None:
+        derived_valid = torch.tensor(independent["valid"]).permute(1, 0, 2)
     if not torch.equal(torch.tensor(valid), derived_valid.permute(1, 0, 2)):
         raise ValueError(
             "face_constraints valid is not exactly score>=0.5 & finite(xy); "
@@ -138,8 +162,15 @@ def attach_face(full, face_path: Path, frames: np.ndarray, cameras: List[str]) -
     full.face_path = str(Path(face_path).resolve())
     full.face_local = torch.tensor(local, dtype=torch.float64)
     full.face_valid = torch.tensor(valid, dtype=torch.bool)  # V,T,N exact stage mask
+    face_weights = np.asarray(fcz["weights"], np.float64) if "weights" in fcz.files else np.ones(N)
+    if (
+        face_weights.shape != (N,)
+        or not np.isfinite(face_weights).all()
+        or (face_weights < 0).any()
+    ):
+        raise ValueError("Face weights must be a finite nonnegative value for each landmark")
     for k in range(N):
-        full.table.append((int(coco[k]), 15, full.face_local[k].clone(), 1.0))
+        full.table.append((int(coco[k]), 15, full.face_local[k].clone(), float(face_weights[k])))
     full.coco = [x[0] for x in full.table]
     full.joints = torch.tensor([x[1] for x in full.table], dtype=torch.long)
     full.offset = torch.tensor(
@@ -164,6 +195,8 @@ def attach_face(full, face_path: Path, frames: np.ndarray, cameras: List[str]) -
         "xy_match_max": err,
         "score_match_max": serr,
         "selection": "exact face_constraints valid mask; no second observations",
+        "independent_observation_sources": independent["sources"] if independent else None,
+        "weights": face_weights.tolist(),
     }
 
 
@@ -368,7 +401,7 @@ def main() -> int:
             "local": full.face_local.tolist(),
             "valid_shape": list(full.face_valid.shape),
             "valid_true": int(full.face_valid.sum()),
-            "weight_each": 1.0,
+            "weights": full.weights[full.base_count :].tolist(),
             "selection": "exact face_constraints valid; no front/inlier/score second gate",
         }
     report = {

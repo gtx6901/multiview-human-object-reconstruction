@@ -65,5 +65,20 @@
     "directory": "runtime/soft_objects/colmap",
     "source": "https://github.com/colmap/colmap/releases/download/3.13.0/colmap-x64-windows-cuda.zip",
     "asset_sha256": "60f77bd8e9823e6d2b39082ee665f69c91900011d5321fc54a4dfebe3de110b7"
+  },
+  "face_alignment": {
+    "repository": "https://github.com/cleardusk/3DDFA_V2",
+    "directory": "runtime/vendor/3DDFA_V2",
+    "revision": "Local vendored snapshot; source commit unavailable",
+    "source_sha256": {
+      "TDDFA.py": "812ef8437b33ef9a19c74631fe3aa2c5c6540c1b32b7c8d3d630383af8b163dc",
+      "FaceBoxes/FaceBoxes.py": "c7b5df2d328a84fba909380de16b294d6c0267e6083e2b45e283874f7062378b",
+      "FaceBoxes/utils/nms/py_cpu_nms.py": "d9f6e53641524e2a77d44af4c880dca4f82006967a5b46063375639a47535336",
+      "configs/bfm_noneck_v3.pkl": "89ac96480eddc331120f2c8401737c55a5fcc97b10f8a64574e63976c3d246ca"
+    },
+    "checkpoint": "runtime/weights/3ddfa_v2/mb1_120x120.pth",
+    "license": "MIT code; model assets retain their own upstream terms",
+    "compatibility": "Author NumPy hard NMS with compiled suppression predicate and scalar threshold comparison; no source-vendor edits",
+    "status": "Observation exploration; not yet adopted as production motion conditioning"
   }
 }
