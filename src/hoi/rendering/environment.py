@@ -253,12 +253,14 @@ class SceneShow:
             frame_list,
             load_bundle,
             load_motion,
+            render_people,
             render_scene,
             to_device,
         )
 
         self.animate = animate
         self.render_scene = render_scene
+        self.render_people = render_people
         bundles = [load_bundle(actor.avatar) for actor in self.config.actors]
         for bundle in bundles[1:]:
             compare_decoders(bundles[0], bundle)
@@ -417,12 +419,49 @@ class SceneShow:
             mesh = self.env.render(actors, self.rasterization, K, W, width, height)
             sky = torch.tensor(self.options.get("background", [.60, .74, .88]), device="cuda")
             backdrop = self.panorama(K, W, width, height)
-            rgb, _ = self.render_scene(
-                self.decoder, self.rasterization, actors, self.features,
-                K, W, width, height, self.background, mesh,
-                display_background=sky if backdrop is None else backdrop,
+            # Decode the people at a fixed screen size, independent of distance:
+            # the DPT decoder's silhouette changes with the feature-map scale, so
+            # rendering directly at the output resolution makes far actors swell.
+            up = torch.tensor(self.rotation[1] / np.linalg.norm(self.rotation[1]),
+                              device="cuda", dtype=torch.float32)
+            points = torch.cat([actor["xyz"] for actor in actors], 0)
+            along = points @ up
+            world_height = float(along.max() - along.min())
+            center = points.mean(0)
+            camera_z = float((W[:3, :3] @ center + W[:3, 3])[2].clamp(min=1e-3))
+            projected = float(K[1, 1]) * world_height / camera_z
+            target_px = 600.0
+            limit = float(np.sqrt(3.2e6 / max(width * height, 1)))
+            scale = min(3.0, max(1.0, target_px / max(projected, 1.0)), limit)
+            if scale > 1.01:
+                hi_width = max(14, int(width * scale) // 14 * 14)
+                hi_height = max(14, int(height * scale) // 14 * 14)
+                K_hi = K.clone()
+                K_hi[0] *= hi_width / width
+                K_hi[1] *= hi_height / height
+                rgb, alpha, depth = self.render_people(
+                    self.decoder, self.rasterization, actors, self.features,
+                    K_hi, W, hi_width, hi_height, self.background,
+                )
+                size = (height, width)
+                rgb = F.interpolate(rgb.permute(2, 0, 1)[None], size=size, mode="area")[0].permute(1, 2, 0)
+                alpha = F.interpolate(alpha[None, None], size=size, mode="area")[0, 0]
+                depth = F.interpolate(depth[None, None], size=size, mode="area")[0, 0]
+            else:
+                rgb, alpha, depth = self.render_people(
+                    self.decoder, self.rasterization, actors, self.features,
+                    K, W, width, height, self.background,
+                )
+            gain = float(self.options.get("subject_gain", 1.0))
+            if gain != 1.0:
+                rgb = rgb * gain
+            from hoi.rendering.compositing import composite
+
+            result = composite(
+                rgb * alpha[..., None], alpha, depth, mesh,
+                background=sky if backdrop is None else backdrop,
             )
-            return (rgb.clamp(0, 1).cpu().numpy() * 255).astype(np.uint8)
+            return (result["rgb"].clamp(0, 1).cpu().numpy() * 255).astype(np.uint8)
 
 
 def render_environment(config, args):
@@ -459,8 +498,7 @@ def render_environment(config, args):
             # distorts small splats (merged hands, swollen silhouettes).
             # Decode the neural appearance at 2x, then downsample: the DPT decoder's
             # silhouette depends on the feature-map resolution (bodies swell at low res).
-            image = show.render(frame, width * 2, height * 2)
-            image = np.asarray(Image.fromarray(image).resize((width, height), Image.LANCZOS))
+            image = show.render(frame, width, height)
             if frame in {frames[0], frames[len(frames)//2], frames[-1]} or not args.video:
                 Image.fromarray(image).save(output / f"frame_{frame:04d}.png")
             if process is not None:

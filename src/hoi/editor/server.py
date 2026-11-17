@@ -126,15 +126,11 @@ def preview(spec: dict, name: str, frame: int, width: int, height: int) -> dict:
         frames = show.frames
         if frame not in frames:
             frame = frames[0]
-        master_width, master_height = width * 2, height * 2
-        image = show.render(frame, master_width, master_height)
-        picture = Image.fromarray(image).resize((width, height), Image.LANCZOS)
+        image = show.render(frame, width, height)
+        picture = Image.fromarray(image)
         PREVIEW.parent.mkdir(parents=True, exist_ok=True)
         picture.save(PREVIEW)
-        K, W = show.camera(frame, master_width, master_height)
-        K = K.clone()
-        K[0] *= 0.5
-        K[1] *= 0.5
+        K, W = show.camera(frame, width, height)
         return {
             "image": f"/preview.png?t={time.time_ns()}",
             "frame": frame,
