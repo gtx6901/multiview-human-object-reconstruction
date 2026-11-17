@@ -4,13 +4,13 @@
 
 ## 当前运行
 
-2026-11-17：唯一检查点为完整author_train6600、epoch8/offset264，约5.386GB；已核对ZIP、文件稳定且无tmp。为七项视频和MJJ002软包探索暂停，当前GPU执行Multi4D完整原生日程，衣物不并发。后续从真实6600继续，目标仍固定官方400001次更新、学习率日程400000，5001次几何预训练不重跑；不是按早期画质停止。外层日志必须用clothing/pipeline.log，内部由入口管理train/run.log，二者重用会触发Windows共享写锁。
+2026-11-17晚：唯一检查点为完整author_train6600、epoch8/offset264，约5.386GB；已核对ZIP、文件稳定且无tmp。用户要求今晚先处理人脸、光照和30fps，衣物与Multi4D均让出GPU：Multi4D停在完整fine15000，当前GPU执行面部身份细化，日志与命令见HANDOFF末尾，衣物不并发。后续从真实6600继续，目标仍固定官方400001次更新、学习率日程400000，5001次几何预训练不重跑；不是按早期画质停止。外层日志必须用clothing/pipeline.log，内部由入口管理train/run.log，二者重用会触发Windows共享写锁。
 
 最近外观输出是4000更新：strict加载、八机位0/49/98与cam04完整99帧/9fps已完成；24张关键帧逐项与3000比较。用户反馈衣服整体效果还可以，应保留为衣物层阶段成果；皮肤格纹、重影和脸手模糊分别评价。正式review为4000，reference.mp4/png为3000唯一必要对照；降低epsilon更差，该临时改动已撤回。不能用约1%训练表现否定充分拟合的效果。
 
 4000连续播放尚未完成审看：电脑操作工具无法可靠确认浏览器网址后已停止操作，未换控制方式；当时临时视频服务已结束。不能把24张图当作完整视频验收。当前4000→5300只做正式原生采样长训，没有通过额外图像修饰改变输出。
 
-04-06已按用户最新任务恢复每小时续接；primary五小时约88%时保留余量，正常重置后继续，不新增定时器。最新七项视频状态在runs/delivery/manifest.json维护；当前任务进程须现场核实后再恢复训练，避免与渲染并发。
+04-06已按用户最新任务恢复每小时续接；用户最新允许使用primary至剩余3%，预留结束余量，正常重置后继续，不新增定时器。最新七项视频状态在runs/delivery/manifest.json维护；当前任务进程须现场核实后再恢复训练，避免与渲染并发。
 
 ## 本轮交付队列（2026-11-17）
 
@@ -18,7 +18,7 @@
 
 后续调研最近两年软性物体动态重建，以4060 Laptop 8GB、16GB RAM及1-2天实际训练预算筛选，再尝试MJJ单人-背包交互。先核实输入、方法真实训练设置和本机速度，不预先承诺长训可在截止前完成。
 
-架构图保留一份交互源，位于当前聊天的visualizations目录，含系统、源文件调用、数据流共六个子图和69段源码依据。节点形状和线型含义固定；main的face.py仅用五个候选点中有真实3D支持的锚点拟合颈/头旋转。Wardrobe正常render调用gaussians/gaussian_renderer.py的render3，包含联合六通道及独立body-only监督两个pass。
+架构图保留一份交互源，位于当前聊天的visualizations目录；11月17日晚更新为八个子图、91段与当前SHA及行范围逐项核对的源码依据，新增面部细化的源文件连接与可微数据流。图形和线型含义保持一致。最新桌面交互预览因用户按Escape而中断，不宣称新图已通过运行预览；源码/布局/引用的静态核对已完成。main的face.py仍用有真实3D支持的五点锚点拟合颈/头旋转，新的identity refinement不等于旧face姿态阶段。Wardrobe正常render调用gaussians/gaussian_renderer.py的render3，包含联合六通道及独立body-only监督两个pass。
 
 本轮架构预览使用的runtime/cache/architecture_browser、architecture_preview.html/png、architecture_layout.cjs和architecture_spec.json清理被执行审查在启动前拒绝，未提供具体原因，仍保留，不换方式绕过。独立headless预览浏览器已关闭；当前训练暂停状态见开头，未操作用户浏览器。
 ## 使用
