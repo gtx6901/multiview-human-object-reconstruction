@@ -33,6 +33,7 @@ STATE = {
 }
 STATIC = Path(__file__).resolve().parent / "static"
 PREVIEW = PROJECT_ROOT / "runs" / "editor_preview.png"
+STILL = PROJECT_ROOT / "runs" / "editor_still.png"
 FRAME_RE = re.compile(r"\[environment\]\s+\S+\s+frame\s+(\d+)")
 
 
@@ -131,6 +132,19 @@ def preview(spec: dict, name: str, frame: int, width: int, height: int) -> dict:
         }
 
 
+def still(spec: dict, name: str, frame: int, width: int, height: int) -> dict:
+    from PIL import Image
+
+    with LOCK:
+        show = ensure_show(name, spec)
+        if frame not in show.frames:
+            frame = show.frames[0]
+        image = show.render(frame, width, height)
+        STILL.parent.mkdir(parents=True, exist_ok=True)
+        Image.fromarray(image).save(STILL)
+        return {"image": f"/still.png?t={time.time_ns()}", "frame": frame}
+
+
 def render_job(name: str, spec: dict) -> None:
     job = STATE["job"]
     spec_path = save_spec(name, spec)
@@ -209,6 +223,8 @@ class Handler(BaseHTTPRequestHandler):
             self.send_file(STATIC / "index.html", "text/html; charset=utf-8")
         elif path == "/preview.png":
             self.send_file(PREVIEW, "image/png")
+        elif path == "/still.png":
+            self.send_file(STILL, "image/png")
         elif path == "/video.mp4":
             job = STATE["job"] or {}
             target = job.get("video")
@@ -223,12 +239,28 @@ class Handler(BaseHTTPRequestHandler):
 
             name = parse_qs(urlparse(self.path).query).get("name", [""])[0]
             try:
-                self.send_json({"name": name, "spec": load_spec(name), "frames": None})
+                self.send_json({
+                    "name": name,
+                    "spec": load_spec(name),
+                    "frames": None,
+                    "up": list(STATE["config"].world_up),
+                })
             except FileNotFoundError:
                 self.send_json({"error": f"unknown scene {name}"}, 404)
         elif path == "/api/job":
             job = STATE["job"]
             self.send_json(job or {"status": "idle"})
+        elif path == "/asset":
+            from urllib.parse import parse_qs, urlparse
+
+            relative = parse_qs(urlparse(self.path).query).get("path", [""])[0]
+            target = (PROJECT_ROOT / relative).resolve()
+            if PROJECT_ROOT not in target.parents:
+                self.send_error(403)
+                return
+            types = {".glb": "model/gltf-binary", ".gltf": "model/gltf+json",
+                     ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp"}
+            self.send_file(target, types.get(target.suffix.lower(), "application/octet-stream"), cache=True)
         elif path.startswith("/static/"):
             name = path[len("/static/"):]
             target = (STATIC / name).resolve()
