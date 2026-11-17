@@ -1,4 +1,4 @@
-"""Compose animated Gaussian actors with a lit glTF environment."""
+﻿"""Compose animated Gaussian actors with a lit glTF environment."""
 
 from __future__ import annotations
 
@@ -457,6 +457,8 @@ def render_environment(config, args):
         for frame in frames:
             # Render 2x and downsample: direct low-resolution gaussian rasterization
             # distorts small splats (merged hands, swollen silhouettes).
+            # Decode the neural appearance at 2x, then downsample: the DPT decoder's
+            # silhouette depends on the feature-map resolution (bodies swell at low res).
             image = show.render(frame, width * 2, height * 2)
             image = np.asarray(Image.fromarray(image).resize((width, height), Image.LANCZOS))
             if frame in {frames[0], frames[len(frames)//2], frames[-1]} or not args.video:

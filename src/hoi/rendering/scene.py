@@ -1,4 +1,4 @@
-"""Render any number of independently animated Gaussian identities in one scene."""
+﻿"""Render any number of independently animated Gaussian identities in one scene."""
 
 from __future__ import annotations
 
@@ -481,7 +481,8 @@ def rasterize_scene(
         render_mode="RGB+ED",
         near_plane=0.01,
         far_plane=100.0,
-        eps2d=1.0,
+        eps2d=0.3,
+        rasterize_mode="antialiased",
     )
     return color, alpha
 
