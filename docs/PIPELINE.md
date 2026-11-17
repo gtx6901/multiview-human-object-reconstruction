@@ -21,6 +21,8 @@
 
 阶段之间的修改后配置保存在 `runs/<scene>/config.json`。分阶段继续时使用这份配置，避免回到原场景文件中的旧路径：
 
+`render`和可选`refine`保留已有完整阶段配置；渲染输入另写`render_config.json`，身份细化保存自身输入签名。用精简的回放配置渲染，不会将已有重建输入覆盖为空。
+
 ```powershell
 python pipeline.py prepare --config configs/datasets/fcs008.json
 python pipeline.py identity --config runs/fcs008/config.json

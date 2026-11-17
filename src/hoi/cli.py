@@ -264,12 +264,12 @@ def identity_scene(config: SceneConfig, reuse: bool = False) -> SceneConfig:
             continue
         directory = config.output / actor.id
         proportions, identity = directory / "proportions", directory / "identity"
-        person = person_file(config, actor)
         segment_index = config.preparation.get("segment_index")
         if not segment_index:
             raise ValueError("Identity reconstruction requires prepare's segmentation index")
         proportions_path = actor.proportions
         if proportions_path is None:
+            person = person_file(config, actor)
             run_stage(
                 "hoi.identity.proportions",
                 ["--person", str(person), "--out", str(proportions)],
@@ -578,5 +578,6 @@ def main() -> int:
         refine_scene(config, args.frames, args.updates)
     if args.command in ("render", "run"):
         render_scene(config, args, fitted=args.command == "run")
-    save_config(config)
+    if args.command not in ("render", "refine"):
+        save_config(config)
     return 0

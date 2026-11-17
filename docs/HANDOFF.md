@@ -133,3 +133,5 @@ MJJ002的965真实融合点已核对.vis索引、相机序列和实际图像缩�
 identity.build新增显式color_response输入，校正发生在sRGB解码后、alpha合成与LHM编码前，缺相机不猜1，不传参数时仍为原像素。None路径和单位响应逐字节一致。MJJ000原图与校正图已实际审看：过曝脸/手/鞋原有信息缺失，简单反曝光会将饱和白变成灰块；不能将此输入校正当作细节恢复或直接采用。`runs/mjj000/review/color_normalization/{control,normalized}/scene.json`是同输入重建的必要对照配置，尚未启动GPU，先等当前refine完成。它不改变动作，选择后清理较差对照。
 
 MJJ001的330帧/30fps原机位和MJJ003的500帧/30fps固定新视角已在Edge实际连续播放并截图审看，节奏连续，未看到新增大幅姿态翻转；面部糊、手部残影与白鞋袜外观仍存在。30fps只增加三维姿态采样，不会恢复原9fps没有记录的动作细节。旧native9fps不再作为新30fps的播放证据。
+
+准备颜色对照时找到共用入口的配置覆盖错误：从精简数据集配置执行render后，main末尾无条件save_config会把已有阶段配置中的输入/体型路径覆盖为null。现render/refine只写自身用途产物，不覆盖完整重建config；已有六场config只从实际person.json和已存在的阶段文件恢复缺失字段，没有猜路径或改张量。显式已有proportions的identity也不再无条件要求与身份编码无关的motion观测包。两项均已作进程内隔离调用验证。
