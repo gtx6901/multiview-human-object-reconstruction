@@ -10,5 +10,5 @@
 - [soft_objects.md](soft_objects.md)：软物体（Multi4D）实现与资源边界
 - [bund_asset_survey.md](bund_asset_survey.md)：外滩/上海地标场景资产调查
 - [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)：第三方来源与许可证
-- [CLOTHING.md](CLOTHING.md)：衣物探索，只在 `codex/clothing` 分支维护
+- 衣物探索：只在 `codex/clothing` 分支维护（该分支含 `docs/CLOTHING.md`）
 - `reference/`：课程与 3DGS 参考 PDF（不进入 Git）

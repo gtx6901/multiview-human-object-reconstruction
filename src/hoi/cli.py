@@ -522,10 +522,6 @@ def main() -> int:
         from hoi.objects.cli import main as objects_main
 
         return objects_main(sys.argv[2:])
-    if len(sys.argv) > 1 and sys.argv[1] == "clothing":
-        from hoi.clothing.cli import main as clothing_main
-
-        return clothing_main(sys.argv[2:])
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "command",
