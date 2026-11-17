@@ -18,7 +18,11 @@
   },
   "rendering": {
     "width": 1008,
-    "height": 1344
+    "height": 1344,
+    "orbit": {
+      "reference_serial": "FCM22020159",
+      "turns": 0
+    }
   },
   "actors": [
     {
