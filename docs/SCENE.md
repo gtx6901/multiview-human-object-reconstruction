@@ -97,7 +97,8 @@ python pipeline.py editor --config runs/fcs008/config.json --port 8765
 
 | 名称 | 文件 | 状态 |
 |---|---|---|
-| dust2 | `configs/environments/dust2.json` | 可用；A 点社区复刻，34 MB GLB，MIT/CC0 贴图 |
+| dust2 | `configs/environments/dust2.json` | CS:S `de_dust2` 提取版，45 MB GLB；课程演示用，带 Valve 版权，不随仓库分发。人体高度按该模型单位设为 0.62 |
+| dust2_fan | `configs/environments/dust2_fan.json` | 社区重制的 A 点小场景，34 MB GLB，MIT 代码 + CC0 贴图；外观偏地中海，不是原版沙2 |
 | times_square | `configs/environments/times_square.json` | 未采用；城市级摄影测量，街面近景不可用 |
 
 外滩：没有找到可用的开源街景模型，候选与许可证见 [bund_asset_survey.md](bund_asset_survey.md)。

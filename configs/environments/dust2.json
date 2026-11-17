@@ -1,10 +1,62 @@
 {
-  "model": "assets/environments/dust2/dust2_a.webp.glb",
-  "source": "https://github.com/StarKnightt/counter-strike-in-browser",
-  "license": "MIT; included Poly Haven textures CC0",
+  "model": "assets/environments/dust2_css/de_dust2.glb",
+  "source": "https://sketchfab.com/3d-models/de-dust2-935c47ecc9574a29a72df694c4f84d5d",
+  "license": "Valve/Source map content; course demo only, not redistributed",
   "model_scale": 1.0,
-  "placement": {"position": [-19, 0, -6.8], "reference_serial": "21305717", "meters_per_body_height": 1.75, "yaw_degrees": 240},
-  "camera": {"eye": [-5, 2.5, -1.0], "target": [0.4, 0.9, 0], "vertical_fov": 46, "width": 1260, "height": 756},
-  "lighting": {"position": [-26, 14, 1.5], "target": [-19, 0, -6.5], "color": [1.0, 0.93, 0.83], "intensity": 1.0, "ambient": [0.38, 0.43, 0.52], "shadow_resolution": 1024, "shadow_bias": 0.02},
-  "background": [0.62, 0.76, 0.91]
+  "placement": {
+    "position": [
+      12.0,
+      0.0,
+      -6.0
+    ],
+    "reference_serial": "21305717",
+    "meters_per_body_height": 0.62,
+    "yaw_degrees": 90,
+    "snap_to_floor": true
+  },
+  "camera": {
+    "eye": [
+      0.0,
+      0.62,
+      1.55
+    ],
+    "target": [
+      0.0,
+      0.36,
+      0.0
+    ],
+    "vertical_fov": 50,
+    "width": 1260,
+    "height": 756
+  },
+  "lighting": {
+    "position": [
+      8.0,
+      6.0,
+      5.0
+    ],
+    "target": [
+      12.0,
+      0.0,
+      -6.0
+    ],
+    "color": [
+      1.0,
+      0.96,
+      0.86
+    ],
+    "intensity": 1.3,
+    "ambient": [
+      0.5,
+      0.55,
+      0.65
+    ],
+    "shadow_resolution": 2048,
+    "shadow_bias": 0.01
+  },
+  "background": [
+    0.55,
+    0.74,
+    0.95
+  ]
 }

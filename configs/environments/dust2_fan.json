@@ -1,0 +1,10 @@
+{
+  "model": "assets/environments/dust2/dust2_a.webp.glb",
+  "source": "https://github.com/StarKnightt/counter-strike-in-browser",
+  "license": "MIT; included Poly Haven textures CC0",
+  "model_scale": 1.0,
+  "placement": {"position": [-19, 0, -6.8], "reference_serial": "21305717", "meters_per_body_height": 1.75, "yaw_degrees": 240},
+  "camera": {"eye": [-5, 2.5, -1.0], "target": [0.4, 0.9, 0], "vertical_fov": 46, "width": 1260, "height": 756},
+  "lighting": {"position": [-26, 14, 1.5], "target": [-19, 0, -6.5], "color": [1.0, 0.93, 0.83], "intensity": 1.0, "ambient": [0.38, 0.43, 0.52], "shadow_resolution": 1024, "shadow_bias": 0.02},
+  "background": [0.62, 0.76, 0.91]
+}
