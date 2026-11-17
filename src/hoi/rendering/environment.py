@@ -455,7 +455,10 @@ def render_environment(config, args):
     from PIL import Image
     try:
         for frame in frames:
-            image = show.render(frame, width, height)
+            # Render 2x and downsample: direct low-resolution gaussian rasterization
+            # distorts small splats (merged hands, swollen silhouettes).
+            image = show.render(frame, width * 2, height * 2)
+            image = np.asarray(Image.fromarray(image).resize((width, height), Image.LANCZOS))
             if frame in {frames[0], frames[len(frames)//2], frames[-1]} or not args.video:
                 Image.fromarray(image).save(output / f"frame_{frame:04d}.png")
             if process is not None:
