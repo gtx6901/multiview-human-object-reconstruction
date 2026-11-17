@@ -2288,7 +2288,9 @@ def run_render(
         display_w -= display_w % 2
         display_h = int(round(raw_h * display_w / raw_w))
         display_h -= display_h % 2
-        video_path = review / f"cam{cam:02d}" / "preview.mp4"
+        from hoi.results import record_video, video_path as result_video_path
+
+        video_path = result_video_path(RESULTS, f"cam{cam:02d}", collection="exploration")
         cmd = [
             ffmpeg,
             "-hide_banner",
@@ -2370,7 +2372,11 @@ def run_render(
             ]
             if decoded.returncode != 0 or not counts or counts[-1] != len(layout["poses"]):
                 raise RuntimeError(f"preview decode failed or incomplete: {decoded.stderr[-2000:]}")
-            video_rel = str(video_path.relative_to(review)).replace("\\", "/")
+            video_rel = os.path.relpath(video_path, review).replace("\\", "/")
+            record_video(
+                video_path, report=report_path, frames=len(layout["poses"]),
+                fps=layout["video_fps"], checkpoint_updates=checkpoint_updates,
+            )
         except BaseException:
             if proc is not None:
                 if proc.stdin is not None and not proc.stdin.closed:

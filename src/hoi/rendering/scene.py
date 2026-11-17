@@ -884,16 +884,20 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 Image.fromarray(image).save(frame_dir / f"{frame:04d}.png")
             print(f"[render] frame {frame}; cameras={len(cameras)}", flush=True)
     if args.video:
+        from hoi.results import record_video, video_path
+
         for serial, K, W, directory, frame_dir in cameras:
+            destination = video_path(out, f"camera_{serial}")
             write_video(
                 Path(runtime["ffmpeg"]),
-                directory / "preview.mp4",
+                destination,
                 frames,
                 frame_dir,
                 args.width,
                 args.height,
                 fps,
             )
+            record_video(destination, report=out / "report.json", frames=len(frames), fps=fps)
             if not args.keep_frames:
                 for frame in frames:
                     (frame_dir / f"{frame:04d}.png").unlink()
@@ -930,6 +934,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "fps": fps,
         "resampling": resampling,
         "video": bool(args.video),
+        "video_outputs": (
+            [str(video_path(out, f"camera_{serial}")) for serial in serials]
+            if args.video else []
+        ),
         "image_size": [args.width, args.height],
         "camera_serials": serials,
         "gauge": gauge,

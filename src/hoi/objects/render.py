@@ -11,6 +11,7 @@ import tempfile
 import numpy as np
 
 from hoi.io import write_json
+from hoi.results import record_video, video_path
 from hoi.objects.multi4d import build_scene_info, parameters
 from hoi.objects.multiview import resolve
 from hoi.runtime import PROJECT_ROOT, runtime_settings
@@ -223,12 +224,16 @@ def main(argv=None):
                 ffmpeg = Path(runtime_settings()["ffmpeg"])
                 write_video(
                     ffmpeg,
-                    destination / "preview.mp4",
+                    video_path(output, f"camera_{serial}", collection="exploration"),
                     frames,
                     temporary,
                     camera.image_width,
                     camera.image_height,
                     fps,
+                )
+                record_video(
+                    video_path(output, f"camera_{serial}", collection="exploration"),
+                    report=root / "report.json", frames=len(frames), fps=fps,
                 )
         print(
             f"[objects render] {serial}; frames={len(frames) if args.video else len(selected)}",

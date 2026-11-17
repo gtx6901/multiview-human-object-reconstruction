@@ -10,7 +10,8 @@
 | FCS006 头盔 | `assets/helmet/texture/mesh.pt`、`assets/helmet/pose/sequence.pt` |
 | FCS008 两人 | `assets/scenes/fcs008/fcs/`、`assets/scenes/fcs008/partner/` |
 | 相机与共享坐标 | `assets/capture/manifest.json`、`assets/scenes/fcs008/cameras.json` |
-| 既有演示成片 | `runs/same_camera/`、`runs/novel_fixed/`、`runs/novel_orbit/`、`runs/four_views_30fps.mp4` |
+| 当前选定成片 | `runs/delivery/selected/`（FCS/MJJ共七项；具体文件、来源和SHA256见统一清单） |
+| 补充视角与既有头盔演示 | `runs/delivery/views/`；原视频只移动归档，内容没有重新编码 |
 | 已交付材料 | `reports/deck/final/八视角人—物动态重建_正文8页.pptx`、`reports/deck/final/双人交互.gif` |
 
 原始视频、输入图像/掩码/标定、选定张量资产、外置模型权重和已交付 PPT/GIF 保留。已有成片来自先前资产与运行，不能用它证明新入口完整重建已经验证。

@@ -54,10 +54,19 @@ FCS006 配置包含一人和头盔；FCS008 配置包含两人。算法不按这
 
 ## 目录和状态
 
+- `runs/delivery/`：所有结果视频的统一位置，`README.md`列出可播放文件，`manifest.json`记录来源与SHA256。`selected/`放选定成片，`views/`放补充视角，`review/`放尚未采用的必要对照，`exploration/`放衣物等探索结果。
 - `src/hoi/`：共用实现；`configs/datasets/`：场景差异；`configs/reconstruction.json`：拟合迭代设置。
 - `assets/`：已有观测和选定人体/刚体资产；`data/`：原始数据；`lhmpp/`、`runtime/`：外置第三方依赖与权重。
-- `runs/<scene>/`：阶段产物、日志、保存后的配置和渲染。
+- `runs/<scene>/`：阶段产物、日志、保存后的配置、关键图和渲染报告；视频直接写入统一结果目录。
 - `reports/deck/final/`：保留已交付 PPT 和 GIF，不在源码整理中改名或覆盖。
+
+渲染输出先进入`review/`或`exploration/`，不能凭运行结束自动成为选定结果。实际审看后，通过同一入口移动归档，例如：
+
+```powershell
+python pipeline.py export --video runs/delivery/review/fcs005_camera_orbit.mp4 --name fcs_dynamic_orbit --collection selected --replace
+```
+
+此命令移动视频并更新清单，不另存一份媒体副本。只有明确要替换同名成片时使用`--replace`；代码历史由Git管理，视频按用途原位更新，不叠加版本号。
 
 双人场景已完成八机位、300个源时刻的完整原片观测准备、NLF和图像手部观测。初始化用有效身体关节共同估计世界位置，不读取旧动作；手部以身份模型的姿态初始化，随后根据图像观测拟合。本轮复用了已选身份；此前也已通过统一入口，从七个真实可见视角重新生成partner身份。
 
