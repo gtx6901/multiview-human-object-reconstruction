@@ -151,3 +151,12 @@ MJJ001的330帧/30fps原机位和MJJ003的500帧/30fps固定新视角已在Edge�
 用户明确停止后，后台Python/GPU任务已全部退出，04-06已PAUSED，worker也停止。随后20:11用户只授权恢复能改善颜色的措施，并要求Codex本人反思为什么SMPL-X已有五官而输出失真。当前只执行同输入MJJ000 identity对照：control原RGB与normalized显式相机响应，顺序入口pipeline.py identity，exec68418；日志各review/color_normalization/<用途>/pipeline.log。不重拟合动作，不修改选定资产，不恢复面部/衣物/软包训练，不自动启用定时器。完成后同动作、同8机位渲染与看图，不能直接采用归一化结果。过曝白像素校正后发灰是已知信息丢失，颜色对照必须显示这一点。
 
 五官下一步是表示链的因果核查：SMPL-X网格不是当前最终渲染表面；需在自设精确相机、统一材质/光照下比较原SMPL-X网格、去掉学习位移的高斯、原生成高斯，再核对128D特征→DPT。不能把已有SMPL-X五官当作Gaussian一定保留正确五官的证据，也不能在未看这些中间表示前另造训练方案。
+
+## 2026-11-18 环境合成与基线核验
+
+- 运行环境：`D:\Document\3dgs\.tmp\rebuild_20261014_runtime\venv`（Python 3.11.16、torch 2.5.1+cu124、numpy 1.26.4）。11月18日凌晨实测可用；PATH 里的 `C:\Program Files\Python311` 和 Anaconda base 都没有 torch，不是本项目环境。
+- 实测：fcs008 源帧0 用统一入口在 504×378 单帧渲染成功；dust2 环境合成在 630×378 成功（当前 `environment.py`）。两次只写临时目录，未覆盖已有结果和交付视频。
+- 新入口：`render --environment configs/environments/<name>.json`，配置、坐标约定和限制见 [SCENE.md](SCENE.md)。当前只有 dust2 可用；times_square 是城市级摄影测量，街面近景不可用，未采用。
+- Git：环境合成提交为 `9cb8506`。`main` 在该提交上拆出衣物探索，只保留人体主链；`codex/clothing` 保留完整衣物实现、配置和检查点。拆出后 main 的渲染路径与拆出前相同，只少了 `clothing` 子命令。
+- 未启动新的重建或训练，GPU 空闲；`runs/delivery` 未改动。
+- 待办：场景编辑器 GUI（挪坐标、换场景、选机位、放人物、一键渲染）；外滩场景按 [bund_asset_survey.md](bund_asset_survey.md) 的结论处理（没有可用的开源街景模型）。
