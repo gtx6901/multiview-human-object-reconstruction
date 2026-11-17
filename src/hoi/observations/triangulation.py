@@ -41,12 +41,20 @@ def triangulate_keypoints(keypoints: Path, manifest: Path):
     meta = json.loads(manifest.read_text(encoding="utf-8"))
     views = meta["views"]
     cams = [v["serial"] for v in views]
-    Ps = np.stack([np.array(v["K_undistorted_native"]) @ np.array(v["W"])[:3] for v in views])
-    centers = np.array([-np.array(v["W"])[:3, :3].T @ np.array(v["W"])[:3, 3] for v in views])
-
     xy = np.stack([np.load(keypoints / f"{c}.npz")["xy"] for c in cams]).astype(np.float64)
     score = np.stack([np.load(keypoints / f"{c}.npz")["score"] for c in cams])
     in_image = np.stack([np.load(keypoints / f"{c}.npz")["in_image"] for c in cams])
+    with np.load(keypoints / f"{cams[0]}.npz", allow_pickle=False) as first_view:
+        frame_ids = first_view["frames"] if "frames" in first_view else np.arange(xy.shape[1])
+    return triangulate_observations(xy, score, in_image, views, frame_ids)
+
+
+def triangulate_observations(xy, score, in_image, views, frame_ids):
+    """Apply the same screened DLT to V,T,N image observations of any landmark set."""
+    cams = [v["serial"] for v in views]
+    Ps = np.stack([np.array(v["K_undistorted_native"]) @ np.array(v["W"])[:3] for v in views])
+    centers = np.array([-np.array(v["W"])[:3, :3].T @ np.array(v["W"])[:3, 3] for v in views])
+    xy = np.asarray(xy, np.float64)
     frames, njoints = xy.shape[1], xy.shape[2]
 
     cand = in_image & (score >= SCORE_MIN)
@@ -101,8 +109,6 @@ def triangulate_keypoints(keypoints: Path, manifest: Path):
             med_err[f, j] = float(np.median(err))
             inlier[keep, f, j] = True
 
-    with np.load(keypoints / f"{cams[0]}.npz", allow_pickle=False) as first_view:
-        frame_ids = first_view["frames"] if "frames" in first_view else np.arange(frames)
     return {
         "xyz": xyz,
         "valid": valid,
