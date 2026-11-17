@@ -43,7 +43,7 @@ def placement_basis(config, initial_gaussians, reference_serial=None):
     up /= np.linalg.norm(up)
     scene = json.loads(config.scene_path.read_text(encoding="utf-8-sig"))
     reference_serial = reference_serial or scene["views"][0]["serial"]
-    view = next(v for v in scene["views"] if v["serial"] == reference_serial)
+    view = next((v for v in scene["views"] if v["serial"] == reference_serial), scene["views"][0])
     matrix = np.asarray(view.get("calibration", view)["W"])
     forward = -matrix[2, :3].copy()
     forward -= up * (forward @ up)

@@ -56,6 +56,17 @@ def load_spec(name: str) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def dataset_configs() -> list[dict]:
+    entries = []
+    for path in sorted((PROJECT_ROOT / "configs/datasets").glob("*.json")):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        entries.append({"name": path.stem, "actors": [actor["id"] for actor in data.get("actors", [])]})
+    return entries
+
+
 def save_spec(name: str, spec: dict) -> Path:
     path = PROJECT_ROOT / "configs/environments" / f"{name}.json"
     path.write_text(json.dumps(spec, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -233,7 +244,7 @@ class Handler(BaseHTTPRequestHandler):
                 return
             self.send_file(PROJECT_ROOT / target, "video/mp4")
         elif path == "/api/scenes":
-            self.send_json({"scenes": scene_specs()})
+            self.send_json({"scenes": scene_specs(), "casts": dataset_configs()})
         elif path == "/api/scene":
             from urllib.parse import parse_qs, urlparse
 
@@ -295,6 +306,24 @@ class Handler(BaseHTTPRequestHandler):
                 )
                 self.send_json(result)
             except Exception as error:  # keep the editor alive on render errors
+                self.send_json({"error": f"{type(error).__name__}: {error}"}, 500)
+        elif path == "/api/cast":
+            job = STATE["job"]
+            if job and job.get("status") in ("starting", "running"):
+                self.send_json({"error": "a render is running; cast is locked"}, 409)
+                return
+            name = body.get("name") or ""
+            target = PROJECT_ROOT / "configs/datasets" / f"{name}.json"
+            if not target.is_file():
+                self.send_json({"error": f"unknown cast {name}"}, 404)
+                return
+            try:
+                config = SceneConfig.load(target)
+                release_show()
+                STATE["config"] = config
+                STATE["config_path"] = str(target)
+                self.send_json({"name": name, "actors": [actor.id for actor in config.actors]})
+            except Exception as error:
                 self.send_json({"error": f"{type(error).__name__}: {error}"}, 500)
         elif path == "/api/scene":
             name = query.get("name", [""])[0]

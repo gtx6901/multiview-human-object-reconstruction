@@ -1,4 +1,4 @@
-﻿const $ = (id) => document.getElementById(id);
+const $ = (id) => document.getElementById(id);
 const canvas = $("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -76,6 +76,17 @@ async function loadScenes() {
   const names = data.scenes.map((item) => item.name);
   state.scene = names.includes("dust2") ? "dust2" : names[0];
   select.value = state.scene;
+
+  const cast = $("cast");
+  cast.innerHTML = "";
+  for (const item of data.casts || []) {
+    const option = document.createElement("option");
+    option.value = item.name;
+    option.textContent = `${item.name}（${item.actors.join(" + ")}）`;
+    cast.appendChild(option);
+  }
+  state.cast = "fcs008";
+  cast.value = state.cast;
 }
 
 async function loadScene(name) {
@@ -356,7 +367,8 @@ function dolly(factor) {
   const camera = state.spec.camera;
   let offset = vec.sub(camera.eye, camera.target);
   const distance = vec.len(offset);
-  const next = Math.min(40, Math.max(0.8, distance * factor));
+  const h = bodyScale();
+  const next = Math.min(12 * h, Math.max(1.2 * h, distance * factor));
   offset = vec.mul(vec.norm(offset), next);
   camera.eye = vec.add(camera.target, offset);
   writeCameraInputs();
@@ -431,15 +443,38 @@ function preset(eye, target) {
   preview("final");
 }
 
-$("view-front").addEventListener("click", () => preset([0, 1.6, 4.5], [0, 1.0, 0]));
-$("view-side").addEventListener("click", () => preset([4.5, 1.6, 0], [0, 1.0, 0]));
-$("view-top").addEventListener("click", () => preset([0.01, 6, 0], [0, 0.8, 0]));
-$("view-back").addEventListener("click", () => preset([0, 1.6, -4.5], [0, 1.0, 0]));
+function bodyScale() {
+  return state.spec.placement.meters_per_body_height ?? 1.75;
+}
+
+function bodyDistance() {
+  return bodyScale() * 2.6;
+}
+
+$("view-front").addEventListener("click", () => {
+  const h = bodyScale();
+  const d = bodyDistance();
+  preset([0, 0.95 * h, d], [0, 0.55 * h, 0]);
+});
+$("view-side").addEventListener("click", () => {
+  const h = bodyScale();
+  const d = bodyDistance();
+  preset([d, 0.95 * h, 0], [0, 0.55 * h, 0]);
+});
+$("view-top").addEventListener("click", () => {
+  const h = bodyScale();
+  preset([0.01, 5.5 * h, 0], [0, 0.5 * h, 0]);
+});
+$("view-back").addEventListener("click", () => {
+  const h = bodyScale();
+  const d = bodyDistance();
+  preset([0, 0.95 * h, -d], [0, 0.55 * h, 0]);
+});
 $("view-focus").addEventListener("click", () => {
-  const distance = 4.5;
+  const h = bodyScale();
   const basis = cameraBasis();
-  const offset = vec.mul(vec.norm(vec.sub(state.spec.camera.eye, state.spec.camera.target)), distance);
-  const target = [0, 1.0, 0];
+  const offset = vec.mul(vec.norm(vec.sub(state.spec.camera.eye, state.spec.camera.target)), bodyDistance());
+  const target = [0, 0.55 * h, 0];
   preset(vec.add(target, offset), target);
 });
 
@@ -523,3 +558,14 @@ async function pollJob() {
     setStatus(`启动失败：${error.message}`);
   }
 })();
+
+$("cast").addEventListener("change", async () => {
+  try {
+    const result = await api("/api/cast", { name: $("cast").value });
+    state.cast = result.name;
+    setStatus(`人物：${result.actors.join(" + ")}`);
+    await preview("final");
+  } catch (error) {
+    setStatus(`切换人物失败：${error.message}`);
+  }
+});
