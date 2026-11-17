@@ -481,7 +481,7 @@ def rasterize_scene(
         render_mode="RGB+ED",
         near_plane=0.01,
         far_plane=100.0,
-        eps2d=0.3,
+        eps2d=1.0,
     )
     return color, alpha
 
