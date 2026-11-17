@@ -1,0 +1,11 @@
+{
+  "model": "assets/environments/timesquare/times_square_new_york_city_ny_usa.glb",
+  "source": "https://sketchfab.com/3d-models/times-square-new-york-city-ny-usa-b1cf32ba3cf040bca21900fdfed71562",
+  "author": "Brian Trepanier (CMBC)",
+  "license": "CC-BY-4.0",
+  "model_scale": 6.0,
+  "placement": {"position": [-9, 0, 1], "reference_serial": "21305717", "meters_per_body_height": 1.75, "yaw_degrees": 0},
+  "camera": {"eye": [0, 2.2, 5.0], "target": [0, 0.9, 0], "vertical_fov": 46, "width": 1260, "height": 756},
+  "lighting": {"position": [-16, 16, 9], "target": [-9, 0, 1], "color": [1.0, 0.96, 0.89], "intensity": 0.7, "ambient": [0.48, 0.52, 0.60], "shadow_resolution": 1024, "shadow_bias": 0.025},
+  "background": [0.66, 0.76, 0.87]
+}

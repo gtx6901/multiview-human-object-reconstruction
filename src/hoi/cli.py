@@ -542,6 +542,7 @@ def main() -> int:
     parser.add_argument("--width", type=int)
     parser.add_argument("--height", type=int)
     parser.add_argument("--cameras", type=Path)
+    parser.add_argument("--environment", type=Path, help="lit glTF environment and placement configuration")
     args = parser.parse_args()
     config = SceneConfig.load(args.config)
     if args.command == "plan":
@@ -581,7 +582,12 @@ def main() -> int:
 
         refine_scene(config, args.frames, args.updates)
     if args.command in ("render", "run"):
-        render_scene(config, args, fitted=args.command == "run")
+        if args.environment:
+            from hoi.rendering.environment import render_environment
+
+            render_environment(config, args)
+        else:
+            render_scene(config, args, fitted=args.command == "run")
     if args.command not in ("render", "refine"):
         save_config(config)
     return 0

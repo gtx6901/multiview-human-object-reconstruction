@@ -497,6 +497,7 @@ def render_scene(
     height: int,
     background: Any,
     mesh_buffer: Optional[Dict[str, Any]] = None,
+    display_background: Any = None,
 ) -> Tuple[Any, Any]:
     import torch
 
@@ -511,7 +512,7 @@ def render_scene(
     if mesh_buffer is not None:
         from hoi.rendering.compositing import composite
 
-        result = composite(rgb[0, 0].float() * ba[..., None], ba, color[0, ..., -1], mesh_buffer)
+        result = composite(rgb[0, 0].float() * ba[..., None], ba, color[0, ..., -1], mesh_buffer, background=display_background)
         return result["rgb"], ba
     white = torch.ones(3, device=color.device, dtype=rgb.dtype)
     out = rgb[0, 0].float() * ba[..., None] + (1.0 - ba[..., None]) * white
