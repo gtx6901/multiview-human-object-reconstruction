@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>场景编辑器</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <h1>场景编辑器</h1>
+  <label>场景 <select id="scene"></select></label>
+  <span id="status">就绪</span>
+  <span class="spacer"></span>
+  <button id="preview">预览</button>
+  <button id="save">保存配置</button>
+  <button id="render" class="primary">渲染视频</button>
+</header>
+<main>
+  <section id="stage">
+    <div id="canvas-wrap">
+      <canvas id="canvas" width="504" height="378"></canvas>
+      <div id="spinner" class="hidden">渲染中…</div>
+    </div>
+    <div id="timeline">
+      <label>帧 <input id="frame" type="range" min="0" max="299" value="0"></label>
+      <span id="frame-label">0</span>
+    </div>
+    <div id="job" class="hidden">
+      <div class="bar"><div id="job-bar"></div></div>
+      <span id="job-text"></span>
+      <a id="job-video" class="hidden" href="#">打开成片</a>
+    </div>
+  </section>
+  <aside>
+    <fieldset>
+      <legend>人物</legend>
+      <label>x <input id="px" type="number" step="0.1"></label>
+      <label>z <input id="pz" type="number" step="0.1"></label>
+      <label>朝向 <input id="yaw" type="number" step="5"></label>
+      <label>身高比例 <input id="scale" type="number" step="0.05"></label>
+      <label class="row"><input id="snap" type="checkbox"> 贴地</label>
+    </fieldset>
+    <fieldset>
+      <legend>机位</legend>
+      <label>镜头
+        <select id="motion">
+          <option value="static">固定</option>
+          <option value="orbit">刷锅环绕</option>
+          <option value="push_in">推进</option>
+          <option value="crane">升降</option>
+        </select>
+      </label>
+      <div id="motion-params">
+        <label data-kind="orbit">半径 <input id="radius" type="number" step="0.5"></label>
+        <label data-kind="orbit push_in crane">高度 <input id="height" type="number" step="0.1"></label>
+        <label data-kind="orbit">圈数 <input id="turns" type="number" step="0.25"></label>
+        <label data-kind="crane">升幅 <input id="rise" type="number" step="0.1"></label>
+      </div>
+      <label>视野 <input id="fov" type="number" step="1"></label>
+      <label>eye x <input id="ex" type="number" step="0.1"></label>
+      <label>eye y <input id="ey" type="number" step="0.1"></label>
+      <label>eye z <input id="ez" type="number" step="0.1"></label>
+      <label>target x <input id="tx" type="number" step="0.1"></label>
+      <label>target y <input id="ty" type="number" step="0.1"></label>
+      <label>target z <input id="tz" type="number" step="0.1"></label>
+    </fieldset>
+    <fieldset>
+      <legend>灯光</legend>
+      <label>强度 <input id="intensity" type="range" min="0" max="2" step="0.05"></label>
+      <label>环境光 <input id="ambient" type="range" min="0" max="1.5" step="0.05"></label>
+      <label>主光颜色 <input id="color" type="color"></label>
+    </fieldset>
+    <p class="hint">在画面上拖动人物即可改位置；预览帧来自真实渲染器。</p>
+  </aside>
+</main>
+<script type="module" src="/static/app.js"></script>
+</body>
+</html>

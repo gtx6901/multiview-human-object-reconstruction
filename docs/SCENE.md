@@ -12,6 +12,40 @@ python pipeline.py render --config runs/fcs008/config.json `
 
 `--config` 提供各人物的 `avatar` / `motion`；`--environment` 指定场景规格。输出在 `runs/<scene>/environment/<规格名>/`，视频按统一规则写入 `runs/delivery/review/`。不加 `--video` 时逐帧写 PNG；加 `--video` 时只保留首/中/尾三张审看图。
 
+## 场景编辑器
+
+```powershell
+python pipeline.py editor --config runs/fcs008/config.json --port 8765
+```
+
+浏览器打开 `http://127.0.0.1:8765/`。服务进程常驻加载一次场景、人体和神经解码器，之后每次预览是真实渲染（约 1–2 秒），不是另一套近似画面。
+
+- 在画面上拖动人物改落点，右侧同时给出 x/z、朝向、身高比例的数字输入；
+- 机位可选固定、刷锅环绕、推进、升降，参数和时间轴帧号直接调；
+- 灯光调主光强度/颜色和环境光；
+- “保存配置”写回 `configs/environments/<name>.json`；“渲染视频”调用同一个 `render --environment`，进度从日志读，成片进 `runs/delivery`。
+
+常驻预览与完整渲染不能同时占用 8 GB 显存：开始渲染前编辑器会释放自己的模型，渲染期间预览暂停。
+
+## 动态机位
+
+`camera.motion` 为空或 `{"type": "static"}` 时使用固定 `eye`/`target`。其他取值按输出帧在片段中的归一化时间 `t` 求值，可选的 `ease` 默认开启（两端缓入缓出）：
+
+| `type` | 参数 | 行为 |
+|---|---|---|
+| `orbit` | `radius`、`height`、`turns`、`look_height` | 绕人物转 `turns` 圈，即“刷锅”；半径缺省取 `eye` 的水平距离 |
+| `push_in` | `end_distance`、`height`、`look_height` | 从 `eye` 的水平距离推到 `end_distance` |
+| `crane` | `rise`、`look_height` | 相机沿竖直方向升 `rise` |
+
+`look_height` 是注视点相对人物落点的高度，缺省沿用 `camera.target` 的 y。
+
+## 全景背景
+
+`background_image` 指定一张 equirectangular 全景图（如 CC0 的外滩夜景），按每个像素的相机射线采样，作为没有被场景几何覆盖区域的背景。`background_yaw`（度）控制全景绕竖直轴的朝向，0 表示相机正前方对应全景 u=0.5。`background_clip_horizon` 默认开启，把地平线以下的射线压到 v=0.5，避免全景里自带的甲板/行人出现在场景栏杆上方。
+
+全景只做背景，不参与人体或场景的照明；它不是 HDR 环境光，也不改变已有资产的拍摄光照。
+
+
 ## 场景规格
 
 ```json

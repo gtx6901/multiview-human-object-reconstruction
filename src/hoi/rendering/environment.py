@@ -1,4 +1,4 @@
-"""Place existing animated Gaussian assets in a lit glTF environment."""
+"""Compose animated Gaussian actors with a lit glTF environment."""
 
 from __future__ import annotations
 
@@ -231,110 +231,256 @@ class EnvironmentRenderer:
         return dict(depth=buffer["depth"], alpha=buffer["alpha"], premultiplied_rgb=rgb*buffer["alpha"][..., None])
 
 
+class SceneShow:
+    """One loaded scene and its actors; re-render after placement or camera edits."""
+
+    def __init__(self, config, options, target_fps=None):
+        self.config = config
+        self.options = options
+        self.target_fps = target_fps
+        self._pano = None
+        self._pano_path = None
+        self.runtime = configure_runtime(config.runtime)
+        self._load_actors()
+        self.rebuild_environment()
+        self.apply_placement()
+
+    def _load_actors(self):
+        from hoi.rendering.rig import animate
+        from hoi.rendering.scene import (
+            build_decoder,
+            compare_decoders,
+            frame_list,
+            load_bundle,
+            load_motion,
+            render_scene,
+            to_device,
+        )
+
+        self.animate = animate
+        self.render_scene = render_scene
+        bundles = [load_bundle(actor.avatar) for actor in self.config.actors]
+        for bundle in bundles[1:]:
+            compare_decoders(bundles[0], bundle)
+        motions = [
+            load_motion(actor.motion, bundle["poses"], bundle["rig"]["rest_joints"].dtype)
+            for actor, bundle in zip(self.config.actors, bundles)
+        ]
+        frames = sorted(set.intersection(*(set(frame_list(m)) for m in motions)))
+        if not frames:
+            raise ValueError("actor motions share no frame")
+        if self.target_fps is not None and self.target_fps != self.config.fps:
+            from hoi.motion.resampling import output_times, resample_motion
+
+            times = (np.asarray(frames) - frames[0]) / self.config.fps
+            targets = output_times(times, self.config.fps, self.target_fps)
+            motions = [
+                resample_motion(m, b["rig"], self.config.fps, self.target_fps, targets)
+                for m, b in zip(motions, bundles)
+            ]
+            frames = frame_list(motions[0])
+        self.frames = frames
+        self.indices = [{f: i for i, f in enumerate(frame_list(m))} for m in motions]
+        self.rigs = [to_device(b["rig"], "cuda") for b in bundles]
+        self.poses = [to_device(m, "cuda") for m in motions]
+        self.features = [b["features"].cuda().float() for b in bundles]
+        self.decoder = build_decoder(bundles[0], "cuda")
+        self.rasterization = load_rasterization(self.runtime)
+        self.background = bundles[0]["background_embedding"][2].cuda().float()
+        self.first = [
+            animate(rig, pose, index[self.frames[0]])
+            for rig, pose, index in zip(self.rigs, self.poses, self.indices)
+        ]
+
+    def rebuild_environment(self):
+        """Reload the glTF model and shadow map; placement and camera are reapplied."""
+        self.env = EnvironmentRenderer(self.options)
+        self.apply_placement()
+
+    def apply_placement(self):
+        from pytorch3d.transforms import matrix_to_quaternion, quaternion_multiply
+
+        options = self.options
+        rotation, center = placement_basis(
+            self.config, self.first, options["placement"].get("reference_serial")
+        )
+        yaw = np.deg2rad(options["placement"].get("yaw_degrees", 0))
+        rotation = np.array([
+            [np.cos(yaw), 0, np.sin(yaw)],
+            [0, 1, 0],
+            [-np.sin(yaw), 0, np.cos(yaw)],
+        ]) @ rotation
+        position = np.asarray(options["placement"]["position"], float)
+        if options["placement"].get("snap_to_floor", True):
+            position[1] = self.env.floor_height(position[0], position[2], position[1])
+        scale = float(options["placement"].get("meters_per_body_height", 1.75))
+        translation = position - scale * (rotation @ center)
+        self.rotation = rotation
+        self.translation = translation
+        self.scale = scale
+        self.position = position
+        self.q = matrix_to_quaternion(torch.tensor(rotation, device="cuda", dtype=torch.float32))
+        self.quaternion_multiply = quaternion_multiply
+
+    def camera(self, frame, width, height):
+        """Static camera or one of the authored motion presets, evaluated at a frame."""
+        camera = self.options["camera"]
+        motion = camera.get("motion") or {"type": "static"}
+        kind = motion.get("type", "static")
+        frames = self.frames
+        index = frames.index(frame) if frame in frames else 0
+        span = max(len(frames) - 1, 1)
+        t = index / span
+        if motion.get("ease", True):
+            t = t * t * (3 - 2 * t)
+        eye_offset = np.asarray(camera["eye"], float)
+        target_offset = np.asarray(camera["target"], float)
+        eye = self.position + eye_offset
+        target = self.position + target_offset
+        if kind == "orbit":
+            radius = float(motion.get("radius", np.hypot(eye_offset[0], eye_offset[2])))
+            angle0 = np.arctan2(eye_offset[2], eye_offset[0])
+            angle = angle0 + np.deg2rad(float(motion.get("start_degrees", 0))) + 2 * np.pi * float(motion.get("turns", 1.0)) * t
+            eye = self.position + np.array([
+                radius * np.cos(angle),
+                eye_offset[1] + float(motion.get("height", 0)),
+                radius * np.sin(angle),
+            ])
+            target = self.position + np.array([0.0, float(motion.get("look_height", target_offset[1])), 0.0])
+        elif kind == "push_in":
+            distance = np.hypot(eye_offset[0], eye_offset[2])
+            end = float(motion.get("end_distance", distance * 0.55))
+            distance = distance + (end - distance) * t
+            direction = np.array([eye_offset[0], eye_offset[2]])
+            direction /= max(np.linalg.norm(direction), 1e-9)
+            eye = self.position + np.array([
+                distance * direction[0],
+                eye_offset[1] + float(motion.get("height", 0)),
+                distance * direction[1],
+            ])
+            target = self.position + np.array([0.0, float(motion.get("look_height", target_offset[1])), 0.0])
+        elif kind == "crane":
+            eye = self.position + eye_offset + np.array([0.0, float(motion.get("rise", 1.2)) * t, 0.0])
+            target = self.position + np.array([0.0, float(motion.get("look_height", target_offset[1])), 0.0])
+        W = torch.tensor(look_at(eye, target), device="cuda", dtype=torch.float32)
+        focal = height / (2 * np.tan(np.deg2rad(camera.get("vertical_fov", 42)) / 2))
+        K = torch.tensor([[focal, 0, width/2], [0, focal, height/2], [0, 0, 1]], device="cuda", dtype=torch.float32)
+        return K, W
+
+    def panorama(self, K, W, width, height):
+        """Equirectangular backdrop sampled along each pixel ray; display-referred."""
+        path = self.options.get("background_image")
+        if not path:
+            return None
+        from PIL import Image
+
+        target = Path(path) if Path(path).is_absolute() else PROJECT_ROOT / path
+        if self._pano is None or self._pano_path != str(target):
+            pixels = np.asarray(Image.open(target).convert("RGB"), dtype=np.float32) / 255.0
+            self._pano = torch.as_tensor(pixels, device="cuda").permute(2, 0, 1)[None]
+            self._pano_path = str(target)
+        camera = self.options["camera"]
+        fx, fy = float(K[0, 0]), float(K[1, 1])
+        cx, cy = float(K[0, 2]), float(K[1, 2])
+        u = torch.arange(width, device="cuda", dtype=torch.float32) + 0.5
+        v = torch.arange(height, device="cuda", dtype=torch.float32) + 0.5
+        uu, vv = torch.meshgrid(v, u, indexing="ij")
+        direction = torch.stack([(uu - cx) / fx, (vv - cy) / fy, torch.ones_like(uu)], -1)
+        rotation = W[:3, :3]
+        world = direction @ rotation
+        yaw = np.deg2rad(float(self.options.get("background_yaw", 0)))
+        theta = torch.atan2(world[..., 0], -world[..., 2]) + yaw
+        phi = torch.acos((-world[..., 1]).clamp(-1, 1))
+        vertical = phi / np.pi
+        if self.options.get("background_clip_horizon", True):
+            vertical = vertical.clamp(max=0.5)
+        grid = torch.stack([theta / np.pi, vertical * 2 - 1], -1)[None]
+        grid[..., 0] = (grid[..., 0] + 1) % 2 - 1
+        rgb = F.grid_sample(self._pano, grid, align_corners=False, padding_mode="border")[0]
+        return rgb.permute(1, 2, 0)
+
+    def render(self, frame, width, height):
+        with torch.inference_mode():
+            R = torch.tensor(self.rotation, device="cuda", dtype=torch.float32)
+            t = torch.tensor(self.translation, device="cuda", dtype=torch.float32)
+            q = self.q
+            actors = []
+            for rig, pose, index in zip(self.rigs, self.poses, self.indices):
+                g = self.animate(rig, pose, index[frame])
+                g.update(
+                    xyz=g["xyz"] @ R.T * self.scale + t,
+                    scaling=g["scaling"] * self.scale,
+                    rotation=self.quaternion_multiply(q.expand_as(g["rotation"]), g["rotation"]),
+                )
+                actors.append(g)
+            K, W = self.camera(frame, width, height)
+            mesh = self.env.render(actors, self.rasterization, K, W, width, height)
+            sky = torch.tensor(self.options.get("background", [.60, .74, .88]), device="cuda")
+            backdrop = self.panorama(K, W, width, height)
+            rgb, _ = self.render_scene(
+                self.decoder, self.rasterization, actors, self.features,
+                K, W, width, height, self.background, mesh,
+                display_background=sky if backdrop is None else backdrop,
+            )
+            return (rgb.clamp(0, 1).cpu().numpy() * 255).astype(np.uint8)
+
+
 def render_environment(config, args):
     """Reuse selected identity, motion, skinning and neural appearance unchanged."""
-    runtime = configure_runtime(config.runtime)
-    from pytorch3d.transforms import matrix_to_quaternion, quaternion_multiply
-    from hoi.rendering.rig import animate
-    from hoi.rendering.scene import build_decoder, compare_decoders, frame_list, load_bundle
-    from hoi.rendering.scene import load_motion, render_scene, sha256_file, to_device
+    from hoi.rendering.scene import sha256_file
 
     spec_path = args.environment.resolve()
     options = json.loads(spec_path.read_text(encoding="utf-8"))
-    environment = EnvironmentRenderer(options)
-    bundles = [load_bundle(actor.avatar) for actor in config.actors]
-    for bundle in bundles[1:]:
-        compare_decoders(bundles[0], bundle)
-    motions = [load_motion(actor.motion, bundle["poses"], bundle["rig"]["rest_joints"].dtype)
-               for actor, bundle in zip(config.actors, bundles)]
-    frames = sorted(set.intersection(*(set(frame_list(m)) for m in motions)))
-    anchor_frame = frames[0]
+    fps = config.fps if args.fps is None else args.fps
+    show = SceneShow(config, options, target_fps=fps)
+    frames = show.frames
     if args.frames:
         requested = set(args.frames)
-        if requested-set(frames):
+        if requested - set(frames):
             raise ValueError("Requested environment frames are absent from actor motion")
         frames = [f for f in frames if f in requested]
-    fps = config.fps if args.fps is None else args.fps
-    if fps != config.fps:
-        from hoi.motion.resampling import output_times, resample_motion
-        times = output_times(np.asarray(frames)/config.fps, config.fps, fps)
-        motions = [resample_motion(m, b["rig"], config.fps, fps, times) for m, b in zip(motions, bundles)]
-        frames = frame_list(motions[0])
-        anchor_frame = frames[0]
-    if args.video and any(b != a+1 for a, b in zip(frames, frames[1:])):
+    if args.video and any(b != a + 1 for a, b in zip(frames, frames[1:])):
         raise ValueError("Video needs a consecutive shared frame range")
-    indices = [{f:i for i,f in enumerate(frame_list(m))} for m in motions]
-    rigs = [to_device(b["rig"], "cuda") for b in bundles]
-    poses = [to_device(m, "cuda") for m in motions]
-    features = [b["features"].cuda().float() for b in bundles]
-    decoder = build_decoder(bundles[0], "cuda")
-    rasterization = load_rasterization(runtime)
-    background = bundles[0]["background_embedding"][2].cuda().float()
-    first = [animate(rig, pose, index[anchor_frame]) for rig, pose, index in zip(rigs, poses, indices)]
-    rotation, center = placement_basis(config, first, options["placement"].get("reference_serial"))
-    yaw = np.deg2rad(options["placement"].get("yaw_degrees", 0))
-    rotation = np.array([[np.cos(yaw),0,np.sin(yaw)],[0,1,0],[-np.sin(yaw),0,np.cos(yaw)]]) @ rotation
-    position = np.asarray(options["placement"]["position"], float)
-    if options["placement"].get("snap_to_floor", True):
-        position[1] = environment.floor_height(position[0], position[2], position[1])
-    scale = float(options["placement"].get("meters_per_body_height", 1.75))
-    translation = position-scale*(rotation@center)
-    R = torch.tensor(rotation, device="cuda", dtype=torch.float32)
-    t = torch.tensor(translation, device="cuda", dtype=torch.float32)
-    q = matrix_to_quaternion(R)
     camera = options["camera"]
     width, height = args.width or camera.get("width", 1260), args.height or camera.get("height", 756)
-    eye, target = np.asarray(camera["eye"], float)+position, np.asarray(camera["target"], float)+position
-    W = torch.tensor(look_at(eye, target), device="cuda", dtype=torch.float32)
-    focal = height/(2*np.tan(np.deg2rad(camera.get("vertical_fov", 42))/2))
-    K = torch.tensor([[focal,0,width/2],[0,focal,height/2],[0,0,1]], device="cuda", dtype=torch.float32)
-    sky = torch.tensor(options.get("background", [.60,.74,.88]), device="cuda")
     output = config.output / "environment" / spec_path.stem
     output.mkdir(parents=True, exist_ok=True)
     destination = video_path(output, "camera_main")
     process = None
     if args.video:
-        process = subprocess.Popen([runtime["ffmpeg"],"-hide_banner","-loglevel","error","-y",
-            "-f","rawvideo","-pix_fmt","rgb24","-s",f"{width}x{height}","-r",str(fps),
-            "-i","pipe:0","-an","-c:v","libx264","-crf","18","-pix_fmt","yuv420p",
-            "-movflags","+faststart",str(destination)], stdin=subprocess.PIPE)
+        process = subprocess.Popen([show.runtime["ffmpeg"], "-hide_banner", "-loglevel", "error", "-y",
+            "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{width}x{height}", "-r", str(fps),
+            "-i", "pipe:0", "-an", "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p",
+            "-movflags", "+faststart", str(destination)], stdin=subprocess.PIPE)
     from PIL import Image
     try:
-        with torch.inference_mode():
-            for frame in frames:
-                actors = []
-                for rig, pose, index in zip(rigs, poses, indices):
-                    g = animate(rig, pose, index[frame])
-                    g.update(xyz=g["xyz"]@R.T*scale+t, scaling=g["scaling"]*scale,
-                             rotation=quaternion_multiply(q.expand_as(g["rotation"]), g["rotation"]))
-                    actors.append(g)
-                mesh = environment.render(actors, rasterization, K, W, width, height)
-                rgb, _ = render_scene(decoder, rasterization, actors, features, K, W,
-                                      width, height, background, mesh, display_background=sky)
-                image = (rgb.clamp(0,1).cpu().numpy()*255).astype(np.uint8)
-                if frame in {frames[0], frames[len(frames)//2], frames[-1]} or not args.video:
-                    Image.fromarray(image).save(output/f"frame_{frame:04d}.png")
-                if process is not None:
-                    process.stdin.write(image.tobytes())
-                print(f"[environment] {spec_path.stem} frame {frame}", flush=True)
+        for frame in frames:
+            image = show.render(frame, width, height)
+            if frame in {frames[0], frames[len(frames)//2], frames[-1]} or not args.video:
+                Image.fromarray(image).save(output / f"frame_{frame:04d}.png")
+            if process is not None:
+                process.stdin.write(image.tobytes())
+            print(f"[environment] {spec_path.stem} frame {frame}", flush=True)
         if process is not None:
             process.stdin.close()
             if process.wait():
                 raise RuntimeError("Environment video encoding failed")
     except BaseException:
         if process is not None and process.poll() is None:
-            process.kill(); process.wait()
+            process.kill()
+            process.wait()
         raise
-    report = dict(environment=str(environment.model_path), environment_sha256=sha256_file(environment.model_path),
-        specification=str(spec_path), actors=[dict(id=a.id,avatar=str(a.avatar),motion=str(a.motion),
+    K, W = show.camera(frames[0], width, height)
+    report = dict(environment=str(show.env.model_path), environment_sha256=sha256_file(show.env.model_path),
+        specification=str(spec_path), actors=[dict(id=a.id, avatar=str(a.avatar), motion=str(a.motion),
         motion_sha256=sha256_file(a.motion)) for a in config.actors], frames=frames, fps=fps,
-        placement=dict(rotation=rotation.tolist(), translation=translation.tolist(), scale=scale,
-        floor_height=float(position[1]), scale_scope="visual scene placement, not independently measured metric scale"),
-        camera=dict(K=K.cpu().tolist(),W=W.cpu().tolist()), lighting=environment.light,
+        placement=dict(rotation=show.rotation.tolist(), translation=show.translation.tolist(), scale=show.scale,
+        floor_height=float(show.position[1]), scale_scope="visual scene placement, not independently measured metric scale"),
+        camera=dict(K=K.cpu().tolist(), W=W.cpu().tolist()), camera_motion=options["camera"].get("motion"), lighting=show.env.light,
         appearance="Original neural appearance, including captured lighting; no recovered PBR materials or intrinsic relighting",
         shadows="Gaussian expected-depth light-space shadows plus opaque mesh shadow map; approximate volumetric shadow",
-        video=str(destination) if args.video else None, image_size=[width,height])
-    write_json(output/"report.json", report)
+        video=str(destination) if args.video else None, image_size=[width, height])
+    write_json(output / "report.json", report)
     if args.video:
-        record_video(destination, report=output/"report.json", frames=len(frames),fps=fps,
+        record_video(destination, report=output / "report.json", frames=len(frames), fps=fps,
                      description=f"{config.id} 双人交互置入 {spec_path.stem} 虚拟场景")
