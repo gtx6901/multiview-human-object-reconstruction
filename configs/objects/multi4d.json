@@ -1,9 +1,0 @@
-{
-  "author_config": "third_party/multi4d/arguments/dynerf.py",
-  "seed": 0,
-  "max_image_size": 1024,
-  "foreground_points": 10000,
-  "camera_radius": 1.0,
-  "checkpoint_interval": 500,
-  "overrides": {}
-}

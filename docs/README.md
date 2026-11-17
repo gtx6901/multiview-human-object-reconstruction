@@ -7,7 +7,6 @@
 - [DESIGN.md](DESIGN.md)：2026-10 的系统设计稿（现状以 HANDOFF 为准）
 - [DECISIONS.md](DECISIONS.md)：关键决定与否证路线
 - [DEPENDENCIES.md](DEPENDENCIES.md)：本机环境、模型与编译依赖
-- [soft_objects.md](soft_objects.md)：软物体（Multi4D）实现与资源边界
 - [bund_asset_survey.md](bund_asset_survey.md)：外滩/上海地标场景资产调查
 - [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)：第三方来源与许可证
 - 衣物探索：只在 `codex/clothing` 分支维护（该分支含 `docs/CLOTHING.md`）

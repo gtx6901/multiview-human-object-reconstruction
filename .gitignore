@@ -23,3 +23,6 @@ __pycache__/
 
 # DSH local recovery records
 /.acl-recovery/
+
+# Delivered media is stored outside Git
+/media/

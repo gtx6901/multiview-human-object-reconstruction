@@ -1,5 +1,7 @@
 # 工程交接
 
+> 主线只保留单人/多人人体管线。衣物在 `codex/clothing`，软物体（Multi4D）在 `codex/objects`；本文中涉及衣物和软物体的段落是当时的历史记录，对应代码不在 main。
+
 ## 当前视频位置（11月17日晚整理后）
 
 正式查看入口为`runs/delivery/README.md`，唯一媒体清单为`runs/delivery/manifest.json`。23个保留视频已实际移动归档并逐项核对SHA256：`selected/`为原选定七项成片，`views/`为九项补充视角，`review/`为六项尚未采用的必要对照，`exploration/`为衣物4000更新视频。本次没有替换选定动作或采用失败面部结果；30fps身体后验候选仍在review，不伪称原选定动作的单纯补帧。

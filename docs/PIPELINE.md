@@ -110,7 +110,7 @@ runs/delivery/
   exploration/<scene>_<method>_<view>.mp4
 ```
 
-所有人体、衣物和软物体视频统一写入`runs/delivery/`，不再把`preview.mp4`留在各场景目录。默认人体输出在`review/`，衣物与软物体输出在`exploration/`；名称由实际运行目录用途和机位生成，同一用途原位更新。关键图、日志、配置和报告仍留原运行目录，报告及统一清单记录视频位置。历史报告中的旧视频路径通过清单的`source`字段追溯，不篡改旧报告的运行事实。
+所有人体视频统一写入`runs/delivery/`，不再把`preview.mp4`留在各场景目录。默认输出在`review/`；探索分支的衣物、软物体结果写入`exploration/`。名称由实际运行目录用途和机位生成，同一用途原位更新。关键图、日志、配置和报告仍留原运行目录，报告及统一清单记录视频位置。历史报告中的旧视频路径通过清单的`source`字段追溯，不篡改旧报告的运行事实。
 
 审看后使用`pipeline.py export --video <实际文件> --name <snake_case名称> --collection selected`移动选定视频并更新清单；可用`views`归档补充视角。显式`--replace`替换已有同名成片，不保存轮次副本。此处的export只整理本地媒体，不上传任何内容，也不重新训练。
 

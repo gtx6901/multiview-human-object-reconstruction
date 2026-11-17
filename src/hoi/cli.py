@@ -518,10 +518,6 @@ def main() -> int:
         from hoi.results import main as export_main
 
         return export_main(sys.argv[2:])
-    if len(sys.argv) > 1 and sys.argv[1] == "objects":
-        from hoi.objects.cli import main as objects_main
-
-        return objects_main(sys.argv[2:])
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "command",
