@@ -47,7 +47,7 @@
       "diff_gaussian_rasterization_hybrid",
       "submodules"
     ],
-    "purpose": "soft-object exploration; native 3D/kNN/hybrid builds and tiny real forward/backward passed; full dataset adapter/training pending",
+    "purpose": "soft-object exploration; real calibrated 8x99 input, CPU sparse/MVS fusion and native checkpoint contracts passed; full training/render quality pending",
     "runtime": "runtime/soft_objects; isolated from clothing/AG extensions",
     "patch": "third_party/multi4d.patch",
     "python_dependencies": {
@@ -58,5 +58,12 @@
       "tomli": "2.2.1",
       "platformdirs": "4.3.6"
     }
+  },
+  "colmap": {
+    "version": "3.13.0",
+    "revision": "0b31f98",
+    "directory": "runtime/soft_objects/colmap",
+    "source": "https://github.com/colmap/colmap/releases/download/3.13.0/colmap-x64-windows-cuda.zip",
+    "asset_sha256": "60f77bd8e9823e6d2b39082ee665f69c91900011d5321fc54a4dfebe3de110b7"
   }
 }

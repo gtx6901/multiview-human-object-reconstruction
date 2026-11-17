@@ -1,0 +1,21 @@
+{
+  "id": "mjj002",
+  "scene_path": "assets/scenes/mjj002/cameras.json",
+  "output": "runs/mjj002/objects",
+  "geometry": {
+    "colmap": "runtime/soft_objects/colmap/bin/colmap.exe",
+    "num_threads": 2,
+    "sift_max_image_size": 2048,
+    "ignore_two_view_tracks": false,
+    "max_image_size": 1024,
+    "gpu_index": 0,
+    "cache_size_gb": 2,
+    "min_fusion_views": 3
+  },
+  "preparation": {
+    "start": 0,
+    "end": 99,
+    "videos_root": "data/videos"
+  },
+  "method_config": "configs/objects/multi4d.json"
+}

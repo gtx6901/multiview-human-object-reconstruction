@@ -504,6 +504,10 @@ def render_scene(config: SceneConfig, args: argparse.Namespace, fitted: bool) ->
 
 
 def main() -> int:
+    if len(sys.argv) > 1 and sys.argv[1] == "objects":
+        from hoi.objects.cli import main as objects_main
+
+        return objects_main(sys.argv[2:])
     if len(sys.argv) > 1 and sys.argv[1] == "clothing":
         from hoi.clothing.cli import main as clothing_main
 
