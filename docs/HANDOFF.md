@@ -1,4 +1,4 @@
-﻿# 工程交接
+# 工程交接
 
 > 主线只保留单人/多人人体管线。衣物在 `codex/clothing`，软物体（Multi4D）在 `codex/objects`；本文中涉及衣物和软物体的段落是当时的历史记录，对应代码不在 main。
 
@@ -161,4 +161,5 @@ MJJ001的330帧/30fps原机位和MJJ003的500帧/30fps固定新视角已在Edge�
 - 新入口：`render --environment configs/environments/<name>.json`，配置、坐标约定和限制见 [SCENE.md](SCENE.md)。当前只有 dust2 可用；times_square 是城市级摄影测量，街面近景不可用，未采用。
 - Git：环境合成提交为 `9cb8506`。`main` 在该提交上拆出衣物探索，只保留人体主链；`codex/clothing` 保留完整衣物实现、配置和检查点。拆出后 main 的渲染路径与拆出前相同，只少了 `clothing` 子命令。
 - 未启动新的重建或训练，GPU 空闲；`runs/delivery` 未改动。
+- 清理（2026-11-18）：删除被否定的面部细化与颜色对照目录、三场 `body_posterior` 候选、10月旧对照 `novel_orbit`/`novel_fixed`/`same_camera`，以及 `runtime/cache/optimizer_control`（10.3 GB）和 `architecture_browser`（502 MB）缓存，合计约 11.8 GB。保留 `runs/delivery` 全部成片、各场最终验收图、`face_geometry` 的结论图，以及原始观测/身份/动作/分割输入。本文对已删除目录的引用是当时的路径，不再存在。
 - 待办：场景编辑器 GUI（挪坐标、换场景、选机位、放人物、一键渲染）；外滩场景按 [bund_asset_survey.md](bund_asset_survey.md) 的结论处理（没有可用的开源街景模型）。
