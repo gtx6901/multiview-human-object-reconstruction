@@ -111,3 +111,11 @@ FCS005实际高斯expected-depth及反投影法线检查已完成，文件review
 新增共享motion/resampling.py执行三维动作重采样：局部55关节最短弧SLERP、线性世界平移、FK重算关节；不改原观测或源motion，不是视频补帧。真实MJJ001的99/9已验证得到330/30、时长11秒、q符号翻转不改变旋转；179到181度中点为180度。MJJ003两人150/9共享时间网格均生成500/30。文件在各场review/resampling，原位单一motion与scene.json。尚未接统一render --fps及新视角轨迹重采样；不能宣称通用入口已完整支持。当前GPU渲染exec50163先MJJ001 330帧再MJJ003 500帧，日志各review/resampling/render.log；先查实际活任务不要重复启动。完成须实际播放新视频并对照源节奏，处理完整render/相机轨迹/多人同钟后才采用。
 
 MJJ003 body→MAP600两身份也已完成：150帧新/旧原机位视频与8机×7时刻已渲染，尚未实际审看。FCS005、FCS008、MJJ001新视频已播放审看；生产fit_scene仍旧face流程，未替换正式资产。今晚优先以上三项，不先大规模删除或改架构，失败控制源码待选择后收敛，保留可追溯历史。
+
+17:05续接：用户允许本轮用至剩余3%（97%已用），取代88%余量规则；最新要求重点人脸与光照。30fps现已接统一pipeline.py render --fps 30：只改变输出时钟，拟合/观测仍用原FPS。55关节SLERP和FK、世界平移、移动相机c2w中心/SO3插值、固定姿态转台及多人共享时钟均已接入。MJJ001真实转动相机0/165/329与固定姿态0/165/329已实际渲染；MJJ003两身份固定新视角完整500/30已由统一入口渲染，保存同review/resampling/render/camera_orbit/preview.mp4。原机位330/30和500/30也保留，首尾均解码通过。新30fps播放仍待审看，不宣称光照或人脸已修复。resampling/scene.json现指回原9fps源motion，不能把输出frame IDs当源帧ID。完整报告显式resampling及source clock，原始motion没有覆盖。
+
+真实MJJ原样本旋转/FK骨长回放差异为float64舍入量级；真实helmet R原时刻经SO3插值回放差约3.6e-7，源为float32，早先1e-8测试精度过严，不是动作时间插值失败。刚体完整动态合成尚未重跑，FCS旧选定头盔资产不替换。
+
+面部下一步最小对照：同8机、同姿态对比学习offset_xyz开/关后的Gaussian中心，确认个体几何是否超出通用模板；再固定同Gaussians，分离光栅128维feature/SH旁路/alpha-depth与最终DPT RGB，查输入细节丢失或DPT先验影响。已读代码确认最终RGB只由feature图经DPT产生，SH RGB不直接进入最终图；facesr配置名不能证明其运行。现有回放与upstream一致只排除了已检验导出变换错误，不代表身份面部正确。不要据expected-depth高频法线断言皮肤凹凸准确。
+
+光照可复用MJJ002已完成几何的965融合点及input/fused.ply.vis核对同物理点跨机RGB，先查COLMAP vis索引到dense sparse image IDs/相机名的真实映射，不猜顺序，不将不同物理面/反射/遮挡误判曝光。不得为了颜色对照重跑几何或训练。当前无活GPU训练；今晚三项优先，Multi4D15000、Wardrobe6600保持。

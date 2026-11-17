@@ -584,6 +584,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     )
     parser.add_argument("--width", type=int)
     parser.add_argument("--height", type=int)
+    parser.add_argument(
+        "--fps", type=float, help="output FPS; interpolate 3D motion on a shared clock"
+    )
     args = parser.parse_args(argv)
     config_path = Path(args.config).resolve()
     config = json.loads(config_path.read_text(encoding="utf-8-sig"))
@@ -681,6 +684,75 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     pose_frame = args.pose_frame
     if pose_frame is None:
         pose_frame = (config.get("rendering") or {}).get("pose_frame")
+    resampling = None
+    if args.fps is not None and args.fps != fps:
+        from hoi.motion.resampling import output_times, resample_motion, resample_transforms
+        from hoi.motion.rotations import LEGACY_FIELDS, export_motion_with_quaternions
+        from hoi.motion.rotations import load_motion_quaternions
+
+        available, _ = select_render_frames(
+            frame_motions, None, list(trajectories.values()), pose_frame
+        )
+        source_fps = fps
+        origin_frame = available[0]
+        times = (np.asarray(available) - origin_frame) / source_fps
+        targets = output_times(times, source_fps, args.fps)
+        resampling = {
+            "source_fps": source_fps,
+            "target_fps": args.fps,
+            "source_origin_frame": origin_frame,
+            "fixed_pose_frame": pose_frame,
+            "target_times": targets.tolist(),
+        }
+        sampled = []
+        for motion, bundle in zip(motions, bundles):
+            source = dict(motion)
+            source["timestamps"] = (np.asarray(frame_list(motion)) - origin_frame) / source_fps
+            if pose_frame is not None:
+                index = frame_list(motion).index(int(pose_frame))
+                q, _ = load_motion_quaternions(motion, verify_legacy=True)
+                source = export_motion_with_quaternions(source, q[index : index + 1])
+                source["translation_world"] = motion["translation_world"][index : index + 1]
+                source["frames"] = torch.tensor([pose_frame])
+                source["timestamps"] = np.array([0.0])
+            result = resample_motion(source, bundle["rig"], source_fps, args.fps, targets)
+            dtype = bundle["rig"]["rest_joints"].dtype
+            for key in (*LEGACY_FIELDS, "translation_world", "joints55_world"):
+                if torch.is_tensor(result.get(key)):
+                    result[key] = result[key].to(dtype=dtype)
+            sampled.append(result)
+        motions = sampled
+        for view in trajectories.values():
+            ids = np.asarray(view["frames"])
+            camera_times = (ids - origin_frame) / source_fps
+            c2w = np.linalg.inv(view["calibration"]["W"])
+            rotation, position = resample_transforms(
+                c2w[:, :3, :3], c2w[:, :3, 3], camera_times, targets
+            )
+            matrices = np.repeat(np.eye(4)[None], len(targets), axis=0)
+            matrices[:, :3, :3], matrices[:, :3, 3] = rotation, position
+            view["calibration"]["W"] = np.linalg.inv(matrices)
+            view["frames"] = list(range(len(targets)))
+            view["frame_index"] = {i: i for i in range(len(targets))}
+        if object_motion is not None:
+            source = dict(object_motion)
+            ids = np.asarray(frame_list(source))
+            object_times = (ids - origin_frame) / source_fps
+            rotation = torch.as_tensor(source["R"]).cpu().numpy()
+            position = torch.as_tensor(source["translation_world"]).cpu().numpy()
+            if pose_frame is not None:
+                index = frame_list(source).index(int(pose_frame))
+                rotation, position = rotation[index : index + 1], position[index : index + 1]
+                object_times = np.array([0.0])
+            rotation, position = resample_transforms(rotation, position, object_times, targets)
+            source.update(
+                R=torch.as_tensor(rotation),
+                translation_world=torch.as_tensor(position),
+                frames=torch.arange(len(targets)),
+            )
+            object_motion = source
+        fps, pose_frame = args.fps, None
+        frame_motions = motions if object_motion is None else [*motions, object_motion]
     frames, frame_indices = select_render_frames(
         frame_motions, args.frames, list(trajectories.values()), pose_frame
     )
@@ -814,16 +886,24 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                     else None
                 ),
                 "motion_boundary": motion["_joint_render_motion_boundary"],
+                "resampling": motion.get("resampling"),
             }
             for actor_id, actor, motion in zip(actor_ids, actors, motions)
         ],
         "frames": frames,
         "pose_frame": pose_frame,
-        "source_pose_frames": [
-            frame if pose_frame is None else int(pose_frame) for frame in frames
-        ],
-        "frame_semantics": "output IDs index camera poses; source_pose_frames index actor and rigid motions",
+        "source_pose_frames": (
+            None
+            if resampling
+            else [frame if pose_frame is None else int(pose_frame) for frame in frames]
+        ),
+        "frame_semantics": (
+            "output IDs index a shared resampled clock; original motion IDs and interpolation weights are in actor resampling"
+            if resampling
+            else "output IDs index camera poses; source_pose_frames index actor and rigid motions"
+        ),
         "fps": fps,
+        "resampling": resampling,
         "video": bool(args.video),
         "image_size": [args.width, args.height],
         "camera_serials": serials,
@@ -836,7 +916,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "backgrounds_differ_from_first": backgrounds_differ,
         "feature_dimension": feature_dimensions[0],
         "rigid_object": object_sources,
-        "renumbered_or_interpolated": False,
+        "renumbered_or_interpolated": resampling is not None,
     }
     (out / "report.json").write_text(
         json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"

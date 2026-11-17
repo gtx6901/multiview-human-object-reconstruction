@@ -500,6 +500,8 @@ def render_scene(config: SceneConfig, args: argparse.Namespace, fitted: bool) ->
         flags.append("--keep-frames")
     if args.pose_frame is not None:
         flags.extend(["--pose-frame", str(args.pose_frame)])
+    if args.fps is not None:
+        flags.extend(["--fps", str(args.fps)])
     run_stage("hoi.rendering.scene", flags, config.output / "render")
 
 
@@ -520,6 +522,7 @@ def main() -> int:
     parser.add_argument("--serial", default="all")
     parser.add_argument("--frames", nargs="+", type=int)
     parser.add_argument("--pose-frame", type=int)
+    parser.add_argument("--fps", type=float, help="output FPS; resample 3D motion and cameras")
     parser.add_argument("--video", action="store_true")
     parser.add_argument("--keep-frames", action="store_true")
     parser.add_argument("--width", type=int)

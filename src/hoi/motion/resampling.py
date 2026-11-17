@@ -125,3 +125,19 @@ def resample_motion(motion, rig, source_fps, target_fps, targets=None):
         "tail": "hold final sample during its remaining display interval",
     }
     return result
+
+
+def resample_transforms(rotations, translations, times, targets):
+    """Interpolate rigid rotations and centers on the same source clock."""
+    from scipy.spatial.transform import Rotation, Slerp
+
+    rotations, translations = np.asarray(rotations), np.asarray(translations)
+    if len(times) == 1:
+        return (
+            np.repeat(rotations, len(targets), axis=0),
+            np.repeat(translations, len(targets), axis=0),
+        )
+    query = np.clip(targets, times[0], times[-1])
+    rotation = Slerp(times, Rotation.from_matrix(rotations))(query).as_matrix()
+    position = np.stack([np.interp(query, times, translations[:, k]) for k in range(3)], -1)
+    return rotation, position

@@ -90,3 +90,7 @@ runs/<scene>/
 先在匹配的 PyTorch/CUDA 环境中执行 `python -m pip install -e .`。包声明常用Python依赖；LHM++源码、预训练权重、PyTorch3D、SAM2、NLF与本地CUDA扩展仍需外置资源。可选刚体需要nvdiffrast，视频需要FFmpeg。实际环境见 [DEPENDENCIES.md](DEPENDENCIES.md)。
 
 `configs/runtime.local.json` 从 `runtime.example.json` 首次配置，文件被 Git 忽略。`HOI_RUNTIME_CONFIG` 可指定本机配置文件，场景 `runtime` 字段继续覆盖它。运行时键包括 lhm_root、gsplat_extension、ffmpeg、hamer_root、nlf_model、sam2_root、sam2_checkpoint、rtmw_model。权重和第三方源码放在 `lhmpp/`、`runtime/`；已有 Windows 扩展需匹配所用 Python/PyTorch/CUDA，不能仅凭基础包安装成功就判断环境可运行。
+
+## 输出帧率
+
+render/run可用`--fps 30`指定输出帧率；输入观测和拟合仍采用场景原FPS。共享渲染器对55关节局部旋转做最短弧SLERP、对世界平移做线性插值，再用FK重算关节；相机中心与SO(3)姿态、可选刚体轨迹使用同一时钟。双人共享时间网格，固定姿态转台保持同一源姿态。99帧/9fps输出330帧/30fps，时长仍11秒，末源样本剩余显示区间保持末姿态。指定FPS时`--frames`选择新的输出帧ID，报告保留源时钟和插值映射，不覆盖源motion。
