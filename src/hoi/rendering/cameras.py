@@ -29,30 +29,40 @@ def orbit_cameras(frames, points, world_up, reference_eye, width, height, option
     vertical = (points - origin) @ up
     target = origin + up * (vertical.min() + vertical.max()) / 2
     offset = points - target
-    vertical = offset @ up
-    horizontal = offset - np.outer(vertical, up)
-    horizontal_radius = np.linalg.norm(horizontal, axis=1).max()
-    vertical_radius = np.abs(vertical).max()
     fov = np.deg2rad(float(options.get("vertical_fov_degrees", 40)))
     margin = float(options.get("margin", 1.15))
     elevation = np.deg2rad(float(options.get("elevation_degrees", 8)))
     turns = float(options.get("turns", 1))
     if not 0 < fov < np.pi or margin <= 0 or not np.isfinite([fov, margin, elevation, turns]).all():
         raise ValueError("invalid orbit field of view, margin, elevation or turns")
+    if not -np.pi / 2 < elevation < np.pi / 2:
+        raise ValueError("orbit elevation must keep the look-at basis away from the poles")
     focal = height / (2 * np.tan(fov / 2))
     horizontal_tangent = width / (2 * focal)
-    distance = margin * (
-        max(vertical_radius / np.tan(fov / 2), horizontal_radius / horizontal_tangent)
-        + horizontal_radius
-    )
     radial = np.asarray(reference_eye, dtype=np.float64) - target
     radial -= up * (radial @ up)
-    if np.linalg.norm(radial) == 0 or distance <= 0:
+    if np.linalg.norm(radial) == 0:
         raise ValueError("reference camera cannot define an orbit around the scene")
     radial /= np.linalg.norm(radial)
     tangent = np.cross(up, radial)
     K = np.array([[focal, 0, width / 2], [0, focal, height / 2], [0, 0, 1]])
     span = max(1, frames[-1] - frames[0] + 1)
+    distance, depth_bound = 0.0, 0.0
+    for frame in frames[:1] if turns == 0 else frames:
+        angle = 2 * np.pi * turns * (frame - frames[0]) / span
+        direction = np.cos(angle) * radial + np.sin(angle) * tangent
+        forward = -(np.cos(elevation) * direction + np.sin(elevation) * up)
+        right = np.cross(forward, up)
+        right /= np.linalg.norm(right)
+        down = np.cross(forward, right)
+        depth = offset @ forward
+        distance = max(
+            distance,
+            float((margin * np.abs(offset @ right) / horizontal_tangent - depth).max()),
+            float((margin * np.abs(offset @ down) / np.tan(fov / 2) - depth).max()),
+        )
+        depth_bound = max(depth_bound, float((-depth).max()))
+    distance = max(distance, np.nextafter(depth_bound, np.inf))
     matrices = []
     for frame in frames:
         angle = 2 * np.pi * turns * (frame - frames[0]) / span
@@ -81,7 +91,7 @@ def orbit_cameras(frames, points, world_up, reference_eye, width, height, option
             "elevation_degrees": float(np.rad2deg(elevation)),
             "margin": margin,
             "turns": turns,
-            "framing": "joint bounds of the selected actual source poses; no motion interpolation",
+            "framing": "perspective bounds of all selected source joints over all output camera directions; no motion interpolation",
         },
     }
 
