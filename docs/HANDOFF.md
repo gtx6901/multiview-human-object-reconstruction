@@ -1,4 +1,4 @@
-# 工程交接
+﻿# 工程交接
 
 > 主线只保留单人/多人人体管线。衣物在 `codex/clothing`，软物体（Multi4D）在 `codex/objects`；本文中涉及衣物和软物体的段落是当时的历史记录，对应代码不在 main。
 
@@ -80,7 +80,7 @@ FCS005之前“明显屈膝不足”的判断使用了异视角比较。205/235�
 
 用户要求核查跨机曝光/颜色，差异小可接受。assets/evidence/exposure旧报告研究检测增强，不能据此否认外观色差；头盔历史颜色仿射拟合来自刚体表面对应，不能直接用于人体。需区分传感器响应、照明、视角反射及身份细节。原图及局部对照仅本地审看，不上传。
 
-衣物暂停在完整author_train6600检查点；当前GPU继续Multi4D，从完整coarse2000恢复fine20000，已保存fine1000完整检查点，不按早期画质停训。最新步数现场核对，软包实现及资源边界见探索分支docs/soft_objects.md。活训练期间不切分支、不改签名绑定源码。只在必要渲染前完整稳定检查点上安全暂停，随后续训。
+衣物暂停在完整author_train6600检查点；当前GPU继续Multi4D，从完整coarse2000恢复fine20000，已保存fine1000完整检查点，不按早期画质停训。最新步数现场核对，软包实现及资源边界见探索分支[docs/soft_objects.md](https://github.com/gtx6901/multiview-human-object-reconstruction/blob/codex/objects/docs/soft_objects.md)。活训练期间不切分支、不改签名绑定源码。只在必要渲染前完整稳定检查点上安全暂停，随后续训。
 
 交互架构图保留同一份源、六视图、69段代码依据。图形语义固定；最新cli.py和cameras.py改动后，需要刷新证据才可称与当前代码一致，软包新分支尚未纳入图。
 
@@ -100,7 +100,7 @@ Multi4D已从完整fine1500（FG74560/BG29787/TR1，峰值CUDA分配5.68GB）恢
 
 Windows15:26发生非正常重启，用户已明确确认是手动重启；不能归因为训练导致的蓝屏。此前日志止于约fine8110，完整fine8000检查点保留。15:42已从8000恢复原生fine20000，改为隐藏后台进程，根PID及命令在runs/mjj002/objects/process.json，先查现场子进程再操作；不重复启动。当前仍单GPU顺序训练，衣物维持6600待续训。
 
-软包render已实现，详见docs/soft_objects.md；单帧原生加载/渲染逐像素一致只验证入口，不是早期画质采用。代码bf13ea2在探索分支；共享人体main未更换选定动作。
+软包render已实现，详见[docs/soft_objects.md](https://github.com/gtx6901/multiview-human-object-reconstruction/blob/codex/objects/docs/soft_objects.md)；单帧原生加载/渲染逐像素一致只验证入口，不是早期画质采用。代码bf13ea2在探索分支；共享人体main未更换选定动作。
 
 FCS005全2400原图FaceBoxes/TDDFA观测已完成，1706个检测中5个额外框实际是远处工作人员，不是误检；已通过已跟踪人物的头部点与框作全局一对一关联，保留未分配检测。FCS008也用相同算法完成8机×3时刻的双人关联与实际图像审看；未看到将两人互换，背侧人脸观测仍需解释，不能声称全部观测可信。
 
