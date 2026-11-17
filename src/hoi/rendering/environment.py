@@ -384,13 +384,13 @@ class SceneShow:
         cx, cy = float(K[0, 2]), float(K[1, 2])
         u = torch.arange(width, device="cuda", dtype=torch.float32) + 0.5
         v = torch.arange(height, device="cuda", dtype=torch.float32) + 0.5
-        uu, vv = torch.meshgrid(v, u, indexing="ij")
+        vv, uu = torch.meshgrid(v, u, indexing="ij")
         direction = torch.stack([(uu - cx) / fx, (vv - cy) / fy, torch.ones_like(uu)], -1)
         rotation = W[:3, :3]
         world = direction @ rotation
         yaw = np.deg2rad(float(self.options.get("background_yaw", 0)))
         theta = torch.atan2(world[..., 0], -world[..., 2]) + yaw
-        phi = torch.acos((-world[..., 1]).clamp(-1, 1))
+        phi = torch.acos(world[..., 1].clamp(-1, 1))
         vertical = phi / np.pi
         if self.options.get("background_clip_horizon", True):
             vertical = vertical.clamp(max=0.5)
