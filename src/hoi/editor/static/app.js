@@ -1,4 +1,4 @@
-const $ = (id) => document.getElementById(id);
+﻿const $ = (id) => document.getElementById(id);
 const canvas = $("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -213,8 +213,8 @@ async function preview(size = "final") {
   }
   try {
     const spec = collectSpec();
-    const width = size === "final" ? 504 : 385;
-    const height = size === "final" ? 378 : 280;
+    const width = size === "final" ? 1008 : 504;
+    const height = size === "final" ? 756 : 378;
     const result = await api("/api/preview", {
       scene: state.scene,
       spec,
