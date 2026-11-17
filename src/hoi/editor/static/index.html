@@ -17,6 +17,14 @@
 </header>
 <main>
   <section id="stage">
+    <div id="viewbar">
+      <button id="view-front">正面</button>
+      <button id="view-side">侧面</button>
+      <button id="view-back">背面</button>
+      <button id="view-top">俯视</button>
+      <button id="view-focus">聚焦人物</button>
+      <span class="hint">左键旋转 · 右键/Shift 平移 · 滚轮缩放 · 拖人物标记移动</span>
+    </div>
     <div id="canvas-wrap">
       <canvas id="canvas" width="504" height="378"></canvas>
       <div id="spinner" class="hidden">渲染中…</div>
@@ -70,7 +78,7 @@
       <label>环境光 <input id="ambient" type="range" min="0" max="1.5" step="0.05"></label>
       <label>主光颜色 <input id="color" type="color"></label>
     </fieldset>
-    <p class="hint">在画面上拖动人物即可改位置；预览帧来自真实渲染器。</p>
+    <p class="hint">在画面上拖动人物标记改位置；空白处拖动旋转视角。</p>
   </aside>
 </main>
 <script type="module" src="/static/app.js"></script>

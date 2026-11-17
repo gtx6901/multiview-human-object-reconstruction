@@ -33,6 +33,14 @@ main {
   align-items: start;
 }
 #stage { min-width: 0; }
+#viewbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+#viewbar button { padding: 4px 10px; font-size: 12px; }
+#viewbar .hint { margin-left: auto; }
 #canvas-wrap {
   position: relative;
   background: #000;
