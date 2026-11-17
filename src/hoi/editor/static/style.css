@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --bg: #14161a;
   --panel: #1c1f26;
   --line: #2b303a;
@@ -41,9 +41,15 @@ main {
 }
 #viewbar button { padding: 4px 10px; font-size: 12px; }
 #viewbar .hint { margin-left: auto; }
-#viewport { position: relative; aspect-ratio: 4 / 3; background: #0b0d11; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
-#live { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
-#live.dragging { cursor: grabbing; }
+#canvas-wrap {
+  position: relative;
+  background: #000;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+#canvas { display: block; width: 100%; height: auto; cursor: grab; }
+#canvas.dragging { cursor: grabbing; }
 #spinner {
   position: absolute;
   inset: 0;
@@ -101,8 +107,3 @@ button:disabled { opacity: .5; cursor: default; }
 #job-bar { height: 100%; width: 0; background: var(--accent); transition: width .3s; }
 #job-text { color: var(--muted); white-space: nowrap; }
 #job-video { color: var(--accent); }
-
-
-#render { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; }
-button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-#viewbar .divider { width: 1px; height: 18px; background: var(--line); margin: 0 4px; }
