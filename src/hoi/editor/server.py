@@ -126,10 +126,17 @@ def preview(spec: dict, name: str, frame: int, width: int, height: int) -> dict:
         frames = show.frames
         if frame not in frames:
             frame = frames[0]
-        image = show.render(frame, width, height)
+        master_width, master_height = 1260, 756
+        image = show.render(frame, master_width, master_height)
+        picture = Image.fromarray(image)
+        if (width, height) != (master_width, master_height):
+            picture = picture.resize((width, height), Image.LANCZOS)
         PREVIEW.parent.mkdir(parents=True, exist_ok=True)
-        Image.fromarray(image).save(PREVIEW)
-        K, W = show.camera(frame, width, height)
+        picture.save(PREVIEW)
+        K, W = show.camera(frame, master_width, master_height)
+        K = K.clone()
+        K[0] *= width / master_width
+        K[1] *= height / master_height
         return {
             "image": f"/preview.png?t={time.time_ns()}",
             "frame": frame,
@@ -150,9 +157,12 @@ def still(spec: dict, name: str, frame: int, width: int, height: int) -> dict:
         show = ensure_show(name, spec)
         if frame not in show.frames:
             frame = show.frames[0]
-        image = show.render(frame, width, height)
+        image = show.render(frame, 1260, 756)
+        picture = Image.fromarray(image)
+        if (width, height) != (1260, 756):
+            picture = picture.resize((width, height), Image.LANCZOS)
         STILL.parent.mkdir(parents=True, exist_ok=True)
-        Image.fromarray(image).save(STILL)
+        picture.save(STILL)
         return {"image": f"/still.png?t={time.time_ns()}", "frame": frame}
 
 
