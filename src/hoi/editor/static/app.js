@@ -202,8 +202,8 @@ async function preview(size = "final") {
   }
   try {
     const spec = collectSpec();
-    const width = size === "final" ? 504 : 384;
-    const height = size === "final" ? 378 : 288;
+    const width = size === "final" ? 504 : 385;
+    const height = size === "final" ? 378 : 280;
     const result = await api("/api/preview", {
       scene: state.scene,
       spec,
@@ -336,7 +336,7 @@ function orbit(dx, dy) {
   offset = rotateAxis(offset, up, -dx * 0.0025);
   const next = rotateAxis(offset, basis.right, -dy * 0.0025);
   const vertical = Math.abs(vec.dot(vec.norm(next), up));
-  if (vertical < 0.985) offset = next;
+  if (vertical < 0.94) offset = next;
   camera.eye = vec.add(camera.target, offset);
   writeCameraInputs();
 }
