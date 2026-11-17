@@ -119,3 +119,17 @@ MJJ003 body→MAP600两身份也已完成：150帧新/旧原机位视频与8机�
 面部下一步最小对照：同8机、同姿态对比学习offset_xyz开/关后的Gaussian中心，确认个体几何是否超出通用模板；再固定同Gaussians，分离光栅128维feature/SH旁路/alpha-depth与最终DPT RGB，查输入细节丢失或DPT先验影响。已读代码确认最终RGB只由feature图经DPT产生，SH RGB不直接进入最终图；facesr配置名不能证明其运行。现有回放与upstream一致只排除了已检验导出变换错误，不代表身份面部正确。不要据expected-depth高频法线断言皮肤凹凸准确。
 
 光照可复用MJJ002已完成几何的965融合点及input/fused.ply.vis核对同物理点跨机RGB，先查COLMAP vis索引到dense sparse image IDs/相机名的真实映射，不猜顺序，不将不同物理面/反射/遮挡误判曝光。不得为了颜色对照重跑几何或训练。当前无活GPU训练；今晚三项优先，Multi4D15000、Wardrobe6600保持。
+
+## 11月17日19时：人脸与光照的实际进展
+
+当前唯一GPU任务是`pipeline.py refine --config runs/fcs005/review/identity_refinement/scene.json`，修正传感器饱和成像后为exec20999；此前未含饱和的1150步控制已停止、单滚动状态清除，没有留第二份训练目录。日志同目录run.log，500步保存training.pt；实际步数先查现场。完整预算10000是本次新实验的预算，不是LHM作者训练推荐，不按早期loss采用。Multi4D15000、Wardrobe6600继续保持暂停。
+
+精确重新解码FCS/MJJ保存的128D latent，scaling/opacity/SH/rotation与导出资产逐项差0。移除恢复出的offset_xyz会改变实际面部形状，说明现有脸部有个体位移，不能将问题归为完全没用几何或模板平板。八视角同像素控制在`runs/fcs005/review/face_geometry/{fcs,mjj}_pipeline.png`：SH是未用于最终RGB的旁路，最终外观为128D特征光栅图经冻结DPT生成。原流程只有前馈身份，没有这个人物的多视角图像细化。
+
+新增可选共享`refine`入口：FCS005的0/205/235×八机，共24图。对beta条件SMPL-X零姿态网格计算法向，共享网格顶点法向位移驱动面部Gaussian中心，另拟合面部Gaussian协方差尺度与128D特征。保持既有动作、身体身份与DPT；多人同一光栅可见性、同一DPT和共享相机RGB响应。该响应是联合目标中的有效颜色响应，不能等同独立曝光测量。sRGB线性域响应后包含传感器饱和；原图SAM2白底合成在原生分辨率完成后再AREA缩放，缺任何被请求演员的mask整张不参与，不能伪造背景。全部参数在configs/reconstruction.json，数据差异只用配置。非零3mm位移的增量公式与正常animate回放xyz误差1.49e-7、尺度1.86e-9（float32舍入）。首步前向/反向/更新可运行，约0.45秒/步、峰值3.44GB，不是画质验收。完成后必须看全8机及未训练时刻/新视角/连续视频，同时比较实际Gaussian深度和RGB，不能靠纹理变锐宣称真实几何改善。原avatar/motion及PPT/GIF没有覆盖。
+
+MJJ002的965真实融合点已核对.vis索引、相机序列和实际图像缩放后的K，同物理点原RGB支持明显跨机色差。相同地面点再次采样MJJ000与MJJ001的0/49/98，已逐项确认相同标定并排除当前人物mask：静态000与动态001相机相对响应明显不同，001片内较稳定、与002相近；不能跨片静默搬曝光参数。实际patch图及观测在各场review/photometry，MJJ002的temporal_response.json汇总。FCS003稀疏背景匹配没有正面717支持，不能虚构完整8机独立标定。
+
+identity.build新增显式color_response输入，校正发生在sRGB解码后、alpha合成与LHM编码前，缺相机不猜1，不传参数时仍为原像素。None路径和单位响应逐字节一致。MJJ000原图与校正图已实际审看：过曝脸/手/鞋原有信息缺失，简单反曝光会将饱和白变成灰块；不能将此输入校正当作细节恢复或直接采用。`runs/mjj000/review/color_normalization/{control,normalized}/scene.json`是同输入重建的必要对照配置，尚未启动GPU，先等当前refine完成。它不改变动作，选择后清理较差对照。
+
+MJJ001的330帧/30fps原机位和MJJ003的500帧/30fps固定新视角已在Edge实际连续播放并截图审看，节奏连续，未看到新增大幅姿态翻转；面部糊、手部残影与白鞋袜外观仍存在。30fps只增加三维姿态采样，不会恢复原9fps没有记录的动作细节。旧native9fps不再作为新30fps的播放证据。

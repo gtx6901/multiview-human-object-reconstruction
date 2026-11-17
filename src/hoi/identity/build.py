@@ -21,6 +21,22 @@ from hoi.identity.model import load_model
 LHM = Path(runtime_settings()["lhm_root"])
 
 
+def normalize_camera_rgb(rgb: np.ndarray, serial: str, response: dict | None) -> np.ndarray:
+    """Remove an explicitly measured diagonal response before identity encoding."""
+    if response is None:
+        return rgb
+    gain = np.asarray(response["linear_rgb_response"][str(serial)], dtype=np.float64)
+    if gain.shape != (3,) or not np.isfinite(gain).all() or np.any(gain <= 0):
+        raise ValueError(f"{serial}: response must be a finite positive RGB 3-vector")
+    srgb = rgb.astype(np.float64) / 255
+    linear = np.where(srgb <= 0.04045, srgb / 12.92, ((srgb + 0.055) / 1.055) ** 2.4)
+    canonical = linear / gain
+    encoded = np.where(
+        canonical <= 0.0031308, 12.92 * canonical, 1.055 * canonical ** (1 / 2.4) - 0.055
+    )
+    return np.rint(np.clip(encoded, 0, 1) * 255).astype(np.uint8)
+
+
 def unpack_mask(packed: np.ndarray, h: int, w: int) -> np.ndarray:
     return np.unpackbits(packed, axis=1, count=w).astype(bool).reshape(h, w)
 
@@ -41,6 +57,7 @@ def build_rgba_inputs(
     actor: str,
     source_frame: int,
     out_dir: Path,
+    color_response: dict | None = None,
 ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], List[Dict[str, Any]]]:
     """Return (input tensors entries, visible records, unknown records)."""
     import cv2
@@ -109,6 +126,7 @@ def build_rgba_inputs(
             unknown.append({**rec, "reason": "frame_read_failed_or_size_mismatch"})
             continue
         rgb = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
+        rgb = normalize_camera_rgb(rgb, serial, color_response)
         alpha = mask.astype(np.float32)
         rgba = np.dstack([rgb, (alpha * 255).astype(np.uint8)])
         input_dir = out_dir / "inputs"
@@ -145,8 +163,14 @@ def build_rgba_inputs(
 
 def build_identity(args: argparse.Namespace, out: Path, destination: Path) -> None:
     segment_index = Path(args.segment_index).resolve()
+    response_path = getattr(args, "color_response", None)
+    response = (
+        None
+        if response_path is None
+        else json.loads(Path(response_path).read_text(encoding="utf-8-sig"))
+    )
     crop_records, visible, unknown = build_rgba_inputs(
-        segment_index, args.actor, args.source_frame, out
+        segment_index, args.actor, args.source_frame, out, response
     )
     if len(crop_records) < args.min_views:
         report = {
@@ -278,6 +302,7 @@ def build_identity(args: argparse.Namespace, out: Path, destination: Path) -> No
                 {"serial": item["serial"], "reason": item["reason"]} for item in unknown
             ],
             "avatar": str(destination / "avatar.pt"),
+            "color_response": response,
         },
     )
 
@@ -289,6 +314,7 @@ def main() -> int:
     parser.add_argument("--source-frame", type=int, default=0)
     parser.add_argument("--out", required=True)
     parser.add_argument("--proportions")
+    parser.add_argument("--color-response", type=Path)
     parser.add_argument("--min-views", type=int, default=3)
     parser.add_argument("--device", default="cuda")
     args = parser.parse_args()

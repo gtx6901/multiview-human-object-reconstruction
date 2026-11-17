@@ -1,5 +1,26 @@
 {
   "body_steps": [400, 200, 200],
   "face_iterations": 200,
-  "motion_iterations": 600
+  "motion_iterations": 600,
+  "identity_refinement": {
+    "frames": [0],
+    "updates": 10000,
+    "width": 1008,
+    "height": 756,
+    "geometry_lr": 0.0001,
+    "feature_lr": 0.002,
+    "scale_lr": 0.0005,
+    "response_lr": 0.001,
+    "displacement_prior_m": 0.005,
+    "geometry_prior": 0.01,
+    "surface_smoothness": 0.01,
+    "feature_prior": 0.001,
+    "scale_prior": 0.001,
+    "response_prior": 0.0001,
+    "gradient_weight": 0.2,
+    "silhouette_weight": 0.1,
+    "body_weight": 0.05,
+    "checkpoint_interval": 500,
+    "seed": 42
+  }
 }

@@ -436,6 +436,56 @@ def build_decoder(bundle: Dict[str, Any], device: str) -> Any:
     return decoder
 
 
+def rasterize_scene(
+    rasterization: Any,
+    gaussians: Sequence[Dict[str, Any]],
+    features: Sequence[Any],
+    K: Any,
+    W: Any,
+    width: int,
+    height: int,
+    background: Any,
+    extra_features: Optional[Sequence[Any]] = None,
+) -> Tuple[Any, Any]:
+    """Shared splat pass; optional attributes use the same visibility as appearance."""
+    import torch
+
+    means = torch.cat([g["xyz"] for g in gaussians], 0)
+    quats = torch.cat([g["rotation"] for g in gaussians], 0)
+    scales = torch.cat([g["scaling"] for g in gaussians], 0)
+    opacities = torch.cat([g["opacity"].flatten() for g in gaussians], 0)
+    colors = torch.cat(
+        [
+            torch.cat([g["shs"].squeeze(1) if g["shs"].ndim == 3 else g["shs"], feature], 1)
+            for g, feature in zip(gaussians, features)
+        ],
+        0,
+    )
+    raster_background = torch.cat([torch.ones(3, device=means.device), background])
+    if extra_features is not None:
+        extra = torch.cat(list(extra_features), 0)
+        colors = torch.cat([colors, extra], -1)
+        raster_background = torch.cat([raster_background, extra.new_zeros(extra.shape[-1])])
+    color, alpha, _ = rasterization(
+        means=means,
+        quats=quats,
+        scales=scales,
+        opacities=opacities,
+        colors=colors,
+        viewmats=W[None],
+        Ks=K[None],
+        width=width,
+        height=height,
+        backgrounds=raster_background[None],
+        packed=False,
+        render_mode="RGB+ED",
+        near_plane=0.01,
+        far_plane=100.0,
+        eps2d=0.3,
+    )
+    return color, alpha
+
+
 def render_scene(
     decoder: Any,
     rasterization: Any,
@@ -450,33 +500,8 @@ def render_scene(
 ) -> Tuple[Any, Any]:
     import torch
 
-    means = torch.cat([g["xyz"] for g in gaussians], 0)
-    quats = torch.cat([g["rotation"] for g in gaussians], 0)
-    scales = torch.cat([g["scaling"] for g in gaussians], 0)
-    opacities = torch.cat([g["opacity"].flatten() for g in gaussians], 0)
-    colors = torch.cat(
-        [
-            torch.cat([g["shs"].squeeze(1) if g["shs"].ndim == 3 else g["shs"], feature], 1)
-            for g, feature in zip(gaussians, features)
-        ],
-        0,
-    )
-    color, alpha, _ = rasterization(
-        means=means,
-        quats=quats,
-        scales=scales,
-        opacities=opacities,
-        colors=colors,
-        viewmats=W[None],
-        Ks=K[None],
-        width=width,
-        height=height,
-        backgrounds=torch.cat([torch.ones(3, device=means.device), background])[None],
-        packed=False,
-        render_mode="RGB+ED",
-        near_plane=0.01,
-        far_plane=100.0,
-        eps2d=0.3,
+    color, alpha = rasterize_scene(
+        rasterization, gaussians, features, K, W, width, height, background
     )
     with torch.autocast("cuda", dtype=torch.bfloat16):
         rgb, mask = decoder.predict_rgbs(
@@ -488,7 +513,7 @@ def render_scene(
 
         result = composite(rgb[0, 0].float() * ba[..., None], ba, color[0, ..., -1], mesh_buffer)
         return result["rgb"], ba
-    white = torch.ones(3, device=means.device, dtype=rgb.dtype)
+    white = torch.ones(3, device=color.device, dtype=rgb.dtype)
     out = rgb[0, 0].float() * ba[..., None] + (1.0 - ba[..., None]) * white
     return out, ba
 

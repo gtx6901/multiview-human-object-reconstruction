@@ -289,7 +289,15 @@ def identity_scene(config: SceneConfig, reuse: bool = False) -> SceneConfig:
                 str(proportions_path),
                 "--out",
                 str(identity),
-            ],
+            ]
+            + (
+                [
+                    "--color-response",
+                    str((PROJECT_ROOT / config.preparation["color_response"]).resolve()),
+                ]
+                if config.preparation.get("color_response")
+                else []
+            ),
             identity,
         )
         actors.append(replace(actor, avatar=identity / "avatar.pt"))
@@ -516,13 +524,15 @@ def main() -> int:
         return clothing_main(sys.argv[2:])
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "command", choices=("prepare", "identity", "initialize", "fit", "render", "run", "plan")
+        "command",
+        choices=("prepare", "identity", "initialize", "fit", "refine", "render", "run", "plan"),
     )
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--serial", default="all")
     parser.add_argument("--frames", nargs="+", type=int)
     parser.add_argument("--pose-frame", type=int)
     parser.add_argument("--fps", type=float, help="output FPS; resample 3D motion and cameras")
+    parser.add_argument("--updates", type=int, help="refinement target total updates")
     parser.add_argument("--video", action="store_true")
     parser.add_argument("--keep-frames", action="store_true")
     parser.add_argument("--width", type=int)
@@ -562,6 +572,10 @@ def main() -> int:
         config = initialize_scene(config, reuse=args.command == "run")
     if args.command in ("fit", "run"):
         config = fit_scene(config)
+    if args.command == "refine":
+        from hoi.identity.refinement import refine_scene
+
+        refine_scene(config, args.frames, args.updates)
     if args.command in ("render", "run"):
         render_scene(config, args, fitted=args.command == "run")
     save_config(config)

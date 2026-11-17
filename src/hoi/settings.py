@@ -39,6 +39,7 @@ class SceneConfig:
     preparation: dict[str, Any] = field(default_factory=dict)
     rigid_object: dict[str, str] | None = None
     rendering: dict[str, Any] = field(default_factory=dict)
+    identity_refinement: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def load(cls, path: Path) -> "SceneConfig":
@@ -76,4 +77,5 @@ class SceneConfig:
             preparation=data.get("preparation", {}),
             rigid_object=data.get("rigid_object"),
             rendering=data.get("rendering", {}),
+            identity_refinement=data.get("identity_refinement", {}),
         )
