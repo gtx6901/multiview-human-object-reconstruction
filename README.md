@@ -1,5 +1,11 @@
 # 多视角人—物动态重建
 
+![MJJ 与 FCS 双人交互环绕演示：Dust2、原创体素村庄、外滩](docs/media/reconstruction_cover.gif)
+
+左：MJJ；右：FCS。两组原始交互各自连续播放，虚拟相机持续环绕，每 3 秒同步切换三维场景。
+
+[下载高清 MP4](docs/media/reconstruction_cover.mp4) · 场景素材：Dust2 © Valve；外滩全景：Shanghai Bund / Greg Zaal（Poly Haven，CC0）。
+
 单人和多人共用 `pipeline.py` / `hoi` 入口，由场景配置指定相机、时间轴、身份与缓存资产。人体链为观测准备 → 身份与体型 → NLF 初始化和图像手部观测 → 四元数身体拟合 → 脸部拟合 → 四元数 MAP → 联合渲染。已有刚体网格和位姿可通过同一渲染器合成。
 
 人体主链与衣物探索分开管理；场景差异放在配置中，版本由Git提交和分支表达。
@@ -16,7 +22,7 @@ python -m pip install -e .
 
 这只安装 `pyproject.toml` 声明的基础依赖，不会下载模型或编译 CUDA 扩展。运行重建还需要本地 LHM++ 源码和权重、SMPL-X、SAM2、RTMW、NLF、HaMeR，以及匹配 Python/PyTorch/CUDA 的渲染扩展。头盔网格渲染还需要 nvdiffrast；视频编码需要 ffmpeg。
 
-首次配置可从 `configs/runtime.example.json` 复制一份 `configs/runtime.local.json`，按本机位置填写依赖路径。已有本机配置应直接检查，不覆盖。模型、数据和生成结果均外置，不随源码提交。详细路径见 [管线说明](docs/PIPELINE.md)。
+首次配置可从 `configs/runtime.example.json` 复制一份 `configs/runtime.local.json`，按本机位置填写依赖路径。已有本机配置应直接检查，不覆盖。模型、原始数据和完整阶段产物均外置，不随源码提交。详细路径见 [管线说明](docs/PIPELINE.md)。
 
 ## 使用
 
